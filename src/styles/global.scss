@@ -1,0 +1,86 @@
+* {
+  padding: 0;
+  margin: 0;
+  line-height: 1.1;
+  box-sizing: border-box;
+  transition: 0.3s all ease;
+  // letter-spacing: -0.03em;
+  font-family: 'Roboto'; //重命名字体名
+}
+
+html {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  height: 100%;
+  // overflow-y: -webkit-overlay;
+  overflow-y: auto; // 火狐
+  overflow-y: overlay; // Chrome
+
+}
+
+#app {
+  height: 100%;
+}
+
+// 滚动条样式
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/*定义滚动条轨道 内阴影+圆角*/
+::-webkit-scrollbar-track {
+  background-color: transparent !important;
+}
+
+/*定义滑块 内阴影+圆角*/
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: #cccccc54;
+}
+
+ul,
+li {
+  // margin: 0;
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+}
+.in-container {
+  max-width: 1240px;
+  width: 100%;
+  @media screen and (max-width:1240px) {
+    padding: 0 25px;
+  }
+  &-title {
+    color: $text-black;
+    font-size: 35px;
+    font-weight: 700;
+    @media screen and (max-width:1240px) {
+      font-size: 22px;
+    }
+  }
+}
+
+.page {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  @media screen and (max-width:1240px) {
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+}
+
+.my-drop-menu{
+  &-item{
+    &:hover{
+      background-color: $common-grey-light !important;
+      color:$text-green !important;
+    }
+  }
+}
