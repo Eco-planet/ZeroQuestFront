@@ -1,4 +1,4 @@
-# Front
+# ZeroQuest Front
 
 ```bash
 Vue CLI v5.0.8
@@ -17,6 +17,8 @@ Vue CLI v5.0.8
 
 ## 적용 라이브러리
 
+기본 ui 디자인 및 다국어지원, SCSS 모듈
+
 ```bash
 element-plus
 
@@ -26,7 +28,7 @@ bignumber.js
 
 i18n
 
-web3
+scss
 ```
 
 ## vue.cli 의 env 설명
@@ -35,10 +37,10 @@ web3
 .env : 모든 환경에서 로드가 된다.
 .env.local : 모든 환경에서 로드가 되며 local용 (git에 등록x)
 
-.env.development : serve 환경에서 실행 
+.env.development : serve 환경에서 실행
 .env.development.local : serve 환경에서 로드되며 local용 (git에 등록x)
 
-.env.production : build 환경에서 실행 
+.env.production : build 환경에서 실행
 .env.production.local : build 환경에서 로드되며 local용 (git에 등록x)
 ```
 
@@ -47,8 +49,26 @@ serve 로 실행후 process.env 를 출력하면 아래와 같이 나옴
 ```
 BASE_URL: "/"
 NODE_ENV: "development"
-VUE_APP_NODE_LOCAL: "Hello ENV Local"
-VUE_APP_NODE_MESSAGE: "Hello ENV Developer"
+VUE_APP_NODE_MESSAGE: "Hello ENV Local"
 VUE_APP_PUBLIC_KEY: "-----BEGIN PUBLIC KEY-----...."
 VUE_APP_TITLE: "ECO Game Platform"
+```
+
+## 화면 구성 타입
+
+ECOP 기획서에 의한대로 Front 는 Mobile 전용으로 개발
+
+## build
+
+serve : local 실행
+
+serve:dev : dev서버 실행
+
+```json
+  "serve": "vue-cli-service serve --mode local",
+  "serve:dev": "vue-cli-service serve --mode development",
+  "serve:prod": "vue-cli-service serve --mode production",
+  "build": "vue-cli-service build --mode local",
+  "build:dev": "vue-cli-service build --mode development",
+  "build:prod": "vue-cli-service build --mode production",
 ```
