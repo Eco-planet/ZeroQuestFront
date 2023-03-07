@@ -1,5 +1,6 @@
-# ECOGameFront
+# Front
 
+```bash
 Vue CLI v5.0.8
 ? Please pick a preset: Manually select features
 ? Check the features needed for your project: Babel, TS, Router, Vuex, CSS Pre-processors, Linter
@@ -12,9 +13,11 @@ Vue CLI v5.0.8
 ? Pick additional lint features: Lint on save
 ? Where do you prefer placing config for Babel, ESLint, etc.? In dedicated config files
 ? Save this as a preset for future projects? No
+```
 
 ## 적용 라이브러리
 
+```bash
 element-plus
 
 axios
@@ -24,6 +27,7 @@ bignumber.js
 i18n
 
 web3
+```
 
 ## vue.cli 의 env 설명
 
