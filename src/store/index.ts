@@ -1,5 +1,5 @@
 import { createStore } from "vuex";
-const modulesFiles = require.context("./modules", true, /\.ts$/);
+const modulesFiles = require.context("./modules", true, /\.(ts|js)$/);
 
 const modules = modulesFiles.keys().reduce((modules: any, modulePath: any) => {
   const moduleName = modulePath.replace(/^\.\/(.*)\.\w+$/, "$1");

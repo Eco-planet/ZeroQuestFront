@@ -17,6 +17,18 @@ const routes: Array<RouteRecordRaw> = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
   },
+  {
+    path: "/login",
+    name: "login",
+    component: () =>
+      import(/* webpackChunkName: "login" */ "../views/LoginView.vue"),
+  },
+  {
+    path: "/mypage",
+    name: "mypage",
+    component: () =>
+      import(/* webpackChunkName: "mypage" */ "../views/MypageView.vue"),
+  },
 ];
 
 const router = createRouter({
@@ -24,11 +36,29 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to: Nullable, from: Nullable, next: Nullable) => {
-  if (to.query.locale)
+router.beforeEach(async (to: Nullable, from: Nullable, next: Nullable) => {
+  if (to.query.locale) {
     store.commit("system/SET_LOCALE", { lang: to.query.locale });
-  // if (to.name === "EcoTree") return
+  }
+
   next();
+});
+
+router.afterEach(async (to: Nullable, from: Nullable, next: Nullable) => {
+  const currentDate = new Date().getTime() / 1000;
+
+  const expireAccessToken = store.getters["auth/getExpireAccessToken"];
+  const expireRefreshToken = store.getters["auth/getExpireRefreshToken"];
+
+  if (to.name === "mypage" && currentDate > expireAccessToken) {
+    if (currentDate > expireRefreshToken) {
+      console.log("sss");
+      alert("로그인후에 이용해주세요!");
+      router.push("/login");
+    } else {
+      await store.dispatch("auth/updateRefreshToken");
+    }
+  }
 });
 
 export default router;

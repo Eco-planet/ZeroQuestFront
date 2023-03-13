@@ -1,14 +1,24 @@
 <template>
   <div class="home">
     <p>{{ VUE_APP_NODE_MESSAGE }}</p>
-
-    <img alt="Vue logo" src="../assets/logo.png" />
+    <div class="flex justify-center">
+      <img alt="Vue logo" src="../assets/logo.png" />
+    </div>
     <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
   </div>
+  <dropdown text="Click me" placement="top">
+    <list-group>
+      <list-group-item>Item #1</list-group-item>
+      <list-group-item>Item #2</list-group-item>
+      <list-group-item>Item #3</list-group-item>
+    </list-group>
+  </dropdown>
+  <Carousel></Carousel>
 </template>
 
 <script lang="ts" setup>
 import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
+import { Carousel, Dropdown, ListGroup, ListGroupItem } from "flowbite-vue";
 
 import openSSLCrypto from "@/utils/openSSLCrypto";
 

@@ -2,7 +2,9 @@
   <Locale />
   <nav>
     <router-link to="/">{{ t("route.Home") }}</router-link> |
-    <router-link to="/about">{{ t("route.About") }}</router-link>
+    <router-link to="/about">{{ t("route.About") }}</router-link> |
+    <router-link to="/login">LOGIN</router-link> |
+    <router-link to="/mypage">MyPage</router-link>
   </nav>
   <router-view />
 </template>
