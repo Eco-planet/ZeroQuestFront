@@ -79,7 +79,7 @@ serve:dev : dev서버 실행 (테스트시에 사용)
 
 ## 로그인 구조
 
-```json
+```
 구글 토큰 획득 -> 백엔드 서버에서 accessToken, refreshToken 획득
 -> 1. router 에서 accessToken 이 만료되면 -> refreshToken 을 이용해서 accessToken 다시 갱신
 -> 2. router 에서 accessToken 과 refreshToken 이 둘다 만료되면 다시 로그인
@@ -87,7 +87,7 @@ serve:dev : dev서버 실행 (테스트시에 사용)
 
 ## tailwindcss
 
-```json
+```
 https://tailwindcss.com/
 ```
 
@@ -96,7 +96,7 @@ https://tailwindcss.com/
 한글 : src/locale/modules/kr.ts
 영어 : src/locale/modules/en.ts
 
-```json
+```js
 import Modal from "@/components/Modal/index.vue";
 import { useI18n } from "vue-i18n";
 
@@ -111,7 +111,7 @@ Router : src/router/index.ts
 Header : src/components/common/HeaderView.vue
 Footer : src/components/common/FooterView.vue
 
-```json
+```
 [Header]
 
 [Router-View]
@@ -127,7 +127,7 @@ Footer : src/components/common/FooterView.vue
 
 src/api/http.ts -> accessToken 과 refreshToken 이 있으면 headers 에 자동으로 추가
 
-```json
+```js
 import http from "@/api/http";
 
 const getUserInfo = () => {
@@ -137,4 +137,3 @@ const getUserInfo = () => {
   });
 };
 ```
-
