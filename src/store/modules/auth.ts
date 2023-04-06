@@ -1,4 +1,5 @@
 import authApi from "@/api/auth";
+import router from "@/router";
 
 export default {
   namespaced: true,
@@ -7,6 +8,8 @@ export default {
     expireAccessToken: sessionStorage.getItem("expireAccessToken") || 0,
     refreshToken: sessionStorage.getItem("refreshToken") || "",
     expireRefreshToken: sessionStorage.getItem("expireRefreshToken") || 0,
+    userId: '',
+    privateKey: '',
   },
   getters: {
     getAccessToken: (state: Nullable) => {
@@ -20,6 +23,12 @@ export default {
     },
     getExpireRefreshToken: (state: Nullable) => {
       return state.expireRefreshToken;
+    },
+    getUserId: (state: Nullable) => {
+      return state.userId;
+    },
+    getPrivateKey: (state: Nullable) => {
+      return state.privateKey;
     },
   },
   mutations: {
@@ -41,13 +50,18 @@ export default {
       sessionStorage.setItem("refreshToken", token);
       sessionStorage.setItem("expireRefreshToken", currentDate + expireAt);
     },
+    setUserId(state: Nullable, { userId }: Nullable) {
+      state.userId = userId;
+    },
+    setPrivateKey(state: Nullable, { privateKey }: Nullable) {
+      state.privateKey = privateKey;
+    },
   },
   actions: {
     async googleLogin(context: Nullable, { token }: Nullable) {
       try {
         const response = await authApi.googleLogin(token);
 
-        console.log("expire =" + response.data.data.accessExpiresIn);
         if (response.status === 200) {
           context.commit("setAccessToken", {
             token: response.data.data.accessToken,
@@ -57,8 +71,13 @@ export default {
             token: response.data.data.refreshToken,
             expireAt: response.data.data.refreshExpiresIn,
           });
+          context.commit("setUserId", {
+            userId: response.data.data.uid,
+          });
 
           console.log(response);
+
+          router.push("/mywallet");
         }
       } catch (e) {
         alert("TOKEN ERROR");

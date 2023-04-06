@@ -1,17 +1,17 @@
 import http from "@/api/http";
 
-function googleLogin(token: string) {
+const googleLogin = (token: string) => {
   return http.post("/auth/google", {
     token,
   });
 }
 
-function updateRefreshToken() {
+const updateRefreshToken = () => {
   return http.post("/auth/refresh");
 }
 
-function login(userid: Nullable, password: Nullable) {
-  return http.post("/login", {
+const login = (userid: Nullable, password: Nullable) => {
+  return http.post("/auth/login", {
     userid,
     password,
   });

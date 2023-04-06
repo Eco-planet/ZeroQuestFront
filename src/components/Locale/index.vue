@@ -31,12 +31,12 @@ function setLocale(locale: Nullable) {
 .locale {
   .icon {
     cursor: pointer;
-    width: 26px;
-    height: 26px;
+    width: 36px;
+    height: 36px;
 
     @media screen and (max-width: 1240px) {
-      width: 24px;
-      height: 24px;
+      width: 36px;
+      height: 36px;
     }
   }
 }

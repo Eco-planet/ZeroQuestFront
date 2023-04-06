@@ -1,25 +1,32 @@
 <template>
   <div class="global-modal" v-if="wrapperVisible" @click="clickMask">
-    <div
-      :class="['global-modal-container', innerClass]"
-      :style="containerStyle"
-      @click.stop
-    >
-      <div class="title">{{ title }}</div>
-      <div class="sub-title">{{ subTitle }}</div>
-      <img
-        v-if="showClose"
-        class="close-icon"
-        src="@/assets/images/img_close_black.png"
-        @click="hide"
-      />
-      <slot></slot>
+    <div :class="['global-modal-container', innerClass]" :style="containerStyle" @click.stop>
+      <img v-if="showClose" class="close-icon" src="@/assets/images/img_close_black.png" @click="hide" />
+      <div class="flex flex-col justify-center items-center">
+        <div><img class="error-icon" src="@/assets/images/icon_error.png" /></div>
+        <div class="h-10"></div>
+        <div class="text-2xl text-center">{{ showTitle }}</div>
+        <div class="h-10"></div>
+        <div v-if="popupType !== 'Error'" class="flex justify-center">
+          <div><button class="w-36 h-12 font-semibold text-white text-xl rounded close-btn" @click="resData('yes')">YES</button></div>
+          <div class="w-20"></div>
+          <div><button class="w-36 h-12 font-semibold text-white text-xl rounded close-btn" @click="resData('no')">NO</button></div>
+        </div>
+        <div v-if="popupType === 'Error'" class="flex justify-center">
+          <div><button class="w-48 h-12 font-semibold text-white text-xl rounded close-btn" @click="hide">Closed</button></div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import store from "@/store";
+import { STATEMENT_OR_BLOCK_KEYS } from "@babel/types";
 import { computed, nextTick, ref, toRefs, watch } from "vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 const props = defineProps({
   visible: {
@@ -34,11 +41,11 @@ const props = defineProps({
     type: String,
     defualt: () => "",
   },
-  title: {
+  popupType: {
     type: String,
-    default: () => "",
+    default: () => "Error",
   },
-  subTitle: {
+  title: {
     type: String,
     default: () => "",
   },
@@ -48,13 +55,27 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["afterShow", "afterHide", "hide", "update:visible"]);
-const { visible, innerStyle } = toRefs(props); // 弹框组件显隐
+const emit = defineEmits([
+  "afterShow",
+  "afterHide",
+  "afterLogin",
+  "show",
+  "hide",
+  "update:visible",
+  "resData"
+]);
+const { visible, innerStyle, title } = toRefs(props); // 弹框组件显隐
 const wrapperVisible = ref(false); // 弹框外部容器显隐
 const innerVisible = ref(false); // 弹框中间容器显隐
+const resolvePromise = ref(null);
+const showTitle = ref(title.value);
 
 watch(visible, (val) => {
   if (val) {
+    if (store.state.isLogin === true) {
+      showTitle.value = t("error.useAfterLogin");
+    }
+
     wrapperVisible.value = true;
     setTimeout(() => {
       innerVisible.value = true;
@@ -65,13 +86,33 @@ watch(visible, (val) => {
     setTimeout(() => {
       wrapperVisible.value = false;
       emit("afterHide");
+
+      if (store.state.isLogin === true) {
+        store.state.isLogin = false;
+        emit("afterLogin");
+      }
     }, 100);
   }
 });
-function hide() {
+
+const show = () => {
+  emit("update:visible", true);
+
+  return new Promise((resolve: any, _) => {
+    resolvePromise.value = resolve;
+  });
+};
+
+const hide = () => {
   emit("update:visible", false);
   emit("hide");
-}
+};
+
+const resData = (resType: string) => {
+  emit("resData", resType);
+  emit("update:visible", false);
+  emit("hide");
+};
 
 const containerStyle = computed(() => ({
   transform: innerVisible.value
@@ -80,7 +121,7 @@ const containerStyle = computed(() => ({
   ...innerStyle.value,
 }));
 
-function clickMask() {
+const clickMask = () => {
   hide();
 }
 </script>
@@ -102,7 +143,7 @@ function clickMask() {
     left: 50%;
     top: 50%;
     // transform: translate(-50%, -70%);
-    border-radius: 10px;
+    // border-radius: 10px;
     padding: 80px 28px 38px 28px;
     overflow-y: auto;
     max-height: 90%;
@@ -112,7 +153,7 @@ function clickMask() {
     }
 
     @media screen and (max-width: 840px) {
-      padding: 6.5rem 2rem;
+      padding: 5rem 2rem;
       width: calc(100% - 60px);
     }
 
@@ -122,14 +163,6 @@ function clickMask() {
       left: 27px;
       font-size: 20px;
       font-weight: bold;
-    }
-
-    .sub-title {
-      position: absolute;
-      top: 55px;
-      left: 29px;
-      font-size: 15px;
-      color: #999;
     }
 
     .close-icon {
@@ -148,6 +181,16 @@ function clickMask() {
         height: 15px;
         cursor: pointer;
       }
+    }
+
+    .error-icon {
+      width: 60%;
+      height: 60%;
+      margin-left: 20%;
+    }
+
+    .close-btn {
+      background-color: #999;
     }
   }
 }

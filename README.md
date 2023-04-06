@@ -17,9 +17,13 @@ Vue CLI v5.0.8
 
 ## 적용 라이브러리
 
-기본 ui 디자인 및 다국어지원, SCSS 모듈
+tailwindcss 사용
+다국어지원, SCSS 모듈
+
 
 ```bash
+tailwindcss
+
 element-plus
 
 axios
@@ -62,7 +66,7 @@ ECOP 기획서에 의한대로 Front 는 Mobile 전용으로 개발
 
 serve : local 실행
 
-serve:dev : dev서버 실행
+serve:dev : dev서버 실행 (테스트시에 사용) 
 
 ```json
   "serve": "vue-cli-service serve --mode local",
@@ -72,3 +76,65 @@ serve:dev : dev서버 실행
   "build:dev": "vue-cli-service build --mode development",
   "build:prod": "vue-cli-service build --mode production",
 ```
+
+## 로그인 구조
+
+```json
+구글 토큰 획득 -> 백엔드 서버에서 accessToken, refreshToken 획득
+-> 1. router 에서 accessToken 이 만료되면 -> refreshToken 을 이용해서 accessToken 다시 갱신
+-> 2. router 에서 accessToken 과 refreshToken 이 둘다 만료되면 다시 로그인
+```
+
+## tailwindcss
+
+```json
+https://tailwindcss.com/
+```
+
+## 다국어 지원
+
+한글 : src/locale/modules/kr.ts
+영어 : src/locale/modules/en.ts
+
+```json
+import Modal from "@/components/Modal/index.vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
+
+const title = t("message.sorryChecking");
+```
+
+## UI 구조
+
+Router : src/router/index.ts
+Header : src/components/common/HeaderView.vue
+Footer : src/components/common/FooterView.vue
+
+```json
+[Header]
+
+[Router-View]
+
+[Footer]
+
+[Loading-Spinner]
+```
+
+## 백엔드 API 호출
+
+.env.development -> VUE_APP_API_URL 에 접속할 서버 설정
+
+src/api/http.ts -> accessToken 과 refreshToken 이 있으면 headers 에 자동으로 추가
+
+```json
+import http from "@/api/http";
+
+const getUserInfo = () => {
+  http.get("/api/user/info")
+  .then((response) => {
+	console.log(response);
+  });
+};
+```
+

@@ -9,7 +9,12 @@ const modules = modulesFiles.keys().reduce((modules: any, modulePath: any) => {
 }, {});
 
 export default createStore({
-  state: {},
+  state: {
+    isLoading: true,
+    isLogin: false,
+    isPopup: false,
+    popupText: '',
+  },
   getters: {},
   mutations: {},
   actions: {},

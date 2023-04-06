@@ -1,33 +1,36 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import HomeView from "../views/HomeView.vue";
+import GoogleView from "../views/GoogleLoginView.vue";
 import store from "@/store";
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     name: "home",
-    component: HomeView,
+    component: GoogleView,
   },
   {
-    path: "/about",
-    name: "about",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
+    path: "/myzq",
+    name: "myzq",
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+      import(/* webpackChunkName: "myzq" */ "../views/ZeroQuestView.vue"),
   },
   {
-    path: "/login",
-    name: "login",
+    path: "/zeronft",
+    name: "zeronft",
     component: () =>
-      import(/* webpackChunkName: "login" */ "../views/LoginView.vue"),
+      import(/* webpackChunkName: "zeronft" */ "../views/ZeroNftView.vue"),
   },
   {
-    path: "/mypage",
-    name: "mypage",
+    path: "/onft",
+    name: "onft",
     component: () =>
-      import(/* webpackChunkName: "mypage" */ "../views/MypageView.vue"),
+      import(/* webpackChunkName: "onft" */ "../views/OpenNftView.vue"),
+  },
+  {
+    path: "/mywallet",
+    name: "mywallet",
+    component: () =>
+      import(/* webpackChunkName: "mywallet" */ "../views/MyWalletView.vue"),
   },
 ];
 
@@ -37,6 +40,18 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to: Nullable, from: Nullable, next: Nullable) => {
+  store.state.isLoading = true;
+
+  const currentDate = new Date().getTime() / 1000;
+  const expireAccessToken = store.getters["auth/getExpireAccessToken"];
+  const expireRefreshToken = store.getters["auth/getExpireRefreshToken"];
+
+  if (to.name === "home" && currentDate <= expireAccessToken) {
+    if (currentDate <= expireRefreshToken) {
+      router.push("/mywallet");
+    }
+  }
+
   if (to.query.locale) {
     store.commit("system/SET_LOCALE", { lang: to.query.locale });
   }
@@ -46,19 +61,22 @@ router.beforeEach(async (to: Nullable, from: Nullable, next: Nullable) => {
 
 router.afterEach(async (to: Nullable, from: Nullable, next: Nullable) => {
   const currentDate = new Date().getTime() / 1000;
-
   const expireAccessToken = store.getters["auth/getExpireAccessToken"];
   const expireRefreshToken = store.getters["auth/getExpireRefreshToken"];
 
-  if (to.name === "mypage" && currentDate > expireAccessToken) {
+  if (to.name === "mywallet" && currentDate > expireAccessToken) {
     if (currentDate > expireRefreshToken) {
-      console.log("sss");
-      alert("로그인후에 이용해주세요!");
-      router.push("/login");
+      store.state.isLogin = true;
+      store.state.isPopup = true;
+      // router.push("/");
     } else {
       await store.dispatch("auth/updateRefreshToken");
     }
   }
+
+  setTimeout(() => {
+    store.state.isLoading = false;
+  }, 100);
 });
 
 export default router;

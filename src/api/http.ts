@@ -27,7 +27,12 @@ const instance = axios.create({
 });
 
 instance.interceptors.request.use(function (config: Nullable) {
-  if (store.getters["auth/getAccessToken"] !== null) {
+  store.state.isLoading = true;
+
+  if (
+    store.getters["auth/getAccessToken"] !== null &&
+    store.getters["auth/getAccessToken"] !== ""
+  ) {
     config["headers"] = {
       authorization: `Bearer ${store.getters["auth/getAccessToken"]}`,
       refresh: store.getters["auth/getRefreshToken"],
@@ -39,11 +44,15 @@ instance.interceptors.request.use(function (config: Nullable) {
 
 instance.interceptors.response.use(
   function (response) {
+    store.state.isLoading = false;
+
     store.commit("error/setValidationError", {});
 
     return response;
   },
   function (error) {
+    store.state.isLoading = false;
+
     if (error.response.status === 422) {
       store.commit("error/setValidationError", error.response.data.data);
     } else {
