@@ -80,7 +80,9 @@ export default {
           router.push("/mywallet");
         }
       } catch (e) {
-        alert("TOKEN ERROR");
+        console.log("TOKEN ERROR");
+
+        router.push("/");
       }
     },
     updateRefreshToken(context: Nullable) {
@@ -95,7 +97,7 @@ export default {
           }
         })
         .catch((e) => {
-          alert("아이디 혹은 비밀번호를 확인해주세요.");
+          router.push("/");
         });
     },
     async login(context: Nullable, { userId, password }: Nullable) {
@@ -107,7 +109,7 @@ export default {
           console.log(response);
         }
       } catch (e) {
-        alert("아이디 혹은 비밀번호를 확인해주세요.");
+        router.push("/");
       }
     },
     loginWithoutAsync(context: Nullable, { userId, password }: Nullable) {
@@ -119,11 +121,13 @@ export default {
           }
         })
         .catch((e) => {
-          alert("아이디 혹은 비밀번호를 확인해주세요.");
+          router.push("/");
         });
     },
     updateExpire(context: Nullable) {
       context.commit("setAccessToken", "");
+
+      router.push("/");
     },
   },
 };

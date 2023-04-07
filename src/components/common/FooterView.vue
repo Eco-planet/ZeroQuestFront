@@ -21,7 +21,7 @@
     <a :class="{ oPage: $route.name === 'mywallet' }" @click="movePage('/mywallet')">My<br />Wallet</a>
     <a @click="movePage('/market')">Open<br />Market</a>
   </div>
-  <Modal :visible="store.state.isPopup" @hide="closeModal" @resData="checkData" @afterLogin="afterLogin" :title="store.state.popupText" />
+  <Modal :visible="store.state.isPopup" @hide="closeModal" @resData="checkData" @afterLogin="afterLogin" title="message.sorryChecking" />
 </template>
 
 <script lang="ts" setup>
@@ -31,8 +31,6 @@ import Modal from "@/components/Modal/index.vue";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
-
-store.state.popupText = t("message.sorryChecking");
 
 const showModal = () => {
   store.state.isPopup = true;

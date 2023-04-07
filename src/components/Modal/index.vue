@@ -5,7 +5,7 @@
       <div class="flex flex-col justify-center items-center">
         <div><img class="error-icon" src="@/assets/images/icon_error.png" /></div>
         <div class="h-10"></div>
-        <div class="text-2xl text-center">{{ showTitle }}</div>
+        <div class="text-2xl text-center">{{ t(showTitle) }}</div>
         <div class="h-10"></div>
         <div v-if="popupType !== 'Error'" class="flex justify-center">
           <div><button class="w-36 h-12 font-semibold text-white text-xl rounded close-btn" @click="resData('yes')">YES</button></div>
@@ -73,7 +73,7 @@ const showTitle = ref(title.value);
 watch(visible, (val) => {
   if (val) {
     if (store.state.isLogin === true) {
-      showTitle.value = t("error.useAfterLogin");
+      showTitle.value = "error.useAfterLogin";
     }
 
     wrapperVisible.value = true;
