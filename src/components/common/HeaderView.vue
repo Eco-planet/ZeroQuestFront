@@ -1,15 +1,17 @@
 <template>
   <div id="header" :class="{ open: menuVisible === true }">
-    <h1><a href="/"><img src="@/assets/images/logo.png" alt="ZeroQuest"></a></h1>
-    <div class="login-box">
-      <div class="flex justify-center items-center">
-        <div><Locale /></div>
-        <div class="w-5"></div>
-        <div><button type="button" class="login-id">ID</button></div>
+    <div class="w-full flex justify-between items-center">
+      <div class="wp-30 flex"><button type="button" class="menu-btn" @click="toggleMenu()"><span></span></button></div>
+      <div class="wp-40 flex justify-center"><h1><a href="/"><img src="@/assets/images/logo.png" alt="ZeroQuest"></a></h1></div>
+      <div class="wp-30 login-box">
+        <div class="flex justify-end items-center">
+          <div><Locale /></div>
+          <div class="w-5"></div>
+          <div><button type="button" class="login-id">ID</button></div>
+        </div>
       </div>
     </div>
-   <button type="button" class="menu-btn" @click="toggleMenu()"><span></span></button>
- </div>
+  </div>
   <div v-show="menuVisible" class="menus flex" :class="{ ani: aniVisible === true }">
     <div class="wp-80 p-8 flex flex-col justify-start items-start" style="background: #fff;">
       <div class="text-2xl" :class="{ select: $route.name === 'myzq' }" @click="movePage('/myzq')">My Z.Q</div>
