@@ -1,4 +1,5 @@
 <template>
+  <!--
   <div id="footer">
     <div class="social-area">
       <a href="javascript:void(0);"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAKpSURBVHgBlVRBSFRhEJ75d/UpUaSEmqxEFF2COolnIUg6VFbuZXXLQ63rZuqinarFU4dKa1VMg4hNLw/ELhEogdCxS4fSQ3mwwkJQEZNcdt+bZvS99e1byd2B//0z3//PN/P/M/9D2EP6+/VSPJAMIMFlNmt5VFhLyzw+EsIb2tQmolH/X7cvuoGBkUQAEB/zQhX8RwjgNxD1dIeDE3sS6rruWVpLDvPOEBQiCKPVZVrE7/cbYnptfGk1GeepMLKdVEPsK2QRMZV8no4mmnhq31mHMTDhEquztgtj6zxv7HKAzmgDz9MW1G5xAMZ0vbhsNbnAus/afa0r3DIpav/Yq9PrRbTQ19q6JfajkUSFhurInbbmue1Enif6mOKBRfpzrVw74T28stXERfBloiussfXorRtfnKfrDQelyssZALFS0rXEJ1wKARsdF5JWhG8hTzENcFUYGxV/6xzQdGdb4CvkKdH2lg88zTkY66Qovt0E4RMUKgTfHJZPZa0hFEOhfAglTlsIV2yDu/wsFCCxWEy5fFYUN9lnR7z6wReJ43nyQVnVSSloZcabuThDnNndgt60gVNPhl/W7EcmPcpHGsxGcQYHRl8f5b/KIlvzHIMbGu9xaxkcaVJeQnW5NmG/03h8/JChEf+F8BzvldfkcbCl+D6Pqe5Qyy+ONMTAGTkF30kvjxImC3AFL9pkIh0dgQ0OHmayKy4yKcCQcG1XuSityfPhfsKOtDLfEdBVjnbTJHU3yweRCDG3tQjmU6V0X9RtwkjE/yedxgus/vCY6j2SOoVA615lHnT7Cp7FJdelzIbeYHAzQyjSc7t5MUVUR5Ip0kNuMN1ArM9JhsBwmDMeLVXbFbr+3Qa8zs3W4z//bGS80QTq5PvahFxJ8ZjlwsQ7w81T7sV/tET2DpGARgMAAAAASUVORK5CYII=" alt="github"></a>
@@ -14,6 +15,7 @@
       <a href="javascript:void(0);">Audits</a>
     </div>
   </div>
+  -->
   <div class="fixed-bottom">
     <a :class="{ oPage: $route.name === 'myzq' }" @click="movePage('/myzq')">My Z.Q</a>
     <a :class="{ oPage: $route.name === 'zeronft' }" @click="movePage('/zeronft')">ZeroNFT</a>
