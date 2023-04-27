@@ -15,11 +15,37 @@
 <script lang="ts" setup>
 import { useI18n } from "vue-i18n";
 import store from "@/store";
+import http from "@/api/http";
 import LoadingSpinner from "@/components/common/LoadingSpinner.vue";
 import Header from "@/components/common/HeaderView.vue";
 import Footer from "@/components/common/FooterView.vue";
+import { onBeforeMount, onMounted, onUpdated } from "vue";
 
 const { t } = useI18n();
+
+onMounted(() => {
+  if (store.getters["auth/getTokenInfos"] === "") {
+    http.get("/api/tokenInfos")
+    .then((response) => {
+      const resTokenData = response.data.data.tokenInfos;
+      const resScannerData = response.data.data.scanner;
+
+      let tokenInfos: any = {};
+      let scanners: any = {};
+
+      resTokenData.forEach((res: any) => {
+        tokenInfos[res.symbol] = res;
+      });
+
+      resScannerData.forEach((res: any) => {
+        scanners[res.chainId] = res;
+      });
+
+      store.commit("auth/setTokenInfos", { 'info': tokenInfos });
+      store.commit("auth/setScanners", { 'info': scanners });
+    });
+  }
+});
 </script>
 
 <style lang="scss">

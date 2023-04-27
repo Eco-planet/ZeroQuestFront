@@ -14,6 +14,7 @@ export default createStore({
     isLogin: false,
     isPopup: false,
     popupText: '',
+    isBalanceUpdate: true,
   },
   getters: {},
   mutations: {},

@@ -8,8 +8,12 @@ export default {
     expireAccessToken: sessionStorage.getItem("expireAccessToken") || 0,
     refreshToken: sessionStorage.getItem("refreshToken") || "",
     expireRefreshToken: sessionStorage.getItem("expireRefreshToken") || 0,
-    userId: '',
-    privateKey: '',
+    tokenInfos: sessionStorage.getItem("tokenInfos") || "",
+    scanners: sessionStorage.getItem("scanners") || "",
+    userId: sessionStorage.getItem("userId") || "",
+    privateKey: sessionStorage.getItem("privateKey") || "",
+    address: sessionStorage.getItem("address") || "",
+    balances: sessionStorage.getItem("balances") || "",
   },
   getters: {
     getAccessToken: (state: Nullable) => {
@@ -24,11 +28,35 @@ export default {
     getExpireRefreshToken: (state: Nullable) => {
       return state.expireRefreshToken;
     },
+    getTokenInfos: (state: Nullable) => {
+      if (state.tokenInfos !== "") {
+        return JSON.parse(state.tokenInfos);
+      } else {
+        return "";
+      }
+    },
+    getScanners: (state: Nullable) => {
+      if (state.scanners !== "") {
+        return JSON.parse(state.scanners);
+      } else {
+        return "";
+      }
+    },
     getUserId: (state: Nullable) => {
       return state.userId;
     },
     getPrivateKey: (state: Nullable) => {
       return state.privateKey;
+    },
+    getAddress: (state: Nullable) => {
+      return state.address;
+    },
+    getBalances: (state: Nullable) => {
+      if (state.balances !== "") {
+        return JSON.parse(state.balances);
+      } else {
+        return "";
+      }
     },
   },
   mutations: {
@@ -50,11 +78,35 @@ export default {
       sessionStorage.setItem("refreshToken", token);
       sessionStorage.setItem("expireRefreshToken", currentDate + expireAt);
     },
+    setTokenInfos(state: Nullable, { info }: Nullable) {
+      state.tokenInfos = JSON.stringify(info);
+
+      sessionStorage.setItem("tokenInfos", JSON.stringify(info));
+    },
+    setScanners(state: Nullable, { info }: Nullable) {
+      state.scanners = JSON.stringify(info);
+
+      sessionStorage.setItem("scanners", JSON.stringify(info));
+    },
     setUserId(state: Nullable, { userId }: Nullable) {
       state.userId = userId;
+
+      sessionStorage.setItem("userId", userId);
     },
     setPrivateKey(state: Nullable, { privateKey }: Nullable) {
       state.privateKey = privateKey;
+
+      sessionStorage.setItem("privateKey", privateKey);
+    },
+    setAddress(state: Nullable, { address }: Nullable) {
+      state.address = address;
+
+      sessionStorage.setItem("address", address);
+    },
+    setBalances(state: Nullable, { info }: Nullable) {
+      state.balances = JSON.stringify(info);
+
+      sessionStorage.setItem("balances", JSON.stringify(info));
     },
   },
   actions: {
@@ -73,6 +125,9 @@ export default {
           });
           context.commit("setUserId", {
             userId: response.data.data.uid,
+          });
+          context.commit("setAddress", {
+            address: response.data.data.wallet.address,
           });
 
           console.log(response);

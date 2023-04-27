@@ -16,6 +16,9 @@
     </div>
   </div>
   -->
+  <div class="h-10"></div>
+  <div class="h-10"></div>
+  <div class="h-10"></div>
   <div class="fixed-bottom">
     <a :class="{ oPage: $route.name === 'myzq' }" @click="movePage('/myzq')">My Z.Q</a>
     <a :class="{ oPage: $route.name === 'zeronft' }" @click="movePage('/zeronft')">ZeroNFT</a>
@@ -23,7 +26,7 @@
     <a :class="{ oPage: $route.name === 'mywallet' }" @click="movePage('/mywallet')">My<br />Wallet</a>
     <a @click="movePage('/market')">Open<br />Market</a>
   </div>
-  <Modal :visible="store.state.isPopup" @hide="closeModal" @resData="checkData" @afterLogin="afterLogin" title="message.sorryChecking" />
+  <!-- <Modal :visible="store.state.isPopup" @hide="closeModal" @resData="checkData" @afterLogin="afterLogin" title="message.sorryChecking" /> -->
 </template>
 
 <script lang="ts" setup>
