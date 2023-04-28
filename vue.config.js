@@ -12,6 +12,9 @@ module.exports = defineConfig({
         chunks: "all",
       },
     },
+    devServer: {
+      allowedHosts: "auto",
+    },
   },
   css: {
     loaderOptions: {

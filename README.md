@@ -137,3 +137,22 @@ const getUserInfo = () => {
   });
 };
 ```
+
+# pm2
+
+```bash
+pm2 start --name "FRONT" npm -- start
+pm2 start --name "FRONT" npm -- run serve:dev
+```
+
+## Invalid Host header
+
+vue.config.js 에 옵션추가
+
+```
+configureWebpack : {
+    devServer: {
+    allowedHosts: "auto",
+  },
+}
+```
