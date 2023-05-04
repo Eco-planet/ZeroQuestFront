@@ -1894,12 +1894,28 @@ input:checked + .toggle-bg {
   border-top-right-radius: 0.75rem !important;
 }
 
+.border-solid {
+  border: solid;
+}
+
+.border-dashed {
+  border: dashed;
+}
+
+.border-dotted {
+  border: dotted;
+}
+
 .border {
   border-width: 1px !important;
 }
 
 .border-0 {
   border-width: 0px !important;
+}
+
+.border-1 {
+  border-width: 1px !important;
 }
 
 .border-2 {

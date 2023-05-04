@@ -13,7 +13,7 @@ export default createStore({
     isLoading: true,
     isLogin: false,
     isPopup: false,
-    popupText: '',
+    popupType: '',
     isBalanceUpdate: true,
   },
   getters: {},

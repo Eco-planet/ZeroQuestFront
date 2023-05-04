@@ -80,7 +80,6 @@ router.afterEach(async (to: Nullable, from: Nullable, next: Nullable) => {
     if (currentDate > expireRefreshToken) {
       store.state.isLogin = true;
       store.state.isPopup = true;
-      // router.push("/");
     } else {
       await store.dispatch("auth/updateRefreshToken");
     }

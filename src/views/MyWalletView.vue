@@ -17,13 +17,13 @@
           <div class="flex justify-between">
             <div class="flex flex-col">
               <div class="flex font-semibold text-2xl">{{ key }}</div>
-              <div class="flex text-sm">= {{ item.priceUsdt }} USDT</div>
+              <div class="flex text-sm">= {{ item.price }} USDT</div>
             </div>
             <div class="flex justify-end">
               <div class="flex flex-col justify-end list-margin">
                 <template v-if="Object.keys(balances).length > 0">
-                  <div class="flex justify-end font-semibold text-2xl">{{ balances[key].balance }}</div>
-                  <div class="flex justify-end text-sm">= {{ item.priceUsdt * balances[key].balance }} USDT</div>
+                  <div class="flex justify-end font-semibold text-2xl">{{ parseFloat((1 * balances[key].balance).toFixed(item.decimals)) }}</div>
+                  <div class="flex justify-end text-sm">= {{ parseFloat((item.price * balances[key].balance).toFixed(item.decimals)) }} USDT</div>
                  </template>
                 <template v-if="Object.keys(balances).length === 0">
                   <div class="flex justify-end font-semibold text-2xl">0</div>
@@ -31,9 +31,9 @@
                 </template>
               </div>
               <div class="flex justify-end items-center">
-                <div class="inout" @click="showModal"><img src="@/assets/images/icon_in.png" /></div>
+                <div class="inout" @click="showQrCode"><img src="@/assets/images/icon_in.png" /></div>
                 <div class="w-3"></div>
-                <div class="inout" @click=""><img src="@/assets/images/icon_out.png" /></div>
+                <div class="inout" @click="getStatusCheck('sendCoin', key.toString())"><img src="@/assets/images/icon_out.png" /></div>
               </div>
             </div>
           </div>
@@ -46,18 +46,18 @@
     <div class="flex">
       <div class="wp-40 flex flex-col">
         <div class="flex justify-end items-center">
-          <div class="font-semibold text-xl">0000</div>
-          <div class="ml-2 text-gray-400">ESG Point</div>
+          <div class="wp-50"><input type="number" class="w-36 font-semibold text-xl" v-model="swapEsgp" style="text-align:right" /></div>
+          <div class="wp-50 flex justify-end items-center text-gray-400">ESG Point</div>
         </div>
         <div class="h-px h-5 bg-gray-200"></div>
       </div>
       <div class="wp-20 flex justify-center items-center">
-        <div class="swap-icon"><img src="@/assets/images/icon_arrow.png" /></div>
+        <div class="swap-icon" @click="getSwapInfo"><img src="@/assets/images/icon_arrow.png" /></div>
       </div>
       <div class="wp-40 flex flex-col">
         <div class="flex justify-end items-center">
-          <div class="font-semibold text-xl swap-text">0000</div>
-          <div class="ml-2 text-gray-400">ESG</div>
+          <div class="wp-80"><input type="number" class="w-36 font-semibold text-xl swap-text" v-model="swapEsg" style="text-align:right"  readonly /></div>
+          <div class="wp-20 flex justify-end items-center text-gray-400">ESG</div>
         </div>
         <div class="h-px h-5 bg-gray-200"></div>
       </div>
@@ -77,18 +77,19 @@
     </div>
     <div class="h-10"></div>
     <div class="flex justify-center items-center">
-      <button class="wp-40 p-2 font-semibold text-2xl text-white swap-btn" @click="">SWAP</button>
+      <button class="wp-40 p-2 font-semibold text-2xl text-white swap-btn" @click="getStatusCheck('swap','')">SWAP</button>
     </div>
     <div class="h-10"></div>
   </div>
-  <Modal :visible="store.state.isPopup" @hide="closeModal" title="qr_code" />
+  <Modal :visible="store.state.isPopup" @hide="closeModal" @resData="checkData" @resJson="checkObject" :title="popupTitle" />
 </template>
 
 <script lang="ts" setup>
 import store from "@/store";
+import router from "@/router";
 import http from "@/api/http";
+import CryptoJS from "crypto";
 import openSSLCrypto from "@/utils/openSSLCrypto";
-import { ethers } from "ethers-ts";
 import { useI18n } from "vue-i18n";
 import { onMounted, ref } from "vue";
 import Modal from "@/components/Modal/index.vue";
@@ -98,32 +99,63 @@ const { t } = useI18n();
 const esgPoint = ref(0);
 const balances = ref();
 const tokenInfos = ref();
+const withdrawSymbol = ref("");
+const popupTitle = ref("");
+
+const isUpdate = ref(false);
+const swapEsgp = ref(0);
+const swapEsg = ref(0);
 
 onMounted(() => {
   updateBalance();
 
-  if (store.state.isBalanceUpdate === true) {
+  if (store.state.isBalanceUpdate === true || 1) {
     getBalanceAll();
   }
 });
 
-const getUserInfo = () => {
-  http.get("/api/user/info")
-  .then((response) => {
-    const seed = openSSLCrypto.decode(response.data.data.wallet.seed);
-    const walletData = ethers.Wallet.fromMnemonic(seed);
-    const privateKey = openSSLCrypto.encode(walletData.privateKey);
+const forceLogout = () => {
+  store.commit("auth/setInitToken");
 
-    store.commit("auth/setPrivateKey", { privateKey });
-  });
+  router.push("/");
+};
+
+const checkError = (status: number, code: number) => {
+  if (status === 400) {
+    store.state.popupType = 'message';
+
+    if (code === 501) {
+      popupTitle.value = 'error.notEnoughMoney';
+    } else if (code === 502) {
+      popupTitle.value = 'error.notEnoughFee';
+    } else if (code === 503) {
+      popupTitle.value = 'error.notFoundCoin';
+    } else if (code === 504) {
+      popupTitle.value = 'error.notFoundWallet';
+    } else if (code === 505) {
+      popupTitle.value = 'error.notEnoughBalance';
+    } else if (code === 506) {
+      popupTitle.value = 'error.notTransferPoint';
+    } else if (code === 507) {
+      popupTitle.value = 'error.passwordNotMatch';
+    } else if (code === 508) {
+      popupTitle.value = 'error.notSupportSwap';
+    } else if (code === 509) {
+      popupTitle.value = 'error.lessMiniumCostSwap';
+    } else if (code === 510) {
+      popupTitle.value = 'error.failedPointSwap';
+    }
+
+    store.state.isPopup = true;
+  } else if (status === 401 || status === 403 || status === 300) {
+    store.commit("auth/setInitToken");
+
+    router.push("/");
+  }
 };
 
 const getBalanceAll = () => {
-  http.get("/api/token/balanceAll", {
-    // params: {
-    //  'address': store.getters["auth/getAddress"],
-    // }
-  })
+  http.get("/api/token/balanceAll")
   .then((response) => {
     store.state.isBalanceUpdate = false;
 
@@ -136,9 +168,11 @@ const getBalanceAll = () => {
     });
 
     store.commit("auth/setBalances", { 'info': balancesData });
-  })
-  .finally(() => { 
+
     updateBalance();
+  })
+  .catch((error) => {
+    checkError(error.response.status, error.response.data.errorCode);
   });
 };
 
@@ -153,12 +187,152 @@ const updateBalance = () => {
   }
 };
 
-const showModal = () => {
+const getStatusCheck = (type: string, symbol: string) => {
+  // 처리중인 SendCoin/Swap 이 있는지 확인
+  http.get("/api/statusCheck", {
+    params: {
+      address: store.getters["auth/getAddress"]
+    }
+  })
+  .then((response) => {
+    if (Object.keys(response.data.data).length > 0) {
+      store.state.popupType = 'message';
+      popupTitle.value = 'error.notProcessIng';
+      store.state.isPopup = true;
+
+      isUpdate.value = true;
+    } else {
+      if (isUpdate.value === true) {
+        isUpdate.value = false;
+
+        getBalanceAll();
+      }
+
+      if (type === 'sendCoin') {
+        withdrawSymbol.value = symbol;
+
+        if (store.getters["auth/getWithdrawPw"] === true) {
+          store.state.popupType = 'send_coin';
+        } else {
+          store.state.popupType = 'withdraw_pass';
+        }
+
+        store.state.isPopup = true;
+      } else if (type ==='swap') {
+        if (swapEsg.value === 0) {
+          store.state.popupType = 'message';
+          popupTitle.value = 'error.lessMiniumCostSwap';
+          store.state.isPopup = true;
+        } else {
+          sendSwap();
+        }
+      }
+    }
+  })
+  .catch((error) => {
+    checkError(error.response.status, error.response.data.errorCode);
+  });
+};
+
+const checkData = (res: string) => {
+  const passwd = openSSLCrypto.encode(CryptoJS.createHash('md5').update(res).digest('hex'));
+
+  http.post("/api/user/withdrawPw", {
+    'password': passwd 
+  })
+  .then((response) => {
+    if (response.data.data.result === true) {
+      store.commit("auth/setWithdrawPw", { 'pw': true });
+    }
+  });
+};
+
+const checkObject = (res: any) => {
+  sendCoin(withdrawSymbol.value, res.address, res.count, res.passwd);
+};
+
+const sendCoin = (symbol: string, to: string, value: number, password: string) => {
+  const passwd = openSSLCrypto.encode(CryptoJS.createHash('md5').update(password).digest('hex'));
+
+  http.post("/api/token/sendCoin", {
+    'symbol': symbol,
+    'to': to,
+    'value': value,
+    'address': store.getters["auth/getAddress"],
+    'privateKey': store.getters["auth/getPrivateKey"],
+    'password': passwd,
+  })
+  .then((response) => {
+    store.state.popupType = 'message';
+    popupTitle.value = 'message.withdrawRequestEnd'; 
+    store.state.isPopup = true;
+  })
+  .catch((error) => {
+    checkError(error.response.status, error.response.data.errorCode);
+  });
+};
+
+const showQrCode = () => {
+  store.state.popupType = 'qr_code';
   store.state.isPopup = true;
 };
 
 const closeModal = () => {
   store.state.isPopup = false;
+};
+
+const getSwapInfo = () => {
+  if (swapEsgp.value < 1000) {
+    store.state.popupType = 'message';
+    popupTitle.value = 'error.lessMiniumCostSwap'; 
+    store.state.isPopup = true;
+  } else {
+    http.get("/api/swap/estimate", {
+      params: {
+        'fromAddress': store.getters["auth/getAddress"],
+        'toAddress': store.getters["auth/getAddress"],
+        'fromSymbol': 'ESGP',
+        'toSymbol': 'ESG',
+        'amount': swapEsgp.value,
+      }
+    })
+    .then((response) => {
+      if (response.data.data.userSendPrice < response.data.data.minSwap) {
+        swapEsg.value = 0;
+
+        store.state.popupType = 'message';
+        popupTitle.value = 'error.lessMiniumCostSwap'; 
+        store.state.isPopup = true;
+      } else {
+        swapEsg.value = response.data.data.swapRecvAmount;
+      }
+    })
+    .catch((error) => {
+      checkError(error.response.status, error.response.data.errorCode);
+    });
+  }
+};
+
+const sendSwap = () => {
+  http.post("/api/swap/send", {
+    'fromAddress': store.getters["auth/getAddress"],
+    'toAddress': store.getters["auth/getAddress"],
+    'fromSymbol': 'ESGP',
+    'toSymbol': 'ESG',
+    'amount': swapEsgp.value, 
+    'privateKey': store.getters["auth/getPrivateKey"],
+  })
+  .then((response) => {
+    swapEsgp.value = 0;
+    swapEsg.value = 0;
+
+    store.state.popupType = 'message';
+    popupTitle.value = 'message.swapRequestEnd'; 
+    store.state.isPopup = true;
+  })
+  .catch((error) => {
+    checkError(error.response.status, error.response.data.errorCode);
+  });
 };
 </script>
 

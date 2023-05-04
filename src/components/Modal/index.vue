@@ -3,14 +3,14 @@
     <div :class="['global-modal-container', innerClass]" :style="containerStyle" @click.stop>
       <img v-if="showClose" class="close-icon" src="@/assets/images/img_close_black.png" @click="hide" />
       <div class="flex flex-col justify-center items-center">
-        <template v-if="title === 'qr_code'">
+        <template v-if="popupType === 'qr_code'">
           <div class="flex flex-col justify-center items-center">
             <div class="font-semibold text-2xl">My Address</div>
             <div class="h-5"></div>
             <QRCodeVue3
               :width="200"
               :height="200"
-              value="{{ showTitle }}"
+              value="{{ store.getters['auth/getAddress'] }}"
               :dotsOptions="{
                 type: 'square'
               }"
@@ -30,17 +30,82 @@
             <div class="w-full flex">- {{ t('message.addressCaution3') }}</div>
           </div>
         </template>
-        <template v-if="title !== 'qr_code'">
+        <template v-if="popupType === 'withdraw_pass'">
+          <div class="flex flex-col justify-center items-center">
+            <div class="font-semibold text-2xl">{{ t('message.withdrawPassRegister') }}</div>
+            <div class="h-5"></div>
+            <div class="h-10"></div>
+            <div class="p-5 flex flex-col text-xl rounded pass-back-bg">
+              <div class="flex justify-start items-center">
+                <div>{{ t('message.withdrawPassInput') }}</div>
+                <div class="ml-4"><input type="password" v-model="passwd1" size="20" class="text-lg border-solid border-1 border-gray-300" /></div>
+              </div>
+              <div class="h-5"></div>
+              <div class="flex justify-start items-center">
+                <div>{{ t('message.withdrawPassCheck') }}</div>
+                <div class="ml-4"><input type="password" v-model="passwd2" size="20" class="text-lg border-solid border-1 border-gray-300" /></div>
+              </div>
+              <div class="h-5"></div>
+              <div v-if="passwdMsg !== ''" class="text-red-500">{{ passwdMsg }}</div>
+            </div>
+            <div class="h-5"></div>
+            <div class="wp-90">
+              <div class="text-left">- {{ t('message.withdrawPassCaution1') }}</div>
+              <div class="text-left">- {{ t('message.withdrawPassCaution2') }}</div>
+            </div>
+            <div class="h-10"></div>
+            <div class="p-3 flex justify-center items-center pass-bg rounded" @click="doPass">
+              <div class="p-2 text-2xl text-white">{{ t('message.withdrawPassRegister') }}</div>
+            </div>
+           </div>
+        </template>
+        <template v-if="popupType === 'send_coin'">
+          <div class="flex flex-col justify-center items-center">
+            <div class="font-semibold text-2xl">{{ t('message.withdraw') }}</div>
+            <div class="h-5"></div>
+            <div class="h-10"></div>
+            <div class="p-5 flex flex-col text-xl rounded pass-back-bg">
+              <div class="flex justify-end items-center">
+                <div>Address</div>
+                <div class="ml-4"><input type="text" v-model="withdrawAddress" size="20" class="text-lg border-solid border-1 border-gray-300" /></div>
+              </div>
+              <div class="h-5"></div>
+              <div class="flex justify-end items-center">
+                <div>{{ t('message.withdrawCount') }}</div>
+                <div class="ml-4"><input type="number" v-model="withdrawCount" size="20" class="text-lg border-solid border-1 border-gray-300" /></div>
+              </div>
+              <div class="h-5"></div>
+              <div class="flex justify-end items-center">
+                <div>{{ t('message.withdrawPassInput') }}</div>
+                <div class="ml-4"><input type="password" v-model="withdrawPass" size="20" class="text-lg border-solid border-1 border-gray-300" /></div>
+              </div>
+              <div class="h-5"></div>
+              <div v-if="withdrawMsg !== ''" class="text-red-500">{{ withdrawMsg }}</div>
+            </div>
+            <div class="h-5"></div>
+            <div class="wp-90">
+              <div class="text-left">- {{ t('message.withdrawCaution1') }}</div>
+              <div class="text-left">- {{ t('message.withdrawCaution2') }}</div>
+              <div class="h-2"></div>
+              <div class="text-left"><span class='font-semibold'>{{ t('message.withdrawCaution3') }}</span> : {{ t('message.withdrawCaution4') }}</div>
+            </div>
+            <div class="h-10"></div>
+            <div class="p-3 flex justify-center items-center pass-bg rounded" @click="doSendCoin">
+              <div class="p-2 text-2xl text-white px-7">{{ t('message.withdrawBtnRegister') }}</div>
+            </div>
+          </div>
+        </template>
+        <template v-if="popupType !== 'qr_code' && popupType !== 'withdraw_pass' && popupType !== 'send_coin'">
           <div><img class="error-icon" src="@/assets/images/icon_error.png" /></div>
           <div class="h-10"></div>
           <div class="text-2xl text-center">{{ t(showTitle) }}</div>
           <div class="h-10"></div>
-          <div v-if="popupType !== 'Error'" class="flex justify-center">
+          <div v-if="popupType !== 'message'" class="flex justify-center">
             <div><button class="w-36 h-12 font-semibold text-white text-xl rounded close-btn" @click="resData('yes')">YES</button></div>
             <div class="w-20"></div>
             <div><button class="w-36 h-12 font-semibold text-white text-xl rounded close-btn" @click="resData('no')">NO</button></div>
           </div>
-          <div v-if="popupType === 'Error'" class="flex justify-center">
+          <div v-if="popupType === 'message'" class="flex justify-center">
             <div><button class="w-48 h-12 font-semibold text-white text-xl rounded close-btn" @click="hide">Closed</button></div>
           </div>
         </template>
@@ -52,7 +117,7 @@
 <script setup lang="ts">
 import store from "@/store";
 import { STATEMENT_OR_BLOCK_KEYS } from "@babel/types";
-import { computed, nextTick, ref, toRefs, watch } from "vue";
+import { onMounted, computed, nextTick, ref, toRefs, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import QRCodeVue3 from "qrcode-vue3";
 
@@ -92,7 +157,8 @@ const emit = defineEmits([
   "show",
   "hide",
   "update:visible",
-  "resData"
+  "resData",
+  "resJson",
 ]);
 const { visible, innerStyle, title } = toRefs(props); // 弹框组件显隐
 const wrapperVisible = ref(false); // 弹框外部容器显隐
@@ -100,10 +166,25 @@ const innerVisible = ref(false); // 弹框中间容器显隐
 const resolvePromise = ref(null);
 const showTitle = ref(title.value);
 
+const passwd1 = ref("");
+const passwd2 = ref("");
+const passwdMsg = ref("");
+
+const withdrawAddress = ref("");
+const withdrawCount = ref();
+const withdrawPass = ref("");
+const withdrawMsg = ref("");
+
+const popupType = ref("");
+
 watch(visible, (val) => {
   if (val) {
+    popupType.value = store.state.popupType;
+
     if (store.state.isLogin === true) {
       showTitle.value = "error.useAfterLogin";
+    } else {
+      showTitle.value = title.value;
     }
 
     wrapperVisible.value = true;
@@ -134,12 +215,24 @@ const show = () => {
 };
 
 const hide = () => {
+  store.state.popupType = '';
+
+  passwd1.value = "";    
+  passwd2.value = "";    
+  passwdMsg.value = "";    
+
   emit("update:visible", false);
   emit("hide");
 };
 
-const resData = (resType: string) => {
-  emit("resData", resType);
+const resData = (res: string) => {
+  emit("resData", res);
+  emit("update:visible", false);
+  emit("hide");
+};
+
+const resJson = (res: any) => {
+  emit("resJson", res);
   emit("update:visible", false);
   emit("hide");
 };
@@ -161,6 +254,42 @@ const doCopy = () => {
   });
 
   hide();
+};
+
+const doPass = () => {
+  if (passwd1.value.length < 6) {
+    passwdMsg.value = "6자리 이상으로 입력해주세요.";
+  } else if (passwd1.value !== passwd2.value) {
+    passwdMsg.value = "패스워드가 일치하지 않습니다.";
+  } else {
+    resData(passwd1.value);
+
+    passwd1.value = "";    
+    passwd2.value = "";    
+    passwdMsg.value = "";    
+  }
+};
+
+const doSendCoin = () => {
+  if (withdrawAddress.value === "") {
+    withdrawMsg.value = "출금하실 주소를 입력해주세요."
+  } else if (withdrawCount.value < 0) {
+    withdrawMsg.value = "출금 수량을 입력해주세요."
+  } else if (withdrawPass.value === "") {
+    withdrawMsg.value = "출금 비밀번호를 입력해주세요."
+  } else {
+    var res = {
+      address: withdrawAddress.value,
+      count: withdrawCount.value,
+      passwd: withdrawPass.value,
+    };
+
+    resJson(res);
+
+    withdrawAddress.value = "";
+    withdrawCount.value = null;
+    withdrawPass.value = "";
+  }
 };
 </script>
 
@@ -233,6 +362,14 @@ const doCopy = () => {
 
     .qrcode-bg {
       background-color: #437af0;
+    }
+
+    .pass-back-bg {
+      background-color: #f6f8f5;
+    }
+
+    .pass-bg {
+      background-color: #0c5c26;
     }
   }
 }

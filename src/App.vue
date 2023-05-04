@@ -19,13 +19,17 @@ import http from "@/api/http";
 import LoadingSpinner from "@/components/common/LoadingSpinner.vue";
 import Header from "@/components/common/HeaderView.vue";
 import Footer from "@/components/common/FooterView.vue";
-import { onBeforeMount, onMounted, onUpdated } from "vue";
+import { onMounted } from "vue";
 
 const { t } = useI18n();
 
 onMounted(() => {
   if (store.getters["auth/getTokenInfos"] === "") {
-    http.get("/api/tokenInfos")
+    http.get("/api/tokenInfos", {
+      params: {
+        'currency': 'USDT',
+      }
+    })
     .then((response) => {
       const resTokenData = response.data.data.tokenInfos;
       const resScannerData = response.data.data.scanner;
@@ -44,7 +48,7 @@ onMounted(() => {
       store.commit("auth/setTokenInfos", { 'info': tokenInfos });
       store.commit("auth/setScanners", { 'info': scanners });
     });
-  }
+  };
 });
 </script>
 

@@ -52,6 +52,8 @@ const loginSdk = () => {
 };
 
 const login = (userData: any): void => {
+  store.state.isBalanceUpdate = true;
+
   const loginToken = {
     googleId: userData.sub,
     email: userData.email,

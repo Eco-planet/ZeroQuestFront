@@ -1,5 +1,7 @@
 import authApi from "@/api/auth";
 import router from "@/router";
+import { ethers } from "ethers-ts";
+import openSSLCrypto from "@/utils/openSSLCrypto";
 
 export default {
   namespaced: true,
@@ -14,6 +16,7 @@ export default {
     privateKey: sessionStorage.getItem("privateKey") || "",
     address: sessionStorage.getItem("address") || "",
     balances: sessionStorage.getItem("balances") || "",
+    withdrawPw: sessionStorage.getItem("withdrawPw") || false,
   },
   getters: {
     getAccessToken: (state: Nullable) => {
@@ -58,8 +61,22 @@ export default {
         return "";
       }
     },
+    getWithdrawPw: (state: Nullable) => {
+      if (state.withdrawPw === true || state.withdrawPw === 'true') {
+        return true;
+      } else {
+        return false;
+      }
+    },
   },
   mutations: {
+    setInitToken(state: Nullable) {
+      state.expireAccessToken = 0;
+      state.expireRefreshToken = 0;
+
+      sessionStorage.setItem("expireAccessToken", '0');
+      sessionStorage.setItem("expireRefreshToken", '0');
+    },
     setAccessToken(state: Nullable, { token, expireAt }: Nullable) {
       const currentDate = new Date().getTime() / 1000;
 
@@ -108,6 +125,11 @@ export default {
 
       sessionStorage.setItem("balances", JSON.stringify(info));
     },
+    setWithdrawPw(state: Nullable, { pw }: Nullable) {
+      state.withdrawPw = pw;
+
+      sessionStorage.setItem("withdrawPw", pw);
+    },
   },
   actions: {
     async googleLogin(context: Nullable, { token }: Nullable) {
@@ -130,7 +152,16 @@ export default {
             address: response.data.data.wallet.address,
           });
 
-          console.log(response);
+          const seed = openSSLCrypto.decode(response.data.data.wallet.seed);
+          const walletData = ethers.Wallet.fromMnemonic(seed);
+          const privateKey = openSSLCrypto.encode(walletData.privateKey);
+          context.commit("setPrivateKey", {
+            privateKey,
+          });
+
+          context.commit("setWithdrawPw", {
+            pw: Boolean(response.data.data.withdrawPw),
+          });
 
           router.push("/mywallet");
         }
