@@ -1,55 +1,63 @@
 <template>
-  <div class="flex w-full justify-between">
-    <div class="wp-30 flex flex-col">
-      <div><img class="nftImg" src="@/assets/images/thumb/thumb1.jpg" alt=""></div>
-      <div class="h-2"></div>
-      <div class="text-lg text-center">NFT1</div>
-      <div class="flex justify-center items-center">
+  <div class="flex flex-col">
+    <div><img class="nftImg" :src="nftInfo.image" alt=""></div>
+    <div v-if="nftCard.enable === 1" class="flex justify-center items-center text-xl nftCardLife">{{ nftCard.balance }} / {{ nftInfo.metaData.maxLife }}</div>
+    <div class="h-2"></div>
+    <div class="text-lg text-center">{{ nftInfo.name }}</div>
+    <div class="flex justify-center items-center">
+      <template v-if="nftCard.enable === 0">
+        <div class="wp-30 font-semibold text-center text-white rounded-full nftOff" @click="updateNftEnable">OFF</div>
+      </template>
+      <template v-if="nftCard.enable === 1">
         <div class="wp-30 font-semibold text-center text-white rounded-full nftOn">ON</div>
-      </div>
-    </div>
-    <div class="wp-30 flex flex-col">
-      <div><img class="nftImg" src="@/assets/images/thumb/thumb2.jpg" alt=""></div>
-      <div class="h-2"></div>
-      <div class="text-lg text-center">NFT2</div>
-      <div class="flex justify-center items-center">
-        <div class="wp-30 font-semibold text-center text-white rounded-full nftOff">OFF</div>
-      </div>
-    </div>
-    <div class="wp-30 flex flex-col">
-      <div><img class="nftImg" src="@/assets/images/thumb/thumb3.jpg" alt=""></div>
-      <div class="h-2"></div>
-      <div class="text-lg text-center">NFT3</div>
-      <div class="flex justify-center items-center">
-        <div class="wp-30 font-semibold text-center text-white rounded-full nftOff">OFF</div>
-      </div>
-    </div>
-  </div>
-  <div class="h-10"></div>
-  <div class="flex w-full justify-between">
-    <div class="wp-30 flex flex-col">
-      <div><img class="nftImg" src="@/assets/images/thumb/thumb4.jpg" alt=""></div>
-      <div class="h-2"></div>
-      <div class="text-lg text-center">NFT4</div>
-      <div class="flex justify-center items-center">
-        <div class="wp-30 font-semibold text-center text-white rounded-full nftOn">ON</div>
-      </div>
-    </div>
-    <div class="wp-30 flex flex-col">
-      <div><img class="nftImg" src="@/assets/images/thumb/thumb5.jpg" alt=""></div>
-      <div class="h-2"></div>
-      <div class="text-lg text-center">NFT5</div>
-      <div class="flex justify-center items-center">
-        <div class="wp-30 font-semibold text-center text-white rounded-full nftOff">OFF</div>
-      </div>
-    </div>
-    <div class="wp-30 flex flex-col">
+      </template>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
+import http from "@/api/http";
+import { ref, toRefs, watch } from "vue";
+
+const props = defineProps({
+  nftCard: {
+    type: Object,
+    default: () => ({}),
+  },
+  nftInfo: {
+    type: Object,
+    default: () => ({}),
+  },
+});
+
+const emit = defineEmits([
+  "updateEnable",
+]);
+
+const { nftCard, nftInfo } = toRefs(props);
+
+watch(nftCard, (val) => {
+  console.log("enable nftCard");
+}, { immediate: false, deep: true });
+
+const updateNftEnable = () => {
+  http.post("/api/nft/enableNft", {
+    'symbol': nftInfo.value.symbol,
+    'tokenId': nftCard.value.tokenId,
+  })
+  .then((response) => {
+    if (response.data.status === 1) {
+      emit("updateEnable");
+    }
+  });
+};
 </script>
 
 <style scoped lang="scss">
+.nftCardLife {
+  margin-top: -25px;
+  height: 25px;
+  background: rgba(0, 0, 0, 0.3);
+  color: #fff;
+}
 </style>

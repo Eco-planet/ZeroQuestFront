@@ -11,7 +11,11 @@
       <div class="text-2xl font-semibold text-left">My NFT</div>
     </div>
     <div class="h-10"></div>
-    <NftList />
+    <div class="w-full grid grid-cols-3 gap-card">
+      <template v-for="item in myNftList" :key="item.tokenId">
+        <MyNftCard :nftCard="item" :nftInfo="nftList[item.nftId]" @updateEnable="getMyNftList" />
+      </template>
+    </div>
     <div class="h-10"></div>
     <div class="h-10"></div>
     <div class="h-10"></div>
@@ -20,7 +24,27 @@
 
 <script lang="ts" setup>
 import store from "@/store";
-import NftList from "@/components/OpenNftView.vue";
+import http from "@/api/http";
+import { onMounted, ref } from "vue";
+import MyNftCard from "@/components/OpenNftView.vue";
+
+const nftList = store.getters["auth/getNftList"];
+const myNftList = ref();
+
+onMounted(() => {
+  getMyNftList();
+});
+
+const getMyNftList = () => {
+  http.get("/api/nft/myZeroNft", {
+    params: {
+      type: 1,
+    }
+  })
+  .then((response) => {
+    myNftList.value = response.data.data;
+  });
+};
 </script>
 
 <style lang="scss">

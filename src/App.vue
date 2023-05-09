@@ -49,6 +49,24 @@ onMounted(() => {
       store.commit("auth/setScanners", { 'info': scanners });
     });
   };
+
+  if (store.getters["auth/getNftList"] === "") {
+    http.get("/api/nft/zeroNft", {
+      params: {}
+    })
+    .then((response) => {
+      const nftListData = response.data.data;
+
+      let nftList: any = {};
+
+      nftListData.forEach((res: any) => {
+        nftList[res.idx] = res;
+        nftList[res.idx]['metaData'] = JSON.parse(res.metaData);
+      });
+
+      store.commit("auth/setNftList", { 'info': nftList });
+    });
+  };
 });
 </script>
 

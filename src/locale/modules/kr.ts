@@ -57,6 +57,7 @@ export default {
   },
 
   error: {
+    none: "잠시후에 다시 이용해주세요.",
     useAfterLogin: "로그인후에 이용해주세요.", 
     notProcessIng: "전송 처리중 입니다.",
     notEnoughMoney: "소지한 수량이 부족합니다.",

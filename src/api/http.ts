@@ -1,21 +1,8 @@
 import axios from "axios";
 import store from "@/store";
+import router from "@/router";
 
 const TIMEOUT = 1000 * 60;
-
-// interface IHttpRequest {
-//   url: string;
-//   data?: object;
-//   params?: object;
-//   headers?: object;
-//   method?: "POST" | "GET";
-
-//   onUploadProgress?: (progressEvent: ProgressEvent) => void;
-
-//   loadingSelector?: string;
-//   hiddenMessage?: boolean;
-//   withCredentials?: boolean;
-// }
 
 const instance = axios.create({
   baseURL: process.env.VUE_APP_API_URL,
@@ -43,22 +30,42 @@ instance.interceptors.request.use(function (config: Nullable) {
 });
 
 instance.interceptors.response.use(
-  function (response) {
+  async (response: any) => {
     store.state.isLoading = false;
-
-    store.commit("error/setValidationError", {});
+    // store.commit("error/setValidationError", {});
 
     return response;
   },
-  function (error) {
-    store.state.isLoading = false;
+  async (error) => {
+    const errorRes = error.response;
+    const originalRequest = error.config;
 
-    if (error.response.status === 422) {
-      store.commit("error/setValidationError", error.response.data.data);
-    } else {
-      return Promise.reject(error);
+    if (errorRes.status == 401) {
+      return await instance.post("/auth/refresh")
+      .then(async (res) => {
+        if (res.status === 200) {
+          store.commit("auth/setAccessToken", { token: res.data.data.accessToken, expireAt: res.data.data.accessExpiresIn });
+
+          originalRequest.headers.Authorization = `Bearer ${res.data.data.accessToken}`;
+          return axios(originalRequest);
+        } 
+      }).catch((err) => {
+        //console.log(err)
+        router.push("/");
+      })
     }
+    
+    setTimeout(() => {
+      store.state.isLoading = false;
+    }, 1000);
+
+    if (errorRes.status === 401) {
+      router.push("/");
+    }
+    //throw error
+
+    return Promise.reject(error);
   }
-);
+)
 
 export default instance;

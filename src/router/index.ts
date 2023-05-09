@@ -72,22 +72,9 @@ router.beforeEach(async (to: Nullable, from: Nullable, next: Nullable) => {
 });
 
 router.afterEach(async (to: Nullable, from: Nullable, next: Nullable) => {
-  const currentDate = new Date().getTime() / 1000;
-  const expireAccessToken = store.getters["auth/getExpireAccessToken"];
-  const expireRefreshToken = store.getters["auth/getExpireRefreshToken"];
-
-  if (to.name === "mywallet" && currentDate > expireAccessToken) {
-    if (currentDate > expireRefreshToken) {
-      store.state.isLogin = true;
-      store.state.isPopup = true;
-    } else {
-      await store.dispatch("auth/updateRefreshToken");
-    }
-  }
-
   setTimeout(() => {
     store.state.isLoading = false;
-  }, 100);
+  }, 0);
 });
 
 export default router;

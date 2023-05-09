@@ -17,6 +17,7 @@ export default {
     address: sessionStorage.getItem("address") || "",
     balances: sessionStorage.getItem("balances") || "",
     withdrawPw: sessionStorage.getItem("withdrawPw") || false,
+    nftList: sessionStorage.getItem("nftList") || "",
   },
   getters: {
     getAccessToken: (state: Nullable) => {
@@ -66,6 +67,13 @@ export default {
         return true;
       } else {
         return false;
+      }
+    },
+    getNftList: (state: Nullable) => {
+      if (state.nftList !== "") {
+        return JSON.parse(state.nftList);
+      } else {
+        return "";
       }
     },
   },
@@ -129,6 +137,11 @@ export default {
       state.withdrawPw = pw;
 
       sessionStorage.setItem("withdrawPw", pw);
+    },
+    setNftList(state: Nullable, { info }: Nullable) {
+      state.nftList = JSON.stringify(info);
+
+      sessionStorage.setItem("nftList", JSON.stringify(info));
     },
   },
   actions: {

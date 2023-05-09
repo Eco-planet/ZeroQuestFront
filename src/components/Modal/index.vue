@@ -221,6 +221,10 @@ const hide = () => {
   passwd2.value = "";    
   passwdMsg.value = "";    
 
+  withdrawAddress.value = "";
+  withdrawCount.value = null;
+  withdrawPass.value = "";
+ 
   emit("update:visible", false);
   emit("hide");
 };

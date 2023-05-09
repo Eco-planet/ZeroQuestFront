@@ -57,6 +57,7 @@ export default {
   },
 
   error: {
+    none: "Please use it again later.",
     useAfterLogin: "Please login first",
     notProcessIng: "Transfer is being processed.",
     notEnoughMoney: "The quantity you have is insufficient.",

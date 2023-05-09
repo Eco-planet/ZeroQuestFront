@@ -93,6 +93,7 @@ import openSSLCrypto from "@/utils/openSSLCrypto";
 import { useI18n } from "vue-i18n";
 import { onMounted, ref } from "vue";
 import Modal from "@/components/Modal/index.vue";
+import { errorMsg } from "@/utils/util";
 
 const { t } = useI18n();
 
@@ -123,29 +124,7 @@ const forceLogout = () => {
 const checkError = (status: number, code: number) => {
   if (status === 400) {
     store.state.popupType = 'message';
-
-    if (code === 501) {
-      popupTitle.value = 'error.notEnoughMoney';
-    } else if (code === 502) {
-      popupTitle.value = 'error.notEnoughFee';
-    } else if (code === 503) {
-      popupTitle.value = 'error.notFoundCoin';
-    } else if (code === 504) {
-      popupTitle.value = 'error.notFoundWallet';
-    } else if (code === 505) {
-      popupTitle.value = 'error.notEnoughBalance';
-    } else if (code === 506) {
-      popupTitle.value = 'error.notTransferPoint';
-    } else if (code === 507) {
-      popupTitle.value = 'error.passwordNotMatch';
-    } else if (code === 508) {
-      popupTitle.value = 'error.notSupportSwap';
-    } else if (code === 509) {
-      popupTitle.value = 'error.lessMiniumCostSwap';
-    } else if (code === 510) {
-      popupTitle.value = 'error.failedPointSwap';
-    }
-
+    popupTitle.value = errorMsg(status, code);
     store.state.isPopup = true;
   } else if (status === 401 || status === 403 || status === 300) {
     store.commit("auth/setInitToken");
