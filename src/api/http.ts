@@ -32,7 +32,6 @@ instance.interceptors.request.use(function (config: Nullable) {
 instance.interceptors.response.use(
   async (response: any) => {
     store.state.isLoading = false;
-    // store.commit("error/setValidationError", {});
 
     return response;
   },
@@ -40,7 +39,7 @@ instance.interceptors.response.use(
     const errorRes = error.response;
     const originalRequest = error.config;
 
-    if (errorRes.status == 401) {
+    if (errorRes.status === 401) {
       return await instance.post("/auth/refresh")
       .then(async (res) => {
         if (res.status === 200) {

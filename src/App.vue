@@ -67,6 +67,23 @@ onMounted(() => {
       store.commit("auth/setNftList", { 'info': nftList });
     });
   };
+
+  if (store.getters["auth/getBannerList"] === "") {
+    http.get("/api/banners", {
+      params: {}
+    })
+    .then((response) => {
+      const bannerListData = response.data.data;
+
+      let bannerList: any = {};
+
+      bannerListData.forEach((res: any) => {
+        bannerList[res.idx] = res;
+      });
+
+      store.commit("auth/setBannerList", { 'info': bannerList });
+    });
+  };
 });
 </script>
 
