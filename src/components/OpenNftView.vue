@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col">
-    <div><img class="nftImg" :src="nftInfo.image" alt=""></div>
+    <div><img class="nftImg" :src="nftInfo.image" alt="" @click="goNftDetail(nftCard.nftId)"></div>
     <div v-if="nftCard.enable === 1" class="flex justify-center items-center text-xl nftCardLife">{{ nftCard.balance }} / {{ nftInfo.metaData.maxLife }}</div>
     <div class="h-2"></div>
     <div class="text-lg text-center">{{ nftInfo.name }}</div>
@@ -16,6 +16,7 @@
 </template>
 
 <script lang="ts" setup>
+import router from "@/router";
 import http from "@/api/http";
 import { ref, toRefs, watch } from "vue";
 
@@ -50,6 +51,10 @@ const updateNftEnable = () => {
       emit("updateEnable");
     }
   });
+};
+
+const goNftDetail = (nftId: number) => {
+  router.push({ name: 'onft-detail', params: { nftId } });
 };
 </script>
 

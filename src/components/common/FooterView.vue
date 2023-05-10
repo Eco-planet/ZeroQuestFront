@@ -5,7 +5,7 @@
   <div class="fixed-bottom">
     <a :class="{ oPage: $route.name === 'myzq' }" @click="movePage('/myzq')">My Z.Q</a>
     <a :class="{ oPage: $route.name === 'zeronft' }" @click="movePage('/zeronft')">ZeroNFT</a>
-    <a :class="{ oPage: $route.name === 'onft' }" @click="movePage('/onft')">O!NFT</a>
+    <a :class="{ oPage: $route.name === 'onft' || $route.name === 'onft-detail' }" @click="movePage('/onft')">O!NFT</a>
     <a :class="{ oPage: $route.name === 'mywallet' }" @click="movePage('/mywallet')">My<br />Wallet</a>
     <a @click="movePage('/market')">Open<br />Market</a>
   </div>

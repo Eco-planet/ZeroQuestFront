@@ -21,4 +21,6 @@ const app = createApp(App)
 
 // app.config.globalProperties.isLoading = false;
 
-app.mount("#app");
+router.isReady().then(() => {
+  app.mount("#app");
+});
