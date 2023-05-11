@@ -48,11 +48,12 @@
     </div>
     <div class="wp-20"></div>
   </div>
-  <Modal :visible="modalVisible" @hide="closeModal"></Modal>
+  <Modal :visible="modalVisible" @hide="closeModal" title="message.sorryChecking" />
 </template>
 
 <script lang="ts" setup>
 import router from "@/router";
+import store from "@/store";
 import { ref } from "vue";
 import Modal from "@/components/Modal/index.vue";
 
@@ -61,6 +62,7 @@ const menuVisible = ref(false);
 const aniVisible = ref(false);
 
 const showModal = () => {
+  store.state.popupType = 'message';
   modalVisible.value = true;
 };
 
