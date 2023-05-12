@@ -1,19 +1,192 @@
 <template>
-  <br/>
-  <br/>
-  <br/>
-  <div class="flex flex-col justify-center items-center text-2xl">Terms</div>
-  <br />
-  <br />
+  <div class="h-10"></div>
+  <div class="px-8 flex flex-col">
+    <div class="flex font-semibold text-3xl">ZeroQuest</div>
+    <div class="h-2"></div>
+    <div class="flex text-2xl">{{ t("message.termsTitle") }}</div>
+    <div class="h-10"></div>
+    <div class="flex flex-col items-start">
+      <div class="check-in flex justify-center">
+        <input type="checkbox" v-model="check_all" @change="updateCheck(0)" id="clause-check-all" name="clause-check-all" />
+        <label class="font-bold" for="clause-check-all">{{ t("message.termsAgreeAll") }}</label>
+      </div>
+      <div class="px-8">{{ t("message.termsAgreeInfo") }}</div>
+    </div>
+    <div class="h-5"></div>
+    <div class="h-px h-5 bg-gray-200"></div>
+    <div class="h-5"></div>
+    <div class="flex flex-col items-start">
+      <div class="check-in flex justify-center">
+        <input type="checkbox" v-model="check_01" @change="updateCheck(1)" id="clause-check01" name="clause-check" />
+        <label for="clause-check01">{{ t("message.termsAgree01") }}</label>
+      </div>
+    </div>
+    <div class="flex flex-col items-start">
+      <div class="check-in flex justify-center">
+        <input type="checkbox" v-model="check_02" @change="updateCheck(2)" id="clause-check02" name="clause-check" />
+        <label for="clause-check02">{{ t("message.termsAgree02") }}</label>
+      </div>
+    </div>
+    <div class="flex flex-col items-start">
+      <div class="check-in flex justify-center">
+        <input type="checkbox" v-model="check_03" @change="updateCheck(3)" id="clause-check03" name="clause-check" />
+        <label for="clause-check03">{{ t("message.termsAgree03") }}</label>
+      </div>
+    </div>
+    <div class="h-10"></div>
+    <div class="h-10"></div>
+    <div class="h-10"></div>
+    <div class="flex justify-center items-center">
+      <button :class="[check_01 === true && check_02 === true ? 'wp-60 p-3 font-semibold text-2xl text-white terms-enable' : 'wp-60 p-3 font-semibold text-2xl text-white terms-disable']" @click="updateTerms">{{ t("message.termsBtn") }}</button>
+    </div>
+  </div>
+  <Modal :visible="store.state.isPopup" @hide="closeModal" title="message.agreeTerms" />
  </template>
 
 <script lang="ts" setup>
-import axios from "axios";
 import store from "@/store";
+import router from "@/router";
+import http from "@/api/http";
+import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
+
+const check_all = ref(false);
+const check_01 = ref(false);
+const check_02 = ref(false);
+const check_03 = ref(false);
+
+const closeModal = () => {
+  store.state.isPopup = false;
+};
+
+const updateCheck = (type: number) => {
+  if (type === 0) {
+    if (check_all.value === true) {
+      check_01.value = true;
+      check_02.value = true;
+      check_03.value = true;
+    } else {
+      check_01.value = false;
+      check_02.value = false;
+      check_03.value = false;
+    }
+  } else if (check_01.value === false || check_02.value === false || check_03.value === false) {
+    check_all.value = false;
+  } else if (check_01.value === true && check_02.value === true && check_03.value === true) {
+    check_all.value = true;
+  }
+};
+
+const updateTerms = () => {
+  if (check_01.value === false || check_02.value === false) {
+    store.state.popupType = 'message';
+    store.state.isPopup = true;
+  } else {
+    let agree = '1,' + Number(check_03.value);
+
+    http.post("/auth/terms", {
+      'uid': store.getters["auth/getUserId"],
+      'agree': agree,
+    })
+    .then((response) => {
+      if (response.data.status === 1) {
+        router.push("/mywallet");
+      }
+    });
+  }
+};
 </script>
 
 <style lang="scss">
+.check-in {
+  display: inline-block;
+  vertical-align: top;
+
+  input[type=checkbox], input[type=radio] {
+    display: none;
+    position: absolute;
+    left:0;
+    top:0;
+  }
+
+  input[type=checkbox]+label, input[type=radio]+label {
+    padding-left:25px;
+    font-size:12px;
+    line-height:32px;
+    color: #000;
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+    position: relative;
+  }
+
+  input[type=checkbox]+label:before,
+  input[type=checkbox]+label:after,
+  input[type=radio]+label:before,
+  input[type=radio]+label:after {
+    content: "";
+    width: 18px;
+    height: 18px;
+    background-color: #fff;
+    border:2px solid #bbb;
+    font-size:0;
+    line-height:0;
+    display: inline-block;
+    vertical-align: top;
+    position:absolute;
+    left: 0;
+    top: 8px;
+    border-radius:99px;
+    box-sizing: border-box;
+  }
+
+  input[type=checkbox]+label {}
+  input[type=checkbox]+label:before {}
+  input[type=checkbox]+label:after {
+    border:none;
+    background: url("@/assets/images/check.svg") no-repeat center center;
+    background-size: 12px;
+    opacity: 0.3;
+  }
+  input[type=checkbox]:checked+label:before {
+    border-color:#0c5c26;
+  }
+  input[type=checkbox]:checked+label:after{
+    opacity: 1;
+  }
+
+  input[type=radio]+label{}
+  input[type=radio]+label:before{
+    border-radius:99px;
+  }
+  input[type=radio]+label:after{
+    width: 1rem;
+    height: 1rem;
+    margin:-0.5rem 0 0 0;
+    background-color: var(--point);
+    border:none;
+    top:50%;
+    transition: .3s;
+    transform-origin: 50% 50%;
+    opacity: 0.3;
+  }
+  input[type=radio]:checked+label:before {
+    border-color:var(--point);
+  }
+  input[type=radio]:checked+label:after {
+    opacity: 1;
+  }
+}
+
+.terms-enable {
+  background-color: #0c5c26;
+  border-radius: 5px;
+}
+
+.terms-disable {
+  background-color: #dedede;
+  border-radius: 5px;
+}
 </style>

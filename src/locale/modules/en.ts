@@ -54,7 +54,14 @@ export default {
     withdrawError5: "Please enter the withdrawal password",
     withdrawRequestEnd: "Your withdrawal application has been completed.",
     swapRequestEnd: "The swap request has been completed.",
-  },
+    agreeTerms: "You can use it only if you agree to the required terms and conditions.",
+    termsAgreeAll: "We all agree.",
+    termsAgreeInfo: "There is an explanation related to the whole agreement.",
+    termsAgree01: "[Requirement] Required Agreements",
+    termsAgree02: "[Requirement] Required Agreements",
+    termsAgree03: "[Select] Contains your consent.",
+    termsBtn: "OK",
+   },
 
   error: {
     none: "Please use it again later.",

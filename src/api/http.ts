@@ -39,7 +39,7 @@ instance.interceptors.response.use(
     const errorRes = error.response;
     const originalRequest = error.config;
 
-    if (errorRes.status === 401) {
+    if (errorRes.status === 401 && store.getters["auth/getRefreshToken"] !== '') {
       return await instance.post("/auth/refresh")
       .then(async (res) => {
         if (res.status === 200) {

@@ -54,6 +54,14 @@ export default {
     withdrawError5: "출금 비밀번호를 입력해주세요.",
     withdrawRequestEnd: "출금 요청이 완료되었습니다.",
     swapRequestEnd: "스왑 요청이 완료되었습니다.",
+    agreeTerms: "필수 약관에 동의하셔야 이용이 가능합니다.",
+    termsTitle: "서비스 약관에 동의해주세요.",
+    termsAgreeAll: "모두 동의합니다.",
+    termsAgreeInfo: "전체동의에 관련된 설명글이 나옵니다.",
+    termsAgree01: "[필수] 필수사항 동의 내용",
+    termsAgree02: "[필수] 필수사항 동의 내용",
+    termsAgree03: "[선택] 선택사항 동의 내용이 들어갑니다.",
+    termsBtn: "확인",
   },
 
   error: {

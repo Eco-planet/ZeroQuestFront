@@ -189,7 +189,11 @@ export default {
             pw: Boolean(response.data.data.withdrawPw),
           });
 
-          router.push("/mywallet");
+          if (response.data.data.terms === 1) {
+            router.push("/mywallet");
+          } else {
+            router.push("/terms");
+          }
         }
       } catch (e) {
         console.log("TOKEN ERROR");
