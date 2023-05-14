@@ -21,6 +21,12 @@ const routes: Array<RouteRecordRaw> = [
       import(/* webpackChunkName: "zeronft" */ "../views/ZeroNftView.vue"),
   },
   {
+    path: "/zeronftbuy/:name",
+    name: "zeronftbuy",
+    component: () =>
+      import(/* webpackChunkName: "zeronftbuy" */ "../views/ZeroNftBuy.vue"),
+  },
+  {
     path: "/onft",
     name: "onft",
     component: () =>

@@ -6,6 +6,7 @@ import ElementPlus from "element-plus";
 import locale from "@/locale";
 import vue3GoogleLogin from "vue3-google-login";
 import "@/output.css";
+import "@/ecoplanet.css";
 import "element-plus/dist/index.css";
 import "@/styles/layout.css";
 
