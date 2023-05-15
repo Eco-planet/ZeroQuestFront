@@ -33,104 +33,106 @@ const props = defineProps({
 
 // 샘플 데이터, 나중에 admin에서 추가되는 데이터
 let nftSample = reactive<NFTSampleType[]>([
-    {
-        category: "ECOiTEM",
-        name: "Pino1 NFT 1End",
-        total: 250,
-        price_eth: 0.002,
-        price_esg: 40,
-        expiration_data: new Date("2023-05-31"),
-        description: 'Ullamco incididunt nostrud elit fugiat minim veniam. Pariatur officia tempor ipsum veniam est culpa id labore. Et nostrud eiusmod qui esse. Nisi cillum consectetur commodo exercitation labore eiusmod in. Nisi eu esse Lorem ipsum ullamco quis in aliqua id excepteur velit dolor eiusmod consequat.',
-        extra_img1: require('@/assets/images/thumb/thumb1.jpg'),
-        extra_img2: require('@/assets/images/thumb/thumb2.jpg')
-    },
-    {
-        category: "ECOiTEM",
-        name: "Pino2 NFT 1End",
-        total: 250,
-        price_eth: 0.003,
-        price_esg: 50,
-        expiration_data: new Date("2023-05-31"),
-        description: 'blah blah contents description',
-        extra_img1: '@/assets/images/thumb/thumb1.jpg',
-        extra_img2: '@/assets/images/thumb/thumb2.jpg'
-    },
-    {
-        category: "ECOiTEM",
-        name: "Pino3 NFT 1End",
-        total: 250,
-        price_eth: 0.004,
-        price_esg: 60,
-        expiration_data: new Date("2023-05-31"),
-        description: 'blah blah contents description',
-        extra_img1: '@/assets/images/thumb/thumb1.jpg',
-        extra_img2: '@/assets/images/thumb/thumb2.jpg'
-    },
-    {
-        category: "Game",
-        name: "Pino4 NFT 1End",
-        total: 250,
-        price_eth: 0.005,
-        price_esg: 70,
-        expiration_data: new Date("2023-05-31"),
-        description: 'blah blah contents description',
-        extra_img1: '@/assets/images/thumb/thumb1.jpg',
-        extra_img2: '@/assets/images/thumb/thumb2.jpg'
-    },
-    {
-        category: "Game",
-        name: "Pino4 NFT 1End",
-        total: 250,
-        price_eth: 0.005,
-        price_esg: 70,
-        expiration_data: new Date("2023-05-31"),
-        description: 'blah blah contents description',
-        extra_img1: '@/assets/images/thumb/thumb1.jpg',
-        extra_img2: '@/assets/images/thumb/thumb2.jpg'
-    },
-    {
-        category: "Tree",
-        name: "Pino4 NFT 1End",
-        total: 250,
-        price_eth: 0.005,
-        price_esg: 70,
-        expiration_data: new Date("2023-05-31"),
-        description: 'blah blah contents description',
-        extra_img1: '@/assets/images/thumb/thumb1.jpg',
-        extra_img2: '@/assets/images/thumb/thumb2.jpg'
-    },
-    {
-        category: "Tree",
-        name: "Pino4 NFT 1End",
-        total: 250,
-        price_eth: 0.005,
-        price_esg: 70,
-        expiration_data: new Date("2023-05-31"),
-        description: 'blah blah contents description',
-        extra_img1: '@/assets/images/thumb/thumb1.jpg',
-        extra_img2: '@/assets/images/thumb/thumb2.jpg'
-    },
-    {
-        category: "Panda",
-        name: "Pino4 NFT 1End",
-        total: 250,
-        price_eth: 0.005,
-        price_esg: 70,
-        expiration_data: new Date("2023-05-31"),
-        description: 'blah blah contents description',
-        extra_img1: '@/assets/images/thumb/thumb1.jpg',
-        extra_img2: '@/assets/images/thumb/thumb2.jpg'
-    },
+  {
+    category: "ECOiTEM",
+    name: "Pino1 NFT 1End",
+    total: 250,
+    price_eth: 0.002,
+    price_esg: 40,
+    expiration_data: new Date("2023-05-31"),
+    description: 'Ullamco incididunt nostrud elit fugiat minim veniam. Pariatur officia tempor ipsum veniam est culpa id labore. Et nostrud eiusmod qui esse. Nisi cillum consectetur commodo exercitation labore eiusmod in. Nisi eu esse Lorem ipsum ullamco quis in aliqua id excepteur velit dolor eiusmod consequat.',
+    extra_img1: require('@/assets/images/thumb/thumb1.jpg'),
+    extra_img2: require('@/assets/images/thumb/thumb2.jpg')
+  },
+  {
+    category: "ECOiTEM",
+    name: "Pino2 NFT 1End",
+    total: 250,
+    price_eth: 0.003,
+    price_esg: 50,
+    expiration_data: new Date("2023-05-31"),
+    description: 'blah blah contents description',
+    extra_img1: require('@/assets/images/thumb/thumb1.jpg'),
+    extra_img2: require('@/assets/images/thumb/thumb2.jpg')
+  },
+  {
+    category: "ECOiTEM",
+    name: "Pino3 NFT 1End",
+    total: 250,
+    price_eth: 0.004,
+    price_esg: 60,
+    expiration_data: new Date("2023-05-31"),
+    description: 'blah blah contents description',
+    extra_img1: require('@/assets/images/thumb/thumb1.jpg'),
+    extra_img2: require('@/assets/images/thumb/thumb2.jpg')
+  },
+  {
+    category: "Game",
+    name: "Pino4 NFT 1End",
+    total: 250,
+    price_eth: 0.005,
+    price_esg: 70,
+    expiration_data: new Date("2023-05-31"),
+    description: 'blah blah contents description',
+    extra_img1: require('@/assets/images/thumb/thumb1.jpg'),
+    extra_img2: require('@/assets/images/thumb/thumb2.jpg')
+  },
+  {
+    category: "Game",
+    name: "Pino4 NFT 1End",
+    total: 250,
+    price_eth: 0.005,
+    price_esg: 70,
+    expiration_data: new Date("2023-05-31"),
+    description: 'blah blah contents description',
+    extra_img1: require('@/assets/images/thumb/thumb1.jpg'),
+    extra_img2: require('@/assets/images/thumb/thumb2.jpg')
+  },
+  {
+    category: "Tree",
+    name: "Pino4 NFT 1End",
+    total: 250,
+    price_eth: 0.005,
+    price_esg: 70,
+    expiration_data: new Date("2023-05-31"),
+    description: 'blah blah contents description',
+    extra_img1: require('@/assets/images/thumb/thumb1.jpg'),
+    extra_img2: require('@/assets/images/thumb/thumb2.jpg')
+  },
+  {
+    category: "Tree",
+    name: "Pino4 NFT 1End",
+    total: 250,
+    price_eth: 0.005,
+    price_esg: 70,
+    expiration_data: new Date("2023-05-31"),
+    description: 'blah blah contents description',
+    extra_img1: require('@/assets/images/thumb/thumb1.jpg'),
+    extra_img2: require('@/assets/images/thumb/thumb2.jpg')
+  },
+  {
+    category: "Panda",
+    name: "Pino4 NFT 1End",
+    total: 250,
+    price_eth: 0.005,
+    price_esg: 70,
+    expiration_data: new Date("2023-05-31"),
+    description: 'blah blah contents description',
+    extra_img1: require('@/assets/images/thumb/thumb1.jpg'),
+    extra_img2: require('@/assets/images/thumb/thumb2.jpg')
+  },
 ])
 
 // query로 해당 nft이름을 보내서 그 nft정보를 가져온다.
 function goToDetail(name: string) {
-    console.log("nftName", name)
-    router.push({
-        path: '/zeronftbuy',
-        name: "zeronftbuy",
-        params: {name: name}
-    })
+  console.log("nftName", name)
+  router.push({
+    path: '/zeronftbuy',
+    name: "zeronftbuy",
+    params: {
+      name: name
+    }
+  })
 }
 </script>
   

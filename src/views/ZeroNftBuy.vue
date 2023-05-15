@@ -27,7 +27,7 @@
             <div class="mt-10 text-xl">
               <div class="flex justify-between mb-4">
                 <span>Expiration Date</span>
-                <span>{{ formattedDate }}</span>
+                <span>{{ formatDate(filterNft.expiration_data) }}</span>
               </div>
               <div class="flex justify-between mb-4">
                 <span>Asset Protocol</span>
@@ -39,11 +39,11 @@
               </div>
               <div class="flex justify-between mb-4">
                 <span>Remaining NFT</span>
-                <span>0 / {{ filterNft?.total }}</span>
+                <span>0 / {{ filterNft.total }}</span>
               </div>
               <div class="flex justify-between mb-4">
                 <span>Price</span>
-                <span>{{ filterNft?.price_eth }} ETH / {{ filterNft?.price_esg }} ESG</span>
+                <span>{{ filterNft.price_eth }} ETH / {{ filterNft.price_esg }} ESG</span>
               </div>
             </div>
             <div class="flex justify-end items-center">
@@ -65,183 +65,155 @@
     <div class="text-left">
       <div class="text-2xl font-semibold text-left">CONTENTS</div>
       <div class="text-xl mt-4 font-normal text-gray-500">
-        {{ filterNft?.description }}
+        {{ filterNft.description }}
       </div>
     </div>
     <div class="mt-10 grid grid-cols-2 gap-x-8 gap-y-8">
       <div class="shadow-nft-extra">
         <div class="w-full h-56 relative overflow-hidden">
-          <img :src="filterNft?.extra_img1"/>
+          <img :src="filterNft.extra_img1"/>
         </div>
         <div class="p-4 text-xl font-medium text-black">모바일 NFT</div>
       </div>
       <div class="shadow-nft-extra">
         <div class="w-full h-56 relative overflow-hidden">
-          <img :src="filterNft?.extra_img2"/>
+          <img :src="filterNft.extra_img2"/>
         </div>
         <div class="p-4 text-xl font-medium text-black">모바일 NFT</div>
       </div>
     </div>
-    "asdf"{{ route.params.myParams }}
     <div class="h-40"></div>
   </div>
 </template>
   
-  <script lang="ts" setup>
-  import { ref, reactive, computed, onMounted, defineProps } from "vue"
-  import { useRoute } from "vue-router"
-  import { NFTSampleType } from "../types/IZeroNftType"
-  
-  const route = useRoute();
-  const nftName = ref<string[] | null>(null);
- 
-  function formatDate(date: Date): string {
-    const year = date.getFullYear();
-    const month = ('0' + (date.getMonth() + 1)).slice(-2);
-    const day = ('0' + date.getDate()).slice(-2);
-  
-    return `${year}-${month}-${day}`;
-  }
-  
-  let formattedDate = '';
+<script lang="ts" setup>
+import { ref, reactive, computed, onMounted, defineProps } from "vue"
+import { useRoute } from "vue-router"
+import { NFTSampleType } from "@/types/IZeroNftType"
 
-//   const name = computed(() => route.params.name || props.name)
-  onMounted(() => {
-    nftName.value = {
-      name: route.params.name as string
-    }
-    // 서버에서 api를 통해 받아올 데이터 
-    // nft.value = {
-    //   category: route.params.category as string,
-    //   name: route.params.name as string,
-    //   total: Number(route.params.total),
-    //   price_eth: Number(route.params.price_eth),
-    //   price_esg: Number(route.params.price_esg),
-    //   expiration_data: new Date(route.params.expiration_data as string),
-    //   description: route.params.description as string,
-    //   extra_img1: route.params.extra_img1 as string,
-    //   extra_img2: route.params.extra_img2 as string,
-    // };
-    // if (nft.value?.expiration_data) {
-    //     formattedDate = formatDate(new Date(nft.value.expiration_data));
-    //   }
-    //   console.log(nft.value);
+const route = useRoute();
+const nftName = route.params.name
 
-  })
-  
-  const count = ref(0);
-  const ethPerPrice = 0.002;
-  
-  // 각 nft마다 공통으로 들어가니까 나중에 mixin으로 작성
-  const total_eth = computed(() => {
-    return parseFloat((count.value * ethPerPrice).toFixed(6))
-  })
-  
-  function increase() {
-    count.value++;
-  }
-  
-  function decrease() {
-    if (count.value > 0) {
-      count.value--;
-    }
-  }
+function formatDate(date: Date): string {
+  const year = date.getFullYear();
+  const month = ('0' + (date.getMonth() + 1)).slice(-2);
+  const day = ('0' + date.getDate()).slice(-2);
 
-  let nftSample = reactive<NFTSampleType[]>([
-    {
-        category: "ECOiTEM",
-        name: "Pino1 NFT 1End",
-        total: 250,
-        price_eth: 0.002,
-        price_esg: 40,
-        expiration_data: new Date("2023-05-31"),
-        description: 'Ullamco incididunt nostrud elit fugiat minim veniam. Pariatur officia tempor ipsum veniam est culpa id labore. Et nostrud eiusmod qui esse. Nisi cillum consectetur commodo exercitation labore eiusmod in. Nisi eu esse Lorem ipsum ullamco quis in aliqua id excepteur velit dolor eiusmod consequat.',
-        extra_img1: require('@/assets/images/thumb/thumb1.jpg'),
-        extra_img2: require('@/assets/images/thumb/thumb2.jpg')
-    },
-    {
-        category: "ECOiTEM",
-        name: "Pino2 NFT 1End",
-        total: 250,
-        price_eth: 0.003,
-        price_esg: 50,
-        expiration_data: new Date("2023-05-31"),
-        description: 'blah blah contents description',
-        extra_img1: '@/assets/images/thumb/thumb1.jpg',
-        extra_img2: '@/assets/images/thumb/thumb2.jpg'
-    },
-    {
-        category: "ECOiTEM",
-        name: "Pino3 NFT 1End",
-        total: 250,
-        price_eth: 0.004,
-        price_esg: 60,
-        expiration_data: new Date("2023-05-31"),
-        description: 'blah blah contents description',
-        extra_img1: '@/assets/images/thumb/thumb1.jpg',
-        extra_img2: '@/assets/images/thumb/thumb2.jpg'
-    },
-    {
-        category: "Game",
-        name: "Pino4 NFT 1End",
-        total: 250,
-        price_eth: 0.005,
-        price_esg: 70,
-        expiration_data: new Date("2023-05-31"),
-        description: 'blah blah contents description',
-        extra_img1: '@/assets/images/thumb/thumb1.jpg',
-        extra_img2: '@/assets/images/thumb/thumb2.jpg'
-    },
-    {
-        category: "Game",
-        name: "Pino4 NFT 1End",
-        total: 250,
-        price_eth: 0.005,
-        price_esg: 70,
-        expiration_data: new Date("2023-05-31"),
-        description: 'blah blah contents description',
-        extra_img1: '@/assets/images/thumb/thumb1.jpg',
-        extra_img2: '@/assets/images/thumb/thumb2.jpg'
-    },
-    {
-        category: "Tree",
-        name: "Pino4 NFT 1End",
-        total: 250,
-        price_eth: 0.005,
-        price_esg: 70,
-        expiration_data: new Date("2023-05-31"),
-        description: 'blah blah contents description',
-        extra_img1: '@/assets/images/thumb/thumb1.jpg',
-        extra_img2: '@/assets/images/thumb/thumb2.jpg'
-    },
-    {
-        category: "Tree",
-        name: "Pino4 NFT 1End",
-        total: 250,
-        price_eth: 0.005,
-        price_esg: 70,
-        expiration_data: new Date("2023-05-31"),
-        description: 'blah blah contents description',
-        extra_img1: '@/assets/images/thumb/thumb1.jpg',
-        extra_img2: '@/assets/images/thumb/thumb2.jpg'
-    },
-    {
-        category: "Panda",
-        name: "Pino4 NFT 1End",
-        total: 250,
-        price_eth: 0.005,
-        price_esg: 70,
-        expiration_data: new Date("2023-05-31"),
-        description: 'blah blah contents description',
-        extra_img1: '@/assets/images/thumb/thumb1.jpg',
-        extra_img2: '@/assets/images/thumb/thumb2.jpg'
-    },
+  return `${year}-${month}-${day}`;
+}
+
+const count = ref(0);
+const ethPerPrice = 0.002;
+
+// 각 nft마다 공통으로 들어가니까 나중에 mixin으로 작성
+const total_eth = computed(() => {
+  return parseFloat((count.value * ethPerPrice).toFixed(6))
+})
+
+function increase() {
+  count.value++;
+}
+
+function decrease() {
+  if (count.value > 0) {
+    count.value--;
+  }
+}
+
+let nftSample = reactive<NFTSampleType[]>([
+  {
+      category: "ECOiTEM",
+      name: "Pino1 NFT 1End",
+      total: 250,
+      price_eth: 0.002,
+      price_esg: 40,
+      expiration_data: new Date("2023-05-31"),
+      description: 'Ullamco incididunt nostrud elit fugiat minim veniam. Pariatur officia tempor ipsum veniam est culpa id labore. Et nostrud eiusmod qui esse. Nisi cillum consectetur commodo exercitation labore eiusmod in. Nisi eu esse Lorem ipsum ullamco quis in aliqua id excepteur velit dolor eiusmod consequat.',
+      extra_img1: require('@/assets/images/thumb/thumb1.jpg'),
+      extra_img2: require('@/assets/images/thumb/thumb2.jpg')
+  },
+  {
+      category: "ECOiTEM",
+      name: "Pino2 NFT 1End",
+      total: 250,
+      price_eth: 0.003,
+      price_esg: 50,
+      expiration_data: new Date("2023-05-31"),
+      description: 'blah blah contents description',
+      extra_img1: require('@/assets/images/thumb/thumb1.jpg'),
+      extra_img2: require('@/assets/images/thumb/thumb2.jpg')
+  },
+  {
+      category: "ECOiTEM",
+      name: "Pino3 NFT 1End",
+      total: 250,
+      price_eth: 0.004,
+      price_esg: 60,
+      expiration_data: new Date("2023-05-31"),
+      description: 'blah blah contents description',
+      extra_img1: require('@/assets/images/thumb/thumb1.jpg'),
+      extra_img2: require('@/assets/images/thumb/thumb2.jpg')
+  },
+  {
+      category: "Game",
+      name: "Pino4 NFT 1End",
+      total: 250,
+      price_eth: 0.005,
+      price_esg: 70,
+      expiration_data: new Date("2023-05-31"),
+      description: 'blah blah contents description',
+      extra_img1: require('@/assets/images/thumb/thumb1.jpg'),
+      extra_img2: require('@/assets/images/thumb/thumb2.jpg')
+  },
+  {
+      category: "Game",
+      name: "Pino4 NFT 1End",
+      total: 250,
+      price_eth: 0.005,
+      price_esg: 70,
+      expiration_data: new Date("2023-05-31"),
+      description: 'blah blah contents description',
+      extra_img1: require('@/assets/images/thumb/thumb1.jpg'),
+      extra_img2: require('@/assets/images/thumb/thumb2.jpg')
+  },
+  {
+      category: "Tree",
+      name: "Pino4 NFT 1End",
+      total: 250,
+      price_eth: 0.005,
+      price_esg: 70,
+      expiration_data: new Date("2023-05-31"),
+      description: 'blah blah contents description',
+      extra_img1: require('@/assets/images/thumb/thumb1.jpg'),
+      extra_img2: require('@/assets/images/thumb/thumb2.jpg')
+  },
+  {
+      category: "Tree",
+      name: "Pino4 NFT 1End",
+      total: 250,
+      price_eth: 0.005,
+      price_esg: 70,
+      expiration_data: new Date("2023-05-31"),
+      description: 'blah blah contents description',
+      extra_img1: require('@/assets/images/thumb/thumb1.jpg'),
+      extra_img2: require('@/assets/images/thumb/thumb2.jpg')
+  },
+  {
+      category: "Panda",
+      name: "Pino4 NFT 1End",
+      total: 250,
+      price_eth: 0.005,
+      price_esg: 70,
+      expiration_data: new Date("2023-05-31"),
+      description: 'blah blah contents description',
+      extra_img1: require('@/assets/images/thumb/thumb1.jpg'),
+      extra_img2: require('@/assets/images/thumb/thumb2.jpg')
+  },
 ])
 
-// let filterNft = computed(() => {
-//   return nftSample.filter(nft => nft.name === nftName.value)
-// })
-  
+let filterNft = computed(() => {
+  return nftSample.filter(nft => nft.name === nftName)[0]
+})
 </script>
 
 <style lang="scss">
