@@ -9,3 +9,12 @@ export interface NFTSampleType {
   extra_img1: string;
   extra_img2: string;
 }
+
+export interface NftCategory {
+  idx: number;
+  code: string;
+  name: string;
+  hide: number;
+  createAt: Date;
+  updatedAt: Date;
+}

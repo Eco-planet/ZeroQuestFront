@@ -15,44 +15,43 @@
       </div>
     </div>
     <div class="h-10"></div>
-    
     <div class="w-full relative overflow-x-auto pb-4">
       <ul class="text-xl font-medium text-center text-white space-x-2 whitespace-nowrap">
-        <li v-for="tab in tabList" :key="tab.name" @click="switchTab(tab)"
+        <li v-for="tab in categoryList" :key="tab.name" @click="switchTab(tab)"
         class="inline-block w-32 px-4 py-3 rounded-full bg-disable text-white cursor-pointer"
-        :class="['tab', currentTab.name === tab.name ? 'active' : '']">{{ tab.name }}</li>
+        :class="['tab', currentTab?.name === tab.name ? 'active' : '']">{{ tab.name }}</li>
       </ul>
     </div>
-    <ZeroNft :selectedName="currentTab.name"></ZeroNft>
+    <ZeroNft :selectedName="currentTab?.name"></ZeroNft>
     
     <div class="h-40"></div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import http from "@/api/http";
+import { onMounted, ref } from 'vue';
+import { NftCategory } from "@/types/IZeroNftType"
 import ZeroNft from '@/components/ZeroNft.vue'
 
-// admin에서 받아오는 데이터 category table
-const tabList = [
-  {
-    name: 'ECOiTEM'
-  },
-  {
-    name: 'Game', 
-  },
-  {
-    name: 'Tree', 
-  },
-  {
-    name: 'Panda'
-  },
-  {
-    name: 'ECONFT'
-  },
-]
+const categoryList = ref();
+const currentTab = ref<NftCategory>();
 
-const currentTab = ref(tabList[0]);
+onMounted(async () => {
+  await getNftCategory();
+  if (categoryList.value && categoryList.value.length > 0) {
+    currentTab.value = categoryList.value[0];
+  }
+})
+
+const getNftCategory = () => {
+  http.get("/api/nft/category")
+    .then((res) => {
+      console.log(res.data)
+      categoryList.value = res.data.data;
+      currentTab.value = categoryList.value[0];
+  })
+}
 
 const switchTab = async (tab: any) => {
   currentTab.value = tab;
