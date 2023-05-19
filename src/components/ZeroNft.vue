@@ -32,7 +32,6 @@ onMounted(() => {
 const getNftList = () => {
   http.get("/api/nft/zeroNft")
     .then((res) => {
-      console.log(res.data.data)
       nftList.value = res.data.data;
     });
 };
@@ -63,7 +62,6 @@ const props = defineProps({
 
 // query로 해당 nft이름을 보내서 그 nft정보를 가져온다.
 function goToDetail(name: string) {
-  console.log("nftName", name)
   router.push({
     path: '/zeronftbuy',
     name: "zeronftbuy",
@@ -74,8 +72,8 @@ function goToDetail(name: string) {
 }
 </script>
   
-  <style lang="scss">
-  .shadow-nft {
-    box-shadow: 0 6px 8px 0px rgb(0 0 0 / 0.1), 0 2px 8px 0px rgb(0 0 0 / 0.1);
-  }
-  </style>
+<style lang="scss">
+.shadow-nft {
+  box-shadow: 0 6px 8px 0px rgb(0 0 0 / 0.1), 0 2px 8px 0px rgb(0 0 0 / 0.1);
+}
+</style>

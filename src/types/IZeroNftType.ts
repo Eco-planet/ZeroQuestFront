@@ -18,3 +18,21 @@ export interface NftCategory {
   createAt: Date;
   updatedAt: Date;
 }
+
+export interface nftType {
+  idx: number,
+  cid: number,
+  type: number,
+  symbol: string,
+  name: string,
+  description: string,
+  image: string,
+  hide: number,
+  buySymbol1: string,
+  buyPrice1: number,
+  buySymbol2: string,
+  buyPrice2: number,
+  metaData: null,
+  createdAt: Date,
+  updatedAt: Date
+}

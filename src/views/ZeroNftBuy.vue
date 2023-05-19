@@ -9,7 +9,7 @@
     <div class="flex w-full pb-2 items-center justify-between border-b border-gray-400">
       <div class="text-2xl font-semibold">ESG Point</div>
       <div class="flex items-end">
-        <div class="text-3xl font-semibold text-esg-color">99,999</div>
+        <div class="text-3xl font-semibold text-esg-color">{{ getBalances }}</div>
         <div class="w-1"></div>
         <div class="text-2xl text-gray-400">point</div>
       </div>
@@ -21,13 +21,14 @@
         <div class="p-7 shadow-nft">
           <div class="text-left">
             <div class="w-full h-96 relative overflow-hidden">
-              <img src="@/assets/images/thumb/thumb1.jpg" alt="" class="w-full h-full object-cover object-top">
+              <img :src="nowNft?.image" alt="" class="w-full h-full object-cover object-top">
             </div>
-            <div class="mt-10 text-3xl font-semibold text-black">{{filterNft.name}}</div>
+            <div class="mt-10 text-3xl font-semibold text-black">{{nowNft?.name}}</div>
             <div class="mt-10 text-xl">
               <div class="flex justify-between mb-4">
                 <span>Expiration Date</span>
-                <span>{{ formatDate(filterNft.expiration_data) }}</span>
+                <!-- <span>{{ formatDate(filterNft.expiration_data) }}</span> -->
+                <span>2023-05-31</span>
               </div>
               <div class="flex justify-between mb-4">
                 <span>Asset Protocol</span>
@@ -39,45 +40,45 @@
               </div>
               <div class="flex justify-between mb-4">
                 <span>Remaining NFT</span>
-                <span>0 / {{ filterNft.total }}</span>
+                <span>0 / </span>
               </div>
               <div class="flex justify-between mb-4">
                 <span>Price</span>
-                <span>{{ filterNft.price_eth }} ETH / {{ filterNft.price_esg }} ESG</span>
+                <span>{{nowNft?.buyPrice1}} {{nowNft?.buySymbol1}} / {{ nowNft?.buyPrice2 }} {{ nowNft?.buySymbol2 }}</span>
               </div>
             </div>
-            <div class="flex justify-end items-center">
+            <!-- <div class="flex justify-end items-center">
               <button @click="decrease" class="bg-red-500 text-white px-4 py-2 rounded">-</button>
               <input type="number" min="0" v-model="count" class="text-sm mx-1 w-20 text-center border-2 border-gray-300" />
               <button @click="increase" class="bg-green-500 text-white px-4 py-2 rounded">+</button>
               <span class="w-24 ml-4 flex justify-end text-xl font-semibold">{{total_eth}}ETH</span>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
       <div class="h-10"></div>
       <div class="flex justify-between">
-        <div class="w-64 h-20 flex justify-center items-center rounded-lg text-2xl font-medium text-center text-white bg-esg-color1 cursor-pointer">ESG Point로 구매</div>
-        <div class="w-64 h-20 flex justify-center items-center rounded-lg text-2xl font-medium text-center text-white bg-esg-color2 cursor-pointer">ESG Point 충전</div>
+        <div class="w-64 h-20 flex justify-center items-center rounded-lg text-2xl font-medium text-center text-white bg-esg-color1 cursor-pointer" @click="buyNftESGP(nowNft)">ESG Point로 구매</div>
+        <div class="w-64 h-20 flex justify-center items-center rounded-lg text-2xl font-medium text-center text-white bg-esg-color2 cursor-pointer" @click="goToMyWallet()">ESG Point 충전</div>
       </div>
     </div>
     <div class="h-16"></div>
     <div class="text-left">
       <div class="text-2xl font-semibold text-left">CONTENTS</div>
       <div class="text-xl mt-4 font-normal text-gray-500">
-        {{ filterNft.description }}
+        <!-- {{ filterNft.description }} -->
       </div>
     </div>
     <div class="mt-10 grid grid-cols-2 gap-x-8 gap-y-8">
       <div class="shadow-nft-extra">
         <div class="w-full h-56 relative overflow-hidden">
-          <img :src="filterNft.extra_img1"/>
+          <!-- <img :src="filterNft.extra_img1"/> -->
         </div>
         <div class="p-4 text-xl font-medium text-black">모바일 NFT</div>
       </div>
       <div class="shadow-nft-extra">
         <div class="w-full h-56 relative overflow-hidden">
-          <img :src="filterNft.extra_img2"/>
+          <!-- <img :src="filterNft.extra_img2"/> -->
         </div>
         <div class="p-4 text-xl font-medium text-black">모바일 NFT</div>
       </div>
@@ -87,27 +88,59 @@
 </template>
   
 <script lang="ts" setup>
+import http from "@/api/http";
+import store from "@/store";
 import { ref, reactive, computed, onMounted, defineProps } from "vue"
-import { useRoute } from "vue-router"
-import { NFTSampleType } from "@/types/IZeroNftType"
+import { useRoute, useRouter } from "vue-router"
+import { nftType } from "@/types/IZeroNftType"
 
 const route = useRoute();
+const router = useRouter();
 const nftName = route.params.name
 
+const nowNft = Object.values(store.getters["auth/getNftList"]).filter(item => item.name === nftName)[0]
+const getPk = store.getters["auth/getPrivateKey"]
+const getAddress = store.getters["auth/getAddress"]
+const getBalances = store.getters["auth/getBalances"].ESGP.balance
+
+const buyNftESGP = (nft: nftType) => {
+  http.post("/api/nft/buyNft", {
+    params: {
+      symbol: nft.symbol,
+      nftId: nft.idx,
+      currency: nft.buySymbol2,
+      address: getAddress,
+      privateKey: getPk
+    }
+  }).then((res) => {
+    console.log("res", res)
+  }).catch((err) => {
+    console.log("err", err)
+  })
+}
+
+const goToMyWallet = () => {
+  router.push({
+    path: '/mywallet',
+    name: 'mywallet'
+  })
+}
+
+// 날자 형식 변경
 function formatDate(date: Date): string {
   const year = date.getFullYear();
   const month = ('0' + (date.getMonth() + 1)).slice(-2);
   const day = ('0' + date.getDate()).slice(-2);
-
+  
   return `${year}-${month}-${day}`;
 }
 
+// 구매 개수 counting
 const count = ref(0);
-const ethPerPrice = 0.002;
+const ESGPPerPrice = 5;
 
-// 각 nft마다 공통으로 들어가니까 나중에 mixin으로 작성
 const total_eth = computed(() => {
-  return parseFloat((count.value * ethPerPrice).toFixed(6))
+  return parseFloat((count.value * ESGPPerPrice).toFixed(6))
 })
 
 function increase() {
@@ -119,101 +152,6 @@ function decrease() {
     count.value--;
   }
 }
-
-let nftSample = reactive<NFTSampleType[]>([
-  {
-      category: "ECOiTEM",
-      name: "Pino1 NFT 1End",
-      total: 250,
-      price_eth: 0.002,
-      price_esg: 40,
-      expiration_data: new Date("2023-05-31"),
-      description: 'Ullamco incididunt nostrud elit fugiat minim veniam. Pariatur officia tempor ipsum veniam est culpa id labore. Et nostrud eiusmod qui esse. Nisi cillum consectetur commodo exercitation labore eiusmod in. Nisi eu esse Lorem ipsum ullamco quis in aliqua id excepteur velit dolor eiusmod consequat.',
-      extra_img1: require('@/assets/images/thumb/thumb1.jpg'),
-      extra_img2: require('@/assets/images/thumb/thumb2.jpg')
-  },
-  {
-      category: "ECOiTEM",
-      name: "Pino2 NFT 1End",
-      total: 250,
-      price_eth: 0.003,
-      price_esg: 50,
-      expiration_data: new Date("2023-05-31"),
-      description: 'blah blah contents description',
-      extra_img1: require('@/assets/images/thumb/thumb1.jpg'),
-      extra_img2: require('@/assets/images/thumb/thumb2.jpg')
-  },
-  {
-      category: "ECOiTEM",
-      name: "Pino3 NFT 1End",
-      total: 250,
-      price_eth: 0.004,
-      price_esg: 60,
-      expiration_data: new Date("2023-05-31"),
-      description: 'blah blah contents description',
-      extra_img1: require('@/assets/images/thumb/thumb1.jpg'),
-      extra_img2: require('@/assets/images/thumb/thumb2.jpg')
-  },
-  {
-      category: "Game",
-      name: "Pino4 NFT 1End",
-      total: 250,
-      price_eth: 0.005,
-      price_esg: 70,
-      expiration_data: new Date("2023-05-31"),
-      description: 'blah blah contents description',
-      extra_img1: require('@/assets/images/thumb/thumb1.jpg'),
-      extra_img2: require('@/assets/images/thumb/thumb2.jpg')
-  },
-  {
-      category: "Game",
-      name: "Pino4 NFT 1End",
-      total: 250,
-      price_eth: 0.005,
-      price_esg: 70,
-      expiration_data: new Date("2023-05-31"),
-      description: 'blah blah contents description',
-      extra_img1: require('@/assets/images/thumb/thumb1.jpg'),
-      extra_img2: require('@/assets/images/thumb/thumb2.jpg')
-  },
-  {
-      category: "Tree",
-      name: "Pino4 NFT 1End",
-      total: 250,
-      price_eth: 0.005,
-      price_esg: 70,
-      expiration_data: new Date("2023-05-31"),
-      description: 'blah blah contents description',
-      extra_img1: require('@/assets/images/thumb/thumb1.jpg'),
-      extra_img2: require('@/assets/images/thumb/thumb2.jpg')
-  },
-  {
-      category: "Tree",
-      name: "Pino4 NFT 1End",
-      total: 250,
-      price_eth: 0.005,
-      price_esg: 70,
-      expiration_data: new Date("2023-05-31"),
-      description: 'blah blah contents description',
-      extra_img1: require('@/assets/images/thumb/thumb1.jpg'),
-      extra_img2: require('@/assets/images/thumb/thumb2.jpg')
-  },
-  {
-      category: "Panda",
-      name: "Pino4 NFT 1End",
-      total: 250,
-      price_eth: 0.005,
-      price_esg: 70,
-      expiration_data: new Date("2023-05-31"),
-      description: 'blah blah contents description',
-      extra_img1: require('@/assets/images/thumb/thumb1.jpg'),
-      extra_img2: require('@/assets/images/thumb/thumb2.jpg')
-  },
-])
-
-let filterNft = computed(() => {
-  return nftSample.filter(nft => nft.name === nftName)[0]
-})
 </script>
 
 <style lang="scss">

@@ -9,7 +9,7 @@
     <div class="flex w-full pb-2 items-center justify-between border-b border-gray-400">
       <div class="text-2xl font-semibold">ESG Point</div>
       <div class="flex items-end">
-        <div class="text-3xl font-semibold text-esg-color">99,999</div>
+        <div class="text-3xl font-semibold text-esg-color">{{getBalances}}</div>
         <div class="w-1"></div>
         <div class="text-2xl text-gray-400">point</div>
       </div>
@@ -30,9 +30,12 @@
 
 <script lang="ts" setup>
 import http from "@/api/http";
+import store from "@/store";
 import { onMounted, ref } from 'vue';
 import { NftCategory } from "@/types/IZeroNftType"
 import ZeroNft from '@/components/ZeroNft.vue'
+
+const getBalances = store.getters["auth/getBalances"].ESGP.balance
 
 const categoryList = ref();
 const currentTab = ref<NftCategory>();
@@ -47,7 +50,6 @@ onMounted(async () => {
 const getNftCategory = () => {
   http.get("/api/nft/category")
     .then((res) => {
-      console.log(res.data)
       categoryList.value = res.data.data;
       currentTab.value = categoryList.value[0];
   })
