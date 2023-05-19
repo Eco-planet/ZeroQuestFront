@@ -39,8 +39,6 @@ const { t } = useI18n();
 
 const loginSdk = () => {
   googleTokenLogin().then((response) => {
-    // console.log("Handle the response", response);
-
     axios({
       method: "GET",
       url: "https://www.googleapis.com/oauth2/v3/userinfo?access_token=" + response.access_token,
