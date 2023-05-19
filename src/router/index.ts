@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import GoogleView from "../views/GoogleLoginView.vue";
+import GameLoginView from "../views/GameLoginView.vue";
 import store from "@/store";
 
 const routes: Array<RouteRecordRaw> = [
@@ -7,6 +8,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/",
     name: "home",
     component: GoogleView,
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: GameLoginView,
   },
   {
     path: "/myzq",

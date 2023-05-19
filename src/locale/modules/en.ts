@@ -61,9 +61,10 @@ export default {
     termsAgree02: "[Requirement] Required Agreements",
     termsAgree03: "[Select] Contains your consent.",
     termsBtn: "OK",
+    gameLoginInfo: "{name}, welcome.",
    },
 
-  error: {
+   error: {
     none: "Please use it again later.",
     useAfterLogin: "Please login first",
     notProcessIng: "Transfer is being processed.",

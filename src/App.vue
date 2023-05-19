@@ -1,5 +1,5 @@
 <template>
-  <Header v-if="$route.name !== 'home'" />
+  <Header v-if="$route.name !== 'home' && $route.name !== 'login'" />
     <!-- <Locale v-if="$route.name !== 'login'" /> -->
     <!-- <nav v-if="$route.name !== 'login'">
       <router-link to="/">{{ t("route.Home") }}</router-link> |
@@ -8,7 +8,7 @@
       <router-link to="/mypage">MyPage</router-link>
     </nav> -->
   <router-view />
-  <Footer v-if="$route.name !== 'home'" />
+  <Footer v-if="$route.name !== 'home' && $route.name !== 'login'" />
   <LoadingSpinner v-if="store.state.isLoading"></LoadingSpinner>
 </template>
 

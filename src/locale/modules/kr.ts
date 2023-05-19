@@ -62,6 +62,7 @@ export default {
     termsAgree02: "[필수] 필수사항 동의 내용",
     termsAgree03: "[선택] 선택사항 동의 내용이 들어갑니다.",
     termsBtn: "확인",
+    gameLoginInfo: "{name} 님 반갑습니다.",
   },
 
   error: {
