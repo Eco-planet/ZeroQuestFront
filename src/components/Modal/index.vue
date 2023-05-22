@@ -119,7 +119,7 @@ import store from "@/store";
 import { STATEMENT_OR_BLOCK_KEYS } from "@babel/types";
 import { onMounted, computed, nextTick, ref, toRefs, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import QRCodeVue3 from "qrcode-vue3";
+import QRCodeVue3 from "qr-code-generator-vue3";
 
 const { t } = useI18n();
 
