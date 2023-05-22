@@ -10,7 +10,7 @@
             <QRCodeVue3
               :width="200"
               :height="200"
-              value="{{ store.getters['auth/getAddress'] }}"
+              value="{{ myAddress }}"
               :dotsOptions="{
                 type: 'square'
               }"
@@ -170,6 +170,7 @@ const passwd1 = ref("");
 const passwd2 = ref("");
 const passwdMsg = ref("");
 
+const myAddress = store.getters['auth/getAddress'];
 const withdrawAddress = ref("");
 const withdrawCount = ref();
 const withdrawPass = ref("");
