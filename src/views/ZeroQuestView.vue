@@ -12,7 +12,7 @@
     <div class="flex w-full pb-2 items-center justify-between border-b border-gray-400">
       <div class="text-2xl font-semibold">ESG Point</div>
       <div class="flex items-end">
-        <div class="text-3xl font-semibold text-esg-color">99,999</div>
+        <div class="text-3xl font-semibold text-esg-color">{{ getBalances }}</div>
         <div class="w-1"></div>
         <div class="text-2xl text-gray-400">point</div>
       </div>
@@ -24,27 +24,10 @@
         <div class="text-lg text-gray-400 mx-4 my-1" @click="goToOnft()">more +</div>
       </div>
     </div>
-    <div class="mt-10 grid grid-cols-2 gap-x-8 gap-y-8" >
-      <div v-for="oNft in myOnftSample" :key="oNft.name">
-        <div v-if="oNft.activated === true">
-          <div class="w-full h-64 relative overflow-hidden">
-            <img :src="oNft.extra_img1"/>
-          </div>
-          <div class="pt-4 text-xl font-medium text-black">{{oNft.name}}</div>
-          <div class="flex justify-center">
-            <div class="wp-20 font-semibold text-white rounded-full nftOn">ON</div>
-          </div>
-        </div>
-        <div v-else>
-          <div class="w-full h-64 relative overflow-hidden">
-            <img :src="oNft.extra_img1" class="grayscale"/>
-          </div>
-          <div class="pt-4 text-xl font-medium text-black">{{oNft.name}}</div>
-          <div class="flex justify-center">
-            <div class="wp-20 font-semibold text-white rounded-full nftOff">OFF</div>
-          </div>
-        </div>
-      </div>
+    <div class="w-full grid grid-cols-3 gap-card">
+      <template v-for="item in myNftList" :key="item.tokenId">
+        <MyNftCard :nftCard="item" :nftInfo="nftList[item.nftId]" @updateEnable="getMyNftList" />
+      </template>
     </div>
     <div class="h-10"></div>
     <div class="flex justify-between items-center">
@@ -53,25 +36,14 @@
         <div class="text-lg text-gray-400 mx-4 my-1" @click="goToZeroNft()">more +</div>
       </div>
     </div>
-    <div class="mt-10 grid grid-cols-2 gap-x-8 gap-y-8" >
-      <div v-for="myNft in myNftSample" :key="myNft.name">
-        <div v-if="myNft.activated === true">
-          <div class="w-full h-64 relative overflow-hidden" @click="goToDetail(myNft.name)">
-            <img :src="myNft.extra_img1"/>
-          </div>
-          <div class="pt-4 text-xl font-medium text-black">{{myNft.name}}</div>
-          <div class="flex justify-center">
-            <div class="wp-20 font-semibold text-white rounded-full nftOn">ON</div>
-          </div>
-        </div>
-        <div v-else>
-          <div class="w-full h-64 relative overflow-hidden" @click="goToDetail(myNft.name)">
-            <img :src="myNft.extra_img1" class="grayscale"/>
-          </div>
-          <div class="pt-4 text-xl font-medium text-black">{{myNft.name}}</div>
-          <div class="flex justify-center">
-            <div class="wp-20 font-semibold text-white rounded-full nftOff">OFF</div>
-          </div>
+    <div class="w-full grid grid-cols-3 gap-card">
+      <div class="flex flex-col" v-for="item in myZeroNftList" :key="item.tokenId">
+        <img class="nftImg" :src="nftList[item.nftId].image" alt="" @click="goToDetail(item.nftId)">
+        <div class="h-2"></div>
+        <div class="text-lg text-center">{{ nftList[item.nftId].name }}</div>
+        <div class="flex justify-center items-center">
+          <div v-if="!nftStatus" class="wp-30 font-semibold text-center text-white rounded-full nftOff" @click="updateNftStatus(true)">OFF</div>
+          <div v-else class="wp-30 font-semibold text-center text-white rounded-full nftOn" @click="updateNftStatus(false)">ON</div>
         </div>
       </div>
     </div>
@@ -86,13 +58,13 @@
         <div class="w-full h-56 relative overflow-hidden">
           <img :src="mainDesc.extra_img1"/>
         </div>
-        <div class="p-4 text-xl font-medium text-black">모바일 NFT</div>
+        <div class="p-4 text-xl font-medium text-black">계단오르기 NFT</div>
       </div>
       <div class="shadow-nft-extra">
         <div class="w-full h-56 relative overflow-hidden">
           <img :src="mainDesc.extra_img2"/>
         </div>
-        <div class="p-4 text-xl font-medium text-black">모바일 NFT</div>
+        <div class="p-4 text-xl font-medium text-black">AI 기반 재활용품 NFT</div>
       </div>
     </div>
     <div class="h-40"></div>
@@ -101,18 +73,52 @@
 
 <script lang="ts" setup>
 import store from "@/store"
+import http from "@/api/http";
 import router from "@/router";
-import { reactive } from "vue"
-import { NFTSampleType } from "@/types/IZeroNftType"
+import { reactive, onMounted, ref } from "vue"
+import { NFTSampleType, nftType } from "@/types/IZeroNftType"
+import MyNftCard from "@/components/OpenNftView.vue";
 import { Carousel, Pagination, Slide } from "vue3-carousel";
 
 import "vue3-carousel/dist/carousel.css";
 
-type oNFTSampleType = {
-  name: string;
-  activated: boolean;
-  extra_img1: string;
+const bannerList = store.getters["auth/getBannerList"];
+const getBalances = store.getters["auth/getBalances"].ESGP.balance
+const nftList = store.getters["auth/getNftList"];
+const myNftList = ref<nftType>();
+const myZeroNftList = ref<nftType>();
+const nftStatus = ref(false);
+
+onMounted(() => {
+  getMyNftList();
+  getMyZeroNftList();
+});
+
+const getMyNftList = () => {
+  http.get("/api/nft/myZeroNft", {
+    params: {
+      type: 1,
+    }
+  })
+    .then((response) => {
+      myNftList.value = response.data.data;
+    });
 };
+
+const getMyZeroNftList = () => {
+  http.get("/api/nft/myZeroNft", {
+    params: {
+      type: 0,
+    }
+  })
+    .then((response) => {
+      myZeroNftList.value = response.data.data;
+    });
+};
+
+const updateNftStatus = (status: boolean) => {
+  nftStatus.value = status;
+}
 
 type mainDescType = {
   desc: string;
@@ -120,64 +126,11 @@ type mainDescType = {
   extra_img2: string;
 };
 
-const bannerList = store.getters["auth/getBannerList"];
-
-// 샘플 데이터, 나중에 admin에서 추가되는 데이터
-let myNftSample = reactive<oNFTSampleType[]>([
-  {
-    name: "Pino1 NFT 1End",
-    activated: true,
-    extra_img1: require('@/assets/images/thumb/thumb1.jpg'),
-  },
-  {
-    name: "Pino4 NFT 1End",
-    activated: false,
-    extra_img1: require('@/assets/images/thumb/thumb2.jpg'),
-  },
-  {
-    name: "Pino2 NFT 1End",
-    activated: false,
-    extra_img1: require('@/assets/images/thumb/thumb3.jpg'),
-  },
-  {
-    name: "Pino3 NFT 1End",
-    activated: true,
-    extra_img1: require('@/assets/images/thumb/thumb4.jpg'),
-  },
-])
-
-let myOnftSample = reactive<oNFTSampleType[]>([
-  {
-    name: "NFT1",
-    activated: true,
-    extra_img1: require('@/assets/images/thumb/thumb1.jpg'),
-  },
-  {
-    name: "NFT2",
-    activated: false,
-    extra_img1: require('@/assets/images/thumb/thumb2.jpg'),
-  },
-  {
-    name: "NFT3",
-    activated: false,
-    extra_img1: require('@/assets/images/thumb/thumb3.jpg'),
-  },
-  {
-    name: "NFT4",
-    activated: true,
-    extra_img1: require('@/assets/images/thumb/thumb4.jpg'),
-  },
-  {
-    name: "NFT5",
-    activated: false,
-    extra_img1: require('@/assets/images/thumb/thumb5.jpg'),
-  },
-])
 
 const mainDesc = reactive<mainDescType>({
   desc: "'Ullamco incididunt nostrud elit fugiat minim veniam. Pariatur officia tempor ipsum veniam est culpa id labore. Et nostrud eiusmod qui esse. Nisi cillum consectetur commodo exercitation labore eiusmod in. Nisi eu esse Lorem ipsum ullamco quis in aliqua id excepteur velit dolor eiusmod consequat.'",
-  extra_img1: require('@/assets/images/thumb/thumb5.jpg'),
-  extra_img2: require('@/assets/images/thumb/thumb2.jpg')
+  extra_img1: require('@/assets/images/thumb/thumb6.png'),
+  extra_img2: require('@/assets/images/thumb/thumb7.png')
 })
 
 function goToOnft() {
@@ -192,13 +145,12 @@ function goToZeroNft() {
     name: 'zeronft'
   })
 }
-function goToDetail(name: string) {
-  console.log("nftName", name)
+function goToDetail(idx: number) {
   router.push({
     path: '/zeronftbuy',
     name: "zeronftbuy",
     params: {
-      name: name
+      idx: idx
     }
   })
 }
