@@ -31,20 +31,16 @@
     </div>
     <div class="h-10"></div>
     <div class="flex justify-between items-center">
-      <div class="text-3xl font-semibold text-left">MY NFT</div>
+      <div class="text-3xl font-semibold text-left">NEW NFT</div>
       <div class="border rounded-full">
         <div class="text-lg text-gray-400 mx-4 my-1" @click="goToZeroNft()">more +</div>
       </div>
     </div>
     <div class="w-full grid grid-cols-3 gap-card">
-      <div class="flex flex-col" v-for="item in myZeroNftList" :key="item.tokenId">
-        <img class="nftImg" :src="nftList[item.nftId].image" alt="" @click="goToDetail(item.nftId)">
+      <div class="flex flex-col" v-for="item in nftList" :key="item.tokenId">
+        <img class="nftImg" :src="item.image" alt="" @click="goToDetail(item.idx)">
         <div class="h-2"></div>
-        <div class="text-lg text-center">{{ nftList[item.nftId].name }}</div>
-        <div class="flex justify-center items-center">
-          <div v-if="!nftStatus" class="wp-30 font-semibold text-center text-white rounded-full nftOff" @click="updateNftStatus(true)">OFF</div>
-          <div v-else class="wp-30 font-semibold text-center text-white rounded-full nftOn" @click="updateNftStatus(false)">ON</div>
-        </div>
+        <div class="text-lg text-center">{{ item.name }}</div>
       </div>
     </div>
     <div class="h-16"></div>
@@ -86,12 +82,9 @@ const bannerList = store.getters["auth/getBannerList"];
 const getBalances = store.getters["auth/getBalances"].ESGP.balance
 const nftList = store.getters["auth/getNftList"];
 const myNftList = ref<nftType>();
-const myZeroNftList = ref<nftType>();
-const nftStatus = ref(false);
 
 onMounted(() => {
   getMyNftList();
-  getMyZeroNftList();
 });
 
 const getMyNftList = () => {
@@ -104,21 +97,6 @@ const getMyNftList = () => {
       myNftList.value = response.data.data;
     });
 };
-
-const getMyZeroNftList = () => {
-  http.get("/api/nft/myZeroNft", {
-    params: {
-      type: 0,
-    }
-  })
-    .then((response) => {
-      myZeroNftList.value = response.data.data;
-    });
-};
-
-const updateNftStatus = (status: boolean) => {
-  nftStatus.value = status;
-}
 
 type mainDescType = {
   desc: string;
@@ -139,12 +117,14 @@ function goToOnft() {
     name: 'onft'
   })
 }
+
 function goToZeroNft() {
   router.push({
     path: '/zeronft',
     name: 'zeronft'
   })
 }
+
 function goToDetail(idx: number) {
   router.push({
     path: '/zeronftbuy',
@@ -169,5 +149,13 @@ function goToDetail(idx: number) {
 }
 .grayscale {
   filter: grayscale(100%);
+}
+
+.nftImg {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position: center top;
+  height: 100px;
 }
 </style>
