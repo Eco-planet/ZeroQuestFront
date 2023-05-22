@@ -16,6 +16,14 @@ module.exports = defineConfig({
       allowedHosts: "auto",
     },
   },
+  chainWebpack: (config) => {
+    config.module
+      .rule("raw")
+      .test(/\.md$/)
+      .use("raw-loader")
+      .loader("raw-loader")
+      .end();
+  },
   css: {
     loaderOptions: {
       sass: {

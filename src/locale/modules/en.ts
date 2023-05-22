@@ -62,6 +62,7 @@ export default {
     termsAgree03: "[Select] Contains your consent.",
     termsBtn: "OK",
     gameLoginInfo: "{name}, welcome.",
+    agreeBtn: "Agree",
    },
 
    error: {

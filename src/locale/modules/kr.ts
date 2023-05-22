@@ -58,11 +58,12 @@ export default {
     termsTitle: "서비스 약관에 동의해주세요.",
     termsAgreeAll: "모두 동의합니다.",
     termsAgreeInfo: "전체동의에 관련된 설명글이 나옵니다.",
-    termsAgree01: "[필수] 필수사항 동의 내용",
-    termsAgree02: "[필수] 필수사항 동의 내용",
+    termsAgree01: "[필수] 이용약관",
+    termsAgree02: "[필수] 개인정보처리방침",
     termsAgree03: "[선택] 선택사항 동의 내용이 들어갑니다.",
     termsBtn: "확인",
     gameLoginInfo: "{name} 님 반갑습니다.",
+    agreeBtn: "동의",
   },
 
   error: {

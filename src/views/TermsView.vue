@@ -19,12 +19,20 @@
       <div class="check-in flex justify-center">
         <input type="checkbox" v-model="check_01" @change="updateCheck(1)" id="clause-check01" name="clause-check" />
         <label for="clause-check01">{{ t("message.termsAgree01") }}</label>
+        <div class="flex justify-center items-center">
+          <div class="w-2"></div>
+          <button class="p-2 h-8 flex justify-center items-center font-semibold text-lg text-white terms-enable" @click="showTerms(1)">보기</button>
+        </div>
       </div>
     </div>
     <div class="flex flex-col items-start">
       <div class="check-in flex justify-center">
         <input type="checkbox" v-model="check_02" @change="updateCheck(2)" id="clause-check02" name="clause-check" />
         <label for="clause-check02">{{ t("message.termsAgree02") }}</label>
+        <div class="flex justify-center items-center">
+          <div class="w-2"></div>
+          <button class="p-2 h-8 flex justify-center items-center font-semibold text-lg text-white terms-enable" @click="showTerms(2)">보기</button>
+        </div>
       </div>
     </div>
     <div class="flex flex-col items-start">
@@ -40,6 +48,8 @@
       <button :class="[check_01 === true && check_02 === true ? 'wp-60 p-3 font-semibold text-2xl text-white terms-enable' : 'wp-60 p-3 font-semibold text-2xl text-white terms-disable']" @click="updateTerms">{{ t("message.termsBtn") }}</button>
     </div>
   </div>
+  <div class="h-10"></div>
+  <Terms :visible="termsVisiable" @hide="closeModal" @termsAgree="setTerms" :termsType="termsType" />
   <Modal :visible="store.state.isPopup" @hide="closeModal" title="message.agreeTerms" />
  </template>
 
@@ -47,6 +57,7 @@
 import store from "@/store";
 import router from "@/router";
 import http from "@/api/http";
+import Terms from "@/components/Terms/index.vue";
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 
@@ -57,7 +68,26 @@ const check_01 = ref(false);
 const check_02 = ref(false);
 const check_03 = ref(false);
 
+const termsVisiable = ref(false);
+const termsType = ref(0);
+
+const setTerms = (type: number) => {
+  if (type === 1) {
+    check_01.value = true;
+  } else if (type === 2) {
+    check_02.value = true;
+  }
+
+  updateCheck(type);
+};
+
+const showTerms = (type: number) => {
+  termsType.value = type;
+  termsVisiable.value = true;
+};
+
 const closeModal = () => {
+  termsVisiable.value = false;
   store.state.isPopup = false;
 };
 
