@@ -12,7 +12,7 @@
     <div class="flex w-full pb-2 items-center justify-between border-b border-gray-400">
       <div class="text-2xl font-semibold">ESG Point</div>
       <div class="flex items-end">
-        <div class="text-3xl font-semibold text-esg-color">{{ getBalances }}</div>
+        <div class="text-3xl font-semibold text-esg-color">{{ ESGPBalances }}</div>
         <div class="w-1"></div>
         <div class="text-2xl text-gray-400">point</div>
       </div>
@@ -75,16 +75,26 @@ import { reactive, onMounted, ref } from "vue"
 import { NFTSampleType, nftType } from "@/types/IZeroNftType"
 import MyNftCard from "@/components/OpenNftView.vue";
 import { Carousel, Pagination, Slide } from "vue3-carousel";
+import { errorMsg } from "@/utils/util";
 
 import "vue3-carousel/dist/carousel.css";
 
 const bannerList = store.getters["auth/getBannerList"];
-const getBalances = store.getters["auth/getBalances"].ESGP.balance
 const nftList = store.getters["auth/getNftList"];
+const ESGPBalances = ref()
 const myNftList = ref<nftType>();
+const esgPoint = ref(0);
+const balances = ref();
+const tokenInfos = ref();
+const popupTitle = ref("");
 
 onMounted(() => {
   getMyNftList();
+  updateBalance();
+
+  if (store.state.isBalanceUpdate === true || 1) {
+    getBalanceAll();
+  }
 });
 
 const getMyNftList = () => {
@@ -96,6 +106,52 @@ const getMyNftList = () => {
     .then((response) => {
       myNftList.value = response.data.data;
     });
+};
+
+const checkError = (status: number, code: number) => {
+  if (status === 400) {
+    store.state.popupType = 'message';
+    popupTitle.value = errorMsg(status, code);
+    store.state.isPopup = true;
+  } else if (status === 401 || status === 403 || status === 300) {
+    store.commit("auth/setInitToken");
+
+    router.push("/");
+  }
+};
+
+const getBalanceAll = () => {
+  http.get("/api/token/balanceAll")
+  .then((response) => {
+    store.state.isBalanceUpdate = false;
+
+    const resData = response.data.data.balances;
+
+    let balancesData: any = {};
+
+    resData.forEach((res: any) => {
+      balancesData[res.symbol] = res;
+    });
+
+    store.commit("auth/setBalances", { 'info': balancesData });
+
+    updateBalance();
+  })
+  .catch((error) => {
+    checkError(error.response.status, error.response.data.errorCode);
+  });
+};
+
+const updateBalance = () => {
+  tokenInfos.value = store.getters["auth/getTokenInfos"];
+  balances.value = store.getters["auth/getBalances"];
+  ESGPBalances.value = store.getters["auth/getBalances"].ESGP.balance
+
+  for (const key in balances.value) {
+    if (balances.value[key].symbol === 'ESGP') {
+      esgPoint.value = balances.value[key].balance;
+    }
+  }
 };
 
 type mainDescType = {
