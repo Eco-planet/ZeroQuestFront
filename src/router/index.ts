@@ -78,7 +78,7 @@ router.beforeEach(async (to: Nullable, from: Nullable, next: Nullable) => {
 
   if (to.name === "home" && currentDate <= expireAccessToken) {
     if (currentDate <= expireRefreshToken) {
-      router.push("/mywallet");
+      router.push("/" + process.env.VUE_APP_FIRST_URL);
     }
   }
 

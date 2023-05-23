@@ -122,7 +122,7 @@ const updateTerms = () => {
     })
     .then((response) => {
       if (response.data.status === 1) {
-        router.push("/mywallet");
+        router.push("/" + process.env.VUE_APP_FIRST_URL);
       }
     });
   }

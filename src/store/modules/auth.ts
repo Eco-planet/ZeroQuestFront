@@ -190,7 +190,7 @@ export default {
           });
 
           if (response.data.data.terms === 1) {
-            router.push("/mywallet");
+            router.push("/" + process.env.VUE_APP_FIRST_URL);
           } else {
             router.push("/terms");
           }
