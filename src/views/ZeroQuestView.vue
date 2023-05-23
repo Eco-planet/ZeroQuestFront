@@ -25,9 +25,11 @@
       </div>
     </div>
     <div class="w-full grid grid-cols-3 gap-card">
-      <template v-for="item in myNftList" :key="item.tokenId">
-        <MyNftCard :nftCard="item" :nftInfo="nftList[item.nftId]" @updateEnable="getMyNftList" />
-      </template>
+      <div class="flex flex-col" v-for="item in myNftList" :key="item.tokenId">
+        <div><img class="nftImg" :src="nftList[item.nftId].image" alt="" @click="goNftDetail(item.nftId)"></div>
+        <div class="h-2"></div>
+        <div class="text-lg text-center">{{ nftList[item.nftId].name }}</div>
+      </div>
     </div>
     <div class="h-10"></div>
     <div class="flex justify-between items-center">
@@ -188,6 +190,10 @@ function goToDetail(idx: number) {
     }
   })
 }
+
+const goNftDetail = (nftId: number) => {
+  router.push({ name: 'onft-detail', params: { nftId } });
+};
 </script>
 
 <style lang="scss">
