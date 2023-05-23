@@ -27,7 +27,7 @@ const routes: Array<RouteRecordRaw> = [
       import(/* webpackChunkName: "zeronft" */ "../views/ZeroNftView.vue"),
   },
   {
-    path: "/zeronftbuy/:name",
+    path: "/zeronftbuy/:idx",
     name: "zeronftbuy",
     component: () =>
       import(/* webpackChunkName: "zeronftbuy" */ "../views/ZeroNftBuy.vue"),

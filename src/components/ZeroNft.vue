@@ -2,13 +2,13 @@
   <div class="w-full mt-10">
     <ul class="grid grid-cols-2 gap-x-8 gap-y-8">
       <li class="p-4 shadow-nft" v-for="nft in nftListSort" :key="nft.name">
-        <div class="text-left" @click="goToDetail(nft.name)">
+        <div class="text-left" @click="goToDetail(nft.idx)">
           <div class="w-full h-44 relative overflow-hidden">
             <img :src="nft.image" alt="" class="w-full h-full object-cover object-top">
           </div>
           <div class="mt-4 text-xl font-medium text-black">{{ nft.name }}</div>
-          <div class="mt-2 text-lg font-light text-gray-700">0 / </div>
-          <div class="text-lg font-light text-gray-400">{{nft.buyPrice1}} {{nft.buySymbol1}} / {{ nft.buyPrice2 }} {{ nft.buySymbol2 }}</div>
+          <!-- <div class="mt-2 text-lg font-light text-gray-700">0 / </div> -->
+          <div class="text-lg font-light text-gray-400">{{ nft.buyPrice2 }} {{ nft.buySymbol2 }}</div>
         </div>
       </li>
     </ul>
@@ -61,12 +61,13 @@ const props = defineProps({
 })
 
 // query로 해당 nft이름을 보내서 그 nft정보를 가져온다.
-function goToDetail(name: string) {
+function goToDetail(idx: number) {
+  console.log(idx)
   router.push({
     path: '/zeronftbuy',
     name: "zeronftbuy",
     params: {
-      name: name
+      idx: idx
     }
   })
 }

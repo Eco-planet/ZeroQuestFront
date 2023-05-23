@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col justify-center items-center mm">
+  <div class="flex flex-col items-center mm">
     <div class="h-8"></div>
     <div class="flex flex-col w-full">
       <div class="text-3xl font-semibold text-left">ZeroNFT</div>
@@ -38,10 +38,10 @@
                 <span>Asset Public Chain</span>
                 <span>Ethereum</span>
               </div>
-              <div class="flex justify-between mb-4">
+              <!-- <div class="flex justify-between mb-4">
                 <span>Remaining NFT</span>
                 <span>0 / </span>
-              </div>
+              </div> -->
               <div class="flex justify-between mb-4">
                 <span>Price</span>
                 <span>{{nowNft?.buyPrice1}} {{nowNft?.buySymbol1}} / {{ nowNft?.buyPrice2 }} {{ nowNft?.buySymbol2 }}</span>
@@ -63,26 +63,26 @@
       </div>
     </div>
     <div class="h-16"></div>
-    <div class="text-left">
+    <div class="text-left w-full">
       <div class="text-2xl font-semibold text-left">CONTENTS</div>
       <div class="text-xl mt-4 font-normal text-gray-500">
-        <!-- {{ filterNft.description }} -->
+        {{ nowNft?.description }}
       </div>
     </div>
-    <div class="mt-10 grid grid-cols-2 gap-x-8 gap-y-8">
+    <!-- <div class="mt-10 grid grid-cols-2 gap-x-8 gap-y-8">
       <div class="shadow-nft-extra">
         <div class="w-full h-56 relative overflow-hidden">
-          <!-- <img :src="filterNft.extra_img1"/> -->
+          <img :src="filterNft.extra_img1"/>
         </div>
         <div class="p-4 text-xl font-medium text-black">모바일 NFT</div>
       </div>
       <div class="shadow-nft-extra">
         <div class="w-full h-56 relative overflow-hidden">
-          <!-- <img :src="filterNft.extra_img2"/> -->
+          <img :src="filterNft.extra_img2"/>
         </div>
         <div class="p-4 text-xl font-medium text-black">모바일 NFT</div>
       </div>
-    </div>
+    </div> -->
     <div class="h-40"></div>
   </div>
 </template>
@@ -96,22 +96,21 @@ import { nftType } from "@/types/IZeroNftType"
 
 const route = useRoute();
 const router = useRouter();
-const nftName = route.params.name
+const nftId = parseInt(route.params.idx)
 
-const nowNft = Object.values(store.getters["auth/getNftList"]).filter(item => item.name === nftName)[0]
+const nowNft = Object.values(store.getters["auth/getNftList"]).filter(item => item.idx === nftId)[0]
 const getPk = store.getters["auth/getPrivateKey"]
 const getAddress = store.getters["auth/getAddress"]
 const getBalances = store.getters["auth/getBalances"].ESGP.balance
 
 const buyNftESGP = (nft: nftType) => {
   http.post("/api/nft/buyNft", {
-    params: {
-      symbol: nft.symbol,
-      nftId: nft.idx,
-      currency: nft.buySymbol2,
-      address: getAddress,
-      privateKey: getPk
-    }
+    symbol: nft.symbol,
+    nftId: nft.idx,
+    currency: nft.buySymbol2,
+    balance: 1,
+    address: getAddress,
+    privateKey: getPk
   }).then((res) => {
     console.log("res", res)
   }).catch((err) => {
