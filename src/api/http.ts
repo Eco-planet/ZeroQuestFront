@@ -31,6 +31,8 @@ instance.interceptors.request.use(function (config: Nullable) {
 
 instance.interceptors.response.use(
   async (response: any) => {
+    store.state.errorCount = 0;
+
     store.state.isLoading = false;
 
     return response;
@@ -39,7 +41,9 @@ instance.interceptors.response.use(
     const errorRes = error.response;
     const originalRequest = error.config;
 
-    if (errorRes.status === 401 && store.getters["auth/getRefreshToken"] !== '') {
+    store.state.errorCount += 1;
+
+    if (store.state.errorCount < 3 && errorRes.status === 401 && store.getters["auth/getRefreshToken"] !== undefined && store.getters["auth/getRefreshToken"] !== '') {
       return await instance.post("/auth/refresh")
       .then(async (res) => {
         if (res.status === 200) {

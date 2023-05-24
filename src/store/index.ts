@@ -15,6 +15,7 @@ export default createStore({
     isPopup: false,
     popupType: '',
     isBalanceUpdate: true,
+    errorCount: 0,
   },
   getters: {},
   mutations: {},
