@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col justify-center items-center mm">
+  <div class="px-8 flex flex-col justify-center items-center">
     <div class="h-8"></div>
     <div class="flex flex-col w-full">
       <div class="text-3xl font-semibold text-left">O!NFT</div>
