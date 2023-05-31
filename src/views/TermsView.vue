@@ -122,6 +122,8 @@ const updateTerms = () => {
     })
     .then((response) => {
       if (response.data.status === 1) {
+        store.commit("auth/setTerms", { terms: response.data.status });
+        
         router.push("/" + process.env.VUE_APP_FIRST_URL);
       }
     });

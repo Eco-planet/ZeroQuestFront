@@ -19,6 +19,7 @@ export default {
     withdrawPw: sessionStorage.getItem("withdrawPw") || false,
     nftList: sessionStorage.getItem("nftList") || "",
     bannerList: sessionStorage.getItem("bannerList") || "",
+    terms: sessionStorage.getItem("terms") || "",
   },
   getters: {
     getAccessToken: (state: Nullable) => {
@@ -83,6 +84,9 @@ export default {
       } else {
         return "";
       }
+    },
+    getTerms: (state: Nullable) => {
+      return state.terms;
     },
   },
   mutations: {
@@ -156,6 +160,11 @@ export default {
 
       sessionStorage.setItem("bannerList", JSON.stringify(info));
     },
+    setTerms(state: Nullable, { terms }: Nullable) {
+      state.terms = terms;
+
+      sessionStorage.setItem("terms", terms);
+    },
   },
   actions: {
     async googleLogin(context: Nullable, { token }: Nullable) {
@@ -189,6 +198,10 @@ export default {
             pw: Boolean(response.data.data.withdrawPw),
           });
 
+          context.commit("setTerms", {
+            terms: response.data.data.terms,
+          });
+ 
           if (response.data.data.terms === 1) {
             router.push("/" + process.env.VUE_APP_FIRST_URL);
           } else {

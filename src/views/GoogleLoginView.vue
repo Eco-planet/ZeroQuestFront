@@ -66,7 +66,7 @@ const loginSdk = () => {
         method: "GET",
         url: "https://www.googleapis.com/oauth2/v3/userinfo?access_token=" + response.access_token,
       }).then((userInfo) => {
-        console.log(userInfo);
+        // console.log(userInfo);
         login(userInfo.data);
       });
     });
@@ -74,6 +74,9 @@ const loginSdk = () => {
 };
 
 const login = (userData: any): void => {
+  // 로그인시 기존 토큰 데이터 삭제
+  store.commit("auth/setInitToken");
+
   store.state.isBalanceUpdate = true;
 
   const loginToken = {
