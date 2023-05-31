@@ -46,7 +46,7 @@ onMounted(() => {
   if (store.state.showMode === 'webview' || showMode.value === 'webview') {
     store.state.showMode = 'webview';
 
-    if (isLogin === 1) {
+    if (isLogin.value == 1) {
       store.state.isLoading = true;
       window.Java.jsLogin();
     }
