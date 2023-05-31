@@ -9,6 +9,7 @@
     </nav> -->
   <div class="wrap">
     <router-view />
+    <div class="h-20"></div>
   </div>
   <Footer v-if="$route.name !== 'home' && $route.name !== 'login'" />
   <LoadingSpinner v-if="store.state.isLoading"></LoadingSpinner>
