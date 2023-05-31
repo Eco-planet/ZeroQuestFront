@@ -115,12 +115,6 @@ onMounted(() => {
   }
 });
 
-const forceLogout = () => {
-  store.commit("auth/setInitToken");
-
-  router.push("/");
-};
-
 const checkError = (status: number, code: number) => {
   if (status === 400) {
     store.state.popupType = 'message';

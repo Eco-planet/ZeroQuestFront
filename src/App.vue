@@ -7,7 +7,9 @@
       <router-link to="/login">LOGIN</router-link> |
       <router-link to="/mypage">MyPage</router-link>
     </nav> -->
-  <router-view />
+  <div class="wrap">
+    <router-view />
+  </div>
   <Footer v-if="$route.name !== 'home' && $route.name !== 'login'" />
   <LoadingSpinner v-if="store.state.isLoading"></LoadingSpinner>
 </template>
@@ -94,5 +96,11 @@ onMounted(() => {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+
+.wrap {
+	height: 100%;
+	overflow-y: auto;
+	overflow-y: overlay;
 }
 </style>

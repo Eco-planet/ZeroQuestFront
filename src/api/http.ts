@@ -33,7 +33,9 @@ instance.interceptors.response.use(
   async (response: any) => {
     store.state.errorCount = 0;
 
-    store.state.isLoading = false;
+    setTimeout(() => {
+      store.state.isLoading = false;
+    }, 1000);
 
     return response;
   },

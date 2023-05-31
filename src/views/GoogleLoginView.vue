@@ -29,24 +29,48 @@
 </template>
 
 <script lang="ts" setup>
+import router from "@/router";
 import axios from "axios";
 import store from "@/store";
 import { useI18n } from "vue-i18n";
 import openSSLCrypto from "@/utils/openSSLCrypto";
 import { googleTokenLogin, googleLogout } from "vue3-google-login";
+import { onMounted, ref } from "vue";
 
 const { t } = useI18n();
 
+const showMode = ref(router.currentRoute.value.query.showMode);
+const isLogin = ref(router.currentRoute.value.query.isLogin);
+
+onMounted(() => {
+  if (store.state.showMode === 'webview' || showMode.value === 'webview') {
+    store.state.showMode = 'webview';
+
+    if (isLogin === 1) {
+      store.state.isLoading = true;
+      window.Java.jsLogin();
+    }
+  }
+});
+
+window.webviewLogin = (sub: String, email: String, name: String) => {
+  login({sub, email, name});
+};
+
 const loginSdk = () => {
-  googleTokenLogin().then((response) => {
-    axios({
-      method: "GET",
-      url: "https://www.googleapis.com/oauth2/v3/userinfo?access_token=" + response.access_token,
-    }).then((userInfo) => {
-      console.log(userInfo);
-      login(userInfo.data);
+  if (showMode.value === 'webview') {
+    window.Java.jsSignIn();
+  } else {
+    googleTokenLogin().then((response) => {
+      axios({
+        method: "GET",
+        url: "https://www.googleapis.com/oauth2/v3/userinfo?access_token=" + response.access_token,
+      }).then((userInfo) => {
+        console.log(userInfo);
+        login(userInfo.data);
+      });
     });
-  });
+  }
 };
 
 const login = (userData: any): void => {

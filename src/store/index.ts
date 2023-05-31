@@ -10,6 +10,7 @@ const modules = modulesFiles.keys().reduce((modules: any, modulePath: any) => {
 
 export default createStore({
   state: {
+    showMode: 'web',
     isLoading: true,
     isLogin: false,
     isPopup: false,

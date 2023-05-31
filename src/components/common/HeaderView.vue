@@ -7,7 +7,7 @@
         <div class="flex justify-end items-center">
           <div><Locale /></div>
           <div class="w-5"></div>
-          <div><button type="button" class="login-id">ID</button></div>
+          <div><button type="button" class="login-id" @click="forceLogout">ID</button></div>
         </div>
       </div>
     </div>
@@ -60,6 +60,18 @@ import Modal from "@/components/Modal/index.vue";
 const modalVisible = ref(false);
 const menuVisible = ref(false);
 const aniVisible = ref(false);
+
+const forceLogout = () => {
+  store.commit("auth/setInitToken");
+
+  if (store.state.showMode === 'webview') {
+    window.Java.jsSignOut();
+
+    router.push({ name: 'home', query: { showMode: 'webview', isLogin: 0 } });
+  } else {
+    router.push("/");
+  }
+};
 
 const showModal = () => {
   store.state.popupType = 'message';
