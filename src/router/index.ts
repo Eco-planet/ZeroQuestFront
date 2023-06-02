@@ -76,11 +76,12 @@ router.beforeEach(async (to: Nullable, from: Nullable, next: Nullable) => {
   const expireAccessToken = store.getters["auth/getExpireAccessToken"];
   const expireRefreshToken = store.getters["auth/getExpireRefreshToken"];
 
+  console.log("terms = " + store.getters["auth/getTerms"]);
   if (to.name === "home" && currentDate <= expireAccessToken) {
     if (currentDate <= expireRefreshToken) {
       router.push("/" + process.env.VUE_APP_FIRST_URL);
     }
-  } else if (to.name !== "home" && to.name !== "terms" && store.getters["auth/getTerms"] !== 1) {
+  } else if (to.name !== "home" && to.name !== "terms" && store.getters["auth/getTerms"] != 1) {
       router.push("/terms");
   }
 
