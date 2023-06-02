@@ -3,8 +3,8 @@
     <ul class="grid grid-cols-2 gap-x-8 gap-y-8">
       <li class="p-4 shadow-nft" v-for="nft in nftListSort" :key="nft.name">
         <div class="text-left" @click="goToDetail(nft.idx)">
-          <div class="w-full h-44 relative overflow-hidden">
-            <img :src="nft.image" alt="" class="w-full h-full object-cover object-top">
+          <div class="w-full h-full relative">
+            <img :src="nft.image" alt="" class="w-full h-full object-contain object-top">
           </div>
           <div class="mt-4 text-xl font-medium text-black">{{ nft.name }}</div>
           <!-- <div class="mt-2 text-lg font-light text-gray-700">0 / </div> -->

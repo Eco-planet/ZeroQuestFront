@@ -26,9 +26,16 @@
     </div>
     <div class="w-full grid grid-cols-3 gap-card">
       <div class="flex flex-col" v-for="item in myNftList" :key="item.tokenId">
-        <div><img class="nftImg" :src="nftList[item.nftId].image" alt="" @click="goNftDetail(item.nftId)"></div>
-        <div class="h-2"></div>
-        <div class="text-lg text-center">{{ nftList[item.nftId].name }}</div>
+        <div v-if="item.enable === 1">
+          <div><img class="nftImg" :src="nftList[item.nftId].image" alt="" @click="goNftDetail(item.nftId)"></div>
+          <div class="h-2"></div>
+          <div class="text-lg text-center">{{ nftList[item.nftId].name }}</div>
+        </div>
+        <div class="grayscale" v-else>
+          <div><img class="nftImg" :src="nftList[item.nftId].image" alt="" @click="goNftDetail(item.nftId)"></div>
+          <div class="h-2"></div>
+          <div class="text-lg text-center">{{ nftList[item.nftId].name }}</div>
+        </div>
       </div>
     </div>
     <div class="h-10"></div>
@@ -53,13 +60,13 @@
     </div>
     <div class="mt-10 grid grid-cols-2 gap-x-8 gap-y-8">
       <div class="shadow-nft-extra">
-        <div class="w-full h-56 relative overflow-hidden">
+        <div class="w-full h-full relative">
           <img :src="mainDesc.extra_img1"/>
         </div>
         <div class="p-4 text-xl font-medium text-black">계단오르기 NFT</div>
       </div>
       <div class="shadow-nft-extra">
-        <div class="w-full h-56 relative overflow-hidden">
+        <div class="w-full h-full relative">
           <img :src="mainDesc.extra_img2"/>
         </div>
         <div class="p-4 text-xl font-medium text-black">AI 기반 재활용품 NFT</div>
@@ -214,7 +221,7 @@ const goNftDetail = (nftId: number) => {
 .nftImg {
   width:100%;
   height:100%;
-  object-fit:cover;
+  object-fit: contain;
   object-position: center top;
   height: 100px;
 }

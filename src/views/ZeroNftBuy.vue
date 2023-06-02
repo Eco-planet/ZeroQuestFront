@@ -20,8 +20,8 @@
       <div class="grid">
         <div class="p-7 shadow-nft">
           <div class="text-left">
-            <div class="w-full h-96 relative overflow-hidden">
-              <img :src="nowNft?.image" alt="" class="w-full h-full object-cover object-top">
+            <div class="w-full h-full relative">
+              <img :src="nowNft?.image">
             </div>
             <div class="mt-10 text-3xl font-semibold text-black">{{nowNft?.name}}</div>
             <div class="mt-10 text-xl">
