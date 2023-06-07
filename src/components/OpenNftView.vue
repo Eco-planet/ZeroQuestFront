@@ -10,10 +10,10 @@
     <div class="text-lg text-center">{{ nftInfo.name }}</div>
     <div class="flex justify-center items-center">
       <template v-if="nftCard.enable === 0">
-        <div class="wp-30 font-semibold text-center text-white rounded-full nftOff" @click="updateNftEnable">OFF</div>
+        <div class="wp-30 font-semibold text-center text-white rounded-full nftOff" @click="updateNftEnable(1)">OFF</div>
       </template>
       <template v-if="nftCard.enable === 1">
-        <div class="wp-30 font-semibold text-center text-white rounded-full nftOn">ON</div>
+        <div class="wp-30 font-semibold text-center text-white rounded-full nftOn" @click="updateNftEnable(0)">ON</div>
       </template>
     </div>
   </div>
@@ -45,10 +45,11 @@ watch(nftCard, (val) => {
   console.log("enable nftCard");
 }, { immediate: false, deep: true });
 
-const updateNftEnable = () => {
+const updateNftEnable = (enable: Number) => {
   http.post("/api/nft/enableNft", {
     'symbol': nftInfo.value.symbol,
     'tokenId': nftCard.value.tokenId,
+    'enable': enable,
   })
   .then((response) => {
     if (response.data.status === 1) {
