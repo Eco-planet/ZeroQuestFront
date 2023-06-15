@@ -39,21 +39,14 @@ const getNftList = () => {
 const nftListSort = computed(() => {
   if (!nftList.value) {
     return [];
-  }
-
-  if (props.selectedName === 'ECO') {
-    return nftList.value.filter(item => item.symbol === 'ECONFT2');
-  } else if (props.selectedName === 'Game') {
-    return nftList.value.filter(item => item.symbol === 'ECONFT');
   } else {
-    return nftList.value;
+    return nftList.value.filter(item => item.cid === props.selectedIdx)
   }
 });
 
-
 const props = defineProps({
-    selectedName: {
-        type: String,
+    selectedIdx: {
+        type: Number,
         default() {
             return {}
         }

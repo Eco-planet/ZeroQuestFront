@@ -22,7 +22,7 @@
         :class="['tab', currentTab?.name === tab.name ? 'active' : '']">{{ tab.name }}</li>
       </ul>
     </div>
-    <ZeroNft :selectedName="currentTab?.name"></ZeroNft>
+    <ZeroNft :selectedIdx="currentTab?.idx"></ZeroNft>
     
     <div class="h-40"></div>
   </div>
@@ -41,7 +41,7 @@ const categoryList = ref();
 const currentTab = ref<NftCategory>();
 
 onMounted(async () => {
-  await getNftCategory();
+  getNftCategory();
   if (categoryList.value && categoryList.value.length > 0) {
     currentTab.value = categoryList.value[0];
   }

@@ -12,12 +12,12 @@
     <div class="h-3"></div>
     <div class="w-full h-px bg-gray-200"></div>
     <div class="h-10"></div>
-    <div class="photo-link p-7">
-      <div><img :src="nftInfo.image" /></div>
+    <div class="photo-link p-7 w-full h-full">
+      <div class="flex items-center justify-center"><img :src="nftInfo.image" /></div>
       <div class="h-10"></div>
       <div class="flex font-semibold text-2xl">{{ nftInfo.name }}</div>
       <div class="h-5"></div>
-      <div class="flex text-xl">{{ nftInfo.description }}</div>
+      <div class="flex text-xl text-left">{{ nftInfo.description }}</div>
     </div>
   </div>
 </template>

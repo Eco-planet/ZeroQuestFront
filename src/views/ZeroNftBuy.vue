@@ -20,7 +20,7 @@
       <div class="grid">
         <div class="p-7 shadow-nft">
           <div class="text-left">
-            <div class="w-full h-full relative">
+            <div class="w-full h-full relative flex items-center justify-center">
               <img :src="nowNft?.image">
             </div>
             <div class="mt-10 text-3xl font-semibold text-black">{{nowNft?.name}}</div>
@@ -83,7 +83,7 @@
         <div class="p-4 text-xl font-medium text-black">모바일 NFT</div>
       </div>
     </div> -->
-    <div class="h-40"></div>
+    <div class="h-96"></div>
   </div>
 </template>
   
