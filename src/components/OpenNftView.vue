@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col">
-    <div><img class="nftImg" :src="nftInfo.image" alt="" @click="goNftDetail(nftCard.nftId)"></div>
+    <div><img class="nftImg" :src="nftInfo.image" alt="" @click="goNftDetail(nftCard.nftId, nftCard.tokenId)"></div>
     <div v-if="nftCard.enable === 1" class="flex justify-center items-center">
       <div class="pt-2 w-full text-center text-xl nftCardLife">
         {{ nftCard.balance }} / {{ nftInfo.metaData.maxLife }}
@@ -42,7 +42,7 @@ const emit = defineEmits([
 const { nftCard, nftInfo } = toRefs(props);
 
 watch(nftCard, (val) => {
-  console.log("enable nftCard");
+  //console.log("enable nftCard");
 }, { immediate: false, deep: true });
 
 const updateNftEnable = (enable: Number) => {
@@ -58,8 +58,8 @@ const updateNftEnable = (enable: Number) => {
   });
 };
 
-const goNftDetail = (nftId: number) => {
-  router.push({ name: 'onft-detail', params: { nftId } });
+const goNftDetail = (nftId: number, tokenId: number) => {
+  router.push({ name: 'onft-detail', params: { nftId, tokenId } });
 };
 </script>
 
