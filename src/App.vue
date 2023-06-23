@@ -27,7 +27,6 @@ import { onMounted } from "vue";
 const { t } = useI18n();
 
 onMounted(() => {
-  console.log('app');
   if (store.getters["auth/getTokenInfos"] === undefined || store.getters["auth/getTokenInfos"] === "") {
     http.get("/api/tokenInfos", {
       params: {

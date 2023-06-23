@@ -19,7 +19,8 @@
     <div class="h-10"></div>
     <div class="w-full grid grid-cols-3 gap-card">
       <template v-for="item in myNftList" :key="item.tokenId">
-        <MyNftCard :nftCard="item" :nftInfo="nftList[item.nftId]" @updateEnable="getMyNftList" />
+        <MyNftCard :nftCard="item" :nftInfo="nftList[item.nftId]" @updateEnable="toggleNft" />
+        <!-- <MyNftCard :nftCard="item" :nftInfo="nftList[item.nftId]" @updateEnable="getMyNftList" /> -->
       </template>
     </div>
     <div class="h-10"></div>
@@ -66,6 +67,24 @@ const getMyNftList = () => {
   });
 };
 
+const toggleNft = () => {
+  const idx = store.state.nftIdx;
+
+  const enableType = myNftList.value[idx].enable;
+  const enable = enableType == 0 ? 1 : 0;
+
+  if (enable == 0) {
+    http.post("/api/nft/enableNft", {
+      'symbol': myNftList.value[idx].symbol,
+      'tokenId': myNftList.value[idx].tokenId,
+      'enable': enable,
+    })
+    .then((response) => {
+      getMyNftList();
+    });
+  }
+};
+
 const closeModal = () => {
   store.state.isPopup = false;
 };
@@ -74,28 +93,42 @@ const gameInstall = (type: string) => {
   if (type === 'install') {
     const idx = store.state.nftIdx;
 
-    http.get("/api/quest/gametoken", {
-      params: {
-        symbol: myNftList.value[idx].symbol,
-        nftId: store.state.nftId,
-        tokenId: myNftList.value[idx].tokenId,
-      }
-    })
-    .then((response) => {
-      let deepLink = '';
+    const enableType = myNftList.value[idx].enable;
+    const enable = enableType == 0 ? 1 : 0;
 
-      if(navigator.userAgent.toLowerCase().indexOf("android") > -1){
-        deepLink = nftList[store.state.nftId].and_deeplink;
-      } else if(navigator.userAgent.toLowerCase().indexOf("iphone") > -1){
-        deepLink = nftList[store.state.nftId].ios_deeplink;
-      }
+    if (enable == 1) {
+      http.post("/api/nft/enableNft", {
+        'symbol': myNftList.value[idx].symbol,
+        'tokenId': myNftList.value[idx].tokenId,
+        'enable': enable,
+      })
+      .then((response) => {
+        getMyNftList();
 
-      window.open(deepLink + '?token=' + response.data.data.gameToken + '&name=' + store.getters["auth/getUserName"] + '&email=' + store.getters["auth/getUserEmail"], '_blank');
-    });
+        http.get("/api/quest/gametoken", {
+          params: {
+            symbol: myNftList.value[idx].symbol,
+            nftId: store.state.nftId,
+            tokenId: myNftList.value[idx].tokenId,
+          }
+        })
+        .then((response) => {
+          let deepLink = '';
+
+          if(navigator.userAgent.toLowerCase().indexOf("android") > -1){
+            deepLink = nftList[store.state.nftId].and_deeplink;
+          } else if(navigator.userAgent.toLowerCase().indexOf("iphone") > -1){
+            deepLink = nftList[store.state.nftId].ios_deeplink;
+          }
+
+          window.open(deepLink + '?token=' + response.data.data.gameToken + '&name=' + store.getters["auth/getUserName"] + '&email=' + store.getters["auth/getUserEmail"], '_blank');
+        });
+      });
+    }
   } else if (type === '1') {
-    window.open('https://smartrecycle.apk', '_blank');
+    window.open('https://tempdownload0623.s3.ap-northeast-2.amazonaws.com/smartrecycle.apk', '_blank');
   } else if (type === '2') {
-    window.open('https://stepup.apk', '_blank');
+    window.open('https://tempdownload0623.s3.ap-northeast-2.amazonaws.com/stepup.apk', '_blank');
   }
 }
 
