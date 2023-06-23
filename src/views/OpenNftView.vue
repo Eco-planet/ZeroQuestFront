@@ -93,7 +93,7 @@ const gameInstall = (type: string) => {
         deepLink = nftList[store.state.nftId].ios_deeplink;
       }
 
-      window.open(deepLink + '/?token=' + response.data.data.gameToken + '&name=' + store.getters["auth/getUserName"] + '&email=' + store.getters["auth/getUserEmail"], '_blank');
+      window.open(deepLink + '?token=' + response.data.data.gameToken + '&name=' + store.getters["auth/getUserName"] + '&email=' + store.getters["auth/getUserEmail"], '_blank');
     });
   }
 }
