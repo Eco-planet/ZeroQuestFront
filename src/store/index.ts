@@ -17,6 +17,8 @@ export default createStore({
     popupType: '',
     isBalanceUpdate: true,
     errorCount: 0,
+    nftId: 0,
+    nftIdx: 0,
   },
   getters: {},
   mutations: {},

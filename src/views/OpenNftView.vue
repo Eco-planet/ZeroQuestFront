@@ -26,6 +26,7 @@
     <div class="h-10"></div>
     <div class="h-10"></div>
    </div>
+   <Modal :visible="store.state.isPopup" @hide="closeModal" @resData="gameInstall" />
 </template>
 
 <script lang="ts" setup>
@@ -53,9 +54,49 @@ const getMyNftList = () => {
     }
   })
   .then((response) => {
-    myNftList.value = response.data.data;
+    const myNftData = response.data.data;
+
+    let myList: any = {};
+
+    myNftData.forEach((res: any) => {
+      myList[res.idx] = res;
+    });
+
+    myNftList.value = myList;
   });
 };
+
+const closeModal = () => {
+  store.state.isPopup = false;
+};
+
+const gameInstall = (type: string) => {
+  if (type === 'yes') {
+    const idx = store.state.nftIdx;
+
+    http.get("/api/quest/gametoken", {
+      params: {
+        symbol: myNftList.value[idx].symbol,
+        nftId: store.state.nftId,
+        tokenId: myNftList.value[idx].tokenId,
+      }
+    })
+    .then((response) => {
+      let deepLink = '';
+
+      if(navigator.userAgent.toLowerCase().indexOf("android") > -1){
+        console.log('aos');
+        console.log(nftList[store.state.nftId].and_deeplink);
+        deepLink = nftList[store.state.nftId].and_deeplink;
+      } else if(navigator.userAgent.toLowerCase().indexOf("iphone") > -1){
+        console.log('ios');
+        deepLink = nftList[store.state.nftId].ios_deeplink;
+      }
+
+      window.open(deepLink + '/?token=' + response.data.data.gameToken + '&name=' + store.getters["auth/getUserName"] + '&email=' + store.getters["auth/getUserEmail"], '_blank');
+    });
+  }
+}
 </script>
 
 <style lang="scss">
@@ -65,6 +106,14 @@ const getMyNftList = () => {
   object-fit: contain;
   object-position: center top;
   height: 100px;
+}
+
+.nftDisable {
+  background-color: rgba(0, 0, 0, 0.2);
+  width:100%;
+  height:100%;
+  height: 100px;
+  margin-top: -100px;
 }
 
 .nftOn  {

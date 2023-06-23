@@ -121,7 +121,7 @@ const checkError = (status: number, code: number) => {
     popupTitle.value = errorMsg(status, code);
     store.state.isPopup = true;
   } else if (status === 401 || status === 403 || status === 300) {
-    store.commit("auth/setInitToken");
+    store.commit("auth/setClearToken");
 
     router.push("/");
   }

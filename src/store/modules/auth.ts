@@ -13,6 +13,8 @@ export default {
     tokenInfos: sessionStorage.getItem("tokenInfos") || "",
     scanners: sessionStorage.getItem("scanners") || "",
     userId: sessionStorage.getItem("userId") || "",
+    userName: sessionStorage.getItem("userName") || "",
+    userEmail: sessionStorage.getItem("userEmail") || "",
     privateKey: sessionStorage.getItem("privateKey") || "",
     address: sessionStorage.getItem("address") || "",
     balances: sessionStorage.getItem("balances") || "",
@@ -50,6 +52,12 @@ export default {
     },
     getUserId: (state: Nullable) => {
       return state.userId;
+    },
+    getUserName: (state: Nullable) => {
+      return state.userName;
+    },
+    getUserEmail: (state: Nullable) => {
+      return state.userEmail;
     },
     getPrivateKey: (state: Nullable) => {
       return state.privateKey;
@@ -90,6 +98,12 @@ export default {
     },
   },
   mutations: {
+    setClearToken(state: Nullable) {
+      state.expireAccessToken = 0;
+      state.expireRefreshToken = 0;
+
+      sessionStorage.clear();
+    },
     setInitToken(state: Nullable) {
       state.expireAccessToken = 0;
       state.expireRefreshToken = 0;
@@ -129,6 +143,16 @@ export default {
       state.userId = userId;
 
       sessionStorage.setItem("userId", userId);
+    },
+    setUserName(state: Nullable, { userName }: Nullable) {
+      state.userName = userName;
+
+      sessionStorage.setItem("userName", userName);
+    },
+    setUserEmail(state: Nullable, { userEmail }: Nullable) {
+      state.userEmail = userEmail;
+
+      sessionStorage.setItem("userEmail", userEmail);
     },
     setPrivateKey(state: Nullable, { privateKey }: Nullable) {
       state.privateKey = privateKey;

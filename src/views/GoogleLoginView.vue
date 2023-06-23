@@ -86,6 +86,9 @@ const login = (userData: any): void => {
     timestamp: Date.now(),
   };
 
+  store.commit("auth/setUserName", { userName: userData.name });
+  store.commit("auth/setUserEmail", { userEmail: userData.email });
+
   const json = JSON.stringify(loginToken);
   const encode = openSSLCrypto.encode(json);
 

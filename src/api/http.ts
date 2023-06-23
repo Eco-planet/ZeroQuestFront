@@ -56,7 +56,7 @@ instance.interceptors.response.use(
         } 
       }).catch((err) => {
         //console.log(err)
-        store.commit("auth/setInitToken");
+        store.commit("auth/setClearToken");
 
         router.push("/");
       })
@@ -67,7 +67,7 @@ instance.interceptors.response.use(
     }, 1000);
 
     if (errorRes.status === 401) {
-      store.commit("auth/setInitToken");
+      store.commit("auth/setClearToken");
 
       router.push("/");
     }

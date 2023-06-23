@@ -1,25 +1,30 @@
 <template>
   <div class="flex flex-col">
-    <div><img class="nftImg" :src="nftInfo.image" alt="" @click="goNftDetail(nftCard.nftId, nftCard.tokenId)"></div>
-    <div v-if="nftCard.enable === 1" class="flex justify-center items-center">
+    <div class="flex flex-col">
+      <div><img class="nftImg" :src="nftInfo.image" alt="" @click="goNftDetail(nftCard.nftId, nftCard.tokenId)"></div>
+      <div v-if="nftCard.enable === 0" class="nftDisable" @click="goNftDetail(nftCard.nftId, nftCard.tokenId)"></div>
+    </div>
+    <div v-if="nftCard.enable === 1" class="flex justify-center items-center" @click="goNftDetail(nftCard.nftId, nftCard.tokenId)">
       <div class="pt-2 w-full text-center text-xl nftCardLife">
         {{ nftCard.balance }} / {{ nftInfo.metaData.maxLife }}
       </div>
     </div>
-    <div class="h-2"></div>
+    <div class="h-3"></div>
     <div class="text-lg text-center">{{ nftInfo.name }}</div>
+    <div class="h-1"></div>
     <div class="flex justify-center items-center">
       <template v-if="nftCard.enable === 0">
-        <div class="wp-30 font-semibold text-center text-white rounded-full nftOff" @click="updateNftEnable(1)">OFF</div>
+        <div class="wp-40 p-1 font-semibold text-center text-white rounded-full nftOff" @click="updateNftEnable(1)">OFF</div>
       </template>
-      <template v-if="nftCard.enable === 1">
-        <div class="wp-30 font-semibold text-center text-white rounded-full nftOn" @click="updateNftEnable(0)">ON</div>
+      <template v-else>
+        <div class="wp-40 p-1 font-semibold text-center text-white rounded-full nftOn" @click="updateNftEnable(0)">ON</div>
       </template>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
+import store from "@/store";
 import router from "@/router";
 import http from "@/api/http";
 import { ref, toRefs, watch } from "vue";
@@ -46,6 +51,13 @@ watch(nftCard, (val) => {
 }, { immediate: false, deep: true });
 
 const updateNftEnable = (enable: Number) => {
+  if (enable === 1) {
+    store.state.popupType = 'game_install';
+    store.state.nftId = nftCard.value.nftId;
+    store.state.nftIdx = nftCard.value.idx;
+    store.state.isPopup = true;  
+  }
+
   http.post("/api/nft/enableNft", {
     'symbol': nftInfo.value.symbol,
     'tokenId': nftCard.value.tokenId,

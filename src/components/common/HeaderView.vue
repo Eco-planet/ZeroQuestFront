@@ -62,7 +62,7 @@ const menuVisible = ref(false);
 const aniVisible = ref(false);
 
 const forceLogout = () => {
-  store.commit("auth/setInitToken");
+  store.commit("auth/setClearToken");
 
   if (store.state.showMode === 'webview') {
     window.Java.jsSignOut();

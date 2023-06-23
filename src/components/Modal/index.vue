@@ -95,7 +95,19 @@
             </div>
           </div>
         </template>
-        <template v-if="popupType !== 'qr_code' && popupType !== 'withdraw_pass' && popupType !== 'send_coin'">
+        <template v-if="popupType === 'game_install'">
+          <div class="flex flex-col justify-center items-center">
+            <div class="h-5"></div>
+            <div class="text-2xl text-center">NFT 를 활성화하기 위해서는<br/>{{ nftList[store.state.nftId].name }} App 을<br/>설치해야 합니다.</div>
+            <div class="h-10"></div>
+            <div class="flex items-center justify-center"><img :src="nftList[store.state.nftId].image" /></div>
+            <div class="h-10"></div>
+            <div class="text-xl text-center">연동되는 어플리케이션은 설치 후 동일한<br/>구글 로그인을 사용해야 합니다.</div>
+            <div class="h-10"></div>
+            <button class="wp-60 p-2 font-semibold text-2xl text-white game-btn" @click="resData('yes')">설치하기</button>
+          </div>
+        </template>
+        <template v-if="popupType !== 'qr_code' && popupType !== 'withdraw_pass' && popupType !== 'send_coin' && popupType !== 'game_install'">
           <div><img class="error-icon" src="@/assets/images/icon_error.png" /></div>
           <div class="h-10"></div>
           <div class="text-2xl text-center">{{ t(showTitle) }}</div>
@@ -175,6 +187,8 @@ const withdrawAddress = ref("");
 const withdrawCount = ref();
 const withdrawPass = ref("");
 const withdrawMsg = ref("");
+
+const nftList = store.getters["auth/getNftList"];
 
 const popupType = ref("");
 
@@ -375,6 +389,11 @@ const doSendCoin = () => {
 
     .pass-bg {
       background-color: #0c5c26;
+    }
+
+    .game-btn {
+      background-color: #0c5c26;
+      border-radius: 5px;
     }
   }
 }
