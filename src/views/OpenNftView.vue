@@ -71,7 +71,7 @@ const closeModal = () => {
 };
 
 const gameInstall = (type: string) => {
-  if (type === 'yes') {
+  if (type === 'install') {
     const idx = store.state.nftIdx;
 
     http.get("/api/quest/gametoken", {
@@ -85,18 +85,21 @@ const gameInstall = (type: string) => {
       let deepLink = '';
 
       if(navigator.userAgent.toLowerCase().indexOf("android") > -1){
-        console.log('aos');
-        console.log(nftList[store.state.nftId].and_deeplink);
         deepLink = nftList[store.state.nftId].and_deeplink;
       } else if(navigator.userAgent.toLowerCase().indexOf("iphone") > -1){
-        console.log('ios');
         deepLink = nftList[store.state.nftId].ios_deeplink;
       }
 
       window.open(deepLink + '?token=' + response.data.data.gameToken + '&name=' + store.getters["auth/getUserName"] + '&email=' + store.getters["auth/getUserEmail"], '_blank');
     });
+  } else if (type === '1') {
+    window.open('https://smartrecycle.apk', '_blank');
+  } else if (type === '2') {
+    window.open('https://stepup.apk', '_blank');
   }
 }
+
+
 </script>
 
 <style lang="scss">

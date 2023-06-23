@@ -104,7 +104,11 @@
             <div class="h-10"></div>
             <div class="text-xl text-center">연동되는 어플리케이션은 설치 후 동일한<br/>구글 로그인을 사용해야 합니다.</div>
             <div class="h-10"></div>
-            <button class="wp-60 p-2 font-semibold text-2xl text-white game-btn" @click="resData('yes')">설치하기</button>
+            <div class="w-full flex justify-center items-center">
+              <button class="wp-40 p-2 font-semibold text-2xl text-white down-btn" @click="resData(store.state.nftId.toString());">다운로드</button>
+              <div class="wp-20"></div>
+              <button class="wp-40 p-2 font-semibold text-2xl text-white game-btn" @click="resData('install')">설치하기</button>
+            </div>
           </div>
         </template>
         <template v-if="popupType !== 'qr_code' && popupType !== 'withdraw_pass' && popupType !== 'send_coin' && popupType !== 'game_install'">
@@ -389,6 +393,11 @@ const doSendCoin = () => {
 
     .pass-bg {
       background-color: #0c5c26;
+    }
+
+    .down-btn {
+      background-color: #437af0;
+      border-radius: 5px;
     }
 
     .game-btn {

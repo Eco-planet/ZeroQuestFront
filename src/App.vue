@@ -27,7 +27,8 @@ import { onMounted } from "vue";
 const { t } = useI18n();
 
 onMounted(() => {
-  if (store.getters["auth/getTokenInfos"] === "") {
+  console.log('app');
+  if (store.getters["auth/getTokenInfos"] === undefined || store.getters["auth/getTokenInfos"] === "") {
     http.get("/api/tokenInfos", {
       params: {
         'currency': 'USDT',
@@ -53,7 +54,7 @@ onMounted(() => {
     });
   };
 
-  if (store.getters["auth/getNftList"] === "") {
+  if (store.getters["auth/getNftList"] === undefined || store.getters["auth/getNftList"] === "") {
     http.get("/api/nft/zeroNft", {
       params: {}
     })
@@ -71,7 +72,7 @@ onMounted(() => {
     });
   };
 
-  if (store.getters["auth/getBannerList"] === "") {
+  if (store.getters["auth/getBannerList"] === undefined || store.getters["auth/getBannerList"] === "") {
     http.get("/api/banners", {
       params: {}
     })

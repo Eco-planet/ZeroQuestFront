@@ -102,7 +102,15 @@ export default {
       state.expireAccessToken = 0;
       state.expireRefreshToken = 0;
 
+      let orgTokenInfos = state.tokenInfos;
+      let orgNftList = state.nftList;
+      let orgBannerList = state.bannerList;
+
       sessionStorage.clear();
+
+      sessionStorage.setItem("tokenInfos", orgTokenInfos);
+      sessionStorage.setItem("nftList", orgNftList);
+      sessionStorage.setItem("bannerList", orgBannerList);
     },
     setInitToken(state: Nullable) {
       state.expireAccessToken = 0;
