@@ -19,15 +19,14 @@
     <div class="h-10"></div>
     <div class="w-full grid grid-cols-3 gap-card">
       <template v-for="item in myNftList" :key="item.tokenId">
-        <MyNftCard :nftCard="item" :nftInfo="nftList[item.nftId]" @updateEnable="toggleNft" />
-        <!-- <MyNftCard :nftCard="item" :nftInfo="nftList[item.nftId]" @updateEnable="getMyNftList" /> -->
+        <MyNftCard :nftCard="item" :nftInfo="nftList[item.nftId]" />
       </template>
     </div>
     <div class="h-10"></div>
     <div class="h-10"></div>
     <div class="h-10"></div>
    </div>
-   <Modal :visible="store.state.isPopup" @hide="closeModal" @resData="gameInstall" />
+   <Modal :visible="store.state.isPopup" @hide="closeModal" @resData="checkData" />
 </template>
 
 <script lang="ts" setup>
@@ -67,72 +66,82 @@ const getMyNftList = () => {
   });
 };
 
-const toggleNft = () => {
-  const idx = store.state.nftIdx;
-
-  const enableType = myNftList.value[idx].enable;
-  const enable = enableType == 0 ? 1 : 0;
-
-  if (enable == 0) {
-    http.post("/api/nft/enableNft", {
-      'symbol': myNftList.value[idx].symbol,
-      'tokenId': myNftList.value[idx].tokenId,
-      'enable': enable,
-    })
-    .then((response) => {
-      getMyNftList();
-    });
-  }
+const showPopup = () => {
+  store.state.isPopup = true;
 };
 
 const closeModal = () => {
   store.state.isPopup = false;
 };
 
-const gameInstall = (type: string) => {
-  if (type === 'install') {
+const checkData = (type: String) => {
+  if (type === '1' || type === '2') {
+    gameDownload(type);
+  } else {
+    gameRun();
+  }
+};
+
+const gameDownload = (type: String) => {
     const idx = store.state.nftIdx;
-
     const enableType = myNftList.value[idx].enable;
-    const enable = enableType == 0 ? 1 : 0;
 
-    if (enable == 1) {
+    if (enableType == 0) {
       http.post("/api/nft/enableNft", {
         'symbol': myNftList.value[idx].symbol,
         'tokenId': myNftList.value[idx].tokenId,
-        'enable': enable,
+        'enable': 1,
       })
       .then((response) => {
         getMyNftList();
-
-        http.get("/api/quest/gametoken", {
-          params: {
-            symbol: myNftList.value[idx].symbol,
-            nftId: store.state.nftId,
-            tokenId: myNftList.value[idx].tokenId,
-          }
-        })
-        .then((response) => {
-          let deepLink = '';
-
-          if(navigator.userAgent.toLowerCase().indexOf("android") > -1){
-            deepLink = nftList[store.state.nftId].and_deeplink;
-          } else if(navigator.userAgent.toLowerCase().indexOf("iphone") > -1){
-            deepLink = nftList[store.state.nftId].ios_deeplink;
-          }
-
-          window.open(deepLink + '?token=' + response.data.data.gameToken + '&name=' + store.getters["auth/getUserName"] + '&email=' + store.getters["auth/getUserEmail"], '_blank');
-        });
-      });
+        gameDownUrl(type);
+     });
+    } else {
+      gameDownUrl(type);
     }
-  } else if (type === '1') {
+};
+
+const gameDownUrl = (type: String) => {
+  if (type === '1') {
     window.open('https://tempdownload0623.s3.ap-northeast-2.amazonaws.com/smartrecycle.apk', '_blank');
   } else if (type === '2') {
     window.open('https://tempdownload0623.s3.ap-northeast-2.amazonaws.com/stepup.apk', '_blank');
   }
-}
+};
 
+const gameRun = () => {
+  const idx = store.state.nftIdx;
 
+  let nftType = nftList[store.state.nftId].type;
+  let linkUrl = '';
+
+  if (nftType == 1) {
+    linkUrl = "/api/quest/apptoken"
+  } else if (nftType == 2) {
+    linkUrl = "/api/quest/gametoken"
+  } else {
+    return false;
+  }
+
+  http.get(linkUrl, {
+    params: {
+      symbol: myNftList.value[idx].symbol,
+      nftId: store.state.nftId,
+      tokenId: myNftList.value[idx].tokenId,
+    }
+  })
+  .then((response) => {
+    let deepLink = '';
+
+    if (navigator.userAgent.toLowerCase().indexOf("android") > -1) {
+      deepLink = nftList[store.state.nftId].and_deeplink;
+    } else if (navigator.userAgent.toLowerCase().indexOf("iphone") > -1) {
+      deepLink = nftList[store.state.nftId].ios_deeplink;
+    }
+
+    window.open(deepLink + '?token=' + response.data.data.gameToken + '&name=' + store.getters["auth/getUserName"] + '&email=' + store.getters["auth/getUserEmail"] + '&uid=' + store.getters["auth/getUserId"], '_blank');
+  });
+};
 </script>
 
 <style lang="scss">

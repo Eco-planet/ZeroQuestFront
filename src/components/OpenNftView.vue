@@ -54,21 +54,8 @@ const updateNftEnable = (enable: Number) => {
   store.state.nftId = nftCard.value.nftId;
   store.state.nftIdx = nftCard.value.idx;
 
-  if (enable === 1) {
-    store.state.popupType = 'game_install';
-    store.state.isPopup = true;  
-  }
-
-  // http.post("/api/nft/enableNft", {
-  //   'symbol': nftInfo.value.symbol,
-  //   'tokenId': nftCard.value.tokenId,
-  //   'enable': enable,
-  // })
-  // .then((response) => {
-  //   if (response.data.status === 1) {
-  //     emit("updateEnable");
-  //   }
-  // });
+  store.state.popupType = 'game_install';
+  store.state.isPopup = true;  
 
   emit("updateEnable");
 };
