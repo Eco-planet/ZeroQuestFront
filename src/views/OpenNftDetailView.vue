@@ -79,7 +79,7 @@ const getEsgpBalance = () => {
 const getQuestReward = () => {
   http.get("/api/quest/reward", {
     params: {
-      symbol: 'ESGP',
+      symbol: nftList[nftId].symbol,
       tokenId,
       nftId,
     }

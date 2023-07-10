@@ -105,7 +105,7 @@
             <div class="text-xl text-center">연동되는 어플리케이션은 설치 후 동일한<br/>구글 로그인을 사용해야 합니다.</div>
             <div class="h-10"></div>
             <div class="w-full flex justify-center items-center">
-              <button class="wp-40 p-2 font-semibold text-2xl text-white down-btn" @click="resData(store.state.nftId.toString());">다운로드</button>
+              <button class="wp-40 p-2 font-semibold text-2xl text-white down-btn" @click="resData(store.state.nftId.toString());">실행하기</button>
               <div class="wp-20"></div>
               <button class="wp-40 p-2 font-semibold text-2xl text-white game-btn" @click="resData('install')">설치하기</button>
             </div>

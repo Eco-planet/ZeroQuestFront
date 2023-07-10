@@ -46,7 +46,7 @@
     <div class="flex">
       <div class="wp-40 flex flex-col">
         <div class="flex justify-end items-center">
-          <div class="wp-50"><input type="number" class="w-36 font-semibold text-xl" v-model="swapEsgp" style="text-align:right" /></div>
+          <div class="wp-50"><input type="number" class="w-36 font-semibold text-xl" v-model="swapEsgp" :onKeyup="initSwapEsgp" style="text-align:right" /></div>
           <div class="wp-50 flex justify-end items-center text-gray-400">ESG Point</div>
         </div>
         <div class="h-px h-5 bg-gray-200"></div>
@@ -77,7 +77,7 @@
     </div>
     <div class="h-10"></div>
     <div class="flex justify-center items-center">
-      <button class="wp-40 p-2 font-semibold text-2xl text-white swap-btn" @click="getStatusCheck('swap','')">SWAP</button>
+      <button :class="[swapEsg > 0 ? 'wp-40 p-2 font-semibold text-2xl text-white swap-btn' : 'wp-40 p-2 font-semibold text-2xl text-white swap-btn-disable']" @click="getStatusCheck('swap','')">SWAP</button>
     </div>
     <div class="h-10"></div>
   </div>
@@ -161,6 +161,8 @@ const updateBalance = () => {
 };
 
 const getStatusCheck = (type: string, symbol: string) => {
+  if (swapEsg.value <= 0) return false;
+
   // 처리중인 SendCoin/Swap 이 있는지 확인
   http.get("/api/statusCheck", {
     params: {
@@ -307,6 +309,10 @@ const sendSwap = () => {
     checkError(error.response.status, error.response.data.errorCode);
   });
 };
+
+const initSwapEsgp = () => {
+  swapEsg.value = 0;
+}
 </script>
 
 <style lang="scss">
@@ -356,6 +362,11 @@ const sendSwap = () => {
 
 .swap-btn {
   background-color: #0c5c26;
+  border-radius: 5px;
+}
+
+.swap-btn-disable {
+  background-color: gray;
   border-radius: 5px;
 }
 </style>

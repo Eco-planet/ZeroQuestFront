@@ -6,22 +6,22 @@ import openSSLCrypto from "@/utils/openSSLCrypto";
 export default {
   namespaced: true,
   state: {
-    accessToken: sessionStorage.getItem("accessToken") || "",
-    expireAccessToken: sessionStorage.getItem("expireAccessToken") || 0,
-    refreshToken: sessionStorage.getItem("refreshToken") || "",
-    expireRefreshToken: sessionStorage.getItem("expireRefreshToken") || 0,
-    tokenInfos: sessionStorage.getItem("tokenInfos") || "",
-    scanners: sessionStorage.getItem("scanners") || "",
-    userId: sessionStorage.getItem("userId") || "",
-    userName: sessionStorage.getItem("userName") || "",
-    userEmail: sessionStorage.getItem("userEmail") || "",
-    privateKey: sessionStorage.getItem("privateKey") || "",
-    address: sessionStorage.getItem("address") || "",
-    balances: sessionStorage.getItem("balances") || "",
-    withdrawPw: sessionStorage.getItem("withdrawPw") || false,
-    nftList: sessionStorage.getItem("nftList") || "",
-    bannerList: sessionStorage.getItem("bannerList") || "",
-    terms: sessionStorage.getItem("terms") || "",
+    accessToken: localStorage.getItem("accessToken") || "",
+    expireAccessToken: localStorage.getItem("expireAccessToken") || 0,
+    refreshToken: localStorage.getItem("refreshToken") || "",
+    expireRefreshToken: localStorage.getItem("expireRefreshToken") || 0,
+    tokenInfos: localStorage.getItem("tokenInfos") || "",
+    scanners: localStorage.getItem("scanners") || "",
+    userId: localStorage.getItem("userId") || "",
+    userName: localStorage.getItem("userName") || "",
+    userEmail: localStorage.getItem("userEmail") || "",
+    privateKey: localStorage.getItem("privateKey") || "",
+    address: localStorage.getItem("address") || "",
+    balances: localStorage.getItem("balances") || "",
+    withdrawPw: localStorage.getItem("withdrawPw") || false,
+    nftList: localStorage.getItem("nftList") || "",
+    bannerList: localStorage.getItem("bannerList") || "",
+    terms: localStorage.getItem("terms") || "",
   },
   getters: {
     getAccessToken: (state: Nullable) => {
@@ -106,18 +106,18 @@ export default {
       let orgNftList = state.nftList;
       let orgBannerList = state.bannerList;
 
-      sessionStorage.clear();
+      localStorage.clear();
 
-      sessionStorage.setItem("tokenInfos", orgTokenInfos);
-      sessionStorage.setItem("nftList", orgNftList);
-      sessionStorage.setItem("bannerList", orgBannerList);
+      localStorage.setItem("tokenInfos", orgTokenInfos);
+      localStorage.setItem("nftList", orgNftList);
+      localStorage.setItem("bannerList", orgBannerList);
     },
     setInitToken(state: Nullable) {
       state.expireAccessToken = 0;
       state.expireRefreshToken = 0;
 
-      sessionStorage.setItem("expireAccessToken", '0');
-      sessionStorage.setItem("expireRefreshToken", '0');
+      localStorage.setItem("expireAccessToken", '0');
+      localStorage.setItem("expireRefreshToken", '0');
     },
     setAccessToken(state: Nullable, { token, expireAt }: Nullable) {
       const currentDate = new Date().getTime() / 1000;
@@ -125,8 +125,8 @@ export default {
       state.accessToken = token;
       state.expireAccessToken = currentDate + expireAt;
 
-      sessionStorage.setItem("accessToken", token);
-      sessionStorage.setItem("expireAccessToken", currentDate + expireAt);
+      localStorage.setItem("accessToken", token);
+      localStorage.setItem("expireAccessToken", currentDate + expireAt);
     },
     setRefreshToken(state: Nullable, { token, expireAt }: Nullable) {
       const currentDate = new Date().getTime() / 1000;
@@ -134,68 +134,68 @@ export default {
       state.refreshToken = token;
       state.expireRefreshToken = currentDate + expireAt;
 
-      sessionStorage.setItem("refreshToken", token);
-      sessionStorage.setItem("expireRefreshToken", currentDate + expireAt);
+      localStorage.setItem("refreshToken", token);
+      localStorage.setItem("expireRefreshToken", currentDate + expireAt);
     },
     setTokenInfos(state: Nullable, { info }: Nullable) {
       state.tokenInfos = JSON.stringify(info);
 
-      sessionStorage.setItem("tokenInfos", JSON.stringify(info));
+      localStorage.setItem("tokenInfos", JSON.stringify(info));
     },
     setScanners(state: Nullable, { info }: Nullable) {
       state.scanners = JSON.stringify(info);
 
-      sessionStorage.setItem("scanners", JSON.stringify(info));
+      localStorage.setItem("scanners", JSON.stringify(info));
     },
     setUserId(state: Nullable, { userId }: Nullable) {
       state.userId = userId;
 
-      sessionStorage.setItem("userId", userId);
+      localStorage.setItem("userId", userId);
     },
     setUserName(state: Nullable, { userName }: Nullable) {
       state.userName = userName;
 
-      sessionStorage.setItem("userName", userName);
+      localStorage.setItem("userName", userName);
     },
     setUserEmail(state: Nullable, { userEmail }: Nullable) {
       state.userEmail = userEmail;
 
-      sessionStorage.setItem("userEmail", userEmail);
+      localStorage.setItem("userEmail", userEmail);
     },
     setPrivateKey(state: Nullable, { privateKey }: Nullable) {
       state.privateKey = privateKey;
 
-      sessionStorage.setItem("privateKey", privateKey);
+      localStorage.setItem("privateKey", privateKey);
     },
     setAddress(state: Nullable, { address }: Nullable) {
       state.address = address;
 
-      sessionStorage.setItem("address", address);
+      localStorage.setItem("address", address);
     },
     setBalances(state: Nullable, { info }: Nullable) {
       state.balances = JSON.stringify(info);
 
-      sessionStorage.setItem("balances", JSON.stringify(info));
+      localStorage.setItem("balances", JSON.stringify(info));
     },
     setWithdrawPw(state: Nullable, { pw }: Nullable) {
       state.withdrawPw = pw;
 
-      sessionStorage.setItem("withdrawPw", pw);
+      localStorage.setItem("withdrawPw", pw);
     },
     setNftList(state: Nullable, { info }: Nullable) {
       state.nftList = JSON.stringify(info);
 
-      sessionStorage.setItem("nftList", JSON.stringify(info));
+      localStorage.setItem("nftList", JSON.stringify(info));
     },
     setBannerList(state: Nullable, { info }: Nullable) {
       state.bannerList = JSON.stringify(info);
 
-      sessionStorage.setItem("bannerList", JSON.stringify(info));
+      localStorage.setItem("bannerList", JSON.stringify(info));
     },
     setTerms(state: Nullable, { terms }: Nullable) {
       state.terms = terms;
 
-      sessionStorage.setItem("terms", terms);
+      localStorage.setItem("terms", terms);
     },
   },
   actions: {
