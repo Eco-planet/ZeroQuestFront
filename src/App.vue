@@ -64,7 +64,12 @@ onMounted(() => {
 
       nftListData.forEach((res: any) => {
         nftList[res.idx] = res;
-        nftList[res.idx]['metaData'] = JSON.parse(res.metaData);
+
+        if (res.metaData !== '' && res.metaData !== undefined) {
+          nftList[res.idx]['metaData'] = JSON.parse(res.metaData);
+        } else {
+          nftList[res.idx]['metaData'] = '';
+        }
       });
 
       store.commit("auth/setNftList", { 'info': nftList });

@@ -234,10 +234,10 @@ export default {
             terms: response.data.data.terms,
           });
  
-          if (response.data.data.terms === 1) {
-            router.push("/" + process.env.VUE_APP_FIRST_URL);
-          } else {
+          if (response.data.data.terms == 0) {
             router.push("/terms");
+          } else {
+            router.push("/" + process.env.VUE_APP_FIRST_URL);
           }
         }
       } catch (e) {

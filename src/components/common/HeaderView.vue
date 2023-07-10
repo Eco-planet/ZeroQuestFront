@@ -5,9 +5,9 @@
       <div class="wp-40 flex justify-center"><h1><a href="/"><img src="@/assets/images/logo.png" alt="ZeroQuest"></a></h1></div>
       <div class="wp-30 login-box">
         <div class="flex justify-end items-center">
-          <div><Locale /></div>
+          <!-- <div><Locale /></div> -->
           <div class="w-5"></div>
-          <div><button type="button" class="login-id" @click="forceLogout">ID</button></div>
+          <div><button type="button" class="login-id" @click="moveZq">ID</button></div>
         </div>
       </div>
     </div>
@@ -71,6 +71,10 @@ const forceLogout = () => {
   } else {
     router.push("/");
   }
+};
+
+const moveZq = () => {
+  router.push('myzq');
 };
 
 const showModal = () => {

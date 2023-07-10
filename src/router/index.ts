@@ -80,8 +80,8 @@ router.beforeEach(async (to: Nullable, from: Nullable, next: Nullable) => {
     if (currentDate <= expireRefreshToken) {
       router.push("/" + process.env.VUE_APP_FIRST_URL);
     }
-  } else if (to.name !== "home" && to.name !== "terms" && store.getters["auth/getTerms"] != 1) {
-      router.push("/terms");
+  } else if (to.name !== "home" && to.name !== "terms" && store.getters["auth/getTerms"] != '' && store.getters["auth/getTerms"] == 0) {
+    router.push("/terms");
   }
 
   if (to.query.locale) {
