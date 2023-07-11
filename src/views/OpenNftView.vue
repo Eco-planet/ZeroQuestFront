@@ -19,7 +19,7 @@
     <div class="h-10"></div>
     <div class="w-full grid grid-cols-3 gap-card">
       <template v-for="item in myNftList" :key="item.tokenId">
-        <MyNftCard :nftCard="item" :nftInfo="nftList[item.nftId]" />
+        <MyNftCard :nftCard="item" :nftInfo="nftList[item.nftId]" @updateRun="gameRun" @updateReward="gameReward" />
       </template>
     </div>
     <div class="h-10"></div>
@@ -142,6 +142,10 @@ const gameRun = () => {
 
     window.open(deepLink + '?token=' + response.data.data.gameToken + '&name=' + store.getters["auth/getUserName"] + '&email=' + store.getters["auth/getUserEmail"] + '&uid=' + store.getters["auth/getUserId"], '_blank');
   });
+};
+
+const gameReward = () => {
+
 };
 </script>
 

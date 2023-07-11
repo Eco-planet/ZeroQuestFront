@@ -13,7 +13,23 @@
     <div class="w-full h-px bg-gray-200"></div>
     <div class="h-10"></div>
     <div class="photo-link p-7 w-full h-full">
-      <div class="flex items-center justify-center"><img :src="nftInfo.image" /></div>
+      <div class="flex items-center justify-center" style="position:relative;">
+        <img :src="nftInfo.image" />
+        <div v-if="nftDetail === undefined || nftDetail.enable === 0" class="nftBg"></div>
+      </div>
+      <div class="h-10"></div>
+      <div class="flex justify-center items-center">
+        <template v-if="nftDetail !== undefined && nftDetail.enable === 0">
+          <div class="wp-40 p-3 font-semibold text-center text-white rounded-full nftOn" @click="updateNftEnable('INSTALL')">설치</div>
+          <div class="wp-10"></div>
+          <div class="wp-40 p-3 font-semibold text-center text-white rounded-full nftOn" @click="updateNftEnable('OFF')">OFF</div>
+        </template>
+        <template v-else>
+          <div class="wp-40 p-3 font-semibold text-center text-white rounded-full nftOn" @click="updateNftEnable('RUN')">실행</div>
+          <div class="wp-10"></div>
+          <div class="wp-40 p-3 font-semibold text-center text-white rounded-full nftOn" @click="updateNftEnable('OFF')">OFF</div>
+        </template>
+      </div>
       <div class="h-10"></div>
       <div class="flex font-semibold text-2xl">{{ nftInfo.name }}</div>
       <template v-if="questRewards !== undefined && questRewards !== null && Object.keys(questRewards).length > 0">
@@ -45,6 +61,7 @@
     <div class="h-20"></div>
     <div class="h-20"></div>
   </div>
+   <Modal :visible="store.state.isPopup" @hide="closeModal" @resData="checkData" />
 </template>
 
 <script lang="ts" setup>
@@ -54,6 +71,7 @@ import http from "@/api/http";
 import { onMounted, ref } from "vue";
 
 const nftList = store.getters["auth/getNftList"];
+const nftDetail = ref();
 const esgPoint = ref(0);
 const nftId = Number(router.currentRoute.value.params.nftId);
 const tokenId = Number(router.currentRoute.value.params.tokenId);
@@ -61,9 +79,22 @@ const nftInfo = nftList[nftId];
 const questRewards = ref();
 
 onMounted(() => {
+  getNftDetail();
   getEsgpBalance();
   getQuestReward();
 });
+
+const getNftDetail = () => {
+  http.get("/api/nft/detail", {
+    params: {
+      nftId: nftId,
+      tokenId: tokenId,
+    }
+  })
+  .then((response) => {
+    nftDetail.value = response.data.data;
+  });
+};
 
 const getEsgpBalance = () => {
   http.get("/api/token/balance", {
@@ -93,6 +124,111 @@ const getQuestReward = () => {
     questRewards.value = {};
   })
 };
+
+const showPopup = () => {
+  store.state.isPopup = true;
+};
+
+const closeModal = () => {
+  store.state.isPopup = false;
+};
+
+const checkData = (type: String) => {
+  if (type === '1' || type === '2') {
+    gameDownload(type);
+  } else if (type === 'OFF') {
+    if (nftDetail.value.enable === 1) {
+      http.post("/api/nft/enableNft", {
+        'symbol': nftDetail.value.symbol,
+        'tokenId': nftDetail.value.tokenId,
+        'enable': 0,
+      })
+      .then((response) => {
+        getNftDetail();
+      });
+    }
+  }
+};
+
+const gameDownload = (type: String) => {
+    const idx = store.state.nftIdx;
+    const enableType = nftDetail.value.enable;
+
+    if (enableType == 0) {
+      http.post("/api/nft/enableNft", {
+        'symbol': nftDetail.value.symbol,
+        'tokenId': nftDetail.value.tokenId,
+        'enable': 1,
+      })
+      .then((response) => {
+        getNftDetail();
+        gameDownUrl(type);
+      });
+    } else {
+      gameDownUrl(type);
+    }
+};
+
+const gameDownUrl = (type: String) => {
+  if (type === '1') {
+    window.open('https://tempdownload0623.s3.ap-northeast-2.amazonaws.com/smartrecycle.apk', '_blank');
+  } else if (type === '2') {
+    //window.open('https://tempdownload0623.s3.ap-northeast-2.amazonaws.com/stepup.apk', '_blank');
+    window.open('https://play.google.com/store/apps/details?id=com.android.chrome', '_blank');
+  }
+};
+
+const gameRun = () => {
+  const idx = store.state.nftIdx;
+
+  let nftType = nftList[store.state.nftId].type;
+  let linkUrl = '';
+
+  if (nftType == 1) {
+    linkUrl = "/api/quest/apptoken"
+  } else if (nftType == 2) {
+    linkUrl = "/api/quest/gametoken"
+  } else {
+    return false;
+  }
+
+  http.get(linkUrl, {
+    params: {
+      symbol: nftDetail.value.symbol,
+      nftId: nftId,
+      tokenId: tokenId,
+    }
+  })
+  .then((response) => {
+    let deepLink = '';
+
+    if (navigator.userAgent.toLowerCase().indexOf("android") > -1) {
+      deepLink = nftList[nftId].and_deeplink;
+    } else if (navigator.userAgent.toLowerCase().indexOf("iphone") > -1) {
+      deepLink = nftList[nftId].ios_deeplink;
+    }
+
+    window.open(deepLink + '?token=' + response.data.data.gameToken + '&name=' + store.getters["auth/getUserName"] + '&email=' + store.getters["auth/getUserEmail"] + '&uid=' + store.getters["auth/getUserId"], '_blank');
+  });
+};
+
+const updateNftEnable = (type: String) => {
+  if (type == 'INSTALL') {
+    store.state.nftId = nftId;
+    store.state.nftIdx = nftInfo.idx;
+
+    store.state.popupType = 'game_install';
+    store.state.isPopup = true;  
+  } else if (type === 'OFF') {
+    store.state.nftId = nftId;
+    store.state.nftIdx = nftInfo.idx;
+
+    store.state.popupType = 'game_off';
+    store.state.isPopup = true;  
+  } else if (type === 'RUN') {
+    gameRun();
+ }
+};
 </script>
 
 <style lang="scss">
@@ -119,5 +255,20 @@ const getQuestReward = () => {
 }
 .nTable>table th {
   padding:0; background-color: #edf5ec; font-weight: 400; font-size:12px; color: #555;
+}
+
+.nftBg {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.2);
+  width:100%;
+  height:100%;
+}
+
+.nftOn  {
+  background-color: #24d120;
+}
+
+.nftOff  {
+  background-color: #ccc;
 }
 </style>

@@ -4,20 +4,24 @@
       <div><img class="nftImg" :src="nftInfo.image" alt="" @click="goNftDetail(nftCard.nftId, nftCard.tokenId)"></div>
       <div v-if="nftCard.enable === 0" class="nftDisable" @click="goNftDetail(nftCard.nftId, nftCard.tokenId)"></div>
     </div>
-    <div v-if="nftCard.enable === 1" class="flex justify-center items-center" @click="goNftDetail(nftCard.nftId, nftCard.tokenId)">
+    <!-- <div v-if="nftCard.enable === 1" class="flex justify-center items-center" @click="goNftDetail(nftCard.nftId, nftCard.tokenId)">
       <div class="pt-2 w-full text-center text-xl nftCardLife">
         {{ nftCard.balance }} / {{ nftInfo.metaData.maxLife }}
       </div>
-    </div>
+    </div> -->
     <div class="h-3"></div>
     <div class="text-lg text-center">{{ nftInfo.name }}</div>
     <div class="h-1"></div>
     <div class="flex justify-center items-center">
       <template v-if="nftCard.enable === 0">
-        <div class="wp-40 p-1 font-semibold text-center text-white rounded-full nftOff" @click="updateNftEnable(1)">OFF</div>
+        <div class="wp-40 p-1 font-semibold text-center text-white rounded-full nftOn" @click="updateNftEnable('INSTALL')">ON</div>
+        <div class="wp-10"></div>
+        <div class="wp-40 p-1 font-semibold text-center text-white rounded-full nftOn" @click="updateNftEnable('INSTALL')">보상</div>
       </template>
       <template v-else>
-        <div class="wp-40 p-1 font-semibold text-center text-white rounded-full nftOn" @click="updateNftEnable(0)">ON</div>
+        <div class="wp-40 p-1 font-semibold text-center text-white rounded-full nftOn" @click="updateNftEnable('RUN')">실행</div>
+        <div class="wp-10"></div>
+        <div class="wp-40 p-1 font-semibold text-center text-white rounded-full nftOn" @click="updateNftEnable('REWARD')">보상</div>
       </template>
     </div>
   </div>
@@ -41,7 +45,8 @@ const props = defineProps({
 });
 
 const emit = defineEmits([
-  "updateEnable",
+  "updateRun",
+  "updateReward",
 ]);
 
 const { nftCard, nftInfo } = toRefs(props);
@@ -50,14 +55,18 @@ watch(nftCard, (val) => {
   //console.log("enable nftCard");
 }, { immediate: false, deep: true });
 
-const updateNftEnable = (enable: Number) => {
-  store.state.nftId = nftCard.value.nftId;
-  store.state.nftIdx = nftCard.value.idx;
+const updateNftEnable = (type: String) => {
+  if (type == 'INSTALL') {
+    store.state.nftId = nftCard.value.nftId;
+    store.state.nftIdx = nftCard.value.idx;
 
-  store.state.popupType = 'game_install';
-  store.state.isPopup = true;  
-
-  emit("updateEnable");
+    store.state.popupType = 'game_install';
+    store.state.isPopup = true;  
+  } else if (type === 'RUN') {
+    emit("updateRun");
+  } else if (type == 'REWARD') {
+    emit("updateReward");
+  }
 };
 
 const goNftDetail = (nftId: number, tokenId: number) => {

@@ -106,12 +106,24 @@
             <div class="h-10"></div>
             <div class="w-full flex justify-center items-center">
               <button class="wp-40 p-2 font-semibold text-2xl text-white game-btn" @click="resData(store.state.nftId.toString())">설치하기</button>
-              <div class="wp-20"></div>
-              <button class="wp-40 p-2 font-semibold text-2xl text-white down-btn" @click="resData('run');">실행하기</button>
+              <!-- <div class="wp-20"></div>
+              <button class="wp-40 p-2 font-semibold text-2xl text-white down-btn" @click="resData('run');">실행하기</button> -->
             </div>
           </div>
         </template>
-        <template v-if="popupType !== 'qr_code' && popupType !== 'withdraw_pass' && popupType !== 'send_coin' && popupType !== 'game_install'">
+        <template v-if="popupType === 'game_off'">
+          <div class="flex flex-col justify-center items-center">
+            <div class="h-5"></div>
+            <div class="text-2xl text-center">NFT 를 <span style='color:red;'>OFF</span> 하면<br/>탄소절감 데이터가 적용<br/>되지 않습니다.</div>
+            <div class="h-10"></div>
+            <div class="h-10"></div>
+            <div class="h-10"></div>
+            <div class="w-full flex justify-center items-center">
+              <button class="wp-60 p-2 font-semibold text-2xl text-white off-btn" @click="resData('OFF')">OFF 하기</button>
+            </div>
+          </div>
+        </template>
+        <template v-if="popupType !== 'qr_code' && popupType !== 'withdraw_pass' && popupType !== 'send_coin' && popupType !== 'game_install' && popupType !== 'game_off'">
           <div><img class="error-icon" src="@/assets/images/icon_error.png" /></div>
           <div class="h-10"></div>
           <div class="text-2xl text-center">{{ t(showTitle) }}</div>
@@ -402,6 +414,11 @@ const doSendCoin = () => {
 
     .game-btn {
       background-color: #0c5c26;
+      border-radius: 5px;
+    }
+
+    .off-btn {
+      background-color: #ff0000;
       border-radius: 5px;
     }
   }
