@@ -151,7 +151,6 @@ const checkData = (type: String) => {
 };
 
 const gameDownload = (type: String) => {
-    const idx = store.state.nftIdx;
     const enableType = nftDetail.value.enable;
 
     if (enableType == 0) {
@@ -173,15 +172,12 @@ const gameDownUrl = (type: String) => {
   if (type === '1') {
     window.open('https://tempdownload0623.s3.ap-northeast-2.amazonaws.com/smartrecycle.apk', '_blank');
   } else if (type === '2') {
-    //window.open('https://tempdownload0623.s3.ap-northeast-2.amazonaws.com/stepup.apk', '_blank');
-    window.open('https://play.google.com/store/apps/details?id=com.android.chrome', '_blank');
+    window.open('https://tempdownload0623.s3.ap-northeast-2.amazonaws.com/stepup.apk', '_blank');
   }
 };
 
 const gameRun = () => {
-  const idx = store.state.nftIdx;
-
-  let nftType = nftList[store.state.nftId].type;
+  let nftType = nftList[nftId].type;
   let linkUrl = '';
 
   if (nftType == 1) {
@@ -208,7 +204,7 @@ const gameRun = () => {
       deepLink = nftList[nftId].ios_deeplink;
     }
 
-    window.open(deepLink + '?token=' + response.data.data.gameToken + '&name=' + store.getters["auth/getUserName"] + '&email=' + store.getters["auth/getUserEmail"] + '&uid=' + store.getters["auth/getUserId"], '_blank');
+    window.open(deepLink + '?token=' + response.data.data.appToken + '&name=' + store.getters["auth/getUserName"] + '&email=' + store.getters["auth/getUserEmail"] + '&uid=' + store.getters["auth/getUserId"], '_blank');
   });
 };
 

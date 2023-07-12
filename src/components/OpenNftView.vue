@@ -56,10 +56,10 @@ watch(nftCard, (val) => {
 }, { immediate: false, deep: true });
 
 const updateNftEnable = (type: String) => {
-  if (type == 'INSTALL') {
-    store.state.nftId = nftCard.value.nftId;
-    store.state.nftIdx = nftCard.value.idx;
+  store.state.nftId = nftCard.value.nftId;
+  store.state.nftIdx = nftCard.value.idx;
 
+  if (type == 'INSTALL') {
     store.state.popupType = 'game_install';
     store.state.isPopup = true;  
   } else if (type === 'RUN') {
