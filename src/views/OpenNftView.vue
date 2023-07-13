@@ -105,8 +105,7 @@ const gameDownUrl = (type: String) => {
   if (type === '1') {
     window.open('https://tempdownload0623.s3.ap-northeast-2.amazonaws.com/smartrecycle.apk', '_blank');
   } else if (type === '2') {
-    //window.open('https://tempdownload0623.s3.ap-northeast-2.amazonaws.com/stepup.apk', '_blank');
-    window.open('https://play.google.com/store/apps/details?id=com.android.chrome', '_blank');
+    window.open('https://tempdownload0623.s3.ap-northeast-2.amazonaws.com/stepup.apk', '_blank');
   }
 };
 
