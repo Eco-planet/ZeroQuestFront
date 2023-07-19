@@ -116,7 +116,8 @@ const gameRun = () => {
   let linkUrl = '';
 
   if (nftType == 1) {
-    linkUrl = "/api/quest/apptoken"
+    //linkUrl = "/api/quest/apptoken"
+    linkUrl = "/api/quest/gametoken"
   } else if (nftType == 2) {
     linkUrl = "/api/quest/gametoken"
   } else {
