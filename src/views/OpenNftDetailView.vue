@@ -20,25 +20,32 @@
       <div class="h-10"></div>
       <div class="flex justify-center items-center">
         <template v-if="nftDetail !== undefined && nftDetail.enable === 0">
-          <div class="wp-40 p-3 font-semibold text-center text-white rounded-full nftOn" @click="updateNftEnable('INSTALL')">설치</div>
-          <div class="wp-10"></div>
-          <div class="wp-40 p-3 font-semibold text-center text-white rounded-full nftOn" @click="updateNftEnable('OFF')">OFF</div>
+          <div class="btn-on-off">
+            <button type="button" @click="updateNftEnable('INSTALL')"><strong>ON</strong><strong>OFF</strong></button>
+          </div>
         </template>
         <template v-else>
-          <div class="wp-40 p-3 font-semibold text-center text-white rounded-full nftOn" @click="updateNftEnable('RUN')">실행</div>
-          <div class="wp-10"></div>
-          <div class="wp-40 p-3 font-semibold text-center text-white rounded-full nftOn" @click="updateNftEnable('OFF')">OFF</div>
+          <div class="btn-on-off on">
+            <button type="button" @click="updateNftEnable('OFF')"><strong>ON</strong><strong>OFF</strong></button>
+          </div>
         </template>
       </div>
       <div class="h-10"></div>
-      <div class="flex font-semibold text-2xl">{{ nftInfo.name }}</div>
+      <div class="h-5"></div>
       <template v-if="questRewards !== undefined && questRewards !== null && Object.keys(questRewards).length > 0">
-        <div class="h-10"></div>
+        <div class="px-0 w-full flex justify-between items-center text-2xl">
+          <div class="font-semibold">{{ t("message.nftReward") }}</div>
+          <div class="px-5 nftOn">{{ t("message.rewardBtn") }}</div>
+        </div>
+        <div class="h-5"></div>
+        <div class="h-px h-5 bg-gray-200"></div>
+        <div class="h-5"></div>
         <div class="nTable text-lg">
           <table>
             <thead>
               <tr>
                 <th>날짜</th>
+                <th>시간</th>
                 <th>리워드</th>
               </tr>
             </thead>
@@ -46,6 +53,7 @@
               <template v-for="item in questRewards" :key="item.idx">
                 <tr>
                   <td>{{ item.createdAt.substring(0, 10) }}</td>
+                  <td>{{ item.createdAt.substring(11, 19) }}</td>
                   <td>{{ item.reward }}</td>
                 </tr>
               </template>
@@ -54,20 +62,24 @@
         </div>
       </template>
       <div class="h-10"></div>
+      <div class="h-5"></div>
+      <div class="flex font-semibold text-2xl">{{ nftInfo.name }}</div>
       <div class="flex text-xl text-left" v-html="nftInfo.description.split('\n').join('<br />')"></div>
       <div class="h-10"></div>
       <div class="flex items-center justify-center"><img :src="nftInfo.descImage" /></div>
     </div>
-    <div class="h-20"></div>
-    <div class="h-20"></div>
+
   </div>
-   <Modal :visible="store.state.isPopup" @hide="closeModal" @resData="checkData" />
+  <div class="h-20"></div>
+  <div class="h-20"></div>
+  <Modal :visible="store.state.isPopup" @hide="closeModal" @resData="checkData" />
 </template>
 
 <script lang="ts" setup>
 import router from "@/router";
 import store from "@/store";
 import http from "@/api/http";
+import { useI18n } from "vue-i18n";
 import { onMounted, ref } from "vue";
 
 const nftList = store.getters["auth/getNftList"];
@@ -77,6 +89,8 @@ const nftId = Number(router.currentRoute.value.params.nftId);
 const tokenId = Number(router.currentRoute.value.params.tokenId);
 const nftInfo = nftList[nftId];
 const questRewards = ref();
+
+const { t } = useI18n();
 
 onMounted(() => {
   getNftDetail();
@@ -263,9 +277,22 @@ const updateNftEnable = (type: String) => {
 
 .nftOn  {
   background-color: #24d120;
+  border-radius: 5px;
+  font-size: 10px;
+  color: #FFFFFF;
 }
 
 .nftOff  {
   background-color: #ccc;
+  border-radius: 5px;
+  font-size: 10px;
+  color: #FFFFFF;
 }
+
+.btn-on-off {width:100%; margin-top:10px; font-size:0; line-height:0; display: flex; justify-content: center;}
+.btn-on-off button {width:90px; margin:0; padding:0; background-color: #ccc; border:none; font-size:0; line-height:0; display: flex; justify-content: space-between; border-radius:999px; position: relative; overflow: hidden;}
+.btn-on-off button:before {content: ""; width: 50px; height: 100%; background-color: #949494; display: inline-block; position:absolute; left:calc(100% - 50px); top:0px; border-radius:999px; transition: all .3s ease-out;}
+.btn-on-off button>strong {min-width:50px; height:18px; font-weight: bold; font-size:10px; line-height:1; color: #fff; text-align: center; display: flex; align-items: center; justify-content: center; position: relative; z-index:2;}
+.btn-on-off button>strong+strong {margin-left:-20px;}
+.btn-on-off.on button:before {background-color: #24d120; left:0;}
 </style>

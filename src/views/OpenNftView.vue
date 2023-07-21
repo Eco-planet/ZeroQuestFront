@@ -168,10 +168,12 @@ const gameReward = () => {
 
 .nftOn  {
   background-color: #24d120;
+  border-radius: 5px;
 }
 
 .nftOff  {
   background-color: #ccc;
+  border-radius: 5px;
 }
 
 </style>

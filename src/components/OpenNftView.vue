@@ -14,14 +14,10 @@
     <div class="h-1"></div>
     <div class="flex justify-center items-center">
       <template v-if="nftCard.enable === 0">
-        <div class="wp-40 p-1 font-semibold text-center text-white rounded-full nftOn" @click="updateNftEnable('INSTALL')">ON</div>
-        <div class="wp-10"></div>
-        <div class="wp-40 p-1 font-semibold text-center text-white rounded-full nftOn" @click="updateNftEnable('INSTALL')">보상</div>
+        <div class="wp-40 p-1 font-semibold text-center text-white nftOff" @click="updateNftEnable('INSTALL')">Play</div>
       </template>
       <template v-else>
-        <div class="wp-40 p-1 font-semibold text-center text-white rounded-full nftOn" @click="updateNftEnable('RUN')">실행</div>
-        <div class="wp-10"></div>
-        <div class="wp-40 p-1 font-semibold text-center text-white rounded-full nftOn" @click="updateNftEnable('REWARD')">보상</div>
+        <div class="wp-40 p-1 font-semibold text-center text-white nftOn" @click="updateNftEnable('RUN')">Play</div>
       </template>
     </div>
   </div>

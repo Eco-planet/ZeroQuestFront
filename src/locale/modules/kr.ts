@@ -64,6 +64,8 @@ export default {
     termsBtn: "확인",
     gameLoginInfo: "{name} 님 반갑습니다.",
     agreeBtn: "동의",
+    nftReward: "NFT 리워드",
+    rewardBtn: "보상",
   },
 
   error: {

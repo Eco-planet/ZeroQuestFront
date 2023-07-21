@@ -63,6 +63,8 @@ export default {
     termsBtn: "OK",
     gameLoginInfo: "{name}, welcome.",
     agreeBtn: "Agree",
+    nftReward: "NFT 리워드",
+    rewardBtn: "보상",
    },
 
    error: {
