@@ -43,11 +43,11 @@ const myNftList = ref();
 
 const bannerList = store.getters["auth/getBannerList"];
 
-const onFlutter = ref(false);
+const onFlutter = ref(true);
 const popupTitle = ref("");
 
 onMounted(() => {
-  window.addEventListener("flutterInAppWebViewPlatformReady", function(event) {
+  window.addEventListener("flutterInAppWebViewPlatformReady", (event) => {
     onFlutter.value = true;
 
     store.state.popupType = 'message';
@@ -59,7 +59,7 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  window.removeEventListener("flutterInAppWebViewPlatformReady", function(event) {});
+  window.removeEventListener("flutterInAppWebViewPlatformReady", (event) => {});
 });
 
 const getMyNftList = () => {
@@ -195,8 +195,8 @@ const playTest = () => {
     }
 
     //window.open(deepLink + '?token=' + response.data.data.appToken + '&name=' + store.getters["auth/getUserName"] + '&email=' + store.getters["auth/getUserEmail"] + '&uid=' + store.getters["auth/getUserId"], '_blank');
-    if (onFlutter.value === false) {
-      window.flutter_inappwebview.callHandler('handlePlayBtn', {packageName:deepLink, token:response.data.data.appToken, name:store.getters["auth/getUserName"], email:store.getters["auth/getUserEmail"], uid:store.getters["auth/getUserId"]});
+    if (onFlutter.value === true) {
+      window.flutter_inappwebview.callHandler('handlePlayBtn', {deepLink:deepLink, token:response.data.data.appToken, name:store.getters["auth/getUserName"], email:store.getters["auth/getUserEmail"], uid:store.getters["auth/getUserId"]});
     } else {
       store.state.popupType = 'message';
       popupTitle.value = 'error.notFoundFlutter'; 
