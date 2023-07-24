@@ -195,7 +195,7 @@ const playTest = () => {
     }
 
     //window.open(deepLink + '?token=' + response.data.data.appToken + '&name=' + store.getters["auth/getUserName"] + '&email=' + store.getters["auth/getUserEmail"] + '&uid=' + store.getters["auth/getUserId"], '_blank');
-    if (onFlutter.value === true) {
+    if (onFlutter.value === false) {
       window.flutter_inappwebview.callHandler('handlePlayBtn', {packageName:deepLink, token:response.data.data.appToken, name:store.getters["auth/getUserName"], email:store.getters["auth/getUserEmail"], uid:store.getters["auth/getUserId"]});
     } else {
       store.state.popupType = 'message';
