@@ -49,6 +49,10 @@ const popupTitle = ref("");
 onMounted(() => {
   window.addEventListener("flutterInAppWebViewPlatformReady", function(event) {
     onFlutter.value = true;
+
+    store.state.popupType = 'message';
+    popupTitle.value = 'flutter_enable'; 
+    store.state.isPopup = true;
   });
 
   getMyNftList();
