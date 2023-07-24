@@ -19,7 +19,7 @@
       <template v-else>
         <div class="wp-40 p-1 font-semibold text-center text-white nftOn" @click="updateNftEnable('RUN')">Play</div>
         <div class="wp-10"></div>
-        <div class="wp-40 p-1 font-semibold text-center text-white nftOn" @click="updateNftEnable('TEST')">Play</div>
+        <div class="wp-40 p-1 font-semibold text-center text-white nftOn" @click="updateNftEnable('TEST')">Test</div>
       </template>
     </div>
   </div>
