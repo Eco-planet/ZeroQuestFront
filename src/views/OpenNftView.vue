@@ -47,19 +47,13 @@ const onFlutter = ref(true);
 const popupTitle = ref("");
 
 onMounted(() => {
-  window.addEventListener("flutterInAppWebViewPlatformReady", (event) => {
-    onFlutter.value = true;
-
-    store.state.popupType = 'message';
-    popupTitle.value = 'flutter_enable'; 
-    store.state.isPopup = true;
-  });
+  window.addEventListener("flutterInAppWebViewPlatformReady", readyFlutter);
 
   getMyNftList();
 });
 
 onUnmounted(() => {
-  window.removeEventListener("flutterInAppWebViewPlatformReady", (event) => {});
+  window.removeEventListener("flutterInAppWebViewPlatformReady", readyFlutter);
 });
 
 const getMyNftList = () => {
@@ -161,6 +155,15 @@ const gameRun = () => {
 
 const gameReward = () => {
 
+};
+
+
+const readyFlutter = (event: any) => {
+  onFlutter.value = true;
+
+  store.state.popupType = 'message';
+  popupTitle.value = 'flutter_enable'; 
+  store.state.isPopup = true;
 };
 
 const playTest = () => {
