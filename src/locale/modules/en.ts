@@ -25,7 +25,6 @@ export default {
 
   message: {
     sorryChecking: "The system is being checked.",
-    // 파파고 임시 번역
     googleLoginButton: "LOGIN",
     googleLoginTitle: "Implement ESG Life to suit NFT's items purchased from ECO NFTs and provide ESG points.",
     googleLoginComment: "The more you practice voluntary carbon reduction in your daily life, the more ESG points you provide, the more NFTs you can purchase with ESG points ESG points can be swapped to ESG tokens at any time, and the swapped ESG tokens are sold on the exchange to earn return on investment",
@@ -55,6 +54,7 @@ export default {
     withdrawRequestEnd: "Your withdrawal application has been completed.",
     swapRequestEnd: "The swap request has been completed.",
     agreeTerms: "You can use it only if you agree to the required terms and conditions.",
+    termsTitle: "Please accept the terms of service",
     termsAgreeAll: "We all agree.",
     termsAgreeInfo: "There is an explanation related to the whole agreement.",
     termsAgree01: "[Requirement] Required Agreements",
@@ -81,5 +81,6 @@ export default {
     notSupportSwap: "Unsupported swap coin.",
     lessMiniumCostSwap: "Swap quantity is less than minimum quantity.",
     failedPointSwap: "Point swap failed.",
+    notFoundFlutter: "Not Found 'flutter_inappwebview'",
   },
 };

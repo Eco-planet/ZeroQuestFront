@@ -24,7 +24,6 @@ export default {
   },
 
   message: {
-    // E 2022/6/6
     sorryChecking: "시스템 점검 중.",
     googleLoginButton: "계정으로 로그인",
     googleLoginTitle: "ECO NFT 에서 구매한 NFT의 아이템에 적합하게 ESG Life를 실천하면 ESG point 를 제공합니다.",
@@ -82,5 +81,6 @@ export default {
     notSupportSwap: "지원되지 않는 스왑 코인입니다.",
     lessMiniumCostSwap: "스왑수량이 최소수량보다 작습니다.",
     failedPointSwap: "포인트 스왑에 실패했습니다.",
+    notFoundFlutter: "Not Found 'flutter_inappwebview'",
    },
 };

@@ -18,6 +18,8 @@
       </template>
       <template v-else>
         <div class="wp-40 p-1 font-semibold text-center text-white nftOn" @click="updateNftEnable('RUN')">Play</div>
+        <div class="wp-10"></div>
+        <div class="wp-40 p-1 font-semibold text-center text-white nftOn" @click="updateNftEnable('TEST')">Play</div>
       </template>
     </div>
   </div>
@@ -27,7 +29,7 @@
 import store from "@/store";
 import router from "@/router";
 import http from "@/api/http";
-import { ref, toRefs, watch } from "vue";
+import { toRefs, watch } from "vue";
 
 const props = defineProps({
   nftCard: {
@@ -43,6 +45,7 @@ const props = defineProps({
 const emit = defineEmits([
   "updateRun",
   "updateReward",
+  "updateTest",
 ]);
 
 const { nftCard, nftInfo } = toRefs(props);
@@ -62,6 +65,8 @@ const updateNftEnable = (type: String) => {
     emit("updateRun");
   } else if (type == 'REWARD') {
     emit("updateReward");
+  } else if (type == 'TEST') {
+    emit("updateTest");
   }
 };
 

@@ -19,20 +19,20 @@
     <div class="h-10"></div>
     <div class="w-full grid grid-cols-3 gap-card">
       <template v-for="item in myNftList" :key="item.tokenId">
-        <MyNftCard :nftCard="item" :nftInfo="nftList[item.nftId]" @updateRun="gameRun" @updateReward="gameReward" />
+        <MyNftCard :nftCard="item" :nftInfo="nftList[item.nftId]" @updateRun="gameRun" @updateReward="gameReward" @updateTest="playTest" />
       </template>
     </div>
     <div class="h-10"></div>
     <div class="h-10"></div>
     <div class="h-10"></div>
    </div>
-   <Modal :visible="store.state.isPopup" @hide="closeModal" @resData="checkData" />
+   <Modal :visible="store.state.isPopup" @hide="closeModal" @resData="checkData" :title="popupTitle" />
 </template>
 
 <script lang="ts" setup>
 import store from "@/store";
 import http from "@/api/http";
-import { onMounted, ref } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 import MyNftCard from "@/components/OpenNftView.vue";
 import { Carousel, Pagination, Slide } from "vue3-carousel";
 
@@ -43,8 +43,19 @@ const myNftList = ref();
 
 const bannerList = store.getters["auth/getBannerList"];
 
+const onFlutter = ref(false);
+const popupTitle = ref("");
+
 onMounted(() => {
+  window.addEventListener("flutterInAppWebViewPlatformReady", function(event) {
+    onFlutter.value = true;
+  });
+
   getMyNftList();
+});
+
+onUnmounted(() => {
+  window.removeEventListener("flutterInAppWebViewPlatformReady", function(event) {});
 });
 
 const getMyNftList = () => {
@@ -147,6 +158,48 @@ const gameRun = () => {
 const gameReward = () => {
 
 };
+
+const playTest = () => {
+  const idx = store.state.nftIdx;
+
+  let nftType = nftList[store.state.nftId].type;
+  let linkUrl = '';
+
+  if (nftType == 1) {
+    //linkUrl = "/api/quest/apptoken"
+    linkUrl = "/api/quest/gametoken"
+  } else if (nftType == 2) {
+    linkUrl = "/api/quest/gametoken"
+  } else {
+    return false;
+  }
+
+  http.get(linkUrl, {
+    params: {
+      symbol: myNftList.value[idx].symbol,
+      nftId: store.state.nftId,
+      tokenId: myNftList.value[idx].tokenId,
+    }
+  })
+  .then((response) => {
+    let deepLink = '';
+
+    if (navigator.userAgent.toLowerCase().indexOf("android") > -1) {
+      deepLink = nftList[store.state.nftId].and_deeplink;
+    } else if (navigator.userAgent.toLowerCase().indexOf("iphone") > -1) {
+      deepLink = nftList[store.state.nftId].ios_deeplink;
+    }
+
+    //window.open(deepLink + '?token=' + response.data.data.appToken + '&name=' + store.getters["auth/getUserName"] + '&email=' + store.getters["auth/getUserEmail"] + '&uid=' + store.getters["auth/getUserId"], '_blank');
+    if (onFlutter.value === true) {
+      window.flutter_inappwebview.callHandler('handlePlayBtn', {packageName:deepLink, token:response.data.data.appToken, name:store.getters["auth/getUserName"], email:store.getters["auth/getUserEmail"], uid:store.getters["auth/getUserId"]});
+    } else {
+      store.state.popupType = 'message';
+      popupTitle.value = 'error.notFoundFlutter'; 
+      store.state.isPopup = true;
+    }
+  });
+}
 </script>
 
 <style lang="scss">
