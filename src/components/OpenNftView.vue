@@ -18,8 +18,6 @@
       </template>
       <template v-else>
         <div class="wp-40 p-1 font-semibold text-center text-white nftOn" @click="updateNftEnable('RUN')">Play</div>
-        <div class="wp-10"></div>
-        <div class="wp-40 p-1 font-semibold text-center text-white nftOn" @click="updateNftEnable('TEST')">Test</div>
       </template>
     </div>
   </div>
@@ -45,7 +43,6 @@ const props = defineProps({
 const emit = defineEmits([
   "updateRun",
   "updateReward",
-  "updateTest",
 ]);
 
 const { nftCard, nftInfo } = toRefs(props);
@@ -65,8 +62,6 @@ const updateNftEnable = (type: String) => {
     emit("updateRun");
   } else if (type == 'REWARD') {
     emit("updateReward");
-  } else if (type == 'TEST') {
-    emit("updateTest");
   }
 };
 
