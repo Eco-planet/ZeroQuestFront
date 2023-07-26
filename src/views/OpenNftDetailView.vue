@@ -237,10 +237,8 @@ const updateNftEnable = (type: String) => {
       packageName = nftInfo.ios_packagename;
     }
 
-    alert(packageName);
-
     window.flutter_inappwebview.callHandler('checkAppInstalled', {packageName:packageName}).then((res:any) => {
-      console.log(JSON.stringify(res));
+      //console.log(JSON.stringify(res));
 
       if (res.result == true) {
         http.post("/api/nft/enableNft", {
