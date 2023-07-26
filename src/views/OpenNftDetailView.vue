@@ -232,10 +232,12 @@ const updateNftEnable = (type: String) => {
     let packageName = '';
 
     if (navigator.userAgent.toLowerCase().indexOf("android") > -1) {
-      packageName = nftInfo.value.and_packagename;
+      packageName = nftInfo.and_packagename;
     } else if (navigator.userAgent.toLowerCase().indexOf("iphone") > -1) {
-      packageName = nftInfo.value.ios_packagename;
+      packageName = nftInfo.ios_packagename;
     }
+
+    alert(packageName);
 
     window.flutter_inappwebview.callHandler('checkAppInstalled', {packageName:packageName}).then((res:any) => {
       console.log(JSON.stringify(res));
