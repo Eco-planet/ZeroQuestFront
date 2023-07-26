@@ -68,9 +68,10 @@ const updateNftEnable = (type: String) => {
 
     window.flutter_inappwebview.callHandler('checkAppInstalled', {packageName:packageName}).then((res:any) => {
       console.log(JSON.stringify(res));
+      alert(res);
       alert(JSON.stringify(res));
 
-      var response = JSON.parse(res);
+      var response = JSON.stringify(res);
       alert(response);
       alert(response.result);
 
