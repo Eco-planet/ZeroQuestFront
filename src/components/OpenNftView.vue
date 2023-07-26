@@ -65,6 +65,7 @@ const updateNftEnable = (type: String) => {
     } else if (navigator.userAgent.toLowerCase().indexOf("iphone") > -1) {
       packageName = nftCard.value.ios_deeplink;
     }
+    alert(packageName);
 
     window.flutter_inappwebview.callHandler('checkAppInstalled', {packageName:packageName})
     .then((res:any) => {
