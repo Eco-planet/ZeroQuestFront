@@ -43,6 +43,7 @@ const props = defineProps({
 const emit = defineEmits([
   "updateRun",
   "updateReward",
+  "updateEnable",
 ]);
 
 const { nftCard, nftInfo } = toRefs(props);
@@ -55,6 +56,26 @@ const updateNftEnable = (type: String) => {
   store.state.nftId = nftCard.value.nftId;
   store.state.nftIdx = nftCard.value.idx;
 
+  // INSTALL 인 경우 이미 설치되어 있는지 체크
+  if (type == 'INSTALL') {
+    let packageName = '';
+
+    if (navigator.userAgent.toLowerCase().indexOf("android") > -1) {
+      packageName = nftCard.value.and_deeplink;
+    } else if (navigator.userAgent.toLowerCase().indexOf("iphone") > -1) {
+      packageName = nftCard.value.ios_deeplink;
+    }
+
+    window.flutter_inappwebview.callHandler('checkAppInstalled', {packageName:packageName})
+    .then((res:any) => {
+      console.log(JSON.stringify(result));
+
+      if (res.result == true) {
+        type = 'ENABLE';
+      }
+    });
+  }
+
   if (type == 'INSTALL') {
     store.state.popupType = 'game_install';
     store.state.isPopup = true;  
@@ -62,6 +83,8 @@ const updateNftEnable = (type: String) => {
     emit("updateRun");
   } else if (type == 'REWARD') {
     emit("updateReward");
+  } else if (type == 'ENABLE') {
+    emit("updateEnable");
   }
 };
 

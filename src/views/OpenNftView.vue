@@ -19,7 +19,7 @@
     <div class="h-10"></div>
     <div class="w-full grid grid-cols-3 gap-card">
       <template v-for="item in myNftList" :key="item.tokenId">
-        <MyNftCard :nftCard="item" :nftInfo="nftList[item.nftId]" @updateRun="gameRun" @updateReward="gameReward" />
+        <MyNftCard :nftCard="item" :nftInfo="nftList[item.nftId]" @updateRun="gameRun" @updateReward="gameReward" @updateEnable="gameEnable" />
       </template>
     </div>
     <div class="h-10"></div>
@@ -91,23 +91,33 @@ const checkData = (type: String) => {
   }
 };
 
-const gameDownload = (type: String) => {
-    const idx = store.state.nftIdx;
-    const enableType = myNftList.value[idx].enable;
+const gameEnable = () => {
+  const idx = store.state.nftIdx;
+  const enableType = myNftList.value[idx].enable;
 
-    if (enableType == 0) {
-      http.post("/api/nft/enableNft", {
-        'symbol': myNftList.value[idx].symbol,
-        'tokenId': myNftList.value[idx].tokenId,
-        'enable': 1,
-      })
-      .then((response) => {
-        getMyNftList();
-        gameDownUrl(type);
-     });
-    } else {
-      gameDownUrl(type);
-    }
+  http.post("/api/nft/enableNft", {
+    'symbol': myNftList.value[idx].symbol,
+    'tokenId': myNftList.value[idx].tokenId,
+    'enable': 1,
+  })
+  .then((response) => {
+    getMyNftList();
+  });
+};
+
+const gameDownload = (type: String) => {
+  const idx = store.state.nftIdx;
+  const enableType = myNftList.value[idx].enable;
+    
+  http.post("/api/nft/enableNft", {
+    'symbol': myNftList.value[idx].symbol,
+    'tokenId': myNftList.value[idx].tokenId,
+    'enable': 1,
+  })
+  .then((response) => {
+    getMyNftList();
+    gameDownUrl(type);
+  });
 };
 
 const gameDownUrl = (type: String) => {
