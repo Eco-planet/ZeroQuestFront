@@ -56,7 +56,6 @@ const updateNftEnable = (type: String) => {
   store.state.nftId = nftCard.value.nftId;
   store.state.nftIdx = nftCard.value.idx;
 
-  // INSTALL 인 경우 이미 설치되어 있는지 체크
   if (type == 'INSTALL') {
     let packageName = '';
 
@@ -68,24 +67,21 @@ const updateNftEnable = (type: String) => {
 
     window.flutter_inappwebview.callHandler('checkAppInstalled', {packageName:packageName}).then((res:any) => {
       console.log(JSON.stringify(res));
-      alert(res.result);
 
       if (res.result == true) {
-        type = 'ENABLE';
-        alert(type);
+        emit("updateEnable");
+      } else {
+        store.state.popupType = 'game_install';
+        store.state.isPopup = true;  
       }
+    }).catch(() => {
+      store.state.popupType = 'game_install';
+      store.state.isPopup = true;  
     });
-  }
-
-  if (type == 'INSTALL') {
-    store.state.popupType = 'game_install';
-    store.state.isPopup = true;  
   } else if (type === 'RUN') {
     emit("updateRun");
   } else if (type == 'REWARD') {
     emit("updateReward");
-  } else if (type == 'ENABLE') {
-    emit("updateEnable");
   }
 };
 
