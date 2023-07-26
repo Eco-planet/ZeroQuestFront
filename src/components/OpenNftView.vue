@@ -61,11 +61,10 @@ const updateNftEnable = (type: String) => {
     let packageName = '';
 
     if (navigator.userAgent.toLowerCase().indexOf("android") > -1) {
-      packageName = nftCard.value.and_deeplink;
+      packageName = nftInfo.value.and_packagename;
     } else if (navigator.userAgent.toLowerCase().indexOf("iphone") > -1) {
-      packageName = nftCard.value.ios_deeplink;
+      packageName = nftInfo.value.ios_packagename;
     }
-    alert(packageName);
 
     window.flutter_inappwebview.callHandler('checkAppInstalled', {packageName:packageName})
     .then((res:any) => {
