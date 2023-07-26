@@ -70,7 +70,11 @@ const updateNftEnable = (type: String) => {
       console.log(JSON.stringify(res));
       alert(JSON.stringify(res));
 
-      if (res.result == true) {
+      var response = JSON.stringify(res);
+      alert(response);
+      alert(response.result);
+
+      if (response.result == true) {
         type = 'ENABLE';
       }
     });
