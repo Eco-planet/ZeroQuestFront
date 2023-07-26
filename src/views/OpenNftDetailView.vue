@@ -229,8 +229,34 @@ const updateNftEnable = (type: String) => {
     store.state.nftId = nftId;
     store.state.nftIdx = nftInfo.idx;
 
-    store.state.popupType = 'game_install';
-    store.state.isPopup = true;  
+    let packageName = '';
+
+    if (navigator.userAgent.toLowerCase().indexOf("android") > -1) {
+      packageName = nftInfo.value.and_packagename;
+    } else if (navigator.userAgent.toLowerCase().indexOf("iphone") > -1) {
+      packageName = nftInfo.value.ios_packagename;
+    }
+
+    window.flutter_inappwebview.callHandler('checkAppInstalled', {packageName:packageName}).then((res:any) => {
+      console.log(JSON.stringify(res));
+
+      if (res.result == true) {
+        http.post("/api/nft/enableNft", {
+          'symbol': nftDetail.value.symbol,
+          'tokenId': nftDetail.value.tokenId,
+          'enable': 1,
+        })
+        .then((response) => {
+          getNftDetail();
+        });
+      } else {
+        store.state.popupType = 'game_install';
+        store.state.isPopup = true;  
+      }
+    }).catch(() => {
+      store.state.popupType = 'game_install';
+      store.state.isPopup = true;  
+    });
   } else if (type === 'OFF') {
     store.state.nftId = nftId;
     store.state.nftIdx = nftInfo.idx;
