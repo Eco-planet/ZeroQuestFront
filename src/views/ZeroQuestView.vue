@@ -96,6 +96,8 @@ const balances = ref();
 const tokenInfos = ref();
 const popupTitle = ref("");
 
+console.log("bannerList",bannerList)
+
 onMounted(() => {
   getMyNftList();
   updateBalance();

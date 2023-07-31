@@ -7,7 +7,7 @@
       <router-link to="/login">LOGIN</router-link> |
       <router-link to="/mypage">MyPage</router-link>
     </nav> -->
-  <div class="wrap">
+  <div class="wrap" :class="{'battleBg':$route.name === 'battle'||$route.name === 'entryPage'||$route.name === 'battleDetailInfo'||$route.name === 'myEntry'||$route.name === 'AllSession'}">
     <router-view />
     <div class="h-20"></div>
   </div>
@@ -25,6 +25,10 @@ import Footer from "@/components/common/FooterView.vue";
 import { onMounted } from "vue";
 
 const { t } = useI18n();
+
+const aboutBattle= () =>{
+
+}
 
 onMounted(() => {
   if (store.getters["auth/getTokenInfos"] === undefined || store.getters["auth/getTokenInfos"] === "") {
@@ -108,5 +112,9 @@ onMounted(() => {
 	height: 100%;
 	overflow-y: auto;
 	overflow-y: overlay;
+}
+
+.battleBg {
+  background-color: #fafafa;
 }
 </style>

@@ -1,4 +1,5 @@
 import { createStore } from "vuex";
+import { logos } from "@/utils/Logo"
 const modulesFiles = require.context("./modules", true, /\.(ts|js)$/);
 
 const modules = modulesFiles.keys().reduce((modules: any, modulePath: any) => {
@@ -19,8 +20,11 @@ export default createStore({
     errorCount: 0,
     nftId: 0,
     nftIdx: 0,
+    logos: logos,
   },
-  getters: {},
+  getters: {
+    logos:state => state.logos
+  },
   mutations: {},
   actions: {},
   modules,

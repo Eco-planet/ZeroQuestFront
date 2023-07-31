@@ -7,7 +7,7 @@
     <a :class="{ oPage: $route.name === 'zeronft' }" @click="movePage('/zeronft')">ZeroNFT</a>
     <a :class="{ oPage: $route.name === 'onft' || $route.name === 'onft-detail' }" @click="movePage('/onft')">O!NFT</a>
     <a :class="{ oPage: $route.name === 'mywallet' }" @click="movePage('/mywallet')">My<br />Wallet</a>
-    <a @click="movePage('/market')">Open<br />Market</a>
+    <a :class="{ oPage: $route.name === 'battle' || $route.name === 'entryPage' || $route.name === 'battleDetailInfo' || $route.name === 'myEntry' || $route.name === 'AllSession' }" @click="movePage('/battle')">Battle</a>
   </div>
   <Modal :visible="isPopup" @hide="closeModal" @resData="checkData" @afterLogin="afterLogin" title="message.sorryChecking" />
 </template>
@@ -19,7 +19,7 @@ import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
-
+ 
 const isPopup = ref(false);
 
 const showModal = () => {

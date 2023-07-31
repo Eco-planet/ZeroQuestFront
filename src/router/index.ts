@@ -50,6 +50,40 @@ const routes: Array<RouteRecordRaw> = [
     component: () =>
       import(/* webpackChunkName: "mywallet" */ "../views/MyWalletView.vue"),
   },
+
+  {
+    path: "/battle",
+    name: "battle",
+    component: ()=>
+      import(/* webpackChunkName: "battle" */ "../views/BattleView.vue"),
+  },
+  {
+    path:'/AllSession',
+    name:'AllSession',
+    component: () => 
+      import (/* webpackChunkName: "battle" */ "../views/AllSession.vue"),
+  },
+  {
+    path:'/battleDetailInfo/:walletAddress/:sessionId',
+    name:'battleDetailInfo',
+    component: () => 
+      import (/* webpackChunkName: "battle" */ "../views/BattleDetailInfo.vue"),
+    
+  },
+  {
+    path:'/myEntry/:myAddress',
+    name:'myEntry',
+    component: () => 
+      import (/* webpackChunkName: "battle" */ "../views/MyEntries.vue")
+    
+  },
+  {
+    path:'/entryPage/:sessionId',
+    name:'entryPage',
+    component: () => 
+      import (/* webpackChunkName: "battle" */ "../views/EntryPage.vue")
+    
+  },
   {
     path: "/about",
     name: "about",
