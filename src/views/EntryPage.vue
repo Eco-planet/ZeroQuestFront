@@ -68,7 +68,7 @@
     <button href="#" 
     class="
     mt-12
-    mb-20
+    mb-32
     text-xl
     text-white 
     focus:ring-4 

@@ -7,7 +7,8 @@
     </div>
     <!-- 카드 -->
     <!-- row에 카드2개씩 -->
-    <div class="mt-1 grid grid-cols-2 gap-card">
+    <div class="mt-1 grid grid-cols-2 gap-card"
+    :class="myEntries.length>10 ? '': 'cardMediaBottom'">
         <!-- 카드1 -->
       <div v-for="(item) in myEntries.slice(0,moreLimit)" :key="item.id" class="mt-7 p-5 bg-white">
         <!-- 하트버튼 -->
@@ -44,7 +45,7 @@
     </div>
     <!-- 더보기버튼 -->
     <button href="#" 
-    v-if="myEntries.length >3"
+    v-if="myEntries.length >10"
     @click="moreBtn"
     class="
     mt-32
@@ -58,7 +59,7 @@
     dark:hover:bg-green-700 
     dark:focus:ring-green-800
     cardTbtn
-    mediaBottom"
+    moreMediaBottom"
     >더보기
     </button>
   </div>
@@ -100,7 +101,15 @@ const moreBtn = () => {
     font-size: clamp(1.5rem, 4.3vw, 3rem);
   }
 
-  .mediaBottom {
+  .cardMediaBottom {
+    margin-bottom: 70px;
+
+    @media(min-width:768px){
+      margin-bottom: 200px;
+    }
+  }
+
+  .moreMediaBottom {
     margin-bottom: 70px;
     
     @media(min-width:400px){

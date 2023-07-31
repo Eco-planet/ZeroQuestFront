@@ -81,7 +81,8 @@
     <div class="mt-9 text-start font-semibold otherEntriesText">User’s other entries in this session</div>
     <!-- 카드 -->
     <!-- row에 카드2개씩 -->
-    <div class="grid grid-cols-2 cardMediaButtom">
+    <div class="grid grid-cols-2"
+    :class="otherEntries.length>10 ? '': 'cardMediaBottom'">
         <!-- 카드1 -->
       <div v-for="(item) in otherEntries.slice(0, moreLimit)" :key="item.id" class="p-5">
         <!-- 테테루그림 -->
@@ -116,7 +117,6 @@
     v-if="otherEntries.length >10"
     @click="moreBtn"
     class="
-    mt-32
     text-xl
     text-white 
     py-2 
@@ -127,7 +127,7 @@
     dark:hover:bg-green-700 
     dark:focus:ring-green-800
     cardTbtn
-    mediaBottom"
+    moreMediaBottom"
     >더보기
     </button>
   </div>
@@ -198,11 +198,11 @@ const myEntry = (myAddress:string) => {
 
   .bannerImg {
     width: 100vw;
-    max-width: 620px;
-    height: 19.5vw;
-    max-height: 160px;
+    max-width: 700px;
+    height: 87vw;
+    max-height: 700px;
+   
   }
-
 
   .subText {
     font-size: clamp(1.6rem, 3vw, 3rem);
@@ -233,14 +233,6 @@ const myEntry = (myAddress:string) => {
     font-size: clamp(1.4rem, 3.5vw, 2rem);
   }
 
-  .cardMediaButtom{
-    margin-bottom: 70px;
-
-    @media(min-width:768px){
-      margin-bottom: 200px;
-    }
-  }
-
   .cardImg {
     width: 33vw;
     height: 34.1vw;
@@ -260,7 +252,16 @@ const myEntry = (myAddress:string) => {
     border-radius: 7px;
   }
 
-  .mediaBottom {
+  .cardMediaBottom {
+    margin-bottom: 70px;
+
+    @media(min-width:768px){
+      margin-bottom: 200px;
+    }
+  }
+
+  .moreMediaBottom {
+    margin-top: 70px;
     margin-bottom: 70px;
     
     @media(min-width:400px){

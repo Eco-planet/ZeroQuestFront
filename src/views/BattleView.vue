@@ -183,7 +183,7 @@
     </button>
 
     <!-- Past Session -->
-    <button type="button" class="flex justify-end items-center mediaBottom" @click="AllSession()">
+    <button type="button" class="mt-10 flex justify-end items-center mediaBottom" @click="AllSession()">
       <div class="pr-4 sessionBtn">Past Sessions</div>
       <img 
       class="sessionImg" 
