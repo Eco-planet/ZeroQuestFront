@@ -58,7 +58,6 @@
     dark:bg-green-600 
     dark:hover:bg-green-700 
     dark:focus:ring-green-800
-    cardTbtn
     moreMediaBottom"
     >더보기
     </button>
@@ -87,7 +86,7 @@ const moreBtn = () => {
 
 <style lang="scss" scoped>
   .cardTbtn {
-    background-color: #24d120;;
+    background-color: #0c5c26;
     border-radius: 7px;
   }
 
@@ -111,6 +110,8 @@ const moreBtn = () => {
 
   .moreMediaBottom {
     margin-bottom: 70px;
+    background-color: #24d120;
+    border-radius: 7px;
     
     @media(min-width:400px){
       margin-bottom: 100px;

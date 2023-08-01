@@ -122,7 +122,7 @@ const nowSession:nowSessionType | undefined = sessions.find((e)=>{
   }
 
   .entryBtn {
-    background-color: #0c5c26;
+    background-color: #24d120;
     height: 30px;
     border-radius: 7px;
   } 

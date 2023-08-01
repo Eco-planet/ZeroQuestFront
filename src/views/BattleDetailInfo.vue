@@ -20,7 +20,8 @@
       dark:bg-green-600 
       dark:hover:bg-green-700 
       dark:focus:ring-green-800
-      bg-green-700"
+      myEntriesBtn
+     "
       @click="myEntry(myAddress)">
       my entries
       </button>
@@ -126,7 +127,6 @@
     dark:bg-green-600 
     dark:hover:bg-green-700 
     dark:focus:ring-green-800
-    cardTbtn
     moreMediaBottom"
     >더보기
     </button>
@@ -188,10 +188,10 @@ const myEntry = (myAddress:string) => {
 </script>
 
 <style lang="scss" scoped>
-
-  .voteColor {
+  .myEntriesBtn {
     background-color: #24d120;
   }
+
   .text-esg-color {
     color:#24d120
   }
@@ -209,7 +209,7 @@ const myEntry = (myAddress:string) => {
   }
 
   .likeBtn {
-    background-color: #0c5c26;
+    background-color: #24d120;
     width: 16.5vw;
     max-width : 300px;
     height: 24px;
@@ -247,10 +247,6 @@ const myEntry = (myAddress:string) => {
     background-color: #0c5c26;
     border-radius: 7px;
   }
-  .cardTbtn {
-    background-color: #24d120;;
-    border-radius: 7px;
-  }
 
   .cardMediaBottom {
     margin-bottom: 70px;
@@ -263,6 +259,8 @@ const myEntry = (myAddress:string) => {
   .moreMediaBottom {
     margin-top: 70px;
     margin-bottom: 70px;
+    background-color: #24d120;
+    border-radius: 7px;
     
     @media(min-width:400px){
       margin-bottom: 100px;

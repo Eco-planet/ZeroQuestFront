@@ -48,7 +48,8 @@
     </div>
     <!-- 카드 -->
     <!-- row에 카드2개씩 -->
-    <div class="mt-5 grid grid-cols-2 gap-card">
+    <div class="mt-5 grid grid-cols-2 gap-card"
+    :class="nowSessionItems.length>10 ? '': 'cardMediaBottom'">
         <!-- 카드1 -->
       <div v-for="(item) in nowSessionItems.slice(0,moreLimit)" :key="item.id" class="mt-7 p-5 bg-white">
         <!-- 하트버튼 -->
@@ -98,7 +99,6 @@
     dark:bg-green-600 
     dark:hover:bg-green-700 
     dark:focus:ring-green-800
-    cardTbtn
     mediaBottom"
     >더보기
     </button>
@@ -142,7 +142,7 @@ const moreBtn = () => {
   }
 
   .cardTbtn {
-    background-color: #24d120;;
+    background-color: #0c5c26;
     border-radius: 7px;
   }
   .cardImg {
@@ -155,8 +155,18 @@ const moreBtn = () => {
     font-size: clamp(1.5rem, 4.3vw, 3rem);
   }
 
+  .cardMediaBottom {
+    margin-bottom: 70px;
+
+    @media(min-width:768px){
+      margin-bottom: 200px;
+    }
+  }
+
   .mediaBottom {
     margin-bottom: 70px;
+    background-color: #24d120;
+    border-radius: 7px;
     
     @media(min-width:400px){
       margin-bottom: 100px;

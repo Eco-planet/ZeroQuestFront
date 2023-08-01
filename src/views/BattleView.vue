@@ -178,7 +178,7 @@
     dark:bg-green-600 
     dark:hover:bg-green-700 
     dark:focus:ring-green-800
-    cardTbtn"
+    moreBtn"
     >더보기
     </button>
 
@@ -281,10 +281,6 @@ const AllSession = () => {
 </script>
 
 <style lang="scss" scoped>
-
-  .voteColor {
-    background-color: #24d120;
-  }
   .text-esg-color {
     color:#24d120
   }
@@ -306,11 +302,11 @@ const AllSession = () => {
   .entryBtn {
     width: 75.88px;
     height:28px;
-    background-color: #0c5c26;
+    background-color: #24d120;
   }
 
   .cardTbtn {
-    background-color: #24d120;;
+    background-color: #0c5c26;
     border-radius: 7px;
   }
 
@@ -329,13 +325,17 @@ const AllSession = () => {
     font-size: clamp(1.5rem, 4.3vw, 3rem);
   }
 
- .cardBbtn {
-  background-color: #0c5c26;
-  width: 24vw;
-  max-width : 300px;
-  height: 30px;
-  border-radius: 7px;
-} 
+  .cardBbtn {
+    background-color: #24d120;
+    width: 24vw;
+    max-width : 300px;
+    height: 30px;
+    border-radius: 7px;
+  } 
+  .moreBtn {
+    background-color: #24d120;
+    border-radius: 7px;
+  }
 
   .sessionBtn {
     font-size: clamp(1.5rem, 3.3vw, 2rem);

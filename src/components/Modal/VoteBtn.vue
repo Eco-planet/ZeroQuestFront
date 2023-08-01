@@ -8,7 +8,7 @@
           <div class="bg-white px-4 pb-4">
             <div>
               <div class="text-center">
-                <h3 class="mt-4 font-semibold text-gray-900 voteText" id="modal-title">Vote</h3>
+                <h3 class="mt-4 font-semibold voteText" id="modal-title">Vote</h3>
                 <!--  -->
                 <div class="mt-3 text-start">
                   <div class="flex justify-center mt-4" >
@@ -16,15 +16,11 @@
                   </div>
                   <div class="flex flex-col justify-between p-7"> 
                     <div class="text-center" v-if="checkModal">
-                      <span class="font-medium voteText">Do you want to vote for</span>
-                      <span class="font-semibold text-green-600 voteText">Teteru bear?</span>
+                      <span class="mr-2 font-medium voteText">Do you want to vote for</span>
+                      <span class="font-semibold text-green-600 checkText">Teteru bear?</span>
                     </div>
                     <div class="text-center" v-else> 
                       <span class="font-semibold voteText">Voting Success! </span>
-                    </div>
-                    <div class="flex justify-center p-3 infoBox" v-if="checkModal">
-                      <span class="font-medium boxText">Votable</span>
-                      <span class="text-green-500 font-semibold pl-6 boxText">3 Vote</span>
                     </div>
                   </div>
                 </div>
@@ -146,12 +142,9 @@ const isCheckModal = () => {
   max-height: 350px;
 }
 
-
-.infoBox{
-  background-color: #f0f4ee;
-}
-.boxText {
-  font-size: clamp(1.6rem, 2.8vw, 2rem);
+.checkText{
+  color: #0c5c26;
+  font-size: clamp(1.7rem, 2.5vw, 2.5rem);
 }
 
 .cancleBtn {
@@ -161,7 +154,7 @@ const isCheckModal = () => {
   height: 30px;
 }
 .VoteBtn {
-  background-color: #0c5c26;
+  background-color: #24d120;
   width: 34vw;
   max-width : 180px;
   height: 30px;
