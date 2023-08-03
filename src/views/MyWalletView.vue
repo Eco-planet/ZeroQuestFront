@@ -161,7 +161,7 @@ const updateBalance = () => {
 };
 
 const getStatusCheck = (type: string, symbol: string) => {
-  if (swapEsg.value <= 0) return false;
+  if (type === 'swap' && swapEsg.value <= 0) return false;
 
   // 처리중인 SendCoin/Swap 이 있는지 확인
   http.get("/api/statusCheck", {
