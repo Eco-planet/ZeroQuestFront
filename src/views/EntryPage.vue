@@ -9,17 +9,17 @@
     <div class="mt-2 p-3 w-auto">
       <div class="flex justify-between">
         <div>       
-          <p class="font-semibold text-left entryBoxInfo">{{ nowSession?.title }}</p>
+          <p class="font-semibold text-left entryBoxInfo">{{ recentSession?.title }}</p>
           <p class="pb-4 entryBoxInfo text-start">
             <span class="font-semibold">
               Topic : 
             </span>
-            {{ nowSession?.topic }}</p>
+            {{ recentSession?.topic }}</p>
         </div>
       </div>
       <div class="flex"> 
-        <p class="mr-2 entryBoxInfo2">2022년 3월4일</p> ~ 
-        <p class="ml-2 entryBoxInfo2">222년 4월 4일</p>
+        <p class="mr-2 entryBoxInfo2">{{ formattedCreatedAt }}</p> ~ 
+        <p class="ml-2 entryBoxInfo2">{{ formattedEndAt }}</p>
       </div>
     </div>
     <!-- 사진 -->
@@ -85,15 +85,45 @@
 
 <script lang="ts" setup>
 import router from "@/router"
-import { sessions } from "@/utils/mockData"
 import { nowSessionType } from "@/types/IBattleType"
+import http from "@/api/http"
+import { onMounted, ref, computed } from "vue"
 
-const sessionId = router.currentRoute.value.params.sessionId
-
-const nowSession:nowSessionType | undefined = sessions.find((e)=>{
-  return e.id === Number(sessionId)
+onMounted(()=>{
+  battleSession()
 })
 
+const recentSession = ref()
+
+
+//post요청할때 필요 
+const sessionId = router.currentRoute.value.params.sessionId
+
+
+//session 백API 엔드포인트에 get요청하는 함수
+const battleSession = () => {
+  http.get("/api/battle/session")
+  .then((response)=>{
+    recentSession.value = response.data.data
+  })
+}
+
+const formattedCreatedAt = computed(()=>{
+  if(recentSession.value && recentSession.value.createdAt){
+    const startAt = new Date(recentSession.value.createdAt)
+
+    return startAt.toLocaleDateString ()
+  }
+})
+
+const formattedEndAt = computed(()=>{
+  if(recentSession.value && recentSession.value.period){
+    const endAt = new Date(recentSession.value.period)
+    console.log("session",recentSession.value.idx)
+
+    return endAt.toLocaleDateString ()
+  }
+})
 </script>
 
 <style lang="scss" scoped>

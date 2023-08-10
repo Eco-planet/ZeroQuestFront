@@ -26,7 +26,7 @@
       dark:hover:bg-green-700 
       "
       >
-        <option v-for="session in sessions" :key="session.id" :value=session.id>{{ session.title }}</option>
+        <option v-for="session in allSession.allSessionData" :key="session.idx" :value=session.idx>{{ session.title }}</option>
       </select>
     </div>
     <!-- 박스 -->
@@ -42,8 +42,8 @@
         </div>
       </div>
       <div class="flex"> 
-        <p class="mr-2 entryBoxInfo2">2022년 3월4일</p> ~ 
-        <p class="ml-2 entryBoxInfo2">222년 4월 4일</p>
+        <p class="mr-2 entryBoxInfo2">{{ nowSession?.createdAt }}</p> ~ 
+        <p class="ml-2 entryBoxInfo2">{{ nowSession?.period  }}</p>
       </div>
     </div>
     <!-- 카드 -->
@@ -106,16 +106,62 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
+import { computed, onMounted, reactive, ref, watch } from 'vue'
 import { sessions, entries  } from "@/utils/mockData"
+import http from "@/api/http"
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+const recentSessionIdx = ref(route.params.recentSessionIdx)
+
+const allSession = reactive({
+  allSessionData : []
+})
+
+onMounted(()=>{
+  allSessions()
+  battleContents()
+})
+
+//allSession 백엔드 api 엔드포인트로 get요청보내는 함수
+//여기 contents도 들어있다
+const allSessions = () => {
+  http.get("/api/battle/allSession")
+  .then((response) => {
+    allSession.allSessionData = response.data.data
+  })
+}
+
 
 // 드롭다운 value === session의 id
-const sessionSort = ref(15)
+const sessionSort = ref(Number(recentSessionIdx.value))
 
 //드롭다운 value로 해당하는 session id를 찾아 화면에 뿌려줌
 const nowSession= computed(()=>{
-  return sessions.find(e => e.id === sessionSort.value)
+  if(allSession.allSessionData){
+    return allSession.allSessionData.find((e)=> e.idx === sessionSort.value)
+  }else{
+  }
 })
+
+
+// const formattedCreatedAt = computed(() => {
+//   if( allSession.allSessionData){
+//       const startAt = new Date(allSession.createdAt)
+//       return startAt.toLocaleDateString()
+//     })
+  
+// })
+
+// const formattedEndAt = computed(()=>{
+//   if( allSession.allSessionData){
+//     return allSession.allSessionData.map((allSession)=>{
+//       const startAt = new Date(allSession.period)
+//       return startAt.toLocaleDateString()
+//     })
+//   }
+// })
+
 
 //현재 sessionid에 해당하는entries를 화면에 뿌려줌
 const nowSessionItems = computed(()=>{

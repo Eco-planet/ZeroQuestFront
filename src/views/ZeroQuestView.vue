@@ -115,6 +115,7 @@ const getMyNftList = () => {
   })
     .then((response) => {
       myNftList.value = response.data.data;
+      console.log("zero",response.data.data)
     });
 };
 

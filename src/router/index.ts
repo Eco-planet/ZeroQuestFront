@@ -58,20 +58,20 @@ const routes: Array<RouteRecordRaw> = [
       import(/* webpackChunkName: "battle" */ "../views/BattleView.vue"),
   },
   {
-    path:'/AllSession',
+    path:'/AllSession/:recentSessionIdx',
     name:'AllSession',
     component: () => 
       import (/* webpackChunkName: "battle" */ "../views/AllSession.vue"),
   },
   {
-    path:'/battleDetailInfo/:walletAddress/:sessionId',
+    path:'/battleDetailInfo/:walletAddress/:sessionId/:cardIdx',
     name:'battleDetailInfo',
     component: () => 
       import (/* webpackChunkName: "battle" */ "../views/BattleDetailInfo.vue"),
     
   },
   {
-    path:'/myEntry/:myAddress',
+    path:'/myEntry',
     name:'myEntry',
     component: () => 
       import (/* webpackChunkName: "battle" */ "../views/MyEntries.vue")

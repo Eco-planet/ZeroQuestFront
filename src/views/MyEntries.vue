@@ -8,9 +8,9 @@
     <!-- 카드 -->
     <!-- row에 카드2개씩 -->
     <div class="mt-1 grid grid-cols-2 gap-card"
-    :class="myEntries.length>10 ? '': 'cardMediaBottom'">
+    :class="myEntries.myEntriesArr.length>10 ? '': 'cardMediaBottom'">
         <!-- 카드1 -->
-      <div v-for="(item) in myEntries.slice(0,moreLimit)" :key="item.id" class="mt-7 p-5 bg-white">
+      <div v-for="(item) in myEntriesOrder.slice(0,moreLimit)" :key="item.idx" class="mt-7 p-5 bg-white">
         <!-- 하트버튼 -->
         <div href="#" 
         class="
@@ -31,21 +31,21 @@
               <div>
                 <img class="w-8" src="../assets/images/img_icon_heart_white.png"/>
               </div>
-              <div>{{ item.like }}</div>
+              <div>{{ item.vote }}</div>
             </div>
           </div>
         </div>
           <!-- 테테루그림 -->
         <div class="flex justify-center mt-4">
-          <img class="w-full cardImg" :src="item.img"/>
+          <img class="w-full cardImg" :src="item.image"/>
         </div>
         <!-- teteru bear -->
-        <div class="pt-2 pb-2 font-medium text-truncate cardText">{{ item.cardName }}</div>    
+        <div class="pt-2 pb-2 font-medium text-truncate cardText">{{ item.title }}</div>    
       </div>
     </div>
     <!-- 더보기버튼 -->
     <button href="#" 
-    v-if="myEntries.length >10"
+    v-if="myEntries.myEntriesArr.length >10"
     @click="moreBtn"
     class="
     mt-32
@@ -65,16 +65,33 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
-import router from "@/router"
-import { entries } from '@/utils/mockData'
+import { ref, reactive, onMounted, computed} from 'vue'
+import http from "@/api/http"
 
+const myEntries = reactive({
+  myEntriesArr:[]
+})
 
-const myAddress = router.currentRoute.value.params.myAddress
+onMounted(()=>{
+  battleMyEntry()
+})
 
-const myEntries = entries.filter((e)=>{
-  return e.wallet_address === myAddress
-}).sort((a,b) => b.like - a.like)
+// myEntry API요청
+const battleMyEntry = () => {
+  http.get("/api/battle/myEntry")
+  .then((response) => {
+    myEntries.myEntriesArr = response.data.data;
+    console.log("myEntry", myEntries.myEntriesArr)
+  })
+}
+
+const myEntriesOrder = computed(()=>{
+  return myEntries.myEntriesArr.slice().sort((a,b)=>b.vote - a.vote)
+})
+
+// const myEntriesOrder = myEntries.myEntriesArr.filter((e)=>{
+//   return e.wallet_address === myAddress
+// }).sort((a,b) => b.like - a.like)
 
 //더보기
 const moreLimit = ref(10)

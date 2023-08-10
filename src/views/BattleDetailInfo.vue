@@ -22,7 +22,7 @@
       dark:focus:ring-green-800
       myEntriesBtn
      "
-      @click="myEntry(myAddress)">
+      @click="myEntry">
       my entries
       </button>
     </div>
@@ -134,22 +134,44 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import router from "@/router"
 import store from "@/store";
 import { entries } from '@/utils/mockData'
 import voting from "@/components/Modal/VoteBtn.vue"
+import http from "@/api/http"
+
+onMounted(()=>{
+  battleContents()
+})
+
+
+//지갑주소와 sessionId, idx가 필요한이유
+//해당세션에서 해당 지갑주소에 해당하는 사람의 해당 데이터를 보여주려고
+//그리고 otherEnties에서는 해당세션의 그 지갑주소에 해당하는사람의 나머지 데이터
 
 
 //해당카드의 detail page니까 카드를 올린 사람의 지갑주소와 해당 session을 가지고 와서 해당하는 데이터만 보여줌
 const walletAddress = router.currentRoute.value.params.walletAddress
 const sessionId = router.currentRoute.value.params.sessionId
-
-//나의 entries로 가기위한
-const myAddress = '0x580be183e8sdf181DAC94c72FC6dCC49Bc2c03AA62f'
+const thisCardIdx = router.currentRoute.value.params.cardIdx
+console.log("this",thisCardIdx)
 
 //esgp
 const getBalances = store.getters["auth/getBalances"].ESGP.balance
+
+//Contents 백엔드 api 엔드포인트로 get요청보내는 함수
+//?????  지갑주소도 불러와서 해야됨
+const battleContents = () => {
+  http.get("/api/battle/contents",{
+    params:{
+      session_id:sessionId
+    }
+  })
+  .then((response)=>{
+    console.log(response.data.data)
+  })
+}
 
 const findDetailEntry = entries.find(e => 
   e.session_id === Number(sessionId) &&

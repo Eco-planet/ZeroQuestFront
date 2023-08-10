@@ -21,7 +21,7 @@
       dark:hover:bg-green-700 
       dark:focus:ring-green-800
       entryBtn"
-      @click="myEntry(myAddress)">
+      @click="myEntry">
       my entries
       </button>
     </div>
@@ -38,18 +38,19 @@
     <div class="h-10"></div>
     <!-- 테테루배너 -->
     <div class="flex justify-center">
-      <img class="w-full object-cover bannerImg" :src="nowSession?.bannerImg">
+      <!-- <img class="w-full object-cover bannerImg" :src="nowSession?.bannerImg"> -->
+      <img class="w-full object-cover bannerImg" :src="recentSession?.banner">
     </div>
     <!-- 박스 -->
     <div class="mt-7 p-3 w-auto">
       <div class="flex justify-between">
         <div>       
-          <p class="font-semibold text-left entryBoxInfo">{{ nowSession?.title }}</p>
+          <p class="font-semibold text-left entryBoxInfo">{{ recentSession?.title }}</p>
           <p class="pb-4 entryBoxInfo text-start">
             <span class="font-semibold">
               Topic : 
             </span>
-            {{ nowSession?.topic }}</p>
+            {{ recentSession?.topic }}</p>
         </div>
         <button 
         type="button" 
@@ -67,13 +68,13 @@
         dark:hover:bg-green-700 
         dark:focus:ring-green-800
         entryBtn"
-        @click="entryBtn(nowSession.id)">
+        @click="entryBtn(recentSession?.idx)">
         Entry
         </button>
       </div>
       <div class="flex"> 
-        <p class="mr-2 entryBoxInfo2">2022년 3월4일</p> ~ 
-        <p class="ml-2 entryBoxInfo2">222년 4월 4일</p>
+        <p class="mr-2 entryBoxInfo2">{{formattedCreatedAt}}</p> ~ 
+        <p class="ml-2 entryBoxInfo2">{{formattedEndAt}}</p>
       </div>
     </div>
   
@@ -107,7 +108,7 @@
     <!-- row에 카드2개씩 -->
     <div class="grid grid-cols-2 gap-card">
         <!-- 카드1 -->
-      <div v-for="item in newItems.slice(0,moreLimit)" :key="item.id" class="mt-7 p-5 bg-white">
+      <div v-for="item in newItems.slice(0,moreLimit)" :key="item.idx" class="mt-7 p-5 bg-white">
         <!-- 하트버튼 -->
         <div href="#" 
         class="
@@ -128,16 +129,16 @@
               <div>
                 <img class="w-8" src="../assets/images/img_icon_heart_white.png"/>
               </div>
-              <div>{{item.like}}</div>
+              <div>{{item.vote}}</div>
             </div>
           </div>
         </div>
         <!-- 테테루그림 -->
-        <div class="flex justify-center mt-4" @click="detailInfo(item.wallet_address,  item.session_id)">
-          <img class="w-full cardImg" :src="item.img"/>
+        <div class="flex justify-center mt-4" @click="detailInfo(item.address,  item.session_id, item.idx)">
+          <img class="w-full cardImg" :src="item.image"/>
         </div>
         <!-- teteru bear -->
-        <div class="pt-2 pb-2 font-medium text-truncate cardText">{{ item.cardName }}</div>
+        <div class="pt-2 pb-2 font-medium text-truncate cardText">{{ item.title }}</div>
         <!--굿버튼  -->
         <div> 
           <button
@@ -165,7 +166,7 @@
 
     <!-- 더보기버튼 -->
     <button href="#" 
-    v-if="newItems.length >10"
+    v-if="recentSessionCard.cardData.length >10"
     @click = "moreBtn"
     class="
     my-32
@@ -176,14 +177,14 @@
     focus:ring-4 
     focus:ring-green-300 
     dark:bg-green-600 
-    dark:hover:bg-green-700 
+    dark:hover:bg-green-700 c
     dark:focus:ring-green-800
     moreBtn"
     >더보기
     </button>
 
     <!-- Past Session -->
-    <button type="button" class="mt-10 flex justify-end items-center mediaBottom" @click="AllSession()">
+    <button type="button" class="mt-10 flex justify-end items-center mediaBottom" @click="AllSession(recentSession?.idx)">
       <div class="pr-4 sessionBtn">Past Sessions</div>
       <img 
       class="sessionImg" 
@@ -194,39 +195,83 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, reactive } from 'vue'
 import router from "@/router"
 import store from "@/store";
 import voting from "@/components/Modal/VoteBtn.vue"
-import { sessions, entries } from "@/utils/mockData"
 import { nowSessionType } from "@/types/IBattleType"
+import http from "@/api/http"
+
+const recentSession = ref()
+const recentSessionCard = reactive({
+  cardData:[]
+})
 
 
+onMounted(()=>{
+  battleSession();
+})
 
-//내 임시주소
-const myAddress = '0x580be183e8sdf181DAC94c72FC6dCC49Bc2c03AA62f'
+//session 백엔드 api 엔드포인트로 get요청보내는 함수
+const battleSession = () => {
+  http.get("/api/battle/session")
+  .then((response) => {
+  recentSession.value = response.data.data;
+  console.log("recentSession.value.contents",  recentSession.value.contents )
+  // battleContents()
+  })
+}
+
+const formattedCreatedAt = computed(()=>{
+  if(recentSession.value && recentSession.value.createdAt){
+    const startAt = new Date(recentSession.value.createdAt)
+
+    return startAt.toLocaleDateString ()
+  }
+})
+
+const formattedEndAt = computed(()=>{
+  if(recentSession.value && recentSession.value.period){
+    const endAt = new Date(recentSession.value.period)
+
+    return endAt.toLocaleDateString ()
+  }
+})
+
+// //Contents 백엔드 api 엔드포인트로 get요청보내는 함수
+// const battleContents = () => {
+//   if(recentSession.value.idx){
+//     const sessionId = recentSession.value.idx
+//     http.get(`/api/battle/contents/${sessionId}`,{
+    
+//     params:{
+//       session_id:recentSession.value.idx
+//     }
+//     })
+//     .then((response)=>{
+//       recentSessionCard.cardData = response.data.data
+
+//     })
+//   }else {
+//     console.error("recentSession.value.idx가 정의되지 않았습니다")
+//   }
+// }
 
 //esgp
 const getBalances = store.getters["auth/getBalances"].ESGP.balance
 
-//현재 15th session
-//db 최신session 1개 받아서 보여주면 됨
-const nowSession:nowSessionType | undefined= sessions.find(e => e.id === 15)
-
 //default sorting
 const sortBtn = ref("Vote")
 
-//sorting기능 //15th session에 해당하는 데이터만 보여줌
+//sorting기능 //현재 session에 해당하는 카드데이터만 보여줌
 const newItems = computed(()=>{
-  const newEntry = entries.filter(e => e.session_id === 15)
-
   switch(sortBtn.value){
     case "Vote":
-      return newEntry.slice().sort((a,b) => b.like - a.like)
+      return recentSessionCard.cardData.slice().sort((a,b) => b.vote - a.vote)
     case "Title":
-      return newEntry.slice().sort((a, b) => a.cardName.localeCompare(b.cardName))  
+      return recentSessionCard.cardData.slice().sort((a, b) => a.title.localeCompare(b.title))  
   }
-  return newEntry
+  return recentSessionCard.cardData
 })
 
 //더보기
@@ -247,11 +292,11 @@ const modalChange = (voteModalEmit:boolean) => {
 }
 
 // router
-const myEntry = (myAddress:string) => {
+const myEntry = () => {
 
   router.push({
-    params:{myAddress},
-    name:"myEntry"
+    path:'/myEntry',
+    name:'myEntry'
   })
 }
 
@@ -263,18 +308,18 @@ const entryBtn = (sessionId:number) => {
   })
 }
 
-const detailInfo = (walletAddress:string,  sessionId:number) => {
+const detailInfo = (walletAddress:string,  sessionId:number , cardIdx:number) => {
 
   router.push({
-    params:{ walletAddress, sessionId },
+    params:{ walletAddress, sessionId, cardIdx },
     name:'battleDetailInfo'
   })
 }
 
-const AllSession = () => {
+const AllSession = (recentSessionIdx:number) => {
 
   router.push({
-    path:'/AllSession',
+    params:{recentSessionIdx},
     name:'AllSession'
   })
 }
