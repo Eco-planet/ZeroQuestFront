@@ -42,8 +42,8 @@
         </div>
       </div>
       <div class="flex"> 
-        <p class="mr-2 entryBoxInfo2">{{ nowSession?.createdAt }}</p> ~ 
-        <p class="ml-2 entryBoxInfo2">{{ nowSession?.period  }}</p>
+        <p class="mr-2 entryBoxInfo2">{{ date(nowSession?.createdAt)}}</p> ~ 
+        <p class="ml-2 entryBoxInfo2">{{ date(nowSession?.period) }}</p>
       </div>
     </div>
     <!-- 카드 -->
@@ -51,7 +51,7 @@
     <div class="mt-5 grid grid-cols-2 gap-card"
     :class="nowSessionItems.length>10 ? '': 'cardMediaBottom'">
         <!-- 카드1 -->
-      <div v-for="(item) in nowSessionItems.slice(0,moreLimit)" :key="item.id" class="mt-7 p-5 bg-white">
+      <div v-for="(item) in nowSessionItems.slice(0,moreLimit)" :key="item.idx" class="mt-7 p-5 bg-white">
         <!-- 하트버튼 -->
         <div href="#" 
         class="
@@ -72,16 +72,16 @@
               <div>
                 <img class="w-8" src="../assets/images/img_icon_heart_white.png"/>
               </div>
-              <div>{{ item.like }}</div>
+              <div>{{ item.vote }}</div>
             </div>
           </div>
         </div>
           <!-- 테테루그림 -->
         <div class="flex justify-center mt-4">
-          <img class="w-full cardImg" :src="item.img"/>
+          <img class="w-full cardImg" :src="item.image"/>
         </div>
         <!-- teteru bear -->
-        <div class="pt-2 pb-2 font-medium text-truncate cardText">{{ item.cardName }}</div>      
+        <div class="pt-2 pb-2 font-medium text-truncate cardText">{{ item.title }}</div>      
       </div>
     </div>
     <!-- 더보기버튼 -->
@@ -106,8 +106,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, reactive, ref, watch } from 'vue'
-import { sessions, entries  } from "@/utils/mockData"
+import { computed, onMounted, reactive, ref } from 'vue'
 import http from "@/api/http"
 import { useRoute } from 'vue-router'
 
@@ -120,7 +119,6 @@ const allSession = reactive({
 
 onMounted(()=>{
   allSessions()
-  battleContents()
 })
 
 //allSession 백엔드 api 엔드포인트로 get요청보내는 함수
@@ -130,8 +128,10 @@ const allSessions = () => {
   .then((response) => {
     allSession.allSessionData = response.data.data
   })
+  .catch((error)=>{
+    alert(error)
+  })
 }
-
 
 // 드롭다운 value === session의 id
 const sessionSort = ref(Number(recentSessionIdx.value))
@@ -140,34 +140,20 @@ const sessionSort = ref(Number(recentSessionIdx.value))
 const nowSession= computed(()=>{
   if(allSession.allSessionData){
     return allSession.allSessionData.find((e)=> e.idx === sessionSort.value)
-  }else{
-  }
+  } 
 })
-
-
-// const formattedCreatedAt = computed(() => {
-//   if( allSession.allSessionData){
-//       const startAt = new Date(allSession.createdAt)
-//       return startAt.toLocaleDateString()
-//     })
-  
-// })
-
-// const formattedEndAt = computed(()=>{
-//   if( allSession.allSessionData){
-//     return allSession.allSessionData.map((allSession)=>{
-//       const startAt = new Date(allSession.period)
-//       return startAt.toLocaleDateString()
-//     })
-//   }
-// })
-
+const date = (dateString) => {
+  const date = new Date(dateString);
+  return date.toLocaleDateString();
+}
 
 //현재 sessionid에 해당하는entries를 화면에 뿌려줌
 const nowSessionItems = computed(()=>{
-  return entries
-  .filter(e => e.session_id === sessionSort.value)
-  .sort((a,b) => b.like - a.like)
+  if(allSession && allSession.allSessionData){
+    const nowSession = allSession.allSessionData.find(e => e.idx === sessionSort.value)
+
+    return nowSession ? nowSession.contents.sort((a,b) => b.vote - a.vote) : []
+  }
 })
 
 //더보기

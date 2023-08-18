@@ -21,11 +21,21 @@ export default createStore({
     nftId: 0,
     nftIdx: 0,
     logos: logos,
+    updateEntryInfo:null
   },
   getters: {
-    logos:state => state.logos
+    logos:state => state.logos,
+    updateEntryInfo:state => state.updateEntryInfo
   },
-  mutations: {},
-  actions: {},
+  mutations: {
+    SET_DATA(state, payload){
+      state.updateEntryInfo = payload
+    }
+  },
+  actions: {
+    updateEntryInfo({ commit }, data) {
+      commit('SET_DATA', data)
+    }
+  },
   modules,
 });

@@ -73,8 +73,8 @@
         </button>
       </div>
       <div class="flex"> 
-        <p class="mr-2 entryBoxInfo2">{{formattedCreatedAt}}</p> ~ 
-        <p class="ml-2 entryBoxInfo2">{{formattedEndAt}}</p>
+        <p class="mr-2 entryBoxInfo2">{{ date(recentSession?.createdAt )}}</p> ~ 
+        <p class="ml-2 entryBoxInfo2">{{ date(recentSession?.period) }}</p>
       </div>
     </div>
   
@@ -106,7 +106,8 @@
     </div>
     <!-- 카드 -->
     <!-- row에 카드2개씩 -->
-    <div class="grid grid-cols-2 gap-card">
+    <div v-if="isLoading">Loading...</div>
+    <div v-else-if="recentSessionCard && recentSessionCard.cardData" class="grid grid-cols-2 gap-card">
         <!-- 카드1 -->
       <div v-for="item in newItems.slice(0,moreLimit)" :key="item.idx" class="mt-7 p-5 bg-white">
         <!-- 하트버튼 -->
@@ -199,7 +200,7 @@ import { ref, computed, onMounted, reactive } from 'vue'
 import router from "@/router"
 import store from "@/store";
 import voting from "@/components/Modal/VoteBtn.vue"
-import { nowSessionType } from "@/types/IBattleType"
+// import { nowSessionType } from "@/types/IBattleType"
 import http from "@/api/http"
 
 const recentSession = ref()
@@ -207,55 +208,33 @@ const recentSessionCard = reactive({
   cardData:[]
 })
 
+const isLoading = ref(true)
 
 onMounted(()=>{
-  battleSession();
+  isLoading.value = true
+  battleSession()
 })
 
 //session 백엔드 api 엔드포인트로 get요청보내는 함수
 const battleSession = () => {
+
   http.get("/api/battle/session")
   .then((response) => {
   recentSession.value = response.data.data;
-  console.log("recentSession.value.contents",  recentSession.value.contents )
-  // battleContents()
+  recentSessionCard.cardData = response.data.data.contents;
+
+  isLoading.value = false
+  })
+  .catch((error)=>{
+    alert(error)
+
   })
 }
 
-const formattedCreatedAt = computed(()=>{
-  if(recentSession.value && recentSession.value.createdAt){
-    const startAt = new Date(recentSession.value.createdAt)
-
-    return startAt.toLocaleDateString ()
-  }
-})
-
-const formattedEndAt = computed(()=>{
-  if(recentSession.value && recentSession.value.period){
-    const endAt = new Date(recentSession.value.period)
-
-    return endAt.toLocaleDateString ()
-  }
-})
-
-// //Contents 백엔드 api 엔드포인트로 get요청보내는 함수
-// const battleContents = () => {
-//   if(recentSession.value.idx){
-//     const sessionId = recentSession.value.idx
-//     http.get(`/api/battle/contents/${sessionId}`,{
-    
-//     params:{
-//       session_id:recentSession.value.idx
-//     }
-//     })
-//     .then((response)=>{
-//       recentSessionCard.cardData = response.data.data
-
-//     })
-//   }else {
-//     console.error("recentSession.value.idx가 정의되지 않았습니다")
-//   }
-// }
+const date = (dateString) => {
+  const date = new Date(dateString)
+  return date.toLocaleDateString();
+}
 
 //esgp
 const getBalances = store.getters["auth/getBalances"].ESGP.balance
@@ -300,7 +279,7 @@ const myEntry = () => {
   })
 }
 
-const entryBtn = (sessionId:number) => {
+const entryBtn = (sessionId:number ) => {
 
   router.push({
     params:{ sessionId },

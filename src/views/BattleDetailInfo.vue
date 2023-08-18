@@ -39,12 +39,12 @@
     <div class="h-10"></div>
     <!-- 카드 이미지 -->
     <div class="flex justify-center">
-      <img class="w-full object-cover bannerImg" :src="findDetailEntry?.img">
+      <img class="w-full object-cover bannerImg" :src="findDetailEntry?.image">
     </div>
     
     <!-- 좋아요버튼 -->
     <div class="flex justify-between pt-9">
-      <div class="font-semibold subText">{{ findDetailEntry?.cardName }}</div>
+      <div class="font-semibold subText">{{ findDetailEntry?.title }}</div>
       <div class=" ">
         <button href="#" 
         class="
@@ -70,13 +70,13 @@
         <img class="walletImg" src="../assets/images/img_icon_wallet1.png"/>
       </div>
       <!-- 길어지면 뒤에 ... -->
-      <div class="text-truncate walletAddress ">{{ findDetailEntry?.wallet_address }} </div>
+      <div class="text-truncate walletAddress ">{{ findDetailEntry?.address }} </div>
     </div> 
     <voting  @close-modal="modalChange" v-if="isModalOpen"></voting>
 
     <!-- infoBox -->
     <div class="mt-7 p-5 w-auto rounded-lg text-start infoBox"> 
-      {{ findDetailEntry?.describe }}
+      {{ findDetailEntry?.desc }}
     </div>
     <!-- 다른 entry sub -->
     <div class="mt-9 text-start font-semibold otherEntriesText">User’s other entries in this session</div>
@@ -85,13 +85,13 @@
     <div class="grid grid-cols-2"
     :class="otherEntries.length>10 ? '': 'cardMediaBottom'">
         <!-- 카드1 -->
-      <div v-for="(item) in otherEntries.slice(0, moreLimit)" :key="item.id" class="p-5">
+      <div v-for="(item) in otherEntries.slice(0, moreLimit)" :key="item.idx" class="p-5">
         <!-- 테테루그림 -->
         <div class="flex justify-center">
-          <img class="w-full cardImg" :src="item.img"/>
+          <img class="w-full cardImg" :src="item.image"/>
         </div>
         <!-- teteru bear -->
-        <div class="pt-2 pb-2 font-medium text-truncate cardText">{{ item.cardName }}</div> 
+        <div class="pt-2 pb-2 font-medium text-truncate cardText">{{ item.title }}</div> 
         <!-- 투표수 확인 -->
         <div href="#" 
         class="
@@ -108,7 +108,7 @@
         >
           <div class="flex justify-center">
             <div class="pr-4">Vote.</div>
-            <div>{{ item.like }}</div>
+            <div>{{ item.vote }}</div>
           </div>
         </div>   
       </div>
@@ -134,10 +134,9 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from "vue";
+import { computed, onMounted, reactive, ref } from "vue";
 import router from "@/router"
 import store from "@/store";
-import { entries } from '@/utils/mockData'
 import voting from "@/components/Modal/VoteBtn.vue"
 import http from "@/api/http"
 
@@ -145,42 +144,54 @@ onMounted(()=>{
   battleContents()
 })
 
-
 //지갑주소와 sessionId, idx가 필요한이유
 //해당세션에서 해당 지갑주소에 해당하는 사람의 해당 데이터를 보여주려고
 //그리고 otherEnties에서는 해당세션의 그 지갑주소에 해당하는사람의 나머지 데이터
-
 
 //해당카드의 detail page니까 카드를 올린 사람의 지갑주소와 해당 session을 가지고 와서 해당하는 데이터만 보여줌
 const walletAddress = router.currentRoute.value.params.walletAddress
 const sessionId = router.currentRoute.value.params.sessionId
 const thisCardIdx = router.currentRoute.value.params.cardIdx
-console.log("this",thisCardIdx)
 
 //esgp
 const getBalances = store.getters["auth/getBalances"].ESGP.balance
 
+const detailCardInfo = reactive({
+  cardData:[]
+})
+
 //Contents 백엔드 api 엔드포인트로 get요청보내는 함수
-//?????  지갑주소도 불러와서 해야됨
 const battleContents = () => {
-  http.get("/api/battle/contents",{
-    params:{
-      session_id:sessionId
-    }
-  })
+  http.get(`/api/battle/detailContents/${sessionId}/${walletAddress}`)
   .then((response)=>{
-    console.log(response.data.data)
+    detailCardInfo.cardData = response.data.data
+  })
+  .catch((error)=>{
+    alert(error)
   })
 }
 
-const findDetailEntry = entries.find(e => 
-  e.session_id === Number(sessionId) &&
-  e.wallet_address === walletAddress
-)
+//메인에서 클릭한 카드이미지
+const findDetailEntry = computed(() => {
+  if(detailCardInfo && detailCardInfo.cardData && sessionId && walletAddress && thisCardIdx){
+    return detailCardInfo.cardData.find(e => 
+      e.session_id === Number(sessionId) &&
+      e.address === walletAddress &&
+      e.idx === Number(thisCardIdx)
+    )
+  }
+})
 
-const otherEntries = entries.filter((e)=>{
- return e.wallet_address === walletAddress && e.session_id !== Number(sessionId) 
-}).sort((a,b) => b.like - a.like)
+//이번세션에 등록한 다른 카드이미지
+const otherEntries = computed(() => {
+  if(detailCardInfo && detailCardInfo.cardData && sessionId && walletAddress && thisCardIdx){
+    return detailCardInfo.cardData.filter((e)=>
+      e.address === walletAddress &&
+      e.session_id === Number(sessionId) && 
+      e.idx !== Number(thisCardIdx) 
+    ).sort((a,b) => b.vote - a.vote)
+  }
+})
 
 //더보기
 const moreLimit = ref(10)

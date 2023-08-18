@@ -18,14 +18,15 @@
         </div>
       </div>
       <div class="flex"> 
-        <p class="mr-2 entryBoxInfo2">{{ formattedCreatedAt }}</p> ~ 
-        <p class="ml-2 entryBoxInfo2">{{ formattedEndAt }}</p>
+        <p class="mr-2 entryBoxInfo2">{{ date(recentSession?.createdAt) }}</p> ~ 
+        <p class="ml-2 entryBoxInfo2">{{ date(recentSession?.period) }}</p>
       </div>
     </div>
     <!-- 사진 -->
-    <input id="entryImg" type="file" class="mt-7 hidden" accept="image/*">
+    <input id="entryImg" type="file" class="mt-7 hidden" accept="image/*" @change="handleFileValue"/>
     <label type="button" for="entryImg" class="mt-8 flex justify-center border-1 border-gray-300 bg-gray-100">
-      <img src="../assets/images/upload.png"/>
+      <img  v-if="!imagePreviewUrl" src="../assets/images/upload.png"/>
+      <img  v-if="imagePreviewUrl" :src="imagePreviewUrl"/>
     </label>
 
     <!--info -->
@@ -43,27 +44,27 @@
     <!-- nameInput -->
     <div>  
       <div class="pt-9 text-start font-semibold inputNameText">Name</div>
-      <input type="text" class="w-full border-solid border-gray-300"/>
+      <input type="text" class="w-full border-solid border-gray-300"  v-model.trim="titleValue"/>
     </div>
 
      <!-- descriptionInput -->
      <div>  
       <div class="pt-9 text-start font-semibold inputNameText">Description</div>
-      <textarea type="text" class="w-full h-56 border-solid border-gray-300" placeholder="Description this item."/>
+      <textarea type="text" class="w-full h-56 border-solid border-gray-300" v-model.trim="descValue" placeholder="Description this item."/>
     </div>
 
     <!--check-->
     <div class="flex pt-4">
       <div class="pr-2 flex items-center">      
-        <input type="checkbox" class="border-solid border-gray-300 entryCheckbox"/>
-      </div>
-
-      <div class="pl-3 text-start info1">
-       The entry of stolen item is against our terms of service and not allowed on ECO NFT. 
-       The award of the stolen item can be revoked.
+        <input id="entryCheck" type="checkbox" class="border-solid border-gray-300 entryCheckbox" v-model="checkboxValue"/>
+        <label for="entryCheck" class="pl-3 text-start info1">
+          The entry of stolen item is against our terms of service and not allowed on ECO NFT. 
+          The award of the stolen item can be revoked.
+         </label>
       </div>
     </div>
-  
+    <div>{{updateEntryInfo}}</div>
+
     <!--entry버튼  -->
     <button href="#" 
     class="
@@ -77,17 +78,24 @@
     dark:hover:bg-green-700 
     dark:focus:ring-green-800
     entryBtn"
+    @click="enrollmentBtn"
     >
       <div>Entry</div>
+      
     </button>
   </div>
 </template>
 
 <script lang="ts" setup>
 import router from "@/router"
-import { nowSessionType } from "@/types/IBattleType"
 import http from "@/api/http"
-import { onMounted, ref, computed } from "vue"
+import { computed, onMounted, ref } from "vue"
+import { useRoute } from 'vue-router'
+import store from "@/store"
+
+//post요청할때 필요 
+const route = useRoute()
+const sessionId = ref(route.params.sessionId)
 
 onMounted(()=>{
   battleSession()
@@ -95,35 +103,86 @@ onMounted(()=>{
 
 const recentSession = ref()
 
-
-//post요청할때 필요 
-const sessionId = router.currentRoute.value.params.sessionId
-
-
 //session 백API 엔드포인트에 get요청하는 함수
 const battleSession = () => {
   http.get("/api/battle/session")
   .then((response)=>{
     recentSession.value = response.data.data
   })
+  .catch((error)=>{
+    alert(error)
+  })
 }
 
-const formattedCreatedAt = computed(()=>{
-  if(recentSession.value && recentSession.value.createdAt){
-    const startAt = new Date(recentSession.value.createdAt)
+const date = (dateString) => {
+  const date = new Date(dateString)
+  return date.toLocaleDateString();
+}
 
-    return startAt.toLocaleDateString ()
+//input
+const imageValue = ref('')
+
+const imagePreviewUrl = ref('')
+
+const handleFileValue = ((event)=>{
+  imageValue.value = event.target.files[0]
+
+  let reader = new FileReader()
+
+  reader.onload = (event) => {
+    imagePreviewUrl.value = event.target.result
+  }
+
+  if(imageValue.value){
+    reader.readAsDataURL(imageValue.value)
+  }else if(imageValue.value === undefined){
+    imagePreviewUrl.value = undefined
   }
 })
 
-const formattedEndAt = computed(()=>{
-  if(recentSession.value && recentSession.value.period){
-    const endAt = new Date(recentSession.value.period)
-    console.log("session",recentSession.value.idx)
+const updateEntryInfo = computed(() => store.getters.updateEntryInfo)
 
-    return endAt.toLocaleDateString ()
+// const titleValue = ref('')
+const titleValue = computed({
+      get: () => updateEntryInfo.entryTitle,
+      set: (newValue) => {
+        store.commit('SET_DATA', { ...updateEntryInfo, entryTitle: newValue });
+      }
+});
+
+
+const descValue = ref('')
+
+const checkboxValue = ref(true)
+
+const enrollmentBtn = (() => {
+
+  if(!titleValue.value || !descValue.value || checkboxValue.value === false || !imageValue.value ){
+    alert("모든필드를 채우고, 체크박스를 선택해주세요")
+    return 
+
+  }else if( titleValue.value && descValue.value && checkboxValue.value === true &&imageValue.value ){
+  
+    const formData = new FormData();
+    formData.append('image',imageValue.value)
+    formData.append('title', titleValue.value)
+    formData.append('desc', descValue.value)
+    formData.append('session_id',Number(sessionId.value))
+
+    http.post("/api/battle/entry",formData)
+    .then((response) => {
+      alert("Finished appointment")
+      router.push({
+        path:'/battle',
+        name:'battle'
+      })
+    })
+    .catch((error) => {
+      alert(error)
+    })
   }
 })
+
 </script>
 
 <style lang="scss" scoped>

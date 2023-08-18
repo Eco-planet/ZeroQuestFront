@@ -82,7 +82,12 @@ const routes: Array<RouteRecordRaw> = [
     name:'entryPage',
     component: () => 
       import (/* webpackChunkName: "battle" */ "../views/EntryPage.vue")
-    
+  },
+  {
+    path:'/entryPage',
+    name:'entryUpdatePage',
+    component: () => 
+      import (/* webpackChunkName: "battle" */ "../views/EntryPage.vue")
   },
   {
     path: "/about",
