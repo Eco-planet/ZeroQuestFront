@@ -198,10 +198,29 @@
 <script lang="ts" setup>
 import { ref, computed, onMounted, reactive } from 'vue'
 import router from "@/router"
-import store from "@/store";
+// import store from "@/store";
 import voting from "@/components/Modal/VoteBtn.vue"
-// import { nowSessionType } from "@/types/IBattleType"
 import http from "@/api/http"
+import {useStore} from "vuex"
+
+const store = useStore()
+
+const entryBtn = (sessionId:number ) => {
+
+  const updataDataSave = {
+    entryImage:"",
+    entryTitle:"",
+    entryDesc:"",
+    entryIdx:""
+  }
+
+  store.dispatch('updateEntryInfo',updataDataSave )
+
+  router.push({
+  params:{ sessionId },
+  name:'entryPage'
+})
+}
 
 const recentSession = ref()
 const recentSessionCard = reactive({
@@ -279,13 +298,13 @@ const myEntry = () => {
   })
 }
 
-const entryBtn = (sessionId:number ) => {
+// const entryBtn = (sessionId:number ) => {
 
-  router.push({
-    params:{ sessionId },
-    name:'entryPage'
-  })
-}
+//   router.push({
+//     params:{ sessionId },
+//     name:'entryPage'
+//   })
+// }
 
 const detailInfo = (walletAddress:string,  sessionId:number , cardIdx:number) => {
 

@@ -63,7 +63,6 @@
          </label>
       </div>
     </div>
-    <div>{{updateEntryInfo}}</div>
 
     <!--entry버튼  -->
     <button href="#" 
@@ -80,7 +79,8 @@
     entryBtn"
     @click="enrollmentBtn"
     >
-      <div>Entry</div>
+      <div v-if="sessionId">Entry</div>
+      <div v-else>Edit</div>
       
     </button>
   </div>
@@ -96,6 +96,11 @@ import store from "@/store"
 //post요청할때 필요 
 const route = useRoute()
 const sessionId = ref(route.params.sessionId)
+console.log("SessionID",sessionId.value)
+const entryIdx = store.getters.updateEntryInfo.entryIdx
+console.log("entryIdx",entryIdx.value)
+const entrySessionId = store.getters.updateEntryInfo.entrySessionId
+console.log("entrySessionId",entrySessionId.value)
 
 onMounted(()=>{
   battleSession()
@@ -122,7 +127,9 @@ const date = (dateString) => {
 //input
 const imageValue = ref('')
 
+
 const imagePreviewUrl = ref('')
+imagePreviewUrl.value = store.getters.updateEntryInfo.entryImage
 
 const handleFileValue = ((event)=>{
   imageValue.value = event.target.files[0]
@@ -140,24 +147,21 @@ const handleFileValue = ((event)=>{
   }
 })
 
-const updateEntryInfo = computed(() => store.getters.updateEntryInfo)
-
-// const titleValue = ref('')
-const titleValue = computed({
-      get: () => updateEntryInfo.entryTitle,
-      set: (newValue) => {
-        store.commit('SET_DATA', { ...updateEntryInfo, entryTitle: newValue });
-      }
-});
+const titleValue = ref('')
+titleValue.value = store.getters.updateEntryInfo.entryTitle
 
 
 const descValue = ref('')
 
+descValue.value = store.getters.updateEntryInfo.entryDesc
+
 const checkboxValue = ref(true)
 
 const enrollmentBtn = (() => {
-
-  if(!titleValue.value || !descValue.value || checkboxValue.value === false || !imageValue.value ){
+  if(sessionId.value){
+    //entryAdd코드
+    console.log("세션아디있다")
+    if(!titleValue.value || !descValue.value || checkboxValue.value === false || !imageValue.value ){
     alert("모든필드를 채우고, 체크박스를 선택해주세요")
     return 
 
@@ -181,6 +185,22 @@ const enrollmentBtn = (() => {
       alert(error)
     })
   }
+  }else {
+    //entryUpdate코드
+
+    //이미지는 보이지만 값은 가지고있지않다 
+    //세션id도 가져와야된다
+    //수정버튼누를때 스토어에 세션id값도 보내주자
+
+    //??idx, session값 스토어에서 못받아온다 문제는?
+    console.log("세션아디없다")
+    console.log("image",imageValue.value)
+    console.log("title",titleValue.value)
+    console.log("desc",descValue.value)
+    // console.log("entrySessionId",entrySessionId.value)
+  }
+
+  
 })
 
 </script>
