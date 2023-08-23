@@ -4,7 +4,7 @@
     <div class="fixed inset-0 z-10 overflow-y-auto">
       <div class="min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
         <!--  -->
-        <div  v-if="userVotes > 0 || !userVotes " class="p-5 relative transform overflow-hidden bg-white shadow-xl transition-all">
+        <div  v-if="userName > 0 || !userName " class="p-5 relative transform overflow-hidden bg-white shadow-xl transition-all">
           <div class="bg-white px-4 pb-4">
             <div>
               <div class="text-center">
@@ -133,15 +133,18 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { defineProps } from 'vue';
 import http from "@/api/http";
 import { useStore } from 'vuex';
 import store from "@/store"
 
 const setStore = useStore()
-const userVotes = computed(() => store.getters.updateUserVotes)
-console.log("user",userVotes.value)
+// const userVotes = computed(() => store.getters.updateUserVotes)
+// console.log("user",userVotes.value)
+
+const userName = computed(() => Number(store.getters["auth/getUserVote"]))
+console.log("user",userName.value)
 
 const props = defineProps({
   voteIdx:Number
@@ -172,21 +175,20 @@ const checkModal = ref(true)
 
 // console.log(" outuserVotes", userVotes.value)
 
+
+
 const isCheckModal = () => {
   console.log("vote클릭")
 
   http.post(`/api/battle/vote/${ props.voteIdx }`)
   .then((response) => {
+   
     const remainingVotes = response.data.data.vote
     console.log("remainingVotes",remainingVotes)
-    // userVotes.value = remainingVotes
-    // console.log(" httpvotes", userVotes.value)
-
-
     setStore.dispatch('updateUserVotes',remainingVotes)
   })
   .catch((error) => {
-    alert(error.response.data.message)
+    alert(error)
   })
   checkModal.value = false
 }

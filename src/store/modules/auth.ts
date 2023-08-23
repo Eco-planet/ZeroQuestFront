@@ -22,6 +22,7 @@ export default {
     nftList: localStorage.getItem("nftList") || "",
     bannerList: localStorage.getItem("bannerList") || "",
     terms: localStorage.getItem("terms") || "",
+    vote: localStorage.getItem("vote") || 0,
   },
   getters: {
     getAccessToken: (state: Nullable) => {
@@ -95,6 +96,9 @@ export default {
     },
     getTerms: (state: Nullable) => {
       return state.terms;
+    },
+    getUserVote: (state:Nullable) => {
+      return state.vote;
     },
   },
   mutations: {
@@ -197,11 +201,16 @@ export default {
 
       localStorage.setItem("terms", terms);
     },
+    setUserVote(state: Nullable, { vote }: Nullable){
+      state.vote = vote;
+      localStorage.setItem("vote", vote.toString());
+    },
   },
   actions: {
     async googleLogin(context: Nullable, { token }: Nullable) {
       try {
         const response = await authApi.googleLogin(token);
+        console.log("res",response)
 
         if (response.status === 200) {
           context.commit("setAccessToken", {
@@ -233,6 +242,10 @@ export default {
           context.commit("setTerms", {
             terms: response.data.data.terms,
           });
+
+          context.commit("setUserVote", {
+            vote: response.data.data.vote,
+          });
  
           if (response.data.data.terms == 0) {
             router.push("/terms");
@@ -245,6 +258,12 @@ export default {
 
         router.push("/");
       }
+    },
+    updateUserVotes(context:Nullable, vote:any){
+      console.log("왔니?",vote)
+      context.commit("setUserVote", {
+        vote,
+      })
     },
     updateRefreshToken(context: Nullable) {
       authApi
