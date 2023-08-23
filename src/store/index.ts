@@ -1,5 +1,6 @@
 import { createStore } from "vuex";
 import { logos } from "@/utils/Logo"
+import { dateTableEmits } from "element-plus/es/components/calendar/src/date-table";
 const modulesFiles = require.context("./modules", true, /\.(ts|js)$/);
 
 const modules = modulesFiles.keys().reduce((modules: any, modulePath: any) => {
@@ -21,20 +22,29 @@ export default createStore({
     nftId: 0,
     nftIdx: 0,
     logos: logos,
-    updateEntryInfo:null
+    updateEntryInfo:null,
+    updateUserVotes:0
   },
   getters: {
     logos:state => state.logos,
-    updateEntryInfo:state => state.updateEntryInfo
+    updateEntryInfo:state => state.updateEntryInfo,
+    updateUserVotes:state => state.updateUserVotes
   },
   mutations: {
     SET_DATA(state, payload){
       state.updateEntryInfo = payload
-    }
+    },
+    SET_USER_VOTES(state, payload){
+      state.updateUserVotes = payload
+    },
+    
   },
   actions: {
     updateEntryInfo({ commit }, data) {
       commit('SET_DATA', data)
+    },
+    updateUserVotes({ commit }, data){
+      commit('SET_USER_VOTES', data)
     }
   },
   modules,

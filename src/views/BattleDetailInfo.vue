@@ -39,12 +39,12 @@
     <div class="h-10"></div>
     <!-- 카드 이미지 -->
     <div class="flex justify-center">
-      <img class="w-full object-cover bannerImg" :src="findDetailEntry?.image">
+      <img class="w-full object-contain mb-20" :src="findDetailEntry?.image">
     </div>
     
     <!-- 좋아요버튼 -->
     <div class="flex justify-between pt-9">
-      <div class="font-semibold subText">{{ findDetailEntry?.title }}</div>
+      <div class="font-semibold wp-80  text-start subText">{{ findDetailEntry?.title }}</div>
       <div class=" ">
         <button href="#" 
         class="
@@ -232,8 +232,7 @@ const myEntry = (myAddress:string) => {
   .bannerImg {
     width: 100vw;
     max-width: 700px;
-    height: 87vw;
-    max-height: 700px;
+  
    
   }
 

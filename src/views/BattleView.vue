@@ -2,11 +2,9 @@
   <div class="flex flex-col justify-center mm">
     <div class="h-8"></div>
     <!-- battle -->
-    <div class="flex justify-between mb-10">    
+    <div class="flex justify-between mb-10">
       <div class="flex font-semibold text-3xl">Battle</div>
-      <button 
-      type="button" 
-      class="
+      <button type="button" class="
       mt-1.5
       w-24
       h-10
@@ -20,9 +18,8 @@
       dark:bg-green-600 
       dark:hover:bg-green-700 
       dark:focus:ring-green-800
-      entryBtn"
-      @click="myEntry">
-      my entries
+      entryBtn" @click="myEntry">
+        my entries
       </button>
     </div>
     <!-- my vote -->
@@ -44,17 +41,16 @@
     <!-- 박스 -->
     <div class="mt-7 p-3 w-auto">
       <div class="flex justify-between">
-        <div>       
+        <div>
           <p class="font-semibold text-left entryBoxInfo">{{ recentSession?.title }}</p>
           <p class="pb-4 entryBoxInfo text-start">
             <span class="font-semibold">
-              Topic : 
+              Topic :
             </span>
-            {{ recentSession?.topic }}</p>
+            {{ recentSession?.topic }}
+          </p>
         </div>
-        <button 
-        type="button" 
-        class="
+        <button type="button" class="
         mt-1.5
         focus:outline-none 
         text-white 
@@ -67,22 +63,19 @@
         dark:bg-green-600 
         dark:hover:bg-green-700 
         dark:focus:ring-green-800
-        entryBtn"
-        @click="entryBtn(recentSession?.idx)">
-        Entry
+        entryBtn" @click="entryBtn(recentSession?.idx)">
+          Entry
         </button>
       </div>
-      <div class="flex"> 
-        <p class="mr-2 entryBoxInfo2">{{ date(recentSession?.createdAt )}}</p> ~ 
+      <div class="flex">
+        <p class="mr-2 entryBoxInfo2">{{ date(recentSession?.createdAt) }}</p> ~
         <p class="ml-2 entryBoxInfo2">{{ date(recentSession?.period) }}</p>
       </div>
     </div>
-  
+
     <!--드롭다운-->
     <div class="grid grid-cols-1 gap-card mt-10">
-      <select
-      v-model="sortBtn"
-      class="border-solid
+      <select v-model="sortBtn" class="border-solid
       border-1
       border-gray-300
       focus:outline-none 
@@ -98,8 +91,7 @@
       focus:ring-green-300 
       dark:bg-green-600 
       dark:hover:bg-green-700 
-      "
-      >
+      ">
         <option value="Vote">Vote</option>
         <option value="Title">Title</option>
       </select>
@@ -108,11 +100,10 @@
     <!-- row에 카드2개씩 -->
     <div v-if="isLoading">Loading...</div>
     <div v-else-if="recentSessionCard && recentSessionCard.cardData" class="grid grid-cols-2 gap-card">
-        <!-- 카드1 -->
-      <div v-for="item in newItems.slice(0,moreLimit)" :key="item.idx" class="mt-7 p-5 bg-white">
+      <!-- 카드1 -->
+      <div v-for="item in newItems.slice(0, moreLimit)" :key="item.idx" class="mt-7 p-5 bg-white">
         <!-- 하트버튼 -->
-        <div href="#" 
-        class="
+        <div href="#" class="
         w-full
         text-xl
         text-white 
@@ -122,32 +113,26 @@
         dark:bg-green-600 
         dark:hover:bg-green-700 
         dark:focus:ring-green-800
-        cardTbtn"
-        >
+        cardTbtn">
           <div class="flex justify-center">
             <div class="pr-4">Vote.</div>
             <div class="flex">
               <div>
-                <img class="w-8" src="../assets/images/img_icon_heart_white.png"/>
+                <img class="w-8" src="../assets/images/img_icon_heart_white.png" />
               </div>
-              <div>{{item.vote}}</div>
+              <div>{{ item.vote }}</div>
             </div>
           </div>
         </div>
         <!-- 테테루그림 -->
-        <div class="flex justify-center mt-4" @click="detailInfo(item.address,  item.session_id, item.idx)">
-          <img class="w-full cardImg" :src="item.image"/>
+        <div class="flex justify-center mt-4" @click="detailInfo(item.address, item.session_id, item.idx)">
+          <img class="w-full cardImg" :src="item.image" />
         </div>
         <!-- teteru bear -->
         <div class="pt-2 pb-2 font-medium text-truncate cardText">{{ item.title }}</div>
         <!--굿버튼  -->
-        <div> 
-          <button
-          type="button" 
-          data-modal-target="staticModal" 
-          data-modal-toggle="staticModal"
-          href="#" 
-          class="
+        <div>
+          <button type="button" data-modal-target="staticModal" data-modal-toggle="staticModal" href="#" class="
           text-xl
           text-white 
           focus:ring-4 
@@ -155,21 +140,16 @@
           dark:bg-green-600 
           dark:hover:bg-green-700 
           dark:focus:ring-green-800
-          cardBbtn"
-          @click="openModal()"
-          >
+          cardBbtn" @click="openModal(item.idx)">
             Vote
           </button>
         </div>
       </div>
     </div>
-    <voting  @close-modal="modalChange" v-if="isModalOpen"></voting>
+    <voting :voteIdx = "voteIdx" @close-modal="modalChange" v-if="isModalOpen"></voting>
 
     <!-- 더보기버튼 -->
-    <button href="#" 
-    v-if="recentSessionCard.cardData.length >10"
-    @click = "moreBtn"
-    class="
+    <button href="#" v-if="recentSessionCard.cardData.length > 10" @click="moreBtn" class="
     my-32
     text-xl
     text-white 
@@ -180,17 +160,13 @@
     dark:bg-green-600 
     dark:hover:bg-green-700 c
     dark:focus:ring-green-800
-    moreBtn"
-    >더보기
+    moreBtn">더보기
     </button>
 
     <!-- Past Session -->
     <button type="button" class="mt-10 flex justify-end items-center mediaBottom" @click="AllSession(recentSession?.idx)">
       <div class="pr-4 sessionBtn">Past Sessions</div>
-      <img 
-      class="sessionImg" 
-      src="../assets/images/img_icon_trangle.png"
-      />
+      <img class="sessionImg" src="../assets/images/img_icon_trangle.png" />
     </button>
   </div>
 </template>
@@ -201,35 +177,35 @@ import router from "@/router"
 // import store from "@/store";
 import voting from "@/components/Modal/VoteBtn.vue"
 import http from "@/api/http"
-import {useStore} from "vuex"
+import { useStore } from "vuex"
 
 const store = useStore()
 
-const entryBtn = (sessionId:number ) => {
+const entryBtn = (sessionId: number) => {
 
   const updataDataSave = {
-    entryImage:"",
-    entryTitle:"",
-    entryDesc:"",
-    entryIdx:""
+    entryImage: "",
+    entryTitle: "",
+    entryDesc: "",
+    entryIdx: ""
   }
 
-  store.dispatch('updateEntryInfo',updataDataSave )
+  store.dispatch('updateEntryInfo', updataDataSave)
 
   router.push({
-  params:{ sessionId },
-  name:'entryPage'
-})
+    params: { sessionId },
+    name: 'entryPage'
+  })
 }
 
 const recentSession = ref()
 const recentSessionCard = reactive({
-  cardData:[]
+  cardData: []
 })
 
 const isLoading = ref(true)
 
-onMounted(()=>{
+onMounted(() => {
   isLoading.value = true
   battleSession()
 })
@@ -238,16 +214,16 @@ onMounted(()=>{
 const battleSession = () => {
 
   http.get("/api/battle/session")
-  .then((response) => {
-  recentSession.value = response.data.data;
-  recentSessionCard.cardData = response.data.data.contents;
+    .then((response) => {
+      recentSession.value = response.data.data;
+      recentSessionCard.cardData = response.data.data.contents;
 
-  isLoading.value = false
-  })
-  .catch((error)=>{
-    alert(error)
+      isLoading.value = false
+    })
+    .catch((error) => {
+      alert(error)
 
-  })
+    })
 }
 
 const date = (dateString) => {
@@ -262,12 +238,12 @@ const getBalances = store.getters["auth/getBalances"].ESGP.balance
 const sortBtn = ref("Vote")
 
 //sorting기능 //현재 session에 해당하는 카드데이터만 보여줌
-const newItems = computed(()=>{
-  switch(sortBtn.value){
+const newItems = computed(() => {
+  switch (sortBtn.value) {
     case "Vote":
-      return recentSessionCard.cardData.slice().sort((a,b) => b.vote - a.vote)
+      return recentSessionCard.cardData.slice().sort((a, b) => b.vote - a.vote)
     case "Title":
-      return recentSessionCard.cardData.slice().sort((a, b) => a.title.localeCompare(b.title))  
+      return recentSessionCard.cardData.slice().sort((a, b) => a.title.localeCompare(b.title))
   }
   return recentSessionCard.cardData
 })
@@ -275,17 +251,20 @@ const newItems = computed(()=>{
 //더보기
 const moreLimit = ref(10)
 const moreBtn = () => {
-  moreLimit.value +=10;
+  moreLimit.value += 10;
 }
 
 //모달
-const isModalOpen= ref(false)
+const isModalOpen = ref(false)
 
-const openModal = () => {
+const voteIdx = ref()
+
+const openModal = (voteDataidx) => {
+  voteIdx.value = voteDataidx
   isModalOpen.value = true
 }
 
-const modalChange = (voteModalEmit:boolean) => {
+const modalChange = (voteModalEmit: boolean) => {
   isModalOpen.value = voteModalEmit
 }
 
@@ -293,108 +272,102 @@ const modalChange = (voteModalEmit:boolean) => {
 const myEntry = () => {
 
   router.push({
-    path:'/myEntry',
-    name:'myEntry'
+    path: '/myEntry',
+    name: 'myEntry'
   })
 }
 
-// const entryBtn = (sessionId:number ) => {
-
-//   router.push({
-//     params:{ sessionId },
-//     name:'entryPage'
-//   })
-// }
-
-const detailInfo = (walletAddress:string,  sessionId:number , cardIdx:number) => {
+const detailInfo = (walletAddress: string, sessionId: number, cardIdx: number) => {
 
   router.push({
-    params:{ walletAddress, sessionId, cardIdx },
-    name:'battleDetailInfo'
+    params: { walletAddress, sessionId, cardIdx },
+    name: 'battleDetailInfo'
   })
 }
 
-const AllSession = (recentSessionIdx:number) => {
+const AllSession = (recentSessionIdx: number) => {
 
   router.push({
-    params:{recentSessionIdx},
-    name:'AllSession'
+    params: { recentSessionIdx },
+    name: 'AllSession'
   })
 }
 </script>
 
 <style lang="scss" scoped>
-  .text-esg-color {
-    color:#24d120
-  }
+.text-esg-color {
+  color: #24d120
+}
 
-  .bannerImg {
-    width: 100vw;
-    max-width: 620px;
-    height: 19.5vw;
-    max-height: 160px;
-  }
+.bannerImg {
+  width: 100vw;
+  max-width: 620px;
+  height: 19.5vw;
+  max-height: 160px;
+}
 
-  .entryBoxInfo {
-    font-size: clamp(1.2rem, 2vw, 2rem);
-  }
+.entryBoxInfo {
+  font-size: clamp(1.2rem, 2vw, 2rem);
+}
 
-  .entryBoxInfo2 {
-    font-size: clamp(1rem, 2vw, 2rem);
-  }
-  .entryBtn {
-    width: 75.88px;
-    height:28px;
-    background-color: #24d120;
-  }
+.entryBoxInfo2 {
+  font-size: clamp(1rem, 2vw, 2rem);
+}
 
-  .cardTbtn {
-    background-color: #0c5c26;
-    border-radius: 7px;
-  }
+.entryBtn {
+  width: 75.88px;
+  height: 28px;
+  background-color: #24d120;
+}
 
-  .cardImg {
-    width: 33vw;
-    height: 34.1vw;
-    max-height: 350px;
-  }
+.cardTbtn {
+  background-color: #0c5c26;
+  border-radius: 7px;
+}
 
-  .cardImg:hover {
-    transform: translateY(-0.4rem);
-    cursor: pointer;
-  }
+.cardImg {
+  width: 33vw;
+  height: 34.1vw;
+  max-height: 350px;
+}
 
-  .cardText {
-    font-size: clamp(1.5rem, 4.3vw, 3rem);
-  }
+.cardImg:hover {
+  transform: translateY(-0.4rem);
+  cursor: pointer;
+}
 
-  .cardBbtn {
-    background-color: #24d120;
-    width: 24vw;
-    max-width : 300px;
-    height: 30px;
-    border-radius: 7px;
-  } 
-  .moreBtn {
-    background-color: #24d120;
-    border-radius: 7px;
-  }
+.cardText {
+  font-size: clamp(1.5rem, 4.3vw, 3rem);
+}
 
-  .sessionBtn {
-    font-size: clamp(1.5rem, 3.3vw, 2rem);
-    color: #18C050 ;
-  }
+.cardBbtn {
+  background-color: #24d120;
+  width: 24vw;
+  max-width: 300px;
+  height: 30px;
+  border-radius: 7px;
+}
 
-  .sessionImg {
-    width: 4vw;
-    max-width: 15px;
-  }
+.moreBtn {
+  background-color: #24d120;
+  border-radius: 7px;
+}
 
-  .mediaBottom {
-    margin-bottom: 70px;
+.sessionBtn {
+  font-size: clamp(1.5rem, 3.3vw, 2rem);
+  color: #18C050;
+}
 
-    @media(min-width:768px){
-      margin-bottom: 200px;
-    }
+.sessionImg {
+  width: 4vw;
+  max-width: 15px;
+}
+
+.mediaBottom {
+  margin-bottom: 70px;
+
+  @media(min-width:768px) {
+    margin-bottom: 200px;
   }
+}
 </style>@/utils/LogoState@/utils/Logo

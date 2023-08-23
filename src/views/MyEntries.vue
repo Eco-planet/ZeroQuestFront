@@ -82,7 +82,6 @@ import { useStore } from 'vuex'
 const store = useStore()
 
 const updataEntryData = (entryImage, entryTitle, entryDesc, entryIdx, entrySessionId) => {
-  console.log("entrySessionId",entrySessionId)
 
   const updataDataSave = {
     entryImage,
