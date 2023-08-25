@@ -146,7 +146,10 @@
         </div>
       </div>
     </div>
-    <voting :voteIdx = "voteIdx" @close-modal="modalChange" v-if="isModalOpen"></voting>
+   
+    <voting :voteIdx = "voteIdx" @close-modal="isModalChange" v-if="isModalOpen">
+    </voting>
+    <completedVote @close-modal="modalChange" v-if="modalOpen"></completedVote>
 
     <!-- 더보기버튼 -->
     <button href="#" v-if="recentSessionCard.cardData.length > 10" @click="moreBtn" class="
@@ -174,12 +177,17 @@
 <script lang="ts" setup>
 import { ref, computed, onMounted, reactive } from 'vue'
 import router from "@/router"
-// import store from "@/store";
 import voting from "@/components/Modal/VoteBtn.vue"
+import completedVote from "@/components/Modal/completedVote.vue"
 import http from "@/api/http"
 import { useStore } from "vuex"
 
 const store = useStore()
+
+const userVote = computed(() => Number(store.getters["auth/getUserVote"]))
+const battleCardData = computed(()=> store.getters.cardData)
+// const battleCardData = computed(()=> store.state.cardData)
+console.log("battleCardData",battleCardData.value)
 
 const entryBtn = (sessionId: number) => {
 
@@ -217,6 +225,8 @@ const battleSession = () => {
     .then((response) => {
       recentSession.value = response.data.data;
       recentSessionCard.cardData = response.data.data.contents;
+      
+      store.dispatch('cardData', recentSessionCard.cardData)
 
       isLoading.value = false
     })
@@ -238,14 +248,23 @@ const getBalances = store.getters["auth/getBalances"].ESGP.balance
 const sortBtn = ref("Vote")
 
 //sorting기능 //현재 session에 해당하는 카드데이터만 보여줌
+// const newItems = computed(() => {
+//   switch (sortBtn.value) {
+//     case "Vote":
+//       return recentSessionCard.cardData.slice().sort((a, b) => b.vote - a.vote)
+//     case "Title":
+//       return recentSessionCard.cardData.slice().sort((a, b) => a.title.localeCompare(b.title))
+//   }
+//   return recentSessionCard.cardData
+// })
+
 const newItems = computed(() => {
   switch (sortBtn.value) {
     case "Vote":
-      return recentSessionCard.cardData.slice().sort((a, b) => b.vote - a.vote)
+      return battleCardData.value.slice().sort((a, b) => b.vote - a.vote)
     case "Title":
-      return recentSessionCard.cardData.slice().sort((a, b) => a.title.localeCompare(b.title))
+      return battleCardData.value.slice().sort((a, b) => a.title.localeCompare(b.title))
   }
-  return recentSessionCard.cardData
 })
 
 //더보기
@@ -256,16 +275,27 @@ const moreBtn = () => {
 
 //모달
 const isModalOpen = ref(false)
+const modalOpen = ref(false)
 
 const voteIdx = ref()
 
 const openModal = (voteDataidx) => {
   voteIdx.value = voteDataidx
-  isModalOpen.value = true
+
+  if(userVote.value>0){
+    isModalOpen.value = true
+  }else{
+    modalOpen.value = true
+  }
+
+}
+const isModalChange = (voteModalEmit: boolean) => {
+  isModalOpen.value = voteModalEmit
+  battleSession()
 }
 
 const modalChange = (voteModalEmit: boolean) => {
-  isModalOpen.value = voteModalEmit
+  modalOpen.value = voteModalEmit
 }
 
 // router

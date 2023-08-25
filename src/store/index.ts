@@ -23,12 +23,14 @@ export default createStore({
     nftIdx: 0,
     logos: logos,
     updateEntryInfo:null,
-    updateUserVotes:0
+    updateUserVotes:0,
+    cardData:[]
   },
   getters: {
     logos:state => state.logos,
     updateEntryInfo:state => state.updateEntryInfo,
-    updateUserVotes:state => state.updateUserVotes
+    updateUserVotes:state => state.updateUserVotes,
+    cardData:state => state.cardData
   },
   mutations: {
     SET_DATA(state, payload){
@@ -37,6 +39,11 @@ export default createStore({
     SET_USER_VOTES(state, payload){
       state.updateUserVotes = payload
     },
+    SET_CARD_DATA(state, payload){
+      console.log("payload",payload)
+      state.cardData = payload
+      console.log("State",state.cardData)
+    }
     
   },
   actions: {
@@ -45,6 +52,9 @@ export default createStore({
     },
     updateUserVotes({ commit }, data){
       commit('SET_USER_VOTES', data)
+    },
+    cardData({ commit }, data){
+      commit('SET_CARD_DATA', data)
     }
   },
   modules,

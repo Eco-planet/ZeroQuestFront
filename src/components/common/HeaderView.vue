@@ -7,7 +7,7 @@
         <div class="flex justify-end items-center">
           <!-- <div><Locale /></div> -->
           <div class="w-5"></div>
-          <div><button type="button" class="login-id" @click="moveZq">ID</button></div>
+          <Dropdown title="Services" :items="services"/>
         </div>
       </div>
     </div>
@@ -35,6 +35,11 @@
         <div class="wp-50 flex justify-start">Terms & Conditions</div>
         <div class="wp-50 flex justify-end menu-right">→</div>
       </div>
+      <div class="h-3"></div>
+      <div class="text-2xl w-full flex" :class="{ select: $route.name === 'introduction' }" @click="movePage('/introduction')">
+        <div class="wp-50 flex justify-start"> introduction</div>
+        <div class="wp-50 flex justify-end menu-right">→</div>
+      </div>
       <div class="h-10"></div>
       <div class="text-2xl font-semibold">공식 채널 참여</div>
       <div class="h-3"></div>
@@ -55,6 +60,7 @@ import router from "@/router";
 import store from "@/store";
 import { ref , computed} from "vue";
 import Modal from "@/components/Modal/index.vue";
+import Dropdown from './Dropdown.vue';
 
 
 
@@ -120,6 +126,21 @@ const movePage = (page: string) => {
     router.push(page);
   }
 };
+
+const services = ref([
+  {
+    title: 'Web',
+    link: '#',
+  },
+  {
+    title: 'Design',
+    link: '#',
+  },
+  {
+    title: 'Videos',
+    link: '#',
+  },
+]);
 
 </script>
 

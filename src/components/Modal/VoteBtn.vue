@@ -4,7 +4,7 @@
     <div class="fixed inset-0 z-10 overflow-y-auto">
       <div class="min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
         <!--  -->
-        <div  v-if="userName > 0 || !userName " class="p-5 relative transform overflow-hidden bg-white shadow-xl transition-all">
+        <div class="p-5 relative transform overflow-hidden bg-white shadow-xl transition-all">
           <div class="bg-white px-4 pb-4">
             <div>
               <div class="text-center">
@@ -94,63 +94,22 @@
             </button>
           </div>
         </div>
-        <!--  -->
-
-        <div v-else class="p-5 relative transform overflow-hidden bg-white shadow-xl transition-all">
-          <div class="bg-white px-4 pb-4">
-            <div>
-              <div class="text-center">
-                <h3 class="mt-4 font-semibold voteText" id="modal-title">you have already voted</h3>
-                <!--  -->
-              </div>
-            </div>
-          </div>
-          <div>
-            <button 
-            data-modal-target="staticModal" data-modal-toggle="staticModal"
-            href="#" 
-            class="
-            rounded-lg
-            text-xl
-            text-white 
-            focus:ring-4 
-            focus:ring-green-300 
-            dark:bg-green-600 
-            dark:hover:bg-green-700 
-            dark:focus:ring-green-800
-            VoteBtn"
-            @click ="closeModal"
-            >
-              <div class="flex justify-center">
-                <div>ok</div>
-              </div>
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref } from 'vue';
 import { defineProps } from 'vue';
 import http from "@/api/http";
 import { useStore } from 'vuex';
-import store from "@/store"
 
 const setStore = useStore()
-// const userVotes = computed(() => store.getters.updateUserVotes)
-// console.log("user",userVotes.value)
-
-const userName = computed(() => Number(store.getters["auth/getUserVote"]))
-console.log("user",userName.value)
 
 const props = defineProps({
-  voteIdx:Number
+  voteIdx:Number,
 })
-
-// const NotLoadding = ref(true)
 
 const emit = defineEmits(['closeModal'])
 
@@ -160,22 +119,9 @@ const closeModal = () => {
 
 const checkModal = ref(true)
 
-// const isCheckModal = () => {
-//   NotLoadding.value = false
-
-//     setTimeout(()=>{
-//       NotLoadding.value = true
-//       checkModal.value = false
-//   },2000)
-// }
-
 //vote버튼누르면 isCheckModal 함수실행
 //checkModal.value를 false로 바꿔주면서 
 //ui버튼을 ok로 바꿔줌
-
-// console.log(" outuserVotes", userVotes.value)
-
-
 
 const isCheckModal = () => {
   console.log("vote클릭")
@@ -185,7 +131,7 @@ const isCheckModal = () => {
    
     const remainingVotes = response.data.data.vote
     console.log("remainingVotes",remainingVotes)
-    setStore.dispatch('updateUserVotes',remainingVotes)
+    setStore.dispatch('auth/updateUserVotes',remainingVotes)
   })
   .catch((error) => {
     alert(error)
