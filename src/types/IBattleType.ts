@@ -14,3 +14,16 @@ export interface nowSessionType {
   period:Date;
   bannerImg:string
 }
+
+export interface contentsType {
+  idx: number;
+  session_id: number;
+  uid: string;
+  address: string;
+  image: string;
+  title: string;
+  desc: string;
+  vote: number;
+  createAt: string;
+  updatedAt: string;
+}

@@ -1,6 +1,8 @@
 import { createStore } from "vuex";
 import { logos } from "@/utils/Logo"
 import { dateTableEmits } from "element-plus/es/components/calendar/src/date-table";
+import { cardProps } from "element-plus";
+import { contentsType } from "@/types/IBattleType";
 const modulesFiles = require.context("./modules", true, /\.(ts|js)$/);
 
 const modules = modulesFiles.keys().reduce((modules: any, modulePath: any) => {
@@ -24,7 +26,8 @@ export default createStore({
     logos: logos,
     updateEntryInfo:null,
     updateUserVotes:0,
-    cardData:[]
+    cardData: [] as contentsType[]
+
   },
   getters: {
     logos:state => state.logos,
@@ -43,6 +46,12 @@ export default createStore({
       console.log("payload",payload)
       state.cardData = payload
       console.log("State",state.cardData)
+    },
+    ADD_CONTENTS_VOTE(state, payload){
+      const contents = state.cardData.find(card => card?.idx === payload);
+      if (contents) {
+        contents.vote += 1
+      }
     }
     
   },
@@ -55,6 +64,9 @@ export default createStore({
     },
     cardData({ commit }, data){
       commit('SET_CARD_DATA', data)
+    },
+    incrementVote({ commit }, data){
+      commit('ADD_CONTENTS_VOTE', data)
     }
   },
   modules,

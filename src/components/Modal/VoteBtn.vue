@@ -128,10 +128,10 @@ const isCheckModal = () => {
 
   http.post(`/api/battle/vote/${ props.voteIdx }`)
   .then((response) => {
-   
-    const remainingVotes = response.data.data.vote
-    console.log("remainingVotes",remainingVotes)
-    setStore.dispatch('auth/updateUserVotes',remainingVotes)
+    const remainingVotes = response.data.data.usersVote
+    const votedContents = response.data.data.votedContentsIdx
+    setStore.dispatch('auth/updateUserVotes', remainingVotes)
+    setStore.dispatch('incrementVote', votedContents)
   })
   .catch((error) => {
     alert(error)

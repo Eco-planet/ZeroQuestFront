@@ -72,6 +72,8 @@
         <p class="ml-2 entryBoxInfo2">{{ date(recentSession?.period) }}</p>
       </div>
     </div>
+    <div>{{ userVote }}</div>
+    <div>{{ battleCardData }}</div>
 
     <!--드롭다운-->
     <div class="grid grid-cols-1 gap-card mt-10">
@@ -214,6 +216,7 @@ const recentSessionCard = reactive({
 const isLoading = ref(true)
 
 onMounted(() => {
+  console.log("투표 끝났니?")
   isLoading.value = true
   battleSession()
 })
@@ -279,7 +282,7 @@ const modalOpen = ref(false)
 
 const voteIdx = ref()
 
-const openModal = (voteDataidx) => {
+const openModal = (voteDataidx: number) => {
   voteIdx.value = voteDataidx
 
   if(userVote.value>0){
@@ -291,7 +294,7 @@ const openModal = (voteDataidx) => {
 }
 const isModalChange = (voteModalEmit: boolean) => {
   isModalOpen.value = voteModalEmit
-  battleSession()
+  // battleSession()
 }
 
 const modalChange = (voteModalEmit: boolean) => {
