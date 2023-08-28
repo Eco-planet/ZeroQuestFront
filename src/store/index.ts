@@ -1,6 +1,7 @@
 import { createStore } from "vuex";
 import { logos } from "@/utils/Logo"
 import { dateTableEmits } from "element-plus/es/components/calendar/src/date-table";
+import { contentsType } from "@/types/IBattleType";
 const modulesFiles = require.context("./modules", true, /\.(ts|js)$/);
 
 const modules = modulesFiles.keys().reduce((modules: any, modulePath: any) => {
@@ -46,11 +47,11 @@ export default createStore({
       const increVotedContent = state.cardData.find((arr:any)=>
          arr.idx === votedIdx
       )
-
       if(increVotedContent){
         increVotedContent.vote +=1
       }
     },
+
   },
   actions: {
     updateEntryInfo({ commit }, data) {

@@ -212,6 +212,7 @@ const recentSessionCard = reactive({
 const isLoading = ref(true)
 
 onMounted(() => {
+  console.log("투표 끝났니?")
   isLoading.value = true
   battleSession()
 })
@@ -277,7 +278,7 @@ const modalOpen = ref(false)
 
 const voteIdx = ref()
 
-const openModal = (voteDataidx) => {
+const openModal = (voteDataidx: number) => {
   voteIdx.value = voteDataidx
 
   if(userVote.value>0){

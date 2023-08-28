@@ -128,7 +128,6 @@ const isCheckModal = () => {
 
   http.post(`/api/battle/vote/${ props.voteIdx }`)
   .then((response) => {
-   
     const remainingVotes = response.data.data.vote
     const votedIdx = props.voteIdx 
 
