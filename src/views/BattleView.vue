@@ -186,8 +186,6 @@ const store = useStore()
 
 const userVote = computed(() => Number(store.getters["auth/getUserVote"]))
 const battleCardData = computed(()=> store.getters.cardData)
-// const battleCardData = computed(()=> store.state.cardData)
-console.log("battleCardData",battleCardData.value)
 
 const entryBtn = (sessionId: number) => {
 
@@ -291,7 +289,7 @@ const openModal = (voteDataidx) => {
 }
 const isModalChange = (voteModalEmit: boolean) => {
   isModalOpen.value = voteModalEmit
-  battleSession()
+  // battleSession()
 }
 
 const modalChange = (voteModalEmit: boolean) => {

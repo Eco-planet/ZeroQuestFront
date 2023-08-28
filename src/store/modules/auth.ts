@@ -2,6 +2,8 @@ import authApi from "@/api/auth";
 import router from "@/router";
 import { ethers } from "ethers-ts";
 import openSSLCrypto from "@/utils/openSSLCrypto";
+import { popperContentEmits } from "element-plus";
+import { isContext } from "vm";
 
 export default {
   namespaced: true,
@@ -205,6 +207,7 @@ export default {
       state.vote = vote;
       localStorage.setItem("vote", vote.toString());
     },
+
   },
   actions: {
     async googleLogin(context: Nullable, { token }: Nullable) {
@@ -260,7 +263,6 @@ export default {
       }
     },
     updateUserVotes(context:Nullable, vote:any){
-      console.log("왔니?",vote)
       context.commit("setUserVote", {
         vote,
       })

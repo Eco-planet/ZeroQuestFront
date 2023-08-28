@@ -37,7 +37,7 @@
       </div>
       <div class="h-3"></div>
       <div class="text-2xl w-full flex" :class="{ select: $route.name === 'introduction' }" @click="movePage('/introduction')">
-        <div class="wp-50 flex justify-start"> introduction</div>
+        <div class="wp-50 flex justify-start"> Introduction</div>
         <div class="wp-50 flex justify-end menu-right">→</div>
       </div>
       <div class="h-10"></div>

@@ -24,7 +24,7 @@ export default createStore({
     logos: logos,
     updateEntryInfo:null,
     updateUserVotes:0,
-    cardData:[]
+    cardData:[],
   },
   getters: {
     logos:state => state.logos,
@@ -40,11 +40,17 @@ export default createStore({
       state.updateUserVotes = payload
     },
     SET_CARD_DATA(state, payload){
-      console.log("payload",payload)
       state.cardData = payload
-      console.log("State",state.cardData)
-    }
-    
+    },
+    SET_VOTED_NUM(state: Nullable,  votedIdx :Nullable){
+      const increVotedContent = state.cardData.find((arr:any)=>
+         arr.idx === votedIdx
+      )
+
+      if(increVotedContent){
+        increVotedContent.vote +=1
+      }
+    },
   },
   actions: {
     updateEntryInfo({ commit }, data) {
@@ -55,7 +61,10 @@ export default createStore({
     },
     cardData({ commit }, data){
       commit('SET_CARD_DATA', data)
-    }
+    },
+    incrementContentsVote(context:Nullable, votedIdx: any){
+      context.commit('SET_VOTED_NUM',votedIdx)
+    },
   },
   modules,
 });

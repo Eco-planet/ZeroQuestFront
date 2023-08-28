@@ -130,8 +130,10 @@ const isCheckModal = () => {
   .then((response) => {
    
     const remainingVotes = response.data.data.vote
-    console.log("remainingVotes",remainingVotes)
-    setStore.dispatch('auth/updateUserVotes',remainingVotes)
+    const votedIdx = props.voteIdx 
+
+    setStore.dispatch('incrementContentsVote', votedIdx)
+    setStore.dispatch('auth/updateUserVotes', remainingVotes)
   })
   .catch((error) => {
     alert(error)

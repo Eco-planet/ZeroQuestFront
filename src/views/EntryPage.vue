@@ -175,6 +175,7 @@ const enrollmentBtn = (() => {
 
       http.post("/api/battle/entry", formData)
         .then((response) => {
+          console.log("response", response)
           alert("Finished appointment")
           router.push({
             path: '/battle',

@@ -87,7 +87,7 @@
           </div>
         </div>
       </div>
-      <div class="mt-32 font-bold">아파트에서 살고있다면?<br> ‘계단오르기’NFT를 통해 <br>ESG 포인트 획득이 가능합니다</div>
+      <div class="mt-32 mb-16 font-bold">아파트에서 살고있다면?<br> ‘계단오르기’NFT를 통해 <br>ESG 포인트 획득이 가능합니다</div>
       <button type="button" 
             class="
             moduleBtnBg
@@ -96,17 +96,30 @@
             focus:outline-none 
             focus:ring-4 
             focus:ring-green-300 
-            font-medium rounded-full 
+            font-medium
             text-sm 
             mt-4
-            px-5
-            py-4 
+            wp-70
+            h-24
+            text-2xl
             text-center 
             dark:bg-green-600 
             dark:hover:bg-green-700 
-            dark:focus:ring-green-800">아파트 '계단오르기' 설치 요청</button>
-    </div>
- <div class="h-56"></div>
+            dark:focus:ring-green-800">아파트 '계단오르기' 설치 요청
+      </button>
+      <div class="mt-40">
+        <span class="font-bold">NFT</span>를 통해 포인트를 얻고<br> 
+        포인트를 <span class="font-bold">ESG토큰</span>으로 스왑해<br>
+        <span class="font-bold">판매</span>할 수 있습니다</div>
+      </div>
+      <div class="flex justify-center relative">  
+        <img src="@/assets/images/info2.png"/>
+        <a>
+          <img class="absolute top-3/4 left-1/2 transform -translate-x-1/2 translate-y-52" src="@/assets/images/info3.png"/>
+        </a>
+      </div>
+      <div class="mt-10 text-xl font-semibold">이 앱은 현재 Google Play에서 다운로드하실 수 있습니다.</div>
+      <div class="h-56"></div>
   </div>
 </template>
 
@@ -120,5 +133,6 @@
   }
   .moduleBtnBg{
     background-color: #31847F;
+    border-radius: 20px;
   }
 </style>
