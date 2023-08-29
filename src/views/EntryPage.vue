@@ -159,10 +159,8 @@ const checkboxValue = ref(true)
 const enrollmentBtn = (() => {
   if (sessionId.value) {
     //entryAdd코드
-    console.log("세션아디있다")
-
     if (!titleValue.value || !descValue.value || checkboxValue.value === false || !imageValue.value) {
-      alert("모든필드를 채우고, 체크박스를 선택해주세요")
+      alert("Please fill in all fields and check the checkboxes")
       return
 
     } else if (titleValue.value && descValue.value && checkboxValue.value && imageValue.value) {
@@ -192,7 +190,7 @@ const enrollmentBtn = (() => {
 
     //필드를 안채웠을경우
     if (!titleValue.value || !descValue.value || checkboxValue.value === false || !imageValue.value) {
-      alert("모든필드를 채우고, 체크박스를 선택해주세요")
+      alert("Please fill in all fields and check the checkboxes")
       return
 
       //수정하러들어왔지만 수정하지않고 그냥 나가는 경우 

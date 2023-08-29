@@ -128,7 +128,7 @@
     dark:hover:bg-green-700 
     dark:focus:ring-green-800
     moreMediaBottom"
-    >더보기
+    >MORE
     </button>
   </div>
 </template>

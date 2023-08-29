@@ -68,7 +68,7 @@
     dark:hover:bg-green-700 
     dark:focus:ring-green-800
     moreMediaBottom"
-    >더보기
+    >MORE
     </button>
   </div>
 </template>
@@ -121,12 +121,11 @@ const battleMyEntry = () => {
 const deleteBtn = (contents_id) => {
   http.delete(`/api/battle/deleteEntry/${contents_id}`)
   .then((response) => {
-    alert("삭제되었습니다")
+    alert("has been deleted")
     battleMyEntry()
   })
   .catch((error) => {
-    console.error("항목 삭제 오류:", error.response ? error.response.data.message : error.message);
-      alert("항목을 삭제하는 중 문제가 발생했습니다. 다시 시도해 주세요.");
+      alert("There was a problem deleting the item. please try again");
   })
 }
 

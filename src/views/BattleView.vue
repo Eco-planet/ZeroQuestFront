@@ -8,16 +8,9 @@
       mt-1.5
       w-24
       h-10
-      focus:outline-none 
       text-white 
-      hover:bg-green-800 
-      focus:ring-4 
-      focus:ring-green-300 
       text-sm 
       rounded-full
-      dark:bg-green-600 
-      dark:hover:bg-green-700 
-      dark:focus:ring-green-800
       entryBtn" @click="myEntry">
         my entries
       </button>
@@ -52,17 +45,10 @@
         </div>
         <button type="button" class="
         mt-1.5
-        focus:outline-none 
         text-white 
-        hover:bg-green-800 
-        focus:ring-4 
-        focus:ring-green-300 
         font-medium 
         text-sm 
         rounded-lg
-        dark:bg-green-600 
-        dark:hover:bg-green-700 
-        dark:focus:ring-green-800
         entryBtn" @click="entryBtn(recentSession?.idx)">
           Entry
         </button>
@@ -78,7 +64,6 @@
       <select v-model="sortBtn" class="border-solid
       border-1
       border-gray-300
-      focus:outline-none 
       font-medium
       text-xl
       p-8 
@@ -86,11 +71,8 @@
       text-center 
       inline-flex 
       items-center 
-      dark:focus:ring-green-800
       focus:ring-4 
       focus:ring-green-300 
-      dark:bg-green-600 
-      dark:hover:bg-green-700 
       ">
         <option value="Vote">Vote</option>
         <option value="Title">Title</option>
@@ -108,11 +90,6 @@
         text-xl
         text-white 
         py-2 
-        focus:ring-4 
-        focus:ring-green-300 
-        dark:bg-green-600 
-        dark:hover:bg-green-700 
-        dark:focus:ring-green-800
         cardTbtn">
           <div class="flex justify-center">
             <div class="pr-4">Vote.</div>
@@ -135,12 +112,7 @@
           <button type="button" data-modal-target="staticModal" data-modal-toggle="staticModal" href="#" class="
           text-xl
           text-white 
-          focus:ring-4 
-          focus:ring-green-300 
-          dark:bg-green-600 
-          dark:hover:bg-green-700 
-          dark:focus:ring-green-800
-          cardBbtn" @click="openModal(item.idx)">
+          cardBbtn" @click="openModal(item.idx, item.uid)">
             Vote
           </button>
         </div>
@@ -158,12 +130,7 @@
     text-white 
     py-2 
     font-semibold
-    focus:ring-4 
-    focus:ring-green-300 
-    dark:bg-green-600 
-    dark:hover:bg-green-700 c
-    dark:focus:ring-green-800
-    moreBtn">더보기
+    moreBtn">MORE
     </button>
 
     <!-- Past Session -->
@@ -186,6 +153,8 @@ const store = useStore()
 
 const userVote = computed(() => Number(store.getters["auth/getUserVote"]))
 const battleCardData = computed(()=> store.getters.cardData)
+const myUid = computed(() =>store.getters["auth/getUserId"])
+console.log("myUid",myUid.value)
 
 const entryBtn = (sessionId: number) => {
 
@@ -278,19 +247,24 @@ const modalOpen = ref(false)
 
 const voteIdx = ref()
 
-const openModal = (voteDataidx: number) => {
+const openModal = (voteDataidx: number, voteUid:string) => {
   voteIdx.value = voteDataidx
 
-  if(userVote.value>0){
-    isModalOpen.value = true
-  }else{
-    modalOpen.value = true
+  if(myUid.value === voteUid){
+    alert("You cannot vote on your own content")
+  }else {
+    if(userVote.value>0){
+      isModalOpen.value = true
+    }else{
+      modalOpen.value = true
+    }
   }
+
+
 
 }
 const isModalChange = (voteModalEmit: boolean) => {
   isModalOpen.value = voteModalEmit
-  // battleSession()
 }
 
 const modalChange = (voteModalEmit: boolean) => {
