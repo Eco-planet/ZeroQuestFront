@@ -17,9 +17,6 @@
       focus:ring-green-300 
       text-sm 
       rounded-full
-      dark:bg-green-600 
-      dark:hover:bg-green-700 
-      dark:focus:ring-green-800
       myEntriesBtn
      "
       @click="myEntry">
@@ -54,9 +51,6 @@
         rounded-lg
         focus:ring-4 
         focus:ring-green-300 
-        dark:bg-green-600 
-        dark:hover:bg-green-700 
-        dark:focus:ring-green-800
         likeBtn"
         @click="openModal()"
         >
@@ -101,9 +95,6 @@
         py-2 
         focus:ring-4 
         focus:ring-green-300 
-        dark:bg-green-600 
-        dark:hover:bg-green-700 
-        dark:focus:ring-green-800
         cardVoteNum"
         >
           <div class="flex justify-center">
@@ -124,9 +115,6 @@
     font-semibold
     focus:ring-4 
     focus:ring-green-300 
-    dark:bg-green-600 
-    dark:hover:bg-green-700 
-    dark:focus:ring-green-800
     moreMediaBottom"
     >MORE
     </button>

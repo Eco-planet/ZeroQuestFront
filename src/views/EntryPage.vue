@@ -75,9 +75,6 @@
     text-white 
     focus:ring-4 
     focus:ring-green-300 
-    dark:bg-green-600 
-    dark:hover:bg-green-700 
-    dark:focus:ring-green-800
     entryBtn" @click="enrollmentBtn">
       <div v-if="sessionId">Entry</div>
       <div v-else>Edit</div>

@@ -19,11 +19,8 @@
       py-2.5 
       inline-flex 
       items-center 
-      dark:focus:ring-green-800
       focus:ring-4 
       focus:ring-green-300 
-      dark:bg-green-600 
-      dark:hover:bg-green-700 
       "
       >
         <option v-for="session in allSession.allSessionData" :key="session.idx" :value=session.idx>{{ session.title }}</option>
@@ -61,9 +58,6 @@
         py-2 
         focus:ring-4 
         focus:ring-green-300 
-        dark:bg-green-600 
-        dark:hover:bg-green-700 
-        dark:focus:ring-green-800
         cardTbtn"
         >
           <div class="flex justify-center">
@@ -96,9 +90,6 @@
     font-semibold
     focus:ring-4 
     focus:ring-green-300 
-    dark:bg-green-600 
-    dark:hover:bg-green-700 
-    dark:focus:ring-green-800
     mediaBottom"
     >MORE
     </button>
