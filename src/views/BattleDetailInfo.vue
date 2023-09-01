@@ -52,7 +52,7 @@
         focus:ring-4 
         focus:ring-green-300 
         likeBtn"
-        @click="openModal()"
+        @click="openModal(findDetailEntry?.idx, findDetailEntry?.uid)"
         >
           <img class="w-7" src="../assets/images/img_icon_like.png"/>
         </button>  
@@ -66,7 +66,10 @@
       <!-- 길어지면 뒤에 ... -->
       <div class="text-truncate walletAddress ">{{ findDetailEntry?.address }} </div>
     </div> 
-    <voting  @close-modal="modalChange" v-if="isModalOpen"></voting>
+
+    <voting :voteIdx = "voteIdx" @close-modal="isModalChange" v-if="isModalOpen">
+    </voting>
+    <completedVote @close-modal="modalChange" v-if="modalOpen"></completedVote>
 
     <!-- infoBox -->
     <div class="mt-7 p-5 w-auto rounded-lg text-start infoBox"> 
@@ -124,9 +127,15 @@
 <script lang="ts" setup>
 import { computed, onMounted, reactive, ref } from "vue";
 import router from "@/router"
-import store from "@/store";
 import voting from "@/components/Modal/VoteBtn.vue"
+import completedVote from "@/components/Modal/completedVote.vue"
 import http from "@/api/http"
+import { useStore } from "vuex"
+
+const store = useStore()
+
+const myUid = computed(() =>store.getters["auth/getUserId"])
+const userVote = computed(() => Number(store.getters["auth/getUserVote"]))
 
 onMounted(()=>{
   battleContents()
@@ -189,13 +198,30 @@ const moreBtn = () => {
 
 //모달
 const isModalOpen= ref(false)
+const modalOpen = ref(false)
 
-const openModal = () => {
-  isModalOpen.value = true
+const voteIdx = ref()
+
+const openModal = (voteDataidx: number, voteUid:string) => {
+  voteIdx.value = voteDataidx
+
+  if(myUid.value === voteUid){
+    alert("본인 컨텐츠에는 투표를 할 수 없습니다")
+  }else {
+    if(userVote.value>0){
+      isModalOpen.value = true
+    }else{
+      modalOpen.value = true
+    }
+  }
 }
 
-const modalChange = (voteModalEmit:boolean) => {
+const isModalChange = (voteModalEmit: boolean) => {
   isModalOpen.value = voteModalEmit
+}
+
+const modalChange = (voteModalEmit: boolean) => {
+  modalOpen.value = voteModalEmit
 }
 
 // router

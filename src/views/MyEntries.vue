@@ -115,18 +115,19 @@ const battleMyEntry = () => {
 const deleteBtn = (contents_id) => {
   http.delete(`/api/battle/deleteEntry/${contents_id}`)
   .then((response) => {
-    alert("has been deleted")
+    alert("삭제되었습니다")
+    // alert("has been deleted")
     battleMyEntry()
   })
   .catch((error) => {
-      alert("There was a problem deleting the item. please try again");
+      alert("삭제가 되지 않았습니다. 다시 시도해주세요");
+      // alert("There was a problem deleting the item. please try again");
   })
 }
 
 const myEntriesOrder = computed(()=>{
   return myEntries.myEntriesArr
 })
-
 
 //더보기
 const moreLimit = ref(10)

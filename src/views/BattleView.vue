@@ -154,7 +154,6 @@ const store = useStore()
 const userVote = computed(() => Number(store.getters["auth/getUserVote"]))
 const battleCardData = computed(()=> store.getters.cardData)
 const myUid = computed(() =>store.getters["auth/getUserId"])
-console.log("myUid",myUid.value)
 
 const entryBtn = (sessionId: number) => {
 
@@ -181,7 +180,6 @@ const recentSessionCard = reactive({
 const isLoading = ref(true)
 
 onMounted(() => {
-  console.log("투표 끝났니?")
   isLoading.value = true
   battleSession()
 })
@@ -215,17 +213,6 @@ const getBalances = store.getters["auth/getBalances"].ESGP.balance
 //default sorting
 const sortBtn = ref("Vote")
 
-//sorting기능 //현재 session에 해당하는 카드데이터만 보여줌
-// const newItems = computed(() => {
-//   switch (sortBtn.value) {
-//     case "Vote":
-//       return recentSessionCard.cardData.slice().sort((a, b) => b.vote - a.vote)
-//     case "Title":
-//       return recentSessionCard.cardData.slice().sort((a, b) => a.title.localeCompare(b.title))
-//   }
-//   return recentSessionCard.cardData
-// })
-
 const newItems = computed(() => {
   switch (sortBtn.value) {
     case "Vote":
@@ -251,7 +238,7 @@ const openModal = (voteDataidx: number, voteUid:string) => {
   voteIdx.value = voteDataidx
 
   if(myUid.value === voteUid){
-    alert("You cannot vote on your own content")
+    alert("본인 컨텐츠에는 투표를 할 수 없습니다")
   }else {
     if(userVote.value>0){
       isModalOpen.value = true
@@ -259,9 +246,6 @@ const openModal = (voteDataidx: number, voteUid:string) => {
       modalOpen.value = true
     }
   }
-
-
-
 }
 const isModalChange = (voteModalEmit: boolean) => {
   isModalOpen.value = voteModalEmit

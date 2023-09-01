@@ -62,13 +62,11 @@
         <div class="w-64 h-20 flex justify-center items-center rounded-lg text-2xl font-medium text-center text-white bg-esg-color2 cursor-pointer" @click="goToMyWallet()">ESG Point 충전</div>
       </div>
     </div>
-    <div class="h-16"></div>
-    <div class="text-left w-full">
+    <div class="h-20"></div>
+    <!-- <div class="text-left w-full">
       <div class="text-2xl font-semibold text-left">CONTENTS</div>
-      <div class="text-xl mt-4 font-normal text-gray-500">
-        {{ nowNft?.description }}
-      </div>
-    </div>
+
+    </div> -->
     <!-- <div class="mt-10 grid grid-cols-2 gap-x-8 gap-y-8">
       <div class="shadow-nft-extra">
         <div class="w-full h-56 relative overflow-hidden">
@@ -83,6 +81,11 @@
         <div class="p-4 text-xl font-medium text-black">모바일 NFT</div>
       </div>
     </div> -->
+    <!-- <recycling></recycling> -->
+
+    <recycling v-if="nftId === 1"></recycling>
+    <stairs v-else-if="nftId === 2"></stairs>
+    <tree v-else-if="nftId === 3"></tree>
     <div class="h-96"></div>
   </div>
 </template>
@@ -93,12 +96,17 @@ import store from "@/store";
 import { ref, reactive, computed, onMounted, defineProps } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import { nftType } from "@/types/IZeroNftType"
+import recycling from "@/components/common/recycling.vue"
+import stairs from "@/components/common/stairs.vue"
+import tree from "@/components/common/tree.vue"
+
 
 const route = useRoute();
 const router = useRouter();
 const nftId = parseInt(route.params.idx)
 
 const nowNft = Object.values(store.getters["auth/getNftList"]).filter(item => item.idx === nftId)[0]
+console.log("nowNft",nowNft)
 const getPk = store.getters["auth/getPrivateKey"]
 const getAddress = store.getters["auth/getAddress"]
 const getBalances = store.getters["auth/getBalances"].ESGP.balance

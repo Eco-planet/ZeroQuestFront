@@ -39,7 +39,7 @@
       </div>
       <div class="info2">
         <span class="font-semibold">Max Size: </span>
-        <span>100MB</span>
+        <span>10MB</span>
       </div>
     </div>
     <!-- nameInput -->
@@ -61,8 +61,10 @@
         <input id="entryCheck" type="checkbox" class="border-solid border-gray-300 entryCheckbox"
           v-model="checkboxValue" />
         <label for="entryCheck" class="pl-3 text-start info1">
-          The entry of stolen item is against our terms of service and not allowed on ECO NFT.
-          The award of the stolen item can be revoked.
+          <!-- The entry of stolen item is against our terms of service and not allowed on ECO NFT.
+          The award of the stolen item can be revoked. -->
+          도난당한 아이템의 등록은 우리의 이용 약관에 위반되며 ECO NFT에서는 허용되지 않습니다.
+          도난당한 아이템의 보상은 취소될 수 있습니다.
         </label>
       </div>
     </div>
@@ -127,8 +129,37 @@ const originalImage = store.getters.updateEntryInfo.entryImage
 imageValue.value = originalImage
 imagePreviewUrl.value = originalImage
 
+// const handleFileValue = ((event) => {
+//   imageValue.value = event.target.files[0]
+
+//   let reader = new FileReader()
+
+//   reader.onload = (event) => {
+//     imagePreviewUrl.value = event.target.result
+//   }
+
+//   if (imageValue.value) {
+//     reader.readAsDataURL(imageValue.value)
+//   } else if (imageValue.value === undefined) {
+//     imagePreviewUrl.value = undefined
+//   }
+// })
+
 const handleFileValue = ((event) => {
   imageValue.value = event.target.files[0]
+
+  const maxSize = 10 * 1024 * 1024; // 10MB, adjust as needed
+  // var fileSizeError = document.getElementById('fileSizeError');
+
+  if (imageValue.value) {
+      if (imageValue.value.size > maxSize) {
+          // alert('File size is too large. Please select a file under 10MB.')
+          alert('이미지는 10MB이하로 선택해주세요')
+          
+          imagePreviewUrl.value = undefined; // clear the preview URL
+          return; // exit the function early
+      } 
+  }
 
   let reader = new FileReader()
 
@@ -142,6 +173,7 @@ const handleFileValue = ((event) => {
     imagePreviewUrl.value = undefined
   }
 })
+
 
 const titleValue = ref('')
 const originalTitle = store.getters.updateEntryInfo.entryTitle 
@@ -157,7 +189,8 @@ const enrollmentBtn = (() => {
   if (sessionId.value) {
     //entryAdd코드
     if (!titleValue.value || !descValue.value || checkboxValue.value === false || !imageValue.value) {
-      alert("Please fill in all fields and check the checkboxes")
+      // alert("Please fill in all fields and check the checkboxes")
+      alert("빠짐없이 모두 작성후에 체크버튼을 눌러주세요")
       return
 
     } else if (titleValue.value && descValue.value && checkboxValue.value && imageValue.value) {
@@ -170,8 +203,8 @@ const enrollmentBtn = (() => {
 
       http.post("/api/battle/entry", formData)
         .then((response) => {
-          console.log("response", response)
-          alert("Finished appointment")
+          // alert("Finished appointment")
+          alert("등록되었습니다")
           router.push({
             path: '/battle',
             name: 'battle'
@@ -187,7 +220,8 @@ const enrollmentBtn = (() => {
 
     //필드를 안채웠을경우
     if (!titleValue.value || !descValue.value || checkboxValue.value === false || !imageValue.value) {
-      alert("Please fill in all fields and check the checkboxes")
+      // alert("Please fill in all fields and check the checkboxes")
+      alert("빠짐없이 모두 작성후에 체크버튼을 눌러주세요")
       return
 
       //수정하러들어왔지만 수정하지않고 그냥 나가는 경우 
@@ -224,7 +258,8 @@ const enrollmentBtn = (() => {
 
       http.post(`/api/battle/editEntry/${entryIdx.value}/${entrySessionId.value}`, formData)
         .then((response) => {
-          alert("Finished edit")
+          alert("수정이 완료되었습니다")
+          // alert("Finished edit")
           router.push({
             path: '/myEntry',
             name: 'myEntry'
