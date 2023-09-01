@@ -84,10 +84,8 @@ const closeModal = () => {
 };
 
 const checkData = (type: String) => {
-  if (type === '1' || type === '2') {
+  if (type !== '') {
     gameDownload(type);
-  } else {
-    gameRun();
   }
 };
 
@@ -107,7 +105,7 @@ const gameEnable = () => {
 
 const gameDownload = (type: String) => {
   const idx = store.state.nftIdx;
-  const enableType = myNftList.value[idx].enable;
+  //const enableType = myNftList.value[idx].enable;
     
   http.post("/api/nft/enableNft", {
     'symbol': myNftList.value[idx].symbol,
@@ -134,11 +132,9 @@ const gameRun = () => {
   let nftType = nftList[store.state.nftId].type;
   let linkUrl = '';
 
-  if (nftType == 1) {
-    //linkUrl = "/api/quest/apptoken"
-    linkUrl = "/api/quest/gametoken"
-  } else if (nftType == 2) {
-    linkUrl = "/api/quest/gametoken"
+  if (nftType > 0) {
+    linkUrl = "/api/quest/apptoken"
+    //linkUrl = "/api/quest/gametoken"
   } else {
     return false;
   }
