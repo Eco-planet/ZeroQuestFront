@@ -80,7 +80,7 @@
       </div>
     </div>
     <div class="h-10"></div>
-    <div class="flex justify-center">
+    <div class="flex justify-center items-center">
       <button :class="[swapEsg > 0 ? 'wp-40 p-2 font-semibold text-2xl text-white swap-btn' : 'wp-40 p-2 font-semibold text-2xl text-white swap-btn-disable']" @click="getStatusCheck('swap','')">SWAP</button>
     </div>
     <div class="h-10"></div>
