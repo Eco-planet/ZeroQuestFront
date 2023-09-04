@@ -96,7 +96,7 @@ import http from "@/api/http";
 import CryptoJS from "crypto";
 import openSSLCrypto from "@/utils/openSSLCrypto";
 import { useI18n } from "vue-i18n";
-import { computed, onMounted, ref } from "vue";
+import { onMounted, ref } from "vue";
 import Modal from "@/components/Modal/index.vue";
 import { errorMsg } from "@/utils/util";
 

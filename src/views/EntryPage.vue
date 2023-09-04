@@ -129,27 +129,10 @@ const originalImage = store.getters.updateEntryInfo.entryImage
 imageValue.value = originalImage
 imagePreviewUrl.value = originalImage
 
-// const handleFileValue = ((event) => {
-//   imageValue.value = event.target.files[0]
-
-//   let reader = new FileReader()
-
-//   reader.onload = (event) => {
-//     imagePreviewUrl.value = event.target.result
-//   }
-
-//   if (imageValue.value) {
-//     reader.readAsDataURL(imageValue.value)
-//   } else if (imageValue.value === undefined) {
-//     imagePreviewUrl.value = undefined
-//   }
-// })
-
 const handleFileValue = ((event) => {
   imageValue.value = event.target.files[0]
 
   const maxSize = 10 * 1024 * 1024; // 10MB, adjust as needed
-  // var fileSizeError = document.getElementById('fileSizeError');
 
   if (imageValue.value) {
       if (imageValue.value.size > maxSize) {
@@ -217,7 +200,6 @@ const enrollmentBtn = (() => {
   } else {
     //entryUpdate코드
 
-
     //필드를 안채웠을경우
     if (!titleValue.value || !descValue.value || checkboxValue.value === false || !imageValue.value) {
       // alert("Please fill in all fields and check the checkboxes")
@@ -271,7 +253,6 @@ const enrollmentBtn = (() => {
     }
   }
 })
-
 </script>
 
 <style lang="scss" scoped>

@@ -69,11 +69,11 @@
         </template>
         <template v-if="popupType === 'withdraw_pass_update'">
           <div class="flex flex-col justify-center items-center">
-            <div class="font-semibold text-2xl">{{ t('message.withdrawPassUpdate') }}</div>
+            <div class="font-semibold text-2xl">{{ t('message.withdrawPassReset') }}</div>
             <div class="h-5"></div>
             <div class="h-10"></div>
             <div class="p-5 flex flex-col text-xl rounded pass-back-bg">
-              <div class="flex justify-start items-center">
+              <div class="flex justify-between items-center">
                 <div>{{ t('message.withdrawPassInput') }}</div>
                 <div class="ml-4">
                   <input type="password" v-model.trim="updatePW1" size="20"
@@ -81,7 +81,7 @@
                 </div>
               </div>
               <div class="h-5"></div>
-              <div class="flex justify-start items-center">
+              <div class="flex justify-between items-center">
                 <div>{{ t('message.withdrawPassCheck') }}</div>
                 <div class="ml-4">
                   <input type="password" v-model.trim="updatePW2" size="20"
@@ -97,7 +97,7 @@
               <div class="text-left">- {{ t('message.withdrawPassCaution2') }}</div>
             </div>
             <div class="h-10"></div>
-            <div class="p-3 flex justify-center items-center pass-bg rounded" @click="requestUpdatePW">
+            <div class="wp-70 p-3 flex justify-center items-center pass-bg rounded" @click="requestUpdatePW">
               <div class="p-2 text-2xl text-white">{{ t('message.withdrawPassUpdate') }}</div>
             </div>
           </div>
@@ -167,43 +167,65 @@
             <div class="pt-4 font-semibold underline" @click="openResetPW">비밀번호를 잊어버리셨습니까?</div>
           </div>
         </template>
-        <!-- <pinReset @modal-close="isCloseModal" v-if="isOpenModal"></pinReset> -->
 
         <template v-if="popupType === 'resetPW'">
           <div class="flex flex-col justify-center items-center">
-            <div class="font-semibold text-2xl">{{ t('message.withdrawPassUpdate') }}</div>
-            <div class="h-5"></div>
-            <div class="h-10"></div>
-            <div class="p-5 flex flex-col text-xl rounded pass-back-bg">
-              <div class="flex justify-start items-center">
-                <div>{{ t('message.withdrawPassInput') }}</div>
-                <div class="ml-4">
-                  <input type="password" v-model.trim="updatePW1" size="20"
-                    class="text-lg border-solid border-1 border-gray-300" />
-                </div>
+            <div class="bg-white px-4 pb-4">
+    
+              <div class="mb-10 text-center">
+                <h3 class="mt-4 font-semibold text-black voteText text-2xl" id="modal-title">출금 비밀번호 초기화 <br>
+                  Google 인증</h3>
               </div>
-              <div class="h-5"></div>
-              <div class="flex justify-start items-center">
-                <div>{{ t('message.withdrawPassCheck') }}</div>
-                <div class="ml-4">
-                  <input type="password" v-model.trim="updatePW2" size="20"
-                    class="text-lg border-solid border-1 border-gray-300" />
-                </div>
+              <div class="py-3 px-10 bg-gray-100 rounded-lg font-medium">인증코드 요청 시<br>
+                현재 로그인 된 구글 메일로 <br>
+                임의로 생성된 인증번호를 전송합니다.
               </div>
-              <div class="h-5"></div>
-              <div v-if="passwdMsg !== ''" class="text-red-500">{{ passwdMsg }}</div>
+              <button 
+              type="button" 
+              class="
+              mb-16
+              text-white 
+              hover:bg-gray-400
+              focus:outline-none 
+              focus:ring-4 
+              focus:ring-gray-200 
+              font-medium
+              text-sm 
+              rounded-lg
+              mt-7
+              w-full
+              h-16
+              text-2xl
+              text-center 
+              getCode
+              "
+              @click="codeRequest"
+              >
+              인증번호 요청
+              </button>
+              <div class="font-medium text-xs">인증번호를 빈 칸에 입력하세요</div>
+              <input type="text" v-model.trim="certificationNumber" class="mt-4 border-solid border-gray-300 wp-70" placeholder="인증번호 입력">
+              <button type="button" 
+              class="
+              moduleBtnBg
+              wp-70
+              text-white 
+              hover:bg-green-800 
+              focus:outline-none 
+              focus:ring-4 
+              focus:ring-green-300 
+              font-medium
+              text-sm 
+              rounded-lg
+              mt-9
+              h-16
+              text-2xl
+              text-center"
+              @click="resetRequest"
+              >
+              완료
+              </button>
             </div>
-            <div class="h-5"></div>
-            <div class="wp-90">
-              <div class="text-left">- {{ t('message.withdrawPassCaution1') }}</div>
-              <div class="text-left">- {{ t('message.withdrawPassCaution2') }}</div>
-            </div>
-            <div class="h-10"></div>
-            <div class="p-3 flex justify-center items-center pass-bg rounded" @click="requestUpdatePW">
-              <div class="p-2 text-2xl text-white">{{ t('message.withdrawPassUpdate') }}</div>
-            </div>
-            
-            <div>asdfasf</div>
           </div>
         </template>
         
@@ -236,7 +258,7 @@
           </div>
         </template>
         <template
-          v-if="popupType !== 'qr_code' && popupType !== 'withdraw_pass' && popupType !== 'withdraw_pass_update' && popupType !== 'pinReset'&& popupType !== 'send_coin' && popupType !== 'game_install' && popupType !== 'game_off'">
+          v-if="popupType !== 'qr_code' && popupType !== 'withdraw_pass' && popupType !== 'withdraw_pass_update' && popupType !== 'resetPW'&& popupType !== 'send_coin' && popupType !== 'game_install' && popupType !== 'game_off'">
           <div>
             <img class="error-icon" src="@/assets/images/icon_error.png" />
           </div>
@@ -261,14 +283,12 @@
 </template>
 
 <script setup lang="ts">
-// import store from "@/store";
 import { computed, ref, toRefs, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import QRCodeVue3 from "qr-code-generator-vue3";
 import http from "@/api/http";
 import CryptoJS from "crypto";
 import openSSLCrypto from "@/utils/openSSLCrypto";
-import pinReset from "@/components/Modal/pinReset.vue"
 import { useStore } from "vuex"
 
 const store = useStore()
@@ -335,6 +355,12 @@ const pwHash = computed(() => store.getters["auth/getPwHash"])
 const pwNumber = computed(() => store.getters["auth/getPwNumber"])
 
 const popupType = ref("");
+
+//출금번호 초기화
+const userEmail = computed(() => store.getters["auth/getUserEmail"])
+
+const certificationNumber = ref()
+const md5Hash = ref()
 
 watch(visible, (val) => {
   if (val) {
@@ -450,8 +476,7 @@ const requestUpdatePW = () => {
     .then((response) => {
       if(response.data.data === true){
         alert("출금비밀번호 변경이 완료되었습니다")
-        store.state.isPopup = false;
-        // store.dispatch("auth/modalBool", false)                      
+        store.state.isPopup = false;                   
       }
     })
     .catch((error) => {
@@ -482,27 +507,54 @@ const doSendCoin = () => {
   }
 };
 
-// const isOpenModal = ref(false)
-
-// const openModal = () => {
-   
-
-//   isOpenModal.value = true
-// }
-
 const openResetPW = () => {
-  console.log("오픈리셋패스워드")
-  
-  // store.state.isPopup = false;
-
-  store.state.popupType = 'resetPW';
-
+  popupType.value = 'resetPW';
   store.state.isPopup = true;
 }
 
-// const isCloseModal = (modalClose) => {
-//   isOpenModal.value = modalClose
-// }
+//인증코드요청
+const codeRequest = () => {
+  http.post("/auth/signStart",{ email: userEmail.value })
+    .then((response) => {
+      md5Hash.value = response.data.data
+      alert("인증코드가 전송되었습니다")
+  })
+  .catch((error) => {
+    alert(error)
+  })
+}
+
+//초기화요청검증
+const resetRequest = () => {
+  if(!md5Hash.value){
+    alert("인증코드 요청을 먼저 진행해주세요")
+  }else if(!certificationNumber.value){
+    alert("인증번호를 입력해주세요")
+  }else if(md5Hash.value && certificationNumber.value){
+    http.post("/auth/signVerify", {
+    verifyToken: md5Hash.value,
+    verifyCode: certificationNumber.value
+
+    })
+    .then((response) => {
+  
+      if(response && response.data){
+        console.log("response",response.data.data)
+        //스토어에 해쉬, 인증번호 넣어주고 비밀번호 입력모달에서 가져와서 쓰기
+        store.dispatch("auth/pwHash", md5Hash.value)
+        store.dispatch("auth/pwNumber", certificationNumber.value)
+
+        popupType.value = 'withdraw_pass_update';
+
+        store.state.isPopup = true;
+      }
+    })
+    .catch((error) => {
+      alert("인증번호를 확인후 다시입력해주세요")
+    })
+  }
+}
+
 </script>
 
 <style lang="scss">
@@ -597,6 +649,18 @@ const openResetPW = () => {
     .off-btn {
       background-color: #ff0000;
       border-radius: 5px;
+    }
+
+    .voteText {
+      font-size: clamp(1.7rem, 2.5vw, 2.5rem);
+    }
+
+    .getCode{
+      background-color: #21B750;
+    }
+    
+    .moduleBtnBg{
+      background-color: #0C5D25
     }
   }
 }</style>
