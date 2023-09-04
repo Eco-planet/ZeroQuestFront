@@ -36,6 +36,7 @@ export default {
     addressCaution3: "The service provider is not responsible for any incorrect input by the user.",
     withdraw: "Withdrawal",
     withdrawPassRegister: "Register withdrawal password",
+    withdrawPassUpdate: "Update withdrawal password",
     withdrawCount: "Quantity",
     withdrawPassInput: "withdrawal password",
     withdrawPassCheck: "Confirm password",

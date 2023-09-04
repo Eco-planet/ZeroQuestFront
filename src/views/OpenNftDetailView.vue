@@ -65,11 +65,19 @@
       <div class="h-5"></div>
       <div class="flex font-semibold text-2xl">{{ nftInfo.name }}</div>
       <div class="flex text-xl text-left" v-html="nftInfo.description.split('\n').join('<br />')"></div>
+
       <div class="h-10"></div>
       <div class="flex items-center justify-center"><img :src="nftInfo.descImage" /></div>
     </div>
 
   </div>
+  <div class="h-20"></div>
+
+  <recycling v-if="nftId === 1"></recycling>
+  <stairs v-else-if="nftId === 2"></stairs>
+  <tree v-else-if="nftId === 3"></tree>
+
+
   <div class="h-20"></div>
   <div class="h-20"></div>
   <Modal :visible="store.state.isPopup" @hide="closeModal" @resData="checkData" />
@@ -81,6 +89,9 @@ import store from "@/store";
 import http from "@/api/http";
 import { useI18n } from "vue-i18n";
 import { onMounted, ref } from "vue";
+import recycling from "@/components/common/recycling.vue"
+import stairs from "@/components/common/stairs.vue"
+import tree from "@/components/common/tree.vue"
 
 const nftList = store.getters["auth/getNftList"];
 const nftDetail = ref();

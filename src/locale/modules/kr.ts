@@ -36,6 +36,7 @@ export default {
     addressCaution3: "사용자가 입력을 잘못한 경우 서비스 제공자는 책임을 지지 않습니다.",
     withdraw: "출금",
     withdrawPassRegister: "출금 비밀번호 등록",
+    withdrawPassUpdate: "출금 비밀번호 수정",
     withdrawCount: "수량",
     withdrawPassInput: "출금 비밀번호",
     withdrawPassCheck: "비밀번호 확인",

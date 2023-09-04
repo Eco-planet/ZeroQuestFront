@@ -25,6 +25,9 @@ export default {
     bannerList: localStorage.getItem("bannerList") || "",
     terms: localStorage.getItem("terms") || "",
     vote: localStorage.getItem("vote") || 0,
+    pwHash: localStorage.getItem("pwHash") || "",
+    pwNumber: localStorage.getItem("pwNumber") || "",
+    modalBool: localStorage.getItem("modalFalse")
   },
   getters: {
     getAccessToken: (state: Nullable) => {
@@ -101,6 +104,16 @@ export default {
     },
     getUserVote: (state:Nullable) => {
       return state.vote;
+    },
+    getPwHash: (state:Nullable) => {
+      return state.pwHash
+    },
+    getPwNumber: (state:Nullable) => {
+      return state.pwNumber
+    },
+
+    getModalBool: (state:Nullable) => {
+      return state.modalBool
     },
   },
   mutations: {
@@ -208,6 +221,21 @@ export default {
       localStorage.setItem("vote", vote.toString());
     },
 
+    setPwHash(state:Nullable, { pwHash }: Nullable){
+      state.pwHash = pwHash;
+      localStorage.setItem("pwHash", pwHash)
+    },
+
+    setPwNumber(state:Nullable, { pwNumber }: Nullable){
+      state.pwNumber = pwNumber;
+      localStorage.setItem("pwNumber", pwNumber)
+    },
+    setModalBool(state:Nullable, { modalFalse } :Nullable){
+      state.modalFalse = modalFalse;
+      localStorage.setItem("modalBool", modalFalse )
+    }
+
+
   },
   actions: {
     async googleLogin(context: Nullable, { token }: Nullable) {
@@ -267,6 +295,22 @@ export default {
         vote,
       })
     },
+    pwHash(context:Nullable, pwHash:any){
+      context.commit("setPwHash", {
+        pwHash
+      })
+    },
+    pwNumber(context:Nullable, pwNumber:any){
+      context.commit("setPwNumber", {
+        pwNumber
+      })
+    },
+    modalBool(context:Nullable, modalFalse:any){
+      context.commit("setModalBool", {
+        modalFalse
+      })
+    },
+
     updateRefreshToken(context: Nullable) {
       authApi
         .updateRefreshToken()

@@ -5,11 +5,11 @@ export const localeTypes = {
 
 export const locales = [
   {
-    name: localeTypes.EN,
-    label: "English",
-  },
-  {
     name: localeTypes.KR,
     label: "Korean",
+  },
+  {
+    name: localeTypes.EN,
+    label: "English",
   },
 ];

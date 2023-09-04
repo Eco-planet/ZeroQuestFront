@@ -31,9 +31,13 @@
                 </template>
               </div>
               <div class="flex justify-end items-center">
-                <div class="inout" @click="showQrCode"><img src="@/assets/images/icon_in.png" /></div>
+                <div class="inout" @click="showQrCode">
+                  <img src="@/assets/images/icon_in.png" />
+                </div>
                 <div class="w-3"></div>
-                <div class="inout" @click="getStatusCheck('sendCoin', key.toString())"><img src="@/assets/images/icon_out.png" /></div>
+                <div class="inout" @click="getStatusCheck('sendCoin', key.toString())">
+                  <img src="@/assets/images/icon_out.png" />
+                </div>
               </div>
             </div>
           </div>
@@ -76,13 +80,13 @@
       </div>
     </div>
     <div class="h-10"></div>
-    <div class="flex justify-center items-center">
-      <button :class="[swapEsg > 0 ? 'wp-40 p-2 font-semibold text-2xl text-white swap-btn' : 'wp-40 p-2 font-semibold text-2xl text-white swap-btn-disable']" @click="getStatusCheck('swap','')">SWAP</button>
+    <div class="flex justify-center">
       <button :class="[swapEsg > 0 ? 'wp-40 p-2 font-semibold text-2xl text-white swap-btn' : 'wp-40 p-2 font-semibold text-2xl text-white swap-btn-disable']" @click="getStatusCheck('swap','')">SWAP</button>
     </div>
     <div class="h-10"></div>
   </div>
   <Modal :visible="store.state.isPopup" @hide="closeModal" @resData="checkData" @resJson="checkObject" :title="popupTitle" />
+ 
 </template>
 
 <script lang="ts" setup>
@@ -92,7 +96,7 @@ import http from "@/api/http";
 import CryptoJS from "crypto";
 import openSSLCrypto from "@/utils/openSSLCrypto";
 import { useI18n } from "vue-i18n";
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import Modal from "@/components/Modal/index.vue";
 import { errorMsg } from "@/utils/util";
 
@@ -314,6 +318,7 @@ const sendSwap = () => {
 const initSwapEsgp = () => {
   swapEsg.value = 0;
 }
+
 </script>
 
 <style lang="scss">

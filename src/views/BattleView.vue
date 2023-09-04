@@ -84,7 +84,7 @@
     <div v-else-if="recentSessionCard && recentSessionCard.cardData" class="grid grid-cols-2 gap-card">
       <!-- 카드1 -->
       <div v-for="item in newItems.slice(0, moreLimit)" :key="item.idx" class="mt-7 p-5 bg-white">
-        <!-- 하트버튼 -->
+        <!-- 하트 -->
         <div href="#" class="
         w-full
         text-xl
