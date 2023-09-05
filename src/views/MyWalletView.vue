@@ -56,7 +56,8 @@
         <div class="h-px h-5 bg-gray-200"></div>
       </div>
       <div class="wp-20 flex justify-center items-center">
-        <div class="swap-icon" @click="getSwapInfo"><img src="@/assets/images/icon_arrow.png" /></div>
+        <!-- <div class="swap-icon" @click="getSwapInfo"><img src="@/assets/images/icon_arrow.png" /></div> -->
+        <div class="swap-icon" @click="getSwapInfo"><img src="@/assets/images/arrow.png" /></div>
       </div>
       <div class="wp-40 flex flex-col">
         <div class="flex justify-end items-center">
@@ -340,8 +341,24 @@ const initSwapEsgp = () => {
   width: 25% !important;
 }
 
+@keyframes glowing {
+  0% {
+    transform: scale(1.2);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1.2);
+  }
+}
+
 .swap-icon {
   width: 40% !important;
+  animation-name: glowing;
+  animation-duration: 2s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
 }
 
 .swap-text {

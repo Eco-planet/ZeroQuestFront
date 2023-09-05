@@ -1,11 +1,11 @@
 <template>
     <el-dropdown class="locale" trigger="click">
-      <!-- <div>
-        <img class="my-img" src="./../../assets/images/icons8.png"/>      
-      </div> -->
-      <div class="login-box">
-        <button type="button" class="login-id">ID</button>
+      <div>
+        <img class="my-img" src="@/assets/images/account.png"/>      
       </div>
+      <!-- <div class="login-box">
+        <button type="button" class="login-id">ID</button>
+      </div> -->
       <template #dropdown>
         <el-dropdown-menu class="my-drop-menu">
           <el-dropdown-item

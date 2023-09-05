@@ -53,7 +53,7 @@
       </div>
     </div>
     <div class="h-36"></div>
-    <div class="break-words text-black">
+    <div class="break-words text-black media-Bottom">
       <div class="font-semibold text-2xl">제로퀘스트와 함께 지구를 살려요!🌍🎮</div><br>
       <div class="font-medium text-lg">탄소 발자국을 줄이는 행동, 그게 바로 우리의 게임 미션!<br> 
       성공할 때마다 ESG 포인트도 적립! <br>
@@ -226,5 +226,11 @@ const goNftDetail = (nftId: number) => {
   object-fit: contain;
   object-position: center top;
   height: 100px;
+}
+
+.media-Bottom {
+  @media(min-width:450px) {
+    margin-bottom: 100px;
+  }
 }
 </style>

@@ -24,7 +24,8 @@
     </div>
     <ZeroNft :selectedIdx="currentTab?.idx"></ZeroNft>
     
-    <div class="h-40"></div>
+    
+    <div class="h-72"></div>
   </div>
 </template>
 

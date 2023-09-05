@@ -54,7 +54,7 @@
         <div>       
           <div class="mt-20 pb-3 font-semibold text-2xl">4. 종료 및 보상</div>
           <div class="font-medium text-xl">실행 후 ESG 포인트를 받을 수 있습니다 <br>
-            eSG 포인트는 ESG 토큰으로 변경이 가능합니다
+            ESG 포인트는 ESG 토큰으로 변경이 가능합니다
           </div>
           <div class="flex justify-center">        
             <img class="pt-4" src="@/assets/images/esg.png">

@@ -77,7 +77,8 @@
     text-white 
     focus:ring-4 
     focus:ring-green-300 
-    entryBtn" @click="enrollmentBtn">
+    entryBtn" 
+    @click="enrollmentBtn">
       <div v-if="sessionId">Entry</div>
       <div v-else>Edit</div>
 
@@ -211,8 +212,6 @@ const enrollmentBtn = (() => {
     && descValue.value === originalDesc
     && checkboxValue.value 
     && imageValue.value === originalImage){
-    
-      console.log("수정안함")
  
       router.push({
         path: '/myEntry',
@@ -232,7 +231,6 @@ const enrollmentBtn = (() => {
     && entryIdx.value
     && entrySessionId.value
     ) {
-      console.log("다있네")
       const formData = new FormData();
       formData.append('image', imageValue.value)
       formData.append('title', titleValue.value)
@@ -284,5 +282,9 @@ const enrollmentBtn = (() => {
   background-color: #24d120;
   height: 30px;
   border-radius: 7px;
+
+  @media(min-width:390px) {
+    margin-bottom: 200px;
+  }
 }
 </style>
