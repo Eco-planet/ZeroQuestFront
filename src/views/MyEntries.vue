@@ -144,7 +144,7 @@ const moreBtn = () => {
   }
 
   .cardImg {
-    width: 33vw;
+    object-fit: contain;
     height: 34.1vw;
     max-height: 350px;
   }
