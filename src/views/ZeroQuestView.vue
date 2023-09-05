@@ -52,24 +52,23 @@
         <div class="text-lg text-center">{{ item.name }}</div>
       </div>
     </div>
-    <div class="h-16"></div>
-    <div class="text-left">
-      <div class="text-xl mt-4 font-normal text-gray-500">
-        {{ mainDesc.desc }}
-      </div>
-    </div>
-    <div class="mt-10 grid grid-cols-2 gap-x-8 gap-y-8">
-      <div class="shadow-nft-extra">
-        <div class="w-full h-full relative">
-          <img :src="mainDesc.extra_img1"/>
-        </div>
-        <div class="p-4 text-xl font-medium text-black">계단오르기 NFT</div>
-      </div>
-      <div class="shadow-nft-extra">
-        <div class="w-full h-full relative">
-          <img :src="mainDesc.extra_img2"/>
-        </div>
-        <div class="p-4 text-xl font-medium text-black">AI 기반 재활용품 NFT</div>
+    <div class="h-36"></div>
+    <div class="break-words text-black">
+      <div class="font-semibold text-2xl">제로퀘스트와 함께 지구를 살려요!🌍🎮</div><br>
+      <div class="font-medium text-lg">탄소 발자국을 줄이는 행동, 그게 바로 우리의 게임 미션!<br> 
+      성공할 때마다 ESG 포인트도 적립! <br>
+      포인트는 ESG 토큰으로 교환하면 재태크도 됩니다.<br>
+      
+      계단 오르기부터 자전거 타기까지!<br>
+      제로퀘스트와 함께하면, 지구를 살리면서 주머니도 가득!<br>
+      함께 지구를 더 즐겁게, 건강하게 만들어가요!
+      </div><br>
+      
+      
+      <div class="pt-4 font-semibold text-xl">
+      지금 바로 시작! <br>
+      제로퀘스트와 지구의 히어로가 되어보세요!🌟🚀<br>
+      쉿! 소문내기까지 하면 추가 보너스도 빵빵합니다.
       </div>
     </div>
     <div class="h-40"></div>

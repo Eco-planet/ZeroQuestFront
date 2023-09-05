@@ -26,8 +26,8 @@ export default {
   message: {
     sorryChecking: "시스템 점검 중.",
     googleLoginButton: "계정으로 로그인",
-    googleLoginTitle: "ECO NFT 에서 구매한 NFT의 아이템에 적합하게 ESG Life를 실천하면 ESG point 를 제공합니다.",
-    googleLoginComment: "일상 생활속에서 자발적 탄소감축을 실천하면 할수록 ESG point 제공하고, 제공받은 ESG point 로 추가적인 NFT를 구매 촉진 ESG point 는 언제든지 ESG token 으로 스왑이 가능하고, 스왑한 ESG 토큰은 거래소에서 판매하여 투자수익 획득",
+    // googleLoginTitle: "ECO NFT 에서 구매한 NFT의 아이템에 적합하게 ESG Life를 실천하면 ESG point 를 제공합니다.",
+    // googleLoginComment: "제로퀘스트와 함께 지구를 살려요!🌍🎮<br>탄소 발자국을 줄이는 행동, 그게 바로 우리의 게임 미션! 성공할 때마다 ESG 포인트도 적립! 더 재미있게, 포인트는 ESG 토큰으로 교환하면 재태크도 됩니다. 계단 오르기부터 자전거 타기까지!  제로퀘스트와 함께하면, 지구를 살리면서 주머니도 가득! 함께 지구를 더 즐겁게, 건강하게 만들어가요!지금 바로 시작! 제로퀘스트와 지구의 히어로가 되어보세요!🌟🚀쉿! 소문내기까지 하면 추가 보너스도 빵빵합니다.",
     swapCaution: "주의사항",
     swapCaution1: "ESG point 1,000 point 이상부터 Swap 이 가능합니다.",
     swapCaution2: "ESG 토큰의 가격은 코인마켓캡 7 일 평균가 기준입니다.",

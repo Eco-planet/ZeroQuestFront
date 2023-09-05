@@ -155,13 +155,13 @@ const moreBtn = () => {
 </script>
 
 <style lang="scss" scoped>
-  .entryBoxInfo {
-    font-size: clamp(1.2rem, 2vw, 2rem);
-  }
+.entryBoxInfo {
+  font-size: clamp(1.2rem, 3.5vw, 3rem);
+}
 
-  .entryBoxInfo2 {
-    font-size: clamp(1rem, 2vw, 2rem);
-  }
+.entryBoxInfo2 {
+  font-size: clamp(1rem, 3vw, 2rem);
+}
 
   .cardTbtn {
     background-color: #0c5c26;

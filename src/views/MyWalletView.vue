@@ -67,8 +67,8 @@
       </div>
     </div>
     <div class="h-10"></div>
-    <div class="flex flex-col">
-      <div class="swap-noti flex">{{ t("message.swapCaution") }}</div>
+    <div class="flex flex-col text-xl">
+      <div class="swap-noti flex font-semibold">{{ t("message.swapCaution") }}</div>
       <div class="h-2"></div>
       <div class="flex justify-start items-center">
         <div class="font-bold">·</div>

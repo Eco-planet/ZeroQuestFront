@@ -92,7 +92,7 @@
               <div v-if="passwdMsg !== ''" class="text-red-500">{{ passwdMsg }}</div>
             </div>
             <div class="h-5"></div>
-            <div class="wp-90">
+            <div class="text-lg">
               <div class="text-left">- {{ t('message.withdrawPassCaution1') }}</div>
               <div class="text-left">- {{ t('message.withdrawPassCaution2') }}</div>
             </div>
@@ -153,7 +153,7 @@
               </div>
             </div>
             <div class="h-5"></div>
-            <div class="wp-90">
+            <div class="wp-90 text-lg">
               <div class="text-left">- {{ t('message.withdrawCaution1') }}</div>
               <div class="text-left">- {{ t('message.withdrawCaution2') }}</div>
               <div class="h-2"></div>
@@ -164,7 +164,7 @@
             <div class="p-3 flex justify-center items-center pass-bg rounded" @click="doSendCoin">
               <div class="p-2 text-2xl text-white px-7">{{ t('message.withdrawBtnRegister') }}</div>
             </div>
-            <div class="pt-4 font-semibold underline" @click="openResetPW">비밀번호를 잊어버리셨습니까?</div>
+            <div class="pt-4 font-semibold underline text-lg" @click="openResetPW">비밀번호를 잊어버리셨습니까?</div>
           </div>
         </template>
 
@@ -176,7 +176,7 @@
                 <h3 class="mt-4 font-semibold text-black voteText text-2xl" id="modal-title">출금 비밀번호 초기화 <br>
                   Google 인증</h3>
               </div>
-              <div class="py-3 px-10 bg-gray-100 rounded-lg font-medium">인증코드 요청 시<br>
+              <div class="py-3 px-10 bg-gray-100 rounded-lg font-medium text-xl">인증코드 요청 시<br>
                 현재 로그인 된 구글 메일로 <br>
                 임의로 생성된 인증번호를 전송합니다.
               </div>
@@ -203,7 +203,7 @@
               >
               인증번호 요청
               </button>
-              <div class="font-medium text-xs">인증번호를 빈 칸에 입력하세요</div>
+              <div class="font-medium text-xl">인증번호를 빈 칸에 입력하세요</div>
               <input type="text" v-model.trim="certificationNumber" class="mt-4 border-solid border-gray-300 wp-70" placeholder="인증번호 입력">
               <button type="button" 
               class="

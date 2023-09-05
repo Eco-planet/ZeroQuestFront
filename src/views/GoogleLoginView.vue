@@ -21,9 +21,26 @@
     </div>
     <div class="h-10"></div>
     <div class="wp-70 max-w-4xl">
-      <div class="font-medium text-xl font-semibold">{{ t("message.googleLoginTitle") }}</div>
+      <!-- <div class="font-medium text-xl font-semibold">{{ t("message.googleLoginTitle") }}</div> -->
       <div class="h-5"></div>
-      <div class="break-words text-gray-500 text-lg">{{ t("message.googleLoginComment") }}</div>
+      <div class="break-words text-black">
+        <div class="font-semibold text-2xl">제로퀘스트와 함께 지구를 살려요!🌍🎮</div><br>
+        <div class="font-medium text-lg">탄소 발자국을 줄이는 행동, 그게 바로 우리의 게임 미션!<br> 
+        성공할 때마다 ESG 포인트도 적립! <br>
+        포인트는 ESG 토큰으로 교환하면 재태크도 됩니다.<br>
+        
+        계단 오르기부터 자전거 타기까지!<br>
+        제로퀘스트와 함께하면, 지구를 살리면서 주머니도 가득!<br>
+        함께 지구를 더 즐겁게, 건강하게 만들어가요!
+        </div><br>
+        
+        
+        <div class="pt-4 font-semibold text-xl">
+        지금 바로 시작! <br>
+        제로퀘스트와 지구의 히어로가 되어보세요!🌟🚀<br>
+        쉿! 소문내기까지 하면 추가 보너스도 빵빵합니다.
+        </div>
+      </div>
     </div>
   </div>
 </template>

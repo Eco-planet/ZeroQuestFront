@@ -26,8 +26,7 @@ export default {
   message: {
     sorryChecking: "The system is being checked.",
     googleLoginButton: "LOGIN",
-    googleLoginTitle: "Implement ESG Life to suit NFT's items purchased from ECO NFTs and provide ESG points.",
-    googleLoginComment: "The more you practice voluntary carbon reduction in your daily life, the more ESG points you provide, the more NFTs you can purchase with ESG points ESG points can be swapped to ESG tokens at any time, and the swapped ESG tokens are sold on the exchange to earn return on investment",
+    googleLoginTitle: "Save the Earth with Zero Quest!🌍🎮Reducing your carbon footprint is our game mission!Earn ESG points for every success!Even more fun, points can be redeemed by exchanging them for ESG tokens.From climbing stairs to riding a bike!With ZeroQuest, you can save the planet and fill your pockets!Let’s make the Earth more enjoyable and healthy together!Start right now! Become a hero of Earth with ZeroQuest!🌟🚀Shh! There are plenty of additional bonuses if you spread the word.",
     swapCaution: "Caution",
     swapCaution1: "You can swap from ESG point 1,000 points or higher.",
     swapCaution2: "ESG Token's price is based on a 7-day average price for CoinMarketCap.",

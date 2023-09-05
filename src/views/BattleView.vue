@@ -9,7 +9,7 @@
       w-24
       h-10
       text-white 
-      text-sm 
+      text-lg 
       rounded-full
       entryBtn" @click="myEntry">
         my entries
@@ -47,7 +47,7 @@
         mt-1.5
         text-white 
         font-medium 
-        text-sm 
+        text-lg 
         rounded-lg
         entryBtn" @click="entryBtn(recentSession?.idx)">
           Entry
@@ -294,11 +294,11 @@ const AllSession = (recentSessionIdx: number) => {
 }
 
 .entryBoxInfo {
-  font-size: clamp(1.2rem, 2vw, 2rem);
+  font-size: clamp(1.2rem, 3.5vw, 3rem);
 }
 
 .entryBoxInfo2 {
-  font-size: clamp(1rem, 2vw, 2rem);
+  font-size: clamp(1rem, 3vw, 2rem);
 }
 
 .entryBtn {
