@@ -156,7 +156,7 @@ const gameRun = () => {
     }
 
     //window.open(deepLink + '?token=' + response.data.data.appToken + '&name=' + store.getters["auth/getUserName"] + '&email=' + store.getters["auth/getUserEmail"] + '&uid=' + store.getters["auth/getUserId"], '_blank');
-    window.flutter_inappwebview.callHandler('handlePlayBtn', {deepLink:deepLink, token:response.data.data.appToken, name:store.getters["auth/getUserName"], email:store.getters["auth/getUserEmail"], uid:store.getters["auth/getUserId"]});
+    window.flutter_inappwebview.callHandler('handlePlayBtn', {deepLink:deepLink, token:response.data.data.appToken, name:store.getters["auth/getUserName"], email:store.getters["auth/getUserEmail"], uid:store.getters["auth/getUserId"], isTest:response.data.data.isTest});
   });
 };
 
