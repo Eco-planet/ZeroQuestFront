@@ -40,7 +40,7 @@
       <template v-if="questRewards !== undefined && questRewards !== null && Object.keys(questRewards).length > 0">
         <div class="px-0 w-full flex justify-between items-center text-2xl">
           <div class="font-semibold">{{ t("message.nftReward") }}</div>
-          <div class="px-5 nftOn">{{ t("message.rewardBtn") }}</div>
+          <div class="px-5 nftOn" @click="exchangeReward">{{ t("message.rewardBtn") }}</div>
         </div>
         <div class="h-5"></div>
         <div class="h-px h-5 bg-gray-200"></div>
@@ -147,6 +147,21 @@ const getQuestReward = () => {
       questRewards.value = {};
     })
 };
+
+const exchangeReward = () => {
+  http.post("/api/quest/reward", {
+    symbol: nftList[nftId].symbol,
+    tokenId,
+    nftId
+  })
+    .then((response) => {
+      console.log(response);
+      alert("포인트 환전 성공")
+    })
+    .catch(() => {
+      console.log('err');
+    })
+}
 
 const showPopup = () => {
   store.state.isPopup = true;

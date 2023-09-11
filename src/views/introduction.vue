@@ -105,7 +105,7 @@
             text-center 
             dark:bg-green-600 
             dark:hover:bg-green-700 
-            dark:focus:ring-green-800">아파트 '계단오르기' 설치 요청
+            dark:focus:ring-green-800">우리동네 '계단오르기' 설치 요청
       </button>
       <div class="mt-40">
         <span class="font-bold">NFT</span>를 통해 포인트를 얻고<br> 
