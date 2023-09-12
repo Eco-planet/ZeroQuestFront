@@ -190,10 +190,10 @@ const battleSession = () => {
   http.get("/api/battle/session")
     .then((response) => {
       recentSession.value = response.data.data;
-      recentSessionCard.cardData = response.data.data.contents;
-      
-      store.dispatch('cardData', recentSessionCard.cardData)
-
+      if(response.data.data.contents){
+        recentSessionCard.cardData = response.data.data.contents;
+        store.dispatch('cardData', recentSessionCard.cardData)
+      }
       isLoading.value = false
     })
     .catch((error) => {
