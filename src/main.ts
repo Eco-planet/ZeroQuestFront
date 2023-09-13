@@ -9,6 +9,7 @@ import "@/output.css";
 import "@/ecoplanet.css";
 import "element-plus/dist/index.css";
 import "@/styles/layout.css";
+import Vue from "vue";
 
 import globalComponents from "@/components";
 
@@ -21,6 +22,12 @@ const app = createApp(App)
   .use(vue3GoogleLogin, { clientId: process.env.VUE_APP_GOOGLE_API_KEY });
 
 // app.config.globalProperties.isLoading = false;
+declare global {
+  interface Window {
+    Kakao: any;
+  }
+}
+window.Kakao.init("ef29c555315de8448ce4f5e49d1b6442");
 
 router.isReady().then(() => {
   app.mount("#app");

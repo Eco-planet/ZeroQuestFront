@@ -1,15 +1,30 @@
 <template>
+  <!-- <div>
+    <h2>래퍼럴 입력창</h2>
+    <input
+      type="string"
+      style="border: 1px solid black"
+      v-model="referralCode"
+    />
+    <button @click="referralInput">래퍼럴 버튼</button>
+  </div> -->
+
   <div class="flex flex-col justify-center mm">
     <div class="h-8"></div>
     <div class="w-full">
       <Carousel :autoplay="3000" :wrap-around="true">
         <Slide v-for="slide in bannerList" :key="slide">
-          <div class="carousel__item" style="overflow: hidden;"><img :src="slide.url" /></div>
+          <div class="carousel__item" style="overflow: hidden">
+            <img :src="slide.url" />
+          </div>
         </Slide>
       </Carousel>
     </div>
+
     <div class="h-10"></div>
-    <div class="flex w-full pb-2 items-center justify-between border-b border-gray-400">
+    <div
+      class="flex w-full pb-2 items-center justify-between border-b border-gray-400"
+    >
       <div class="text-2xl font-semibold">ESG Point</div>
       <div class="flex items-end">
         <div class="text-3xl font-semibold text-esg-color">{{ esgPoint }}</div>
@@ -21,18 +36,59 @@
     <div class="flex justify-between items-center">
       <div class="text-3xl font-semibold text-left">O!NFT</div>
       <div class="border rounded-full">
-        <div class="text-lg text-gray-400 mx-4 my-1" @click="goToOnft()">more +</div>
+        <div class="text-lg text-gray-400 mx-4 my-1" @click="goToOnft()">
+          more +
+        </div>
+
+        <!-- 카카오 공유, 텔레그램 공유 -->
+
+        <!-- 카카오 공유 -->
+        <!-- <button type="button">
+          <a id="kakao-link-btn" @click="shareKakao">
+            <img
+              src="https://www.designdb.com/usr/upload/editor/email/202304132212562023ad50-d888-46ee-8247-12fe63822d4f.png"
+              alt="카카오톡 공유하기"
+              style="width: 70px; height: 70px"
+            />
+          </a>
+        </button> -->
+
+        <!-- 텔레그램 공유 -->
+        <!-- <button type="button" class="sns_btn" @click="shareTelegram">
+          <img
+            src="https://www.cctvnews.co.kr/news/photo/201909/136595_148460_5049.jpg"
+            alt="텔레그램 공유하기"
+            style="width: 70px; height: 70px"
+          />
+        </button> -->
+
+        <!-- 카카오 공유, 텔레그램 공유 이미지 -->
       </div>
     </div>
     <div class="w-full grid grid-cols-3 gap-card">
       <div class="flex flex-col" v-for="item in myNftList" :key="item.tokenId">
         <div v-if="item.enable === 1">
-          <div><img class="nftImg" :src="nftList[item.nftId].image" alt="" @click="goNftDetail(item.nftId)"></div>
+          <div>
+            <img
+              class="nftImg"
+              :src="nftList[item.nftId].image"
+              alt=""
+              @click="goNftDetail(item.nftId)"
+            />
+          </div>
+
           <div class="h-2"></div>
           <div class="text-lg text-center">{{ nftList[item.nftId].name }}</div>
         </div>
         <div class="grayscale" v-else>
-          <div><img class="nftImg" :src="nftList[item.nftId].image" alt="" @click="goNftDetail(item.nftId)"></div>
+          <div>
+            <img
+              class="nftImg"
+              :src="nftList[item.nftId].image"
+              alt=""
+              @click="goNftDetail(item.nftId)"
+            />
+          </div>
           <div class="h-2"></div>
           <div class="text-lg text-center">{{ nftList[item.nftId].name }}</div>
         </div>
@@ -42,51 +98,96 @@
     <div class="flex justify-between items-center">
       <div class="text-3xl font-semibold text-left">NEW NFT</div>
       <div class="border rounded-full">
-        <div class="text-lg text-gray-400 mx-4 my-1" @click="goToZeroNft()">more +</div>
+        <div class="text-lg text-gray-400 mx-4 my-1" @click="goToZeroNft()">
+          more +
+        </div>
       </div>
     </div>
     <div class="w-full grid grid-cols-3 gap-card">
       <div class="flex flex-col" v-for="item in nftList" :key="item.tokenId">
-        <img class="nftImg" :src="item.image" alt="" @click="goToDetail(item.idx)">
+        <img
+          class="nftImg"
+          :src="item.image"
+          alt=""
+          @click="goToDetail(item.idx)"
+        />
         <div class="h-2"></div>
         <div class="text-lg text-center">{{ item.name }}</div>
       </div>
     </div>
-    <div class="h-36"></div>
-    <div class="break-words text-black media-Bottom">
-      <div class="font-semibold text-2xl">제로퀘스트와 함께 지구를 살려요!🌍🎮</div><br>
-      <div class="font-medium text-lg">탄소 발자국을 줄이는 행동, 그게 바로 우리의 게임 미션!<br> 
-      성공할 때마다 ESG 포인트도 적립! <br>
-      포인트는 ESG 토큰으로 교환하면 재태크도 됩니다.<br>
-      
-      계단 오르기부터 자전거 타기까지!<br>
-      제로퀘스트와 함께하면, 지구를 살리면서 주머니도 가득!<br>
-      함께 지구를 더 즐겁게, 건강하게 만들어가요!
-      </div><br>
-      
-      
+    <div
+      class="w-66 h-24 bg-gray-400 flex justify-center items-center mb-5 mt-10 cursor-pointer"
+      @click="referPage"
+    >
+      <div class="text-2xl">래퍼럴</div>
+    </div>
+
+    <div
+      class="break-words text-black media-Bottom intro-zeroquest text-center mt-10"
+    >
+      <div class="font-semibold text-2xl">
+        제로퀘스트와 함께 지구를 살려요!🌍🎮
+      </div>
+      <br />
+      <div class="font-medium text-lg">
+        탄소 발자국을 줄이는 행동, 그게 바로 우리의 게임 미션!<br />
+        성공할 때마다 ESG 포인트도 적립! <br />
+        포인트는 ESG 토큰으로 교환하면 재태크도 됩니다.<br />
+
+        계단 오르기부터 자전거 타기까지!<br />
+        제로퀘스트와 함께하면, 지구를 살리면서 주머니도 가득!<br />
+        함께 지구를 더 즐겁게, 건강하게 만들어가요!
+      </div>
+      <br />
+
       <div class="pt-4 font-semibold text-xl">
-      지금 바로 시작! <br>
-      제로퀘스트와 지구의 히어로가 되어보세요!🌟🚀<br>
-      쉿! 소문내기까지 하면 추가 보너스도 빵빵합니다.
+        지금 바로 시작! <br />
+        제로퀘스트와 지구의 히어로가 되어보세요!🌟🚀<br />
+        쉿! 소문내기까지 하면 추가 보너스도 빵빵합니다.
       </div>
     </div>
+    <!-- <div class="h-16"></div>
+    <div class="text-left">
+      ipsum lorem
+      <div class="text-xl mt-4 font-normal text-gray-500">
+        {{ mainDesc.desc }}
+      </div>
+    </div>
+    <div class="mt-10 grid grid-cols-2 gap-x-8 gap-y-8">
+      <div class="shadow-nft-extra">
+        <div class="w-full h-full relative">
+          <img :src="mainDesc.extra_img1" />
+        </div>
+
+        <div class="p-4 text-xl font-medium text-black">계단오르기 NFT</div>
+      </div>
+      <div class="shadow-nft-extra">
+        <div class="w-full h-full relative">
+          <img :src="mainDesc.extra_img2" />
+        </div>
+        <div class="p-4 text-xl font-medium text-black">
+          AI 기반 재활용품 NFT
+        </div>
+      </div>
+    </div> -->
     <div class="h-40"></div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import store from "@/store"
+import store from "@/store";
 import http from "@/api/http";
 import router from "@/router";
-import { reactive, onMounted, ref } from "vue"
-import { NFTSampleType, nftType } from "@/types/IZeroNftType"
+import axios from "axios";
+import { reactive, onMounted, ref, computed } from "vue";
+import { NFTSampleType, nftType } from "@/types/IZeroNftType";
 import MyNftCard from "@/components/OpenNftView.vue";
 import { Carousel, Pagination, Slide } from "vue3-carousel";
 import { errorMsg } from "@/utils/util";
-
+import { useStore } from "vuex";
 import "vue3-carousel/dist/carousel.css";
-
+const vuexStore = useStore(); // Use a different variable name for the store
+const referral = computed(() => vuexStore.getters["auth/getReferral"]);
 const bannerList = store.getters["auth/getBannerList"];
 const nftList = store.getters["auth/getNftList"];
 const myNftList = ref<nftType>();
@@ -94,8 +195,8 @@ const esgPoint = ref(0);
 const balances = ref();
 const tokenInfos = ref();
 const popupTitle = ref("");
-
-console.log("bannerList",bannerList)
+const referralCode = ref(""); //레퍼럴 코드 확인용
+console.log("bannerList", bannerList);
 
 onMounted(() => {
   getMyNftList();
@@ -107,20 +208,21 @@ onMounted(() => {
 });
 
 const getMyNftList = () => {
-  http.get("/api/nft/myZeroNft", {
-    params: {
-      type: 1,
-    }
-  })
+  http
+    .get("/api/nft/myZeroNft", {
+      params: {
+        type: 1,
+      },
+    })
     .then((response) => {
       myNftList.value = response.data.data;
-      console.log("zero",response.data.data)
+      console.log("zero", response.data.data);
     });
 };
 
 const checkError = (status: number, code: number) => {
   if (status === 400) {
-    store.state.popupType = 'message';
+    store.state.popupType = "message";
     popupTitle.value = errorMsg(status, code);
     store.state.isPopup = true;
   } else if (status === 401 || status === 403 || status === 300) {
@@ -131,25 +233,26 @@ const checkError = (status: number, code: number) => {
 };
 
 const getBalanceAll = () => {
-  http.get("/api/token/balanceAll")
-  .then((response) => {
-    store.state.isBalanceUpdate = false;
+  http
+    .get("/api/token/balanceAll")
+    .then((response) => {
+      store.state.isBalanceUpdate = false;
 
-    const resData = response.data.data.balances;
+      const resData = response.data.data.balances;
 
-    let balancesData: any = {};
+      let balancesData: any = {};
 
-    resData.forEach((res: any) => {
-      balancesData[res.symbol] = res;
+      resData.forEach((res: any) => {
+        balancesData[res.symbol] = res;
+      });
+
+      store.commit("auth/setBalances", { info: balancesData });
+
+      updateBalance();
+    })
+    .catch((error) => {
+      checkError(error.response.status, error.response.data.errorCode);
     });
-
-    store.commit("auth/setBalances", { 'info': balancesData });
-
-    updateBalance();
-  })
-  .catch((error) => {
-    checkError(error.response.status, error.response.data.errorCode);
-  });
 };
 
 const updateBalance = () => {
@@ -157,7 +260,7 @@ const updateBalance = () => {
   balances.value = store.getters["auth/getBalances"];
 
   for (const key in balances.value) {
-    if (balances.value[key].symbol === 'ESGP') {
+    if (balances.value[key].symbol === "ESGP") {
       esgPoint.value = balances.value[key].balance;
     }
   }
@@ -169,51 +272,117 @@ type mainDescType = {
   extra_img2: string;
 };
 
-
 const mainDesc = reactive<mainDescType>({
   desc: "'Ullamco incididunt nostrud elit fugiat minim veniam. Pariatur officia tempor ipsum veniam est culpa id labore. Et nostrud eiusmod qui esse. Nisi cillum consectetur commodo exercitation labore eiusmod in. Nisi eu esse Lorem ipsum ullamco quis in aliqua id excepteur velit dolor eiusmod consequat.'",
-  extra_img1: require('@/assets/images/thumb/thumb6.png'),
-  extra_img2: require('@/assets/images/thumb/thumb7.png')
-})
+  extra_img1: require("@/assets/images/thumb/thumb6.png"),
+  extra_img2: require("@/assets/images/thumb/thumb7.png"),
+});
 
 function goToOnft() {
   router.push({
-    path: '/onft',
-    name: 'onft'
-  })
+    path: "/onft",
+    name: "onft",
+  });
 }
 
 function goToZeroNft() {
   router.push({
-    path: '/zeronft',
-    name: 'zeronft'
-  })
+    path: "/zeronft",
+    name: "zeronft",
+  });
 }
 
 function goToDetail(idx: number) {
   router.push({
-    path: '/zeronftbuy',
+    path: "/zeronftbuy",
     name: "zeronftbuy",
     params: {
-      idx: idx
-    }
-  })
+      idx: idx,
+    },
+  });
 }
 
 const goNftDetail = (nftId: number) => {
-  router.push({ name: 'onft-detail', params: { nftId } });
+  router.push({ name: "onft-detail", params: { nftId } });
 };
+
+// 소셜 공유하기, 텔레그램
+// const shareTelegram = () => {
+//   const referralValue = referral.value; // Use the computed property
+//   console.log("텔레그램 Referral:", referralValue); // Check the value in the console
+
+//   if (referralValue) {
+//     const text = `ZeroQuest - 친구초대 이벤트 :`;
+//     const url = `http://localhost:8081`;
+//     const referralSlice = referralValue.slice(-6); // Use slice if referralValue is a string
+//     const telegramShareUrl = `https://telegram.me/share/url?url=${encodeURIComponent(
+//       url
+//     )}&text=${encodeURIComponent(text + referralSlice)}`;
+//     window.open(telegramShareUrl);
+//   } else {
+//     console.error("store.state.referral is not defined or is empty");
+//   }
+// };
+
+// 소셜 공유하기, 카카오
+// const shareKakao = () => {
+//   const referralValue = referral.value;
+//   console.log("이게 뭐라고", referralValue);
+
+//   if (referralValue) {
+//     const referralSlice = referralValue.slice(-6); // Calculate referralSlice here
+//     window.Kakao.Link.sendDefault({
+//       objectType: "feed",
+//       content: {
+//         title: "ZeroQuest - 친구초대 이벤트",
+//         description: referralSlice,
+//         imageUrl: "preview_image.png (1000*1000)",
+//         link: {
+//           mobileWebUrl: "http://localhost:8080/",
+//           webUrl: "http://localhost:8080/",
+//         },
+//       },
+//     });
+//   } else {
+//     console.error("store.state.referral is not defined or is empty");
+//   }
+// };
+
+// 레퍼럴 입력 가이드
+// const referralInput = () => {
+//   console.log("레퍼럴 코드는", referralCode.value, typeof referralCode.value);
+//   http
+//     .post(`/api/user/checkReferral`, {
+//       referralCode: referralCode.value,
+//     })
+//     .then((response) => {
+//       console.log("200", response.data);
+//     })
+//     .catch((error) => {
+//       console.error("Error:", error);
+//       if (error.response) {
+//         console.error("Server Response:", error.response.data);
+//       }
+//     });
+// };
+
+function referPage() {
+  router.push({
+    path: "/myzq/referral",
+    name: "referral",
+  });
+}
 </script>
 
 <style lang="scss">
 .text-esg-color {
   color: #24d120;
 }
-.nftOn  {
+.nftOn {
   background-color: #24d120;
 }
 
-.nftOff  {
+.nftOff {
   background-color: #ccc;
 }
 .grayscale {
@@ -221,16 +390,26 @@ const goNftDetail = (nftId: number) => {
 }
 
 .nftImg {
-  width:100%;
-  height:100%;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
   object-position: center top;
   height: 100px;
 }
 
-.media-Bottom {
-  @media(min-width:450px) {
-    margin-bottom: 100px;
-  }
+.refer-box {
+  width: 358.467px;
+  height: 92.5px;
+  background-color: #a5a5a5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.refer-font {
+  font-size: 14px;
 }
 </style>
+
