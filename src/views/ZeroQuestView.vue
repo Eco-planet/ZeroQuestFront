@@ -397,6 +397,12 @@ function referPage() {
   height: 100px;
 }
 
+.media-Bottom {
+  @media(min-width:450px) {
+    margin-bottom: 100px;
+  }
+}
+
 .refer-box {
   width: 358.467px;
   height: 92.5px;
