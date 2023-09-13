@@ -21,6 +21,12 @@ const routes: Array<RouteRecordRaw> = [
       import(/* webpackChunkName: "myzq" */ "../views/ZeroQuestView.vue"),
   },
   {
+    path: "/myzq/referral",
+    name: "referral",
+    component: () =>
+      import(/* webpackChunkName: "myzq" */ "../views/ReferralView.vue"),
+  },
+  {
     path: "/zeronft",
     name: "zeronft",
     component: () =>
@@ -42,7 +48,9 @@ const routes: Array<RouteRecordRaw> = [
     path: "/onft-detail/:nftId/:tokenId",
     name: "onft-detail",
     component: () =>
-      import(/* webpackChunkName: "onft-detail" */ "../views/OpenNftDetailView.vue"),
+      import(
+        /* webpackChunkName: "onft-detail" */ "../views/OpenNftDetailView.vue"
+      ),
   },
   {
     path: "/mywallet",
@@ -54,40 +62,38 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/battle",
     name: "battle",
-    component: ()=>
+    component: () =>
       import(/* webpackChunkName: "battle" */ "../views/BattleView.vue"),
   },
   {
-    path:'/AllSession/:recentSessionIdx',
-    name:'AllSession',
-    component: () => 
-      import (/* webpackChunkName: "battle" */ "../views/AllSession.vue"),
+    path: "/AllSession/:recentSessionIdx",
+    name: "AllSession",
+    component: () =>
+      import(/* webpackChunkName: "battle" */ "../views/AllSession.vue"),
   },
   {
-    path:'/battleDetailInfo/:walletAddress/:sessionId/:cardIdx',
-    name:'battleDetailInfo',
-    component: () => 
-      import (/* webpackChunkName: "battle" */ "../views/BattleDetailInfo.vue"),
-    
+    path: "/battleDetailInfo/:walletAddress/:sessionId/:cardIdx",
+    name: "battleDetailInfo",
+    component: () =>
+      import(/* webpackChunkName: "battle" */ "../views/BattleDetailInfo.vue"),
   },
   {
-    path:'/myEntry',
-    name:'myEntry',
-    component: () => 
-      import (/* webpackChunkName: "battle" */ "../views/MyEntries.vue")
-    
+    path: "/myEntry",
+    name: "myEntry",
+    component: () =>
+      import(/* webpackChunkName: "battle" */ "../views/MyEntries.vue"),
   },
   {
-    path:'/entryPage/:sessionId',
-    name:'entryPage',
-    component: () => 
-      import (/* webpackChunkName: "battle" */ "../views/EntryPage.vue")
+    path: "/entryPage/:sessionId",
+    name: "entryPage",
+    component: () =>
+      import(/* webpackChunkName: "battle" */ "../views/EntryPage.vue"),
   },
   {
-    path:'/entryPage',
-    name:'entryUpdatePage',
-    component: () => 
-      import (/* webpackChunkName: "battle" */ "../views/EntryPage.vue")
+    path: "/entryPage",
+    name: "entryUpdatePage",
+    component: () =>
+      import(/* webpackChunkName: "battle" */ "../views/EntryPage.vue"),
   },
   {
     path: "/about",
@@ -105,7 +111,9 @@ const routes: Array<RouteRecordRaw> = [
     path: "/introduction",
     name: "introduction",
     component: () =>
-      import(/* webpackChunkName: "introduction" */ "../views/introduction.vue"),
+      import(
+        /* webpackChunkName: "introduction" */ "../views/introduction.vue"
+      ),
   },
 ];
 
@@ -125,7 +133,12 @@ router.beforeEach(async (to: Nullable, from: Nullable, next: Nullable) => {
     if (currentDate <= expireRefreshToken) {
       router.push("/" + process.env.VUE_APP_FIRST_URL);
     }
-  } else if (to.name !== "home" && to.name !== "terms" && store.getters["auth/getTerms"] != '' && store.getters["auth/getTerms"] == 0) {
+  } else if (
+    to.name !== "home" &&
+    to.name !== "terms" &&
+    store.getters["auth/getTerms"] != "" &&
+    store.getters["auth/getTerms"] == 0
+  ) {
     router.push("/terms");
   }
 

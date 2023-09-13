@@ -27,6 +27,8 @@ export default {
     vote: localStorage.getItem("vote") || 0,
     pwHash: localStorage.getItem("pwHash") || "",
     pwNumber: localStorage.getItem("pwNumber") || "",
+    ///레퍼럴 테스트
+    referral: localStorage.getItem("referral") || "",
   },
   getters: {
     getAccessToken: (state: Nullable) => {
@@ -61,6 +63,9 @@ export default {
     getUserName: (state: Nullable) => {
       return state.userName;
     },
+    getReferral: (state: Nullable) => {
+      return state.referral;
+    },
     getUserEmail: (state: Nullable) => {
       return state.userEmail;
     },
@@ -78,7 +83,7 @@ export default {
       }
     },
     getWithdrawPw: (state: Nullable) => {
-      if (state.withdrawPw === true || state.withdrawPw === 'true') {
+      if (state.withdrawPw === true || state.withdrawPw === "true") {
         return true;
       } else {
         return false;
@@ -101,7 +106,7 @@ export default {
     getTerms: (state: Nullable) => {
       return state.terms;
     },
-    getUserVote: (state:Nullable) => {
+    getUserVote: (state: Nullable) => {
       return state.vote;
     },
     getPwHash: (state:Nullable) => {
@@ -130,8 +135,8 @@ export default {
       state.expireAccessToken = 0;
       state.expireRefreshToken = 0;
 
-      localStorage.setItem("expireAccessToken", '0');
-      localStorage.setItem("expireRefreshToken", '0');
+      localStorage.setItem("expireAccessToken", "0");
+      localStorage.setItem("expireRefreshToken", "0");
     },
     setAccessToken(state: Nullable, { token, expireAt }: Nullable) {
       const currentDate = new Date().getTime() / 1000;
@@ -170,6 +175,10 @@ export default {
       state.userName = userName;
 
       localStorage.setItem("userName", userName);
+    },
+    setReferral(state: Nullable, { referral }: Nullable) {
+      state.referral = referral;
+      localStorage.setItem("referral", referral);
     },
     setUserEmail(state: Nullable, { userEmail }: Nullable) {
       state.userEmail = userEmail;
@@ -211,11 +220,10 @@ export default {
 
       localStorage.setItem("terms", terms);
     },
-    setUserVote(state: Nullable, { vote }: Nullable){
+    setUserVote(state: Nullable, { vote }: Nullable) {
       state.vote = vote;
       localStorage.setItem("vote", vote.toString());
     },
-
     setPwHash(state:Nullable, { pwHash }: Nullable){
       state.pwHash = pwHash;
       localStorage.setItem("pwHash", pwHash)
@@ -230,7 +238,7 @@ export default {
     async googleLogin(context: Nullable, { token }: Nullable) {
       try {
         const response = await authApi.googleLogin(token);
-        console.log("res",response)
+        console.log("res", response);
 
         if (response.status === 200) {
           context.commit("setAccessToken", {
@@ -246,6 +254,10 @@ export default {
           });
           context.commit("setAddress", {
             address: response.data.data.wallet.address,
+          });
+          /* 레퍼럴 Application, storage */
+          context.commit("setReferral", {
+            referral: response.data.data.referral,
           });
 
           const seed = openSSLCrypto.decode(response.data.data.wallet.seed);
@@ -266,7 +278,7 @@ export default {
           context.commit("setUserVote", {
             vote: response.data.data.vote,
           });
- 
+
           if (response.data.data.terms == 0) {
             router.push("/terms");
           } else {
@@ -279,10 +291,10 @@ export default {
         router.push("/");
       }
     },
-    updateUserVotes(context:Nullable, vote:any){
+    updateUserVotes(context: Nullable, vote: any) {
       context.commit("setUserVote", {
         vote,
-      })
+      });
     },
     pwHash(context:Nullable, pwHash:any){
       context.commit("setPwHash", {
