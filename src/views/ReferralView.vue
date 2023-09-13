@@ -2,9 +2,7 @@
   <div class="referral-contens-area">
     <div class="w-full flex justify-center">
       <!-- 추가된 부분: div를 중앙 정렬하기 위해 flex와 justify-center를 사용합니다. -->
-      <div
-        class="flex items-center justify-center w-7/10 p-4 rounded-2xl eco-green-bg font-semibold text-4xl text-black"
-      >
+      <div class="mb-10 pl-10 flex items-center justify-center w-7/10 p-4 rounded-2xl font-semibold text-4xl text-black refBtn">
         지구 지키기 소확행 🌎🌟
       </div>
     </div>
@@ -19,18 +17,10 @@
         <span> 지급</span>
       </p>
 
-      <div class="h-20"></div>
-
-      <div
-        @click="showLastSixChars"
-        class="flex items-center justify-between w-auto p-4 mb-10 bg-white border border-black font-semibold text-2xl text-black"
-      >
+      <div @click="showLastSixChars"
+        class="flex items-center justify-between w-auto p-4 my-10 bg-white border border-black font-semibold text-2xl text-black">
         <span class="underline referral-code-span">추천인 코드</span>
-        <img
-          class="referral-image"
-          src="../assets/images/refcodeImg.png"
-          alt="Referral Code Image"
-        />
+        <img class="referral-image" src="../assets/images/refcodeImg.png" alt="Referral Code Image" />
       </div>
 
       <p class="tit">소문내기만 해도</p>
@@ -39,14 +29,11 @@
         <span> 지급</span>
       </p>
 
-      <div class="mx-4">
+      <div class="mt-7 mb-4">
         <!-- 카카오 공유 -->
         <button type="button">
           <a id="kakao-link-btn" @click="shareKakao">
-            <img
-              src="./../assets/images/kakao_logo.png"
-              alt="카카오톡 공유하기"
-            />
+            <img src="./../assets/images/kakao_logo.png" alt="카카오톡 공유하기" />
           </a>
         </button>
 
@@ -56,7 +43,7 @@
         </button>
       </div>
 
-      <div class="h-20"></div>
+      <div class="h-9"></div>
 
       <div class="font-medium text-sm text-gray-400">
         주의사항 : 추천인으로 자기 자신을 추천할 수 없습니다.<br />
@@ -70,7 +57,7 @@
 
       <div class="h-10"></div>
 
-      <div class="py-4 bg-gray-200 rounded-xl">
+      <div class="py-5 bg-gray-200 rounded-xl">
         <div>
           <span class="text-3xl font-bold mb-4 block">
             추천인 코드 입력란
@@ -81,33 +68,19 @@
           </span>
         </div>
 
-        <div
-          class="flex flex-col items-center justify-center space-y-10 mt-10 mb-10"
-        >
-          <input
-            type="text"
-            placeholder="추천인 코드 입력란"
-            class="text-center border border-black border-b-2"
-            v-model="referralCode"
-          />
-
-          <!-- <button
-            @click="referralInput"
-            class="w-36 p-4 font-bold border border-solid rounded-full mt-10"
-            style="background: #70ad47; border-color: white"
-          >
-            <p style="color: white !important">확인</p>
-          </button> -->
+        <div class="flex flex-col items-center justify-center space-y-10 mt-5 mb-10">
+          <input type="text" placeholder="추천인 코드 입력란" class="px-10 py-4 text-center border border-black border-b-2"
+            v-model="referralCode" />
         </div>
+
+        <button
+          @click="referralInput"
+          class="w-36 py-2 text-white font-medium border rounded-full text-xl refBtn"
+        >
+        확인
+        </button>
       </div>
     </div>
-    <button
-      @click="referralInput"
-      class="w-36 p-4 font-bold border border-solid rounded-full mt-10"
-      style="background: #70ad47; border-color: white"
-    >
-      <p style="color: white !important">확인</p>
-    </button>
   </div>
 </template>
 
@@ -242,6 +215,7 @@ const showLastSixChars = () => {
   text-align: center;
   position: relative;
 }
+
 .referral-container {
   width: 100%;
   margin-top: 40px;
@@ -253,54 +227,69 @@ const showLastSixChars = () => {
   flex-grow: 1;
   text-align: center;
   display: flex;
-  align-items: center; /* 수직 중앙 정렬을 위한 속성 */
-  justify-content: center; /* 수평 중앙 정렬을 위한 속성 */
+  align-items: center;
+  /* 수직 중앙 정렬을 위한 속성 */
+  justify-content: center;
+  /* 수평 중앙 정렬을 위한 속성 */
 }
 
 .referral-image {
-  margin-left: 1rem; /* 이미지와 텍스트 사이의 간격 조절 */
+  margin-left: 1rem;
+  /* 이미지와 텍스트 사이의 간격 조절 */
 }
 
-.referral-container > .tit {
+.referral-container>.tit {
   font-weight: 600;
   font-size: 26px;
   line-height: 36px;
   color: #000;
 }
-.referral-container > .tit-bold {
+
+.referral-container>.tit-bold {
   font-weight: 600;
   font-size: 30px;
   line-height: 36px;
   color: #000;
 }
 
+.refBtn {
+  background-color:  #70ad47;
+
+}
+
 @media only screen and (max-width: 1024px) {
   .referral-contens-area {
     padding: 8.3333vw 6.9444vw 23.6111vw;
   }
+
   .referral-container {
     margin-top: 5.5556vw;
     padding: 6.9444vw 6.6667vw;
     border-width: 0.2778vw;
   }
+
   h2 {
     margin-bottom: 6.9444vw;
     font-size: 6.1111vw;
     height: 9.7222vw;
   }
-  .referral-container > .tit {
+
+  .referral-container>.tit {
     font-size: 3.6111vw;
     line-height: 5vw;
   }
-  .referral-container > .tit-bold {
+
+  .referral-container>.tit-bold {
     font-size: 4vw;
     line-height: 5vw;
   }
-  .referral-container > .tit-bold > span:nth-child(1) {
+
+  .referral-container>.tit-bold>span:nth-child(1) {
     font-weight: 600;
     color: #70ad47;
   }
-  .referral-container > .tit-bold > span:nth-child(2) {
+
+  .referral-container>.tit-bold>span:nth-child(2) {
     font-weight: 600;
   }
 }

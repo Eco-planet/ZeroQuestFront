@@ -120,9 +120,9 @@ const gameDownload = (type: String) => {
 
 const gameDownUrl = (type: String) => {
   if (type === '1') {
-    window.open(`https://play.google.com/store/apps/details?id=com.aiblue.stepup_module_app`, '_blank');
+    window.open(`https://play.google.com/store/apps/details?id=com.aiblue.smart_recycle_module_app`, '_blank');
   } else if (type === '2') {
-    window.open('https://tempdownload0623.s3.ap-northeast-2.amazonaws.com/stepup.apk', '_blank');
+    window.open(`https://play.google.com/store/apps/details?id=com.aiblue.stepup_module_app`, '_blank');
   }
 };
 
