@@ -23,15 +23,6 @@
       <div class="text-2xl">{{ t("message.googleLoginButton") }}</div>
     </div>
     <div class="h-10"></div>
-    <div class="wp-70 max-w-4xl">
-      <div class="font-medium text-xl font-semibold">
-        {{ t("message.googleLoginTitle") }}
-      </div>
-      <div class="h-5"></div>
-      <div class="break-words text-gray-500 text-lg">
-        {{ t("message.googleLoginComment") }}
-      </div>
-    </div>
 
     <div class="break-words text-black">
       <div class="font-semibold text-2xl">제로퀘스트와 함께 지구를 살려요!🌍🎮</div><br>

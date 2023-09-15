@@ -86,7 +86,7 @@
       </div>
       <div class="wp-20 flex justify-center items-center">
         <div class="swap-icon" @click="getSwapInfo">
-          <img src="@/assets/images/icon_wallet.png" />
+          <img src="@/assets/images/arrow.png" />
         </div>
       </div>
       <div class="wp-40 flex flex-col">
@@ -330,7 +330,7 @@ const closeModal = () => {
 };
 
 const getSwapInfo = () => {
-  if (swapEsgp.value < 1000) {
+  if (swapEsgp.value < 30000) {
     store.state.popupType = "message";
     popupTitle.value = "error.lessMiniumCostSwap";
     store.state.isPopup = true;
@@ -424,21 +424,11 @@ const initSwapEsgp = () => {
 }
 
 .swap-icon {
-
-  width: 37% !important;
-  border: 2px solid transparent; /* 초기에 투명한 테두리로 설정 */
-  box-shadow: 0 0 20px rgba(0, 0, 255, 0.7);
-}
-
-@keyframes spreadEffect {
-  0% {
-    box-shadow: 0 0 20px rgba(0, 0, 255, 0.7);
-    border-width: 2px; /* 초기 테두리 두께 */
-  }
-  100% {
-    box-shadow: 0 0 60px 30px rgba(0, 0, 255, 0.1); /* 더 퍼진 그림자 효과 */
-    border-width: 20px; /* 퍼진 테두리 두께 */
-  }
+  width: 40% !important;
+  animation-name: glowing;
+  animation-duration: 2s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
 }
 
 .swap-text {

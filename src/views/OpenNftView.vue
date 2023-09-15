@@ -8,7 +8,7 @@
     <div class="w-full">
       <Carousel :autoplay="3000" :wrap-around="true">
         <Slide v-for="slide in bannerList" :key="slide">
-          <div class="carousel__item" style="overflow: hidden;"><img :src="slide.url" /></div>
+          <div class="carousel__item" style="overflow: hidden;"><img :src="slide.url" @click="goToLink(slide.link)" /></div>
         </Slide>
       </Carousel>
     </div>
@@ -31,6 +31,7 @@
 
 <script lang="ts" setup>
 import store from "@/store";
+import router from "@/router";
 import http from "@/api/http";
 import { onMounted, onUnmounted, ref } from "vue";
 import MyNftCard from "@/components/OpenNftView.vue";
@@ -119,11 +120,14 @@ const gameDownload = (type: String) => {
 };
 
 const gameDownUrl = (type: String) => {
-  if (type === '1') {
-    window.open(`https://play.google.com/store/apps/details?id=com.aiblue.smart_recycle_module_app`, '_blank');
-  } else if (type === '2') {
-    window.open(`https://play.google.com/store/apps/details?id=com.aiblue.stepup_module_app`, '_blank');
+  let packageName = '';
+
+  if (navigator.userAgent.toLowerCase().indexOf("android") > -1) {
+    packageName = store.state.packageName;
+  } else if (navigator.userAgent.toLowerCase().indexOf("iphone") > -1) {
+    packageName = store.state.packageName;
   }
+  window.flutter_inappwebview.callHandler('handleInstallBtn', {packageName: packageName})
 };
 
 const gameRun = () => {
@@ -171,6 +175,12 @@ const readyFlutter = (event: any) => {
   popupTitle.value = 'flutter_enable'; 
   store.state.isPopup = true;
 };
+
+function goToLink(link: string) {
+  router.push({
+    path: link,
+  });
+}
 </script>
 
 <style lang="scss">

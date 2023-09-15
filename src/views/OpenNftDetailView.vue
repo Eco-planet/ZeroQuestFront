@@ -40,7 +40,7 @@
       <template v-if="questRewards !== undefined && questRewards !== null && Object.keys(questRewards).length > 0">
         <div class="px-0 w-full flex justify-between items-center text-2xl">
           <div class="font-semibold">{{ t("message.nftReward") }}</div>
-          <div class="px-5 nftOn" @click="exchangeReward">{{ t("message.rewardBtn") }}</div>
+          <!-- <div class="px-5 nftOn" @click="exchangeReward">{{ t("message.rewardBtn") }}</div> -->
         </div>
         <div class="h-5"></div>
         <div class="h-px h-5 bg-gray-200"></div>
@@ -207,11 +207,14 @@ const gameDownload = (type: String) => {
 };
 
 const gameDownUrl = (type: String) => {
-  if (type === '1') {
-    window.open('https://tempdownload0623.s3.ap-northeast-2.amazonaws.com/smartrecycle.apk', '_blank');
-  } else if (type === '2') {
-    window.open('https://tempdownload0623.s3.ap-northeast-2.amazonaws.com/stepup.apk', '_blank');
+  let packageName = '';
+
+  if (navigator.userAgent.toLowerCase().indexOf("android") > -1) {
+    packageName = store.state.packageName;
+  } else if (navigator.userAgent.toLowerCase().indexOf("iphone") > -1) {
+    packageName = store.state.packageName;
   }
+  window.flutter_inappwebview.callHandler('handleInstallBtn', {packageName: packageName})
 };
 
 const gameRun = () => {

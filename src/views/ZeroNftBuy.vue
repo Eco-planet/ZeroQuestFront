@@ -44,7 +44,7 @@
               </div> -->
               <div class="flex justify-between mb-4">
                 <span>Price</span>
-                <span>{{nowNft?.buyPrice1}} {{nowNft?.buySymbol1}} / {{ nowNft?.buyPrice2 }} {{ nowNft?.buySymbol2 }}</span>
+                <span>{{ nowNft?.buyPrice2 }} ESG point</span>
               </div>
             </div>
             <!-- <div class="flex justify-end items-center">
@@ -87,6 +87,8 @@
     <stairs v-else-if="nftId === 2"></stairs>
     <tree v-else-if="nftId === 3"></tree>
     <div class="h-96"></div>
+
+    <nftbuy v-if="isModalOpen" @close-modal="isModalChange"></nftbuy>
   </div>
 </template>
   
@@ -99,6 +101,7 @@ import { nftType } from "@/types/IZeroNftType"
 import recycling from "@/components/common/recycling.vue"
 import stairs from "@/components/common/stairs.vue"
 import tree from "@/components/common/tree.vue"
+import nftbuy from "@/components/Modal/nftBuy.vue"
 
 
 const route = useRoute();
@@ -121,6 +124,7 @@ const buyNftESGP = (nft: nftType) => {
     privateKey: getPk
   }).then((res) => {
     console.log("res", res)
+    isModalOpen.value = true
   }).catch((err) => {
     console.log("err", err)
   })
@@ -158,6 +162,12 @@ function decrease() {
   if (count.value > 0) {
     count.value--;
   }
+}
+
+const isModalOpen = ref(false)
+
+const isModalChange = (buyModalEmit: boolean) => {
+  isModalOpen.value = buyModalEmit
 }
 </script>
 

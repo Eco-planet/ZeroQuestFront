@@ -26,7 +26,11 @@ export default createStore({
     updateEntryInfo:null,
     updateUserVotes:0,
     cardData:[],
+<<<<<<< Updated upstream
     popupValue: 0,
+=======
+    packageName: '',
+>>>>>>> Stashed changes
   },
   getters: {
     logos:state => state.logos,

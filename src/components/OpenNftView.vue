@@ -64,6 +64,7 @@ const updateNftEnable = (type: String) => {
     } else if (navigator.userAgent.toLowerCase().indexOf("iphone") > -1) {
       packageName = nftInfo.value.ios_packagename;
     }
+    store.state.packageName = packageName
 
     window.flutter_inappwebview.callHandler('checkAppInstalled', {packageName:packageName}).then((res:any) => {
       //console.log(JSON.stringify(res));
@@ -72,7 +73,7 @@ const updateNftEnable = (type: String) => {
         emit("updateEnable");
       } else {
         store.state.popupType = 'game_install';
-        store.state.isPopup = true;  
+        store.state.isPopup = true; 
       }
     }).catch(() => {
       store.state.popupType = 'game_install';

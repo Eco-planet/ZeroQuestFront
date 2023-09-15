@@ -15,7 +15,7 @@
       <Carousel :autoplay="3000" :wrap-around="true">
         <Slide v-for="slide in bannerList" :key="slide">
           <div class="carousel__item" style="overflow: hidden">
-            <img :src="slide.url" />
+            <img :src="slide.url" @click="goToLink(slide.link)" />
           </div>
         </Slide>
       </Carousel>
@@ -39,30 +39,6 @@
         <div class="text-lg text-gray-400 mx-4 my-1" @click="goToOnft()">
           more +
         </div>
-
-        <!-- 카카오 공유, 텔레그램 공유 -->
-
-        <!-- 카카오 공유 -->
-        <!-- <button type="button">
-          <a id="kakao-link-btn" @click="shareKakao">
-            <img
-              src="https://www.designdb.com/usr/upload/editor/email/202304132212562023ad50-d888-46ee-8247-12fe63822d4f.png"
-              alt="카카오톡 공유하기"
-              style="width: 70px; height: 70px"
-            />
-          </a>
-        </button> -->
-
-        <!-- 텔레그램 공유 -->
-        <!-- <button type="button" class="sns_btn" @click="shareTelegram">
-          <img
-            src="https://www.cctvnews.co.kr/news/photo/201909/136595_148460_5049.jpg"
-            alt="텔레그램 공유하기"
-            style="width: 70px; height: 70px"
-          />
-        </button> -->
-
-        <!-- 카카오 공유, 텔레그램 공유 이미지 -->
       </div>
     </div>
     <div class="w-full grid grid-cols-3 gap-card">
@@ -115,12 +91,16 @@
         <div class="text-lg text-center">{{ item.name }}</div>
       </div>
     </div>
+    <div class="h-10"></div>
+    
     <div
       class="w-66 h-24 bg-gray-400 flex justify-center items-center mb-5 mt-10 cursor-pointer"
       @click="referPage"
     >
-      <div class="text-2xl">래퍼럴</div>
+      <img src="@/assets/images/fix_banner.jpg" @click="referPage"/>
     </div>
+
+    <div class="h-10"></div>
 
     <div
       class="break-words text-black media-Bottom intro-zeroquest text-center mt-10"
@@ -146,30 +126,6 @@
         쉿! 소문내기까지 하면 추가 보너스도 빵빵합니다.
       </div>
     </div>
-    <!-- <div class="h-16"></div>
-    <div class="text-left">
-      ipsum lorem
-      <div class="text-xl mt-4 font-normal text-gray-500">
-        {{ mainDesc.desc }}
-      </div>
-    </div>
-    <div class="mt-10 grid grid-cols-2 gap-x-8 gap-y-8">
-      <div class="shadow-nft-extra">
-        <div class="w-full h-full relative">
-          <img :src="mainDesc.extra_img1" />
-        </div>
-
-        <div class="p-4 text-xl font-medium text-black">계단오르기 NFT</div>
-      </div>
-      <div class="shadow-nft-extra">
-        <div class="w-full h-full relative">
-          <img :src="mainDesc.extra_img2" />
-        </div>
-        <div class="p-4 text-xl font-medium text-black">
-          AI 기반 재활용품 NFT
-        </div>
-      </div>
-    </div> -->
     <div class="h-40"></div>
   </div>
 </template>
@@ -196,7 +152,6 @@ const balances = ref();
 const tokenInfos = ref();
 const popupTitle = ref("");
 const referralCode = ref(""); //레퍼럴 코드 확인용
-console.log("bannerList", bannerList);
 
 onMounted(() => {
   getMyNftList();
@@ -266,18 +221,6 @@ const updateBalance = () => {
   }
 };
 
-type mainDescType = {
-  desc: string;
-  extra_img1: string;
-  extra_img2: string;
-};
-
-const mainDesc = reactive<mainDescType>({
-  desc: "'Ullamco incididunt nostrud elit fugiat minim veniam. Pariatur officia tempor ipsum veniam est culpa id labore. Et nostrud eiusmod qui esse. Nisi cillum consectetur commodo exercitation labore eiusmod in. Nisi eu esse Lorem ipsum ullamco quis in aliqua id excepteur velit dolor eiusmod consequat.'",
-  extra_img1: require("@/assets/images/thumb/thumb6.png"),
-  extra_img2: require("@/assets/images/thumb/thumb7.png"),
-});
-
 function goToOnft() {
   router.push({
     path: "/onft",
@@ -302,69 +245,15 @@ function goToDetail(idx: number) {
   });
 }
 
+function goToLink(link: string) {
+  router.push({
+    path: link,
+  });
+}
+
 const goNftDetail = (nftId: number) => {
   router.push({ name: "onft-detail", params: { nftId } });
 };
-
-// 소셜 공유하기, 텔레그램
-// const shareTelegram = () => {
-//   const referralValue = referral.value; // Use the computed property
-//   console.log("텔레그램 Referral:", referralValue); // Check the value in the console
-
-//   if (referralValue) {
-//     const text = `ZeroQuest - 친구초대 이벤트 :`;
-//     const url = `http://localhost:8081`;
-//     const referralSlice = referralValue.slice(-6); // Use slice if referralValue is a string
-//     const telegramShareUrl = `https://telegram.me/share/url?url=${encodeURIComponent(
-//       url
-//     )}&text=${encodeURIComponent(text + referralSlice)}`;
-//     window.open(telegramShareUrl);
-//   } else {
-//     console.error("store.state.referral is not defined or is empty");
-//   }
-// };
-
-// 소셜 공유하기, 카카오
-// const shareKakao = () => {
-//   const referralValue = referral.value;
-//   console.log("이게 뭐라고", referralValue);
-
-//   if (referralValue) {
-//     const referralSlice = referralValue.slice(-6); // Calculate referralSlice here
-//     window.Kakao.Link.sendDefault({
-//       objectType: "feed",
-//       content: {
-//         title: "ZeroQuest - 친구초대 이벤트",
-//         description: referralSlice,
-//         imageUrl: "preview_image.png (1000*1000)",
-//         link: {
-//           mobileWebUrl: "http://localhost:8080/",
-//           webUrl: "http://localhost:8080/",
-//         },
-//       },
-//     });
-//   } else {
-//     console.error("store.state.referral is not defined or is empty");
-//   }
-// };
-
-// 레퍼럴 입력 가이드
-// const referralInput = () => {
-//   console.log("레퍼럴 코드는", referralCode.value, typeof referralCode.value);
-//   http
-//     .post(`/api/user/checkReferral`, {
-//       referralCode: referralCode.value,
-//     })
-//     .then((response) => {
-//       console.log("200", response.data);
-//     })
-//     .catch((error) => {
-//       console.error("Error:", error);
-//       if (error.response) {
-//         console.error("Server Response:", error.response.data);
-//       }
-//     });
-// };
 
 function referPage() {
   router.push({

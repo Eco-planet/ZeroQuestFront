@@ -28,7 +28,7 @@ export default {
     googleLoginButton: "LOGIN",
     googleLoginTitle: "Save the Earth with Zero Quest!🌍🎮Reducing your carbon footprint is our game mission!Earn ESG points for every success!Even more fun, points can be redeemed by exchanging them for ESG tokens.From climbing stairs to riding a bike!With ZeroQuest, you can save the planet and fill your pockets!Let’s make the Earth more enjoyable and healthy together!Start right now! Become a hero of Earth with ZeroQuest!🌟🚀Shh! There are plenty of additional bonuses if you spread the word.",
     swapCaution: "Caution",
-    swapCaution1: "You can swap from ESG point 1,000 points or higher.",
+    swapCaution1: "You can swap from ESG point 30,000 points or higher.",
     swapCaution2: "ESG Token's price is based on a 7-day average price for CoinMarketCap.",
     addressCaution1: "We only support the same main net when making a deposit.",
     addressCaution2: "Only matic (polygon mainnet) and ESG (Ethereum) mainnet can be deposited and withdrawn.",
