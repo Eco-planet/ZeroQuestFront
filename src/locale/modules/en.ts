@@ -53,6 +53,7 @@ export default {
     withdrawError4: "Please enter the withdrawal quantity.",
     withdrawError5: "Please enter the withdrawal password",
     withdrawRequestEnd: "Your withdrawal application has been completed.",
+    withdrawRequestValue: "Swap request quantity {value}",
     swapRequestEnd: "The swap request has been completed.",
     agreeTerms: "You can use it only if you agree to the required terms and conditions.",
     termsTitle: "Please accept the terms of service",

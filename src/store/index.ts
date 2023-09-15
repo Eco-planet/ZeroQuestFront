@@ -26,6 +26,7 @@ export default createStore({
     updateEntryInfo:null,
     updateUserVotes:0,
     cardData:[],
+    popupValue: 0,
   },
   getters: {
     logos:state => state.logos,

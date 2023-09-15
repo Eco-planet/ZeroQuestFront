@@ -373,12 +373,13 @@ const sendSwap = () => {
       privateKey: store.getters["auth/getPrivateKey"],
     })
     .then((response) => {
-      swapEsgp.value = 0;
-      swapEsg.value = 0;
-
+      store.state.popupValue = swapEsgp.value;
       store.state.popupType = "message";
       popupTitle.value = "message.swapRequestEnd";
       store.state.isPopup = true;
+
+      swapEsgp.value = 0;
+      swapEsg.value = 0;
     })
     .catch((error) => {
       checkError(error.response.status, error.response.data.errorCode);

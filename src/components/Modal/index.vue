@@ -263,7 +263,11 @@
             <img class="error-icon" src="@/assets/images/icon_error.png" />
           </div>
           <div class="h-10"></div>
-          <div class="text-2xl text-center">{{ t(showTitle) }}</div>
+          <div v-if="showTitle == 'message.swapRequestEnd'" class="text-2xl text-center">
+            <div>{{ t(showTitle) }}</div>
+            <div>({{ t('message.swapRequestValue', { value: store.state.popupValue }) }})</div>
+          </div>
+          <div v-else class="text-2xl text-center">{{ t(showTitle) }}</div>
           <div class="h-10"></div>
           <div v-if="popupType !== 'message'" class="flex justify-center">
             <div><button class="w-36 h-12 font-semibold text-white text-xl rounded close-btn"
@@ -400,6 +404,7 @@ const show = () => {
 };
 
 const hide = () => {
+  store.state.popupValue = 0;
   store.state.popupType = '';
 
   passwd1.value = "";
