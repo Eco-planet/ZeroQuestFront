@@ -19,7 +19,7 @@
 
       <div @click="showLastSixChars"
         class="flex items-center justify-between w-auto p-4 my-10 bg-white border border-black font-semibold text-2xl text-black">
-        <span class="underline referral-code-span">추천인 코드</span>
+        <span class="underline referral-code-span">{{slicedReferralValue}}</span>
         <img class="referral-image" src="../assets/images/refcodeImg.png" alt="Referral Code Image" />
       </div>
 
@@ -206,6 +206,13 @@ const showLastSixChars = () => {
     console.error("referral value is not defined or is empty");
   }
 };
+
+const slicedReferralValue = computed(() => {
+  if (referral.value) {
+    return referral.value.slice(-6);
+  }
+  return "";
+});
 </script>
 
 <style>

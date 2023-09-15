@@ -89,6 +89,11 @@
     <div class="h-96"></div>
 
     <nftbuy v-if="isModalOpen" @close-modal="isModalChange"></nftbuy>
+
+    <Modal
+      :visible="store.state.isPopup"
+      @hide="closeModal"
+    />
   </div>
 </template>
   
@@ -102,6 +107,7 @@ import recycling from "@/components/common/recycling.vue"
 import stairs from "@/components/common/stairs.vue"
 import tree from "@/components/common/tree.vue"
 import nftbuy from "@/components/Modal/nftBuy.vue"
+import Modal from "@/components/Modal/index.vue";
 
 
 const route = useRoute();
@@ -127,6 +133,11 @@ const buyNftESGP = (nft: nftType) => {
     isModalOpen.value = true
   }).catch((err) => {
     console.log("err", err)
+    console.log("err", err.response.data.errorCode)
+    if (err.response.data.errorCode === 505) {
+      store.state.popupType = "message";
+      store.state.isPopup = true;
+    }
   })
 }
 
@@ -169,6 +180,10 @@ const isModalOpen = ref(false)
 const isModalChange = (buyModalEmit: boolean) => {
   isModalOpen.value = buyModalEmit
 }
+
+const closeModal = () => {
+  store.state.isPopup = false;
+};
 </script>
 
 <style lang="scss">
