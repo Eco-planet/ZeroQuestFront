@@ -154,12 +154,15 @@ const shareKakao = () => {
     window.Kakao.Link.sendDefault({
       objectType: "feed",
       content: {
-        title: "ZeroQuest-친구초대 이벤트" + referralSlice + "입력하세요",
+        title: `ZeroQuest-친구초대 이벤트 ${referralSlice}을` + " 입력하세요",
         description: `https://play.google.com/store/apps/details?id=com.aiblue.zrqst_webview_app&pcampaignid=web_share`,
-        imageUrl: "preview_image.png (1000*1000)",
+        //imageUrl: "preview_image.png (1000*1000)",
+        imageUrl:
+          "https://play-lh.googleusercontent.com/VaCMJUHxqjCtqNJ3oKFDdDCZUHdIOu5nZRARVnxSNssiYK6HXZ6JOTcA3vAcLPYfrJI=w240-h480-rw",
+
         link: {
-          mobileWebUrl: "http://localhost:8080/ ",
-          webUrl: "http://localhost:8080/ ",
+          mobileWebUrl: "https://zeroquest.io",
+          webUrl: "https://zeroquest.io",
         },
 
         // serverCallbackArgs: {
