@@ -229,6 +229,22 @@
           </div>
         </template>
         
+        <template v-if="popupType === 'nft_buy'">
+          <div class="flex flex-col justify-center items-center">
+            <div class="h-5"></div>
+            <div class="text-2xl text-center">NFT 를 활성화하기 위해서는<br />{{ nftList[store.state.nftId].name }} App 을<br />설치해야
+              합니다.</div>
+            <div class="h-10"></div>
+            <div class="flex items-center justify-center"><img :src="nftList[store.state.nftId].image" /></div>
+            <div class="h-10"></div>
+            <div class="text-xl text-center">연동되는 어플리케이션은 설치 후 동일한<br />구글 로그인을 사용해야 합니다.</div>
+            <div class="h-10"></div>
+            <div class="w-full flex justify-center items-center">
+              <button class="wp-40 p-2 font-semibold text-2xl text-white game-btn" @click="resData(store.state.nftId.toString())">설치하기</button>
+            </div>
+          </div>
+        </template>
+
         <template v-if="popupType === 'game_install'">
           <div class="flex flex-col justify-center items-center">
             <div class="h-5"></div>
@@ -266,6 +282,9 @@
           <div v-if="showTitle == 'message.swapRequestEnd'" class="text-2xl text-center">
             <div>{{ t(showTitle) }}</div>
             <div>({{ t('message.swapRequestValue', { value: store.state.popupValue }) }})</div>
+          </div>
+          <div v-else-if="showTitle == 'message.getReward'" class="text-2xl text-center">
+            <div>{{ t('message.getReward', { value: store.state.popupValue }) }}</div>
           </div>
           <div v-else class="text-2xl text-center">{{ t(showTitle) }}</div>
           <div class="h-10"></div>

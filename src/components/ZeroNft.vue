@@ -8,7 +8,7 @@
           </div>
           <div class="mt-4 text-xl font-medium text-black">{{ nft.name }}</div>
           <!-- <div class="mt-2 text-lg font-light text-gray-700">0 / </div> -->
-          <div class="text-lg font-light text-gray-400">{{ nft.buyPrice2 }} ESG point</div>
+          <div class="text-lg font-light text-gray-400">{{ Number(nft.buyPrice2).toLocaleString() }} ESG point</div>
         </div>
       </li>
     </ul>

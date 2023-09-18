@@ -20,7 +20,7 @@
     <div class="flex w-full pb-2 items-center justify-between border-b border-gray-400">
       <div class="text-2xl font-semibold">ESG Point</div>
       <div class="flex items-end">
-        <div class="text-3xl font-semibold text-esg-color">{{ getBalances }}</div>
+        <div class="text-3xl font-semibold text-esg-color">{{ esgPoint }}</div>
         <div class="w-1"></div>
         <div class="text-2xl text-gray-400">point</div>
       </div>
@@ -139,6 +139,11 @@
       <img class="sessionImg" src="../assets/images/img_icon_trangle.png" />
     </button>
   </div>
+  <Modal
+    :visible="store.state.isPopup"
+    @hide="closeModal"
+    :title="popupTitle"
+  />
 </template>
 
 <script lang="ts" setup>
@@ -146,10 +151,13 @@ import { ref, computed, onMounted, reactive } from 'vue'
 import router from "@/router"
 import voting from "@/components/Modal/VoteBtn.vue"
 import completedVote from "@/components/Modal/completedVote.vue"
+import Modal from "@/components/Modal/index.vue";
 import http from "@/api/http"
 import { useStore } from "vuex"
 
 const store = useStore()
+
+const popupTitle = ref("");
 
 const userVote = computed(() => Number(store.getters["auth/getUserVote"]))
 const battleCardData = computed(()=> store.getters.cardData)
@@ -180,6 +188,7 @@ const recentSessionCard = reactive({
 const isLoading = ref(true)
 
 onMounted(() => {
+  updateBalance()
   isLoading.value = true
   battleSession()
 })
@@ -197,8 +206,9 @@ const battleSession = () => {
       isLoading.value = false
     })
     .catch((error) => {
-      alert(error)
-
+      store.state.popupType = "message";
+      popupTitle.value = "error.commingSoon";
+      store.state.isPopup = true;
     })
 }
 
@@ -208,7 +218,19 @@ const date = (dateString) => {
 }
 
 //esgp
-const getBalances = store.getters["auth/getBalances"].ESGP.balance
+const esgPoint = ref("");
+const balances = ref();
+
+const updateBalance = () => {
+  balances.value = store.getters["auth/getBalances"];
+
+  for (const key in balances.value) {
+    if (balances.value[key].symbol === "ESGP") {
+      const balance = parseFloat(balances.value[key].balance);
+      esgPoint.value = balance.toLocaleString();
+    }
+  }
+};
 
 //default sorting
 const sortBtn = ref("Vote")
@@ -254,6 +276,10 @@ const isModalChange = (voteModalEmit: boolean) => {
 const modalChange = (voteModalEmit: boolean) => {
   modalOpen.value = voteModalEmit
 }
+
+const closeModal = () => {
+  store.state.isPopup = false;
+};
 
 // router
 const myEntry = () => {

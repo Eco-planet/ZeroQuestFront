@@ -55,6 +55,7 @@ export default {
     withdrawRequestEnd: "Your withdrawal application has been completed.",
     withdrawRequestValue: "Swap request quantity {value}",
     swapRequestEnd: "The swap request has been completed.",
+    notEnoughPoints: "ESG point가 부족합니다.",
     agreeTerms: "You can use it only if you agree to the required terms and conditions.",
     termsTitle: "Please accept the terms of service",
     termsAgreeAll: "We all agree.",

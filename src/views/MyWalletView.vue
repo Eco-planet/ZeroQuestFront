@@ -157,7 +157,7 @@ import { errorMsg } from "@/utils/util";
 
 const { t } = useI18n();
 
-const esgPoint = ref(0);
+const esgPoint = ref("");
 const balances = ref();
 const tokenInfos = ref();
 const withdrawSymbol = ref("");
@@ -216,7 +216,8 @@ const updateBalance = () => {
 
   for (const key in balances.value) {
     if (balances.value[key].symbol === "ESGP") {
-      esgPoint.value = balances.value[key].balance;
+      const balance = parseFloat(balances.value[key].balance);
+      esgPoint.value = balance.toLocaleString();
     }
   }
 };
@@ -358,6 +359,9 @@ const getSwapInfo = () => {
       })
       .catch((error) => {
         checkError(error.response.status, error.response.data.errorCode);
+        store.state.popupType = "message";
+        popupTitle.value = "error.notEnoughMoney";
+        store.state.isPopup = true;
       });
   }
 };
