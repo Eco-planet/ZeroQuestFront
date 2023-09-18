@@ -2,7 +2,9 @@
   <div class="referral-contens-area">
     <div class="w-full flex justify-center">
       <!-- 추가된 부분: div를 중앙 정렬하기 위해 flex와 justify-center를 사용합니다. -->
-      <div class="mb-10 pl-10 flex items-center justify-center w-7/10 p-4 rounded-2xl font-semibold text-4xl text-black refBtn">
+      <div
+        class="mb-10 pl-10 flex items-center justify-center w-7/10 p-4 rounded-2xl font-semibold text-4xl text-black refBtn"
+      >
         지구 지키기 소확행 🌎🌟
       </div>
     </div>
@@ -17,10 +19,18 @@
         <span> 지급</span>
       </p>
 
-      <div @click="showLastSixChars"
-        class="flex items-center justify-between w-auto p-4 my-10 bg-white border border-black font-semibold text-2xl text-black">
-        <span class="underline referral-code-span">{{slicedReferralValue}}</span>
-        <img class="referral-image" src="../assets/images/refcodeImg.png" alt="Referral Code Image" />
+      <div
+        @click="showLastSixChars"
+        class="flex items-center justify-between w-auto p-4 my-10 bg-white border border-black font-semibold text-2xl text-black"
+      >
+        <span class="underline referral-code-span">{{
+          slicedReferralValue
+        }}</span>
+        <img
+          class="referral-image"
+          src="../assets/images/refcodeImg.png"
+          alt="Referral Code Image"
+        />
       </div>
 
       <p class="tit">소문내기만 해도</p>
@@ -33,7 +43,10 @@
         <!-- 카카오 공유 -->
         <button type="button">
           <a id="kakao-link-btn" @click="shareKakao">
-            <img src="./../assets/images/kakao_logo.png" alt="카카오톡 공유하기" />
+            <img
+              src="./../assets/images/kakao_logo.png"
+              alt="카카오톡 공유하기"
+            />
           </a>
         </button>
 
@@ -68,16 +81,22 @@
           </span>
         </div>
 
-        <div class="flex flex-col items-center justify-center space-y-10 mt-5 mb-10">
-          <input type="text" placeholder="추천인 코드 입력란" class="px-10 py-4 text-center border border-black border-b-2"
-            v-model="referralCode" />
+        <div
+          class="flex flex-col items-center justify-center space-y-10 mt-5 mb-10"
+        >
+          <input
+            type="text"
+            placeholder="추천인 코드 입력란"
+            class="px-10 py-4 text-center border border-black border-b-2"
+            v-model="referralCode"
+          />
         </div>
 
         <button
           @click="referralInput"
           class="w-36 py-2 text-white font-medium border rounded-full text-xl refBtn"
         >
-        확인
+          확인
         </button>
       </div>
     </div>
@@ -245,14 +264,14 @@ const slicedReferralValue = computed(() => {
   /* 이미지와 텍스트 사이의 간격 조절 */
 }
 
-.referral-container>.tit {
+.referral-container > .tit {
   font-weight: 600;
   font-size: 26px;
   line-height: 36px;
   color: #000;
 }
 
-.referral-container>.tit-bold {
+.referral-container > .tit-bold {
   font-weight: 600;
   font-size: 30px;
   line-height: 36px;
@@ -260,8 +279,7 @@ const slicedReferralValue = computed(() => {
 }
 
 .refBtn {
-  background-color:  #70ad47;
-
+  background-color: #70ad47;
 }
 
 @media only screen and (max-width: 1024px) {
@@ -281,22 +299,22 @@ const slicedReferralValue = computed(() => {
     height: 9.7222vw;
   }
 
-  .referral-container>.tit {
+  .referral-container > .tit {
     font-size: 3.6111vw;
     line-height: 5vw;
   }
 
-  .referral-container>.tit-bold {
+  .referral-container > .tit-bold {
     font-size: 4vw;
     line-height: 5vw;
   }
 
-  .referral-container>.tit-bold>span:nth-child(1) {
+  .referral-container > .tit-bold > span:nth-child(1) {
     font-weight: 600;
     color: #70ad47;
   }
 
-  .referral-container>.tit-bold>span:nth-child(2) {
+  .referral-container > .tit-bold > span:nth-child(2) {
     font-weight: 600;
   }
 }
