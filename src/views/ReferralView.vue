@@ -177,23 +177,6 @@ const shareKakao = () => {
 
 // 레퍼럴 입력 가이드
 
-// const referralInput = () => {
-//   console.log("레퍼럴 코드는", referralCode.value, typeof referralCode.value);
-//   http
-//     .post(`/api/user/checkReferral`, {
-//       referralCode: referralCode.value,
-//     })
-//     .then((response) => {
-//       console.log("200", response.data);
-//     })
-//     .catch((error) => {
-//       console.error("Error:", error);
-//       if (error.response) {
-//         console.error("Server Response:", error.response.data);
-//       }
-//     });
-// };
-
 const referralInput = () => {
   const userReferralSlice = referral.value.slice(-6);
 
@@ -205,7 +188,7 @@ const referralInput = () => {
   console.log("레퍼럴 코드는", referralCode.value, typeof referralCode.value);
 
   http
-    .post(`/api/user/checkReferral`, {
+    .post(`/api/user/sendReferral `, {
       referralCode: referralCode.value,
     })
     .then((response) => {
