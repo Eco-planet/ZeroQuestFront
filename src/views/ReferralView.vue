@@ -166,7 +166,7 @@ const shareKakao = () => {
         },
 
         // serverCallbackArgs: {
-        //   key: `{"current": "${mobileWebUrl}"}`, // 사용자 정의 파라미터 설정
+        //   key: `{"key": "${mobileWebUrl}"}`, // 사용자 정의 파라미터 설정
         // },
       },
     });
@@ -175,8 +175,7 @@ const shareKakao = () => {
   }
 };
 
-// 레퍼럴 입력 가이드
-
+// 레퍼럴 입력 가이드 (checkReferral, sendReferral)
 const referralInput = () => {
   const userReferralSlice = referral.value.slice(-6);
 
@@ -184,20 +183,23 @@ const referralInput = () => {
     alert("본인의 추천인 코드 마지막 6자리는 입력할 수 없습니다.");
     return;
   }
-
   console.log("레퍼럴 코드는", referralCode.value, typeof referralCode.value);
-
   http
-    .post(`/api/user/sendReferral `, {
+    .post(`/api/user/checkReferral`, {
       referralCode: referralCode.value,
     })
     .then((response) => {
-      console.log("200", response.data);
+      console.log("checkReferral Response:", response.data);
+      // checkReferral이 성공적일 때 sendReferral 호출
+      return http.post(`/api/user/sendReferral`, {
+        referralCode: referralCode.value,
+      });
+    })
+    .then((response) => {
+      console.log("sendReferral Response:", response.data);
     })
     .catch((error) => {
       console.error("Error:", error);
-
-      // 오류 발생시 해당 메시지를 표시
       alert("입력한 코드는 존재하지 않는 레퍼럴 코드입니다.");
     });
 };
