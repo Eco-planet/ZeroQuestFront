@@ -68,6 +68,7 @@ export default {
     agreeBtn: "동의",
     nftReward: "NFT 리워드",
     rewardBtn: "보상",
+    getReward: "{value} 포인트 환전 완료"
   },
 
   error: {
@@ -84,6 +85,10 @@ export default {
     notSupportSwap: "지원되지 않는 스왑 코인입니다.",
     lessMiniumCostSwap: "스왑수량이 최소수량보다 작습니다.",
     failedPointSwap: "포인트 스왑에 실패했습니다.",
+    commingSoon: "준비중 입니다.",
+    notActivated: "NFT가 비활성화 상태 입니다.",
+    notReward: "보상 받을 포인트가 없습니다.",
     notFoundFlutter: "Not Found 'flutter_inappwebview'",
+    notEnoughPoints: "ESG point가 부족합니다.",
    },
 };

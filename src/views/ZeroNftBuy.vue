@@ -44,7 +44,7 @@
               </div> -->
               <div class="flex justify-between mb-4">
                 <span>Price</span>
-                <span>{{ nowNft?.buyPrice2 }} ESG point</span>
+                <span>{{ Number(nowNft?.buyPrice2).toLocaleString() }} ESG point</span>
               </div>
             </div>
             <!-- <div class="flex justify-end items-center">
@@ -93,6 +93,7 @@
     <Modal
       :visible="store.state.isPopup"
       @hide="closeModal"
+      :title="popupTitle"
     />
   </div>
 </template>
@@ -119,6 +120,7 @@ console.log("nowNft",nowNft)
 const getPk = store.getters["auth/getPrivateKey"]
 const getAddress = store.getters["auth/getAddress"]
 const getBalances = store.getters["auth/getBalances"].ESGP.balance
+const popupTitle = ref("");
 
 const buyNftESGP = (nft: nftType) => {
   http.post("/api/nft/buyNft", {
@@ -136,6 +138,7 @@ const buyNftESGP = (nft: nftType) => {
     console.log("err", err.response.data.errorCode)
     if (err.response.data.errorCode === 505) {
       store.state.popupType = "message";
+      popupTitle.value = "error.notEnoughPoints";
       store.state.isPopup = true;
     }
   })

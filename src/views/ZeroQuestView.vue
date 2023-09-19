@@ -147,7 +147,7 @@ const referral = computed(() => vuexStore.getters["auth/getReferral"]);
 const bannerList = store.getters["auth/getBannerList"];
 const nftList = store.getters["auth/getNftList"];
 const myNftList = ref<nftType>();
-const esgPoint = ref(0);
+const esgPoint = ref("");
 const balances = ref();
 const tokenInfos = ref();
 const popupTitle = ref("");
@@ -216,7 +216,8 @@ const updateBalance = () => {
 
   for (const key in balances.value) {
     if (balances.value[key].symbol === "ESGP") {
-      esgPoint.value = balances.value[key].balance;
+      const balance = parseFloat(balances.value[key].balance);
+      esgPoint.value = balance.toLocaleString();
     }
   }
 };

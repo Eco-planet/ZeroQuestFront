@@ -7,9 +7,10 @@
     <div class="h-10"></div>
     <div class="px-2 w-full flex justify-between text-2xl">
       <div class="font-semibold">ESG Point</div>
-      <div>
-        <span class="font-semibold esgPoint">{{ esgPoint }}</span>
-        <span class="text-gray-500">point</span>
+      <div class="flex items-end">
+        <span class="text-3xl font-semibold esgPoint">{{ esgPoint }}</span>
+        <div class="w-1"></div>
+        <span class="text-2xl text-gray-400">point</span>
       </div>
     </div>
     <div class="h-3"></div>
@@ -40,7 +41,7 @@
       <template v-if="questRewards !== undefined && questRewards !== null && Object.keys(questRewards).length > 0">
         <div class="px-0 w-full flex justify-between items-center text-2xl">
           <div class="font-semibold">{{ t("message.nftReward") }}</div>
-          <!-- <div class="px-5 nftOn" @click="exchangeReward">{{ t("message.rewardBtn") }}</div> -->
+          <div class="px-5 nftOn" @click="exchangeReward">{{ t("message.rewardBtn") }}</div>
         </div>
         <div class="h-5"></div>
         <div class="h-px h-5 bg-gray-200"></div>
@@ -78,7 +79,7 @@
 
   <div class="h-20"></div>
   <div class="h-20"></div>
-  <Modal :visible="store.state.isPopup" @hide="closeModal" @resData="checkData" />
+  <Modal :visible="store.state.isPopup" @hide="closeModal" @resData="checkData" :title="popupTitle"/>
 </template>
 
 <script lang="ts" setup>
@@ -93,11 +94,12 @@ import tree from "@/components/common/tree.vue"
 
 const nftList = store.getters["auth/getNftList"];
 const nftDetail = ref();
-const esgPoint = ref(0);
+const esgPoint = ref("");
 const nftId = Number(router.currentRoute.value.params.nftId);
 const tokenId = Number(router.currentRoute.value.params.tokenId);
 const nftInfo = nftList[nftId];
 const questRewards = ref();
+const popupTitle = ref("");
 
 const { t } = useI18n();
 
@@ -126,7 +128,8 @@ const getEsgpBalance = () => {
     }
   })
     .then((response) => {
-      esgPoint.value = response.data.data.balance;
+      const balance = parseFloat(response.data.data.balance);
+      esgPoint.value = balance.toLocaleString()
     })
 };
 
@@ -156,10 +159,22 @@ const exchangeReward = () => {
   })
     .then((response) => {
       console.log(response);
-      alert("포인트 환전 성공")
+      if (response.data.data.reward === 0) {
+        store.state.popupType = "message";
+        popupTitle.value = "error.notReward";
+        store.state.isPopup = true;
+      } else {
+        console.log("response.data.data.reward", response.data.data.reward)
+        store.state.popupValue = response.data.data.reward;
+        store.state.popupType = "message";
+        popupTitle.value = "message.getReward";
+        store.state.isPopup = true;
+      }
     })
     .catch(() => {
-      console.log('err');
+      store.state.popupType = "message";
+      popupTitle.value = "error.notActivated";
+      store.state.isPopup = true;
     })
 }
 
