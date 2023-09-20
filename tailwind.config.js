@@ -9,7 +9,11 @@ module.exports = {
   //purge: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      backgroundColor: {
+        "custom-green": "#70AD47",
+      },
+    },
   },
   plugins: [require("flowbite/plugin")],
 };
