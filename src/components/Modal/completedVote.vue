@@ -8,7 +8,7 @@
           <div class="bg-white px-4 pb-4">
             <div>
               <div class="text-center">
-                <h3 class="mt-4 font-semibold voteText" id="modal-title">you have already voted</h3>
+                <h3 class="mt-4 font-semibold voteText" id="modal-title">{{t('message.battleVoteMessage')}}</h3>
                 <!--  -->
               </div>
             </div>
@@ -41,6 +41,9 @@
 </template>
 
 <script lang="ts" setup>
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 const emit = defineEmits(['closeModal'])
 

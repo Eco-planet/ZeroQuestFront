@@ -50,9 +50,9 @@
           <table>
             <thead>
               <tr>
-                <th>날짜</th>
-                <th>시간</th>
-                <th>리워드</th>
+                <th>{{ t("message.date") }}</th>
+                <th>{{ t("message.time") }}</th>
+                <th>{{ t("message.reward") }}</th>
               </tr>
             </thead>
             <tbody>

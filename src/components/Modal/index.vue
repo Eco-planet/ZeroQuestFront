@@ -164,7 +164,7 @@
             <div class="p-3 flex justify-center items-center pass-bg rounded" @click="doSendCoin">
               <div class="p-2 text-2xl text-white px-7">{{ t('message.withdrawBtnRegister') }}</div>
             </div>
-            <div class="pt-4 font-semibold underline text-lg" @click="openResetPW">비밀번호를 잊어버리셨습니까?</div>
+            <div class="pt-4 font-semibold underline text-lg" @click="openResetPW">{{ t('message.forgetPassword') }}</div>
           </div>
         </template>
 
@@ -173,13 +173,20 @@
             <div class="bg-white px-4 pb-4">
     
               <div class="mb-10 text-center">
-                <h3 class="mt-4 font-semibold text-black voteText text-2xl" id="modal-title">출금 비밀번호 초기화 <br>
-                  Google 인증</h3>
+                <h3 class="mt-4 font-semibold text-black voteText text-2xl" id="modal-title">{{ t('message.resetPassword') }} <br>
+                  {{ t('message.GoogleAuthentication') }}</h3>
               </div>
-              <div class="py-3 px-10 bg-gray-100 rounded-lg font-medium text-xl">인증코드 요청 시<br>
-                현재 로그인 된 구글 메일로 <br>
-                임의로 생성된 인증번호를 전송합니다.
+              <div>
+                <div v-if="locale === 'kr'" class="py-3 px-10 bg-gray-100 rounded-lg font-medium text-xl">인증코드 요청 시<br>
+                  현재 로그인 된 구글 메일로 <br>
+                  임의로 생성된 인증번호를 전송합니다.
+                </div>
+                <div v-else class="py-3 px-10 bg-gray-100 rounded-lg font-medium text-xl">When requesting an authentication code,
+                  a randomly generated verification number 
+                  will be sent to the currently logged-in Google email.
+                </div>
               </div>
+         
               <button 
               type="button" 
               class="
@@ -201,10 +208,10 @@
               "
               @click="codeRequest"
               >
-              인증번호 요청
+              {{ t('message.VerificationCodeRequest') }}
               </button>
-              <div class="font-medium text-xl">인증번호를 빈 칸에 입력하세요</div>
-              <input type="text" v-model.trim="certificationNumber" class="mt-4 border-solid border-gray-300 wp-70" placeholder="인증번호 입력">
+              <div class="font-medium text-xl">{{ t('message.EnterCode') }}</div>
+              <input type="text" v-model.trim="certificationNumber" class="mt-4 border-solid border-gray-300 wp-70" :placeholder="t('message.EnterVerificationCode')">
               <button type="button" 
               class="
               moduleBtnBg
@@ -223,7 +230,7 @@
               text-center"
               @click="resetRequest"
               >
-              완료
+              {{ t("message.Complete") }}
               </button>
             </div>
           </div>
@@ -315,6 +322,8 @@ import openSSLCrypto from "@/utils/openSSLCrypto";
 import { useStore } from "vuex"
 
 const store = useStore()
+
+const locale = computed(() => store.state.system.locale)
 
 const { t } = useI18n();
 
@@ -485,9 +494,9 @@ const doPass = () => {
 
 const requestUpdatePW = () => {
   if (updatePW1.value.length < 6 || updatePW2.value.length < 6) {
-    alert("6자리 이상으로 입력해주세요.")
+    alert(t('message.WithdrawalPasswordCheck1'))
   } else if (updatePW1.value !== updatePW2.value) {
-    alert("패스워드가 일치하지 않습니다.")
+    alert(t('message.WithdrawalPasswordCheck2'))
   } else {
     //해쉬, 변경비번, 인증번호 넘겨줘야됨
     //pwHash.pwNumber
@@ -499,7 +508,7 @@ const requestUpdatePW = () => {
     })
     .then((response) => {
       if(response.data.data === true){
-        alert("출금비밀번호 변경이 완료되었습니다")
+        alert(t('message.WithdrawalPasswordCheck3'))
         store.state.isPopup = false;                   
       }
     })
@@ -541,7 +550,7 @@ const codeRequest = () => {
   http.post("/auth/signStart",{ email: userEmail.value })
     .then((response) => {
       md5Hash.value = response.data.data
-      alert("인증코드가 전송되었습니다")
+      alert(t('message.codeTransmissionCompleted'))
   })
   .catch((error) => {
     alert(error)

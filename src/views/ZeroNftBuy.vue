@@ -9,7 +9,7 @@
     <div class="flex w-full pb-2 items-center justify-between border-b border-gray-400">
       <div class="text-2xl font-semibold">ESG Point</div>
       <div class="flex items-end">
-        <div class="text-3xl font-semibold text-esg-color">{{ getBalances }}</div>
+        <div class="text-3xl font-semibold text-esg-color">{{ esgPoint }}</div>
         <div class="w-1"></div>
         <div class="text-2xl text-gray-400">point</div>
       </div>
@@ -120,7 +120,25 @@ console.log("nowNft",nowNft)
 const getPk = store.getters["auth/getPrivateKey"]
 const getAddress = store.getters["auth/getAddress"]
 const getBalances = store.getters["auth/getBalances"].ESGP.balance
+const esgPoint = ref("");
+const balances = ref();
 const popupTitle = ref("");
+
+onMounted(() => {
+  updateBalance();
+});
+
+const updateBalance = () => {
+  balances.value = store.getters["auth/getBalances"];
+
+  for (const key in balances.value) {
+    if (balances.value[key].symbol === "ESGP") {
+      const balance = parseFloat(balances.value[key].balance);
+      esgPoint.value = balance.toLocaleString();
+    }
+  }
+};
+
 
 const buyNftESGP = (nft: nftType) => {
   http.post("/api/nft/buyNft", {

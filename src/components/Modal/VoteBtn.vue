@@ -20,7 +20,7 @@
                   <div class="flex flex-col justify-between p-7"> 
                     <div class="text-center" v-if="checkModal">
                       <span class="mr-2 font-medium voteText">Do you want to vote for</span>
-                      <span class="font-semibold text-green-600 checkText">Teteru bear?</span>
+                      <span class="font-semibold text-green-600 checkText">This Session?</span>
                     </div>
                     <div class="text-center" v-else> 
                       <span class="font-semibold voteText">Voting Success! </span>
@@ -124,8 +124,6 @@ const checkModal = ref(true)
 //ui버튼을 ok로 바꿔줌
 
 const isCheckModal = () => {
-  console.log("vote클릭")
-
   http.post(`/api/battle/vote/${ props.voteIdx }`)
   .then((response) => {
     const remainingVotes = response.data.data.vote
