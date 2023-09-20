@@ -16,6 +16,7 @@ export default {
     status: "Status",
     congratulations: "Congratulations",
     loading: "Loading",
+    participateChannels: "Participate in official channels"
   },
 
   route: {
@@ -83,7 +84,6 @@ export default {
     withdrawRequestEnd: "Your withdrawal application has been completed.",
     withdrawRequestValue: "Swap request quantity {value}",
     swapRequestEnd: "The swap request has been completed.",
-    notEnoughPoints: "ESG point가 부족합니다.",
     agreeTerms: "You can use it only if you agree to the required terms and conditions.",
     termsTitle: "Please accept the terms of service",
     termsAgreeAll: "We all agree.",
@@ -98,8 +98,9 @@ export default {
     rewardBtn: "reward",
     date:"date",
     time:"time",
-    reward:"reward"
-
+    reward:"reward",
+    buyWithPoint: "Purchase with ESG points",
+    ChargingPoint: "ESG Point charging"
    },
 
    error: {
@@ -117,5 +118,6 @@ export default {
     lessMiniumCostSwap: "Swap quantity is less than minimum quantity.",
     failedPointSwap: "Point swap failed.",
     notFoundFlutter: "Not Found 'flutter_inappwebview'",
+    notEnoughPoints: "ESG points are lacking.",
   },
 };

@@ -237,18 +237,47 @@
         </template>
         
         <template v-if="popupType === 'duplicate_nft_buy'">
-          <div class="flex flex-col justify-center items-center">
-            <div class="h-5"></div>
-            <div class="text-2xl text-center">NFT 를 활성화하기 위해서는<br />{{ nftList[store.state.nftId].name }} App 을<br />설치해야
-              합니다.</div>
-            <div class="h-10"></div>
-            <div class="flex items-center justify-center"><img :src="nftList[store.state.nftId].image" /></div>
-            <div class="h-10"></div>
-            <div class="text-xl text-center">연동되는 어플리케이션은 설치 후 동일한<br />구글 로그인을 사용해야 합니다.</div>
-            <div class="h-10"></div>
-            <div class="w-full flex justify-center items-center">
-              <button class="wp-40 p-2 font-semibold text-2xl text-white game-btn" @click="resData(store.state.nftId.toString())">설치하기</button>
+          <div >
+            <div v-if="locale ==='kr'" class="mb-16 text-3xl font-bold text-black">
+              자발적 탄소감축을 위한 <br/>
+              NFT는 반복 구매할 수 없습니다.
             </div>
+            <div v-else class="mb-16 text-3xl font-bold text-black">
+              Voluntary carbon reduction <br/>
+              NFTs cannot be purchased repeatedly.
+            </div>
+          </div>
+         
+          <div>
+            <div v-if="locale === 'kr'" class="font-semibold text-xl text-black text-2xl">
+              자발적 탄소감축 "제로퀘스트"를 <br/>
+              친구들에게 추천하면<br/>
+              <span class="text-esg-color font-bold">50ESG point</span> 를 드립니다
+            </div>
+            <div v-else class="font-semibold text-xl text-black text-2xl">
+              If you refer 'ZeroQuest' to friends, <br/>
+              you'll earn<br/>
+              <span class="text-esg-color font-bold">50ESG points</span>
+            </div>
+          </div>
+
+       
+    
+          <div class="mt-7 mb-4">
+            <!-- 카카오 공유 -->
+            <button type="button">
+              <a id="kakao-link-btn" @click="shareKakao">
+                <img
+                  src="@/assets/images/kakao_logo.png"
+                  alt="카카오톡 공유하기"
+                />
+              </a>
+            </button>
+    
+            <!-- 텔레그램 공유 -->
+            <button type="button" class="sns_btn" @click="shareTelegram">
+              <img src="@/assets/images/telog.png" alt="텔레그램 공유하기" />
+            </button>
           </div>
         </template>
 
@@ -335,6 +364,7 @@ import http from "@/api/http";
 import CryptoJS from "crypto";
 import openSSLCrypto from "@/utils/openSSLCrypto";
 import { useStore } from "vuex"
+import "vue3-carousel/dist/carousel.css";
 
 const store = useStore()
 
@@ -408,6 +438,9 @@ const userEmail = computed(() => store.getters["auth/getUserEmail"])
 
 const certificationNumber = ref()
 const md5Hash = ref()
+
+const referral = computed(() => store.getters["auth/getReferral"]);
+const referralCode = ref(""); //레퍼럴 코드 확인용
 
 watch(visible, (val) => {
   if (val) {
@@ -602,6 +635,124 @@ const resetRequest = () => {
     })
   }
 }
+
+
+// 소셜 공유하기, 텔레그램
+
+const shareTelegram = () => {
+  const referralValue = referral.value;
+
+  if (referralValue) {
+    const text = `ZeroQuest - 친구초대 이벤트 :`;
+    const url = `https://play.google.com/store/apps/details?id=com.aiblue.zrqst_webview_app`;
+    const referralSlice = referralValue.slice(-6); // Use slice if referralValue is a string
+    const telegramShareUrl = `https://telegram.me/share/url?url=${encodeURIComponent(
+      url
+    )}  &text=${encodeURIComponent(text + referralSlice)}`;
+    // window.open(telegramShareUrl);
+    window.flutter_inappwebview.callHandler('handleTelegramShareBtn', {infoShareTelegram: telegramShareUrl}).then((res: any) => {
+      console.log(res)
+    })
+    // Assuming that you want to send the referral after sharing on Telegram
+    if (window.confirm("텔레그램으로 친구 공유합니다")) {
+      sendReferralRequest(referralValue)
+        .then((response) => {
+          console.log("sendReferral Response:", response.data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
+  } else {
+    console.error("store.state.referral is not defined or is empty");
+  }
+};
+const sendReferralRequest = (code) => {
+  return http.post(`/api/user/sendReferral`, {
+    referralCode: code,
+  });
+};
+
+// 소셜 공유하기, 카카오
+const shareKakao = () => {
+  const referralValue = referral.value;
+  if (referralValue) {
+    const referralSlice = referralValue.slice(-6);
+    const infoShareKakao = {
+      objectType: "feed",
+      content: {
+        title: `ZeroQuest-친구초대 이벤트 ${referralSlice}을 입력하세요`,
+        description: `https://play.google.com/store/apps/details?id=com.aiblue.zrqst_webview_app&pcampaignid=web_share`,
+        imageUrl:
+          "https://play-lh.googleusercontent.com/VaCMJUHxqjCtqNJ3oKFDdDCZUHdIOu5nZRARVnxSNssiYK6HXZ6JOTcA3vAcLPYfrJI=w240-h480-rw",
+        link: {
+          mobileWebUrl: `https://zeroquest.io`, 
+          webUrl: `https://zeroquest.io`,
+        },
+      },
+    }
+
+    // 모바일 버전
+    window.flutter_inappwebview.callHandler('handleKakaoShareBtn', {infoShareKakao: infoShareKakao}).then((res: any) => {
+      console.log(res)
+    })
+
+    // 여기서 api/user/sendReferral 호출하기
+    sendReferralRequest(referralValue)
+      .then((response) => {
+        console.log("sendReferral Response:", response.data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  } else {
+    console.error("store.state.referral is not defined or is empty");
+  }
+};
+
+// 레퍼럴 입력 가이드 (sendReferral)
+const referralInput = () => {
+  const userReferralSlice = referral.value.slice(-6);
+
+  if (referralCode.value === userReferralSlice) {
+    alert("본인의 추천인 코드 마지막 6자리는 입력할 수 없습니다.");
+    return;
+  }
+
+  console.log("레퍼럴 코드는", referralCode.value, typeof referralCode.value);
+
+  http
+    .post(`/api/user/checkReferral`, {
+      referralCode: referralCode.value,
+    })
+    .then((response) => {
+      console.log("200", response.data);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      alert("이미 등록된 레퍼럴 코드입니다.");
+      // 오류 발생시 해당 메시지를 표시
+      alert("입력한 코드는 존재하지 않는 레퍼럴 코드입니다.");
+    });
+};
+
+const showLastSixChars = () => {
+  const referralValue = referral.value;
+  if (referralValue) {
+    const slicedValue = referralValue.slice(-6);
+
+    // 클립보드에 slicedValue를 복사
+    navigator.clipboard
+      .writeText(slicedValue)
+      .then(() => {
+        alert(slicedValue + "은 추천인 코드입니다."); // 뒷부분 6자리를 알림창으로 표시.
+        alert("추천인 코드가 클립보드에 복사되었습니다.");
+      })
+      .catch((err) => {
+        console.error("Could not copy text: ", err);
+      });
+  }
+};
 
 </script>
 

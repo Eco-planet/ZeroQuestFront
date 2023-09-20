@@ -28,7 +28,7 @@
       <div class="h-10"></div>
       <div class="text-2xl font-semibold">About</div>
       <div class="h-3"></div>
-      <div class="text-2xl w-full flex" :class="{ select: $route.name === 'about' }" @click="movePage('/about')">
+      <div class="text-2xl w-full flex" :class="{ select: $route.name === 'introduction' }" @click="movePage('/introduction')">
         <div class="wp-50 flex justify-start">About ZeroQuest</div>
         <div class="wp-50 flex justify-end menu-right">→</div>
       </div>
@@ -38,12 +38,8 @@
         <div class="wp-50 flex justify-end menu-right">→</div>
       </div>
       <div class="h-3"></div>
-      <div class="text-2xl w-full flex" :class="{ select: $route.name === 'introduction' }" @click="movePage('/introduction')">
-        <div class="wp-50 flex justify-start"> Introduction</div>
-        <div class="wp-50 flex justify-end menu-right">→</div>
-      </div>
       <div class="h-10"></div>
-      <div class="text-2xl font-semibold">공식 채널 참여</div>
+      <div class="text-2xl font-semibold">{{ t("common.participateChannels") }}</div>
       <div class="h-3"></div>
       <div class="social-area wp-70 grid grid-cols-5 gap-2">
         <a v-for="logo in logos" :key="logo.id" :class="logo.name" class="snsImg" :href="logo.href">
@@ -61,10 +57,11 @@
 import router from "@/router";
 import store from "@/store";
 import { ref , computed} from "vue";
+import { useI18n } from "vue-i18n";
 import Modal from "@/components/Modal/index.vue";
 import Dropdown from './Dropdown.vue';
 
-
+const { t } = useI18n();
 
 const logos = computed(()=>store.getters.logos);
 

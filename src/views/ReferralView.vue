@@ -162,7 +162,10 @@ const shareTelegram = () => {
     const telegramShareUrl = `https://telegram.me/share/url?url=${encodeURIComponent(
       url
     )}  &text=${encodeURIComponent(text + referralSlice)}`;
-    window.open(telegramShareUrl);
+    // window.open(telegramShareUrl);
+    window.flutter_inappwebview.callHandler('handleTelegramShareBtn', {infoShareTelegram: telegramShareUrl}).then((res: any) => {
+      console.log(res)
+    })
     // Assuming that you want to send the referral after sharing on Telegram
     if (window.confirm("텔레그램으로 친구 공유합니다")) {
       sendReferralRequest(referralValue)
@@ -188,7 +191,7 @@ const shareKakao = () => {
   const referralValue = referral.value;
   if (referralValue) {
     const referralSlice = referralValue.slice(-6);
-    window.Kakao.Link.sendDefault({
+    const infoShareKakao = {
       objectType: "feed",
       content: {
         title: `ZeroQuest-친구초대 이벤트 ${referralSlice}을 입력하세요`,
@@ -196,13 +199,33 @@ const shareKakao = () => {
         imageUrl:
           "https://play-lh.googleusercontent.com/VaCMJUHxqjCtqNJ3oKFDdDCZUHdIOu5nZRARVnxSNssiYK6HXZ6JOTcA3vAcLPYfrJI=w240-h480-rw",
         link: {
-          mobileWebUrl: `dev-zqbackend.eco-esgtest.io`,
-          webUrl: `dev-zqbackend.eco-esgtest.io`,
+          mobileWebUrl: `https://zeroquest.io`, 
+          webUrl: `https://zeroquest.io`,
         },
-        // serverCallbackArgs: { callback: "/api/test" },
-        // serverCallbackArgs: '{"key":"value"}',
       },
-    });
+    }
+
+    // 모바일 버전
+    window.flutter_inappwebview.callHandler('handleKakaoShareBtn', {infoShareKakao: infoShareKakao}).then((res: any) => {
+      console.log(res)
+    })
+
+    // 웹 버전
+    // window.Kakao.Link.sendDefault({
+    //   objectType: "feed",
+    //   content: {
+    //     title: `ZeroQuest-친구초대 이벤트 ${referralSlice}을 입력하세요`,
+    //     description: `https://play.google.com/store/apps/details?id=com.aiblue.zrqst_webview_app&pcampaignid=web_share`,
+    //     imageUrl:
+    //       "https://play-lh.googleusercontent.com/VaCMJUHxqjCtqNJ3oKFDdDCZUHdIOu5nZRARVnxSNssiYK6HXZ6JOTcA3vAcLPYfrJI=w240-h480-rw",
+    //     link: {
+    //       mobileWebUrl: `https://zeroquest.io`, 
+    //       webUrl: `https://zeroquest.io`,
+    //     },
+    //     // serverCallbackArgs: { callback: "/api/test" },
+    //     // serverCallbackArgs: '{"key":"value"}',
+    //   },
+    // });
 
     // GET 요청을 서버에 보내기
     // http

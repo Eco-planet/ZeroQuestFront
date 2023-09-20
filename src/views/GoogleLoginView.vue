@@ -43,30 +43,6 @@
       </div>
     </div>
   </div>
-  <!-- 카카오 공유 -->
-  <!--   <button type="button">
-    <a id="kakao-link-btn" @click="shareKakao">
-      <img
-        src="https://www.designdb.com/usr/upload/editor/email/202304132212562023ad50-d888-46ee-8247-12fe63822d4f.png"
-        alt="카카오톡 공유하기"
-      />
-    </a>
-  </button> -->
-
-  <!-- 텔레그램 공유 -->
-  <!-- <button type="button" class="sns_btn" @click="shareTelegram">
-    <img
-      src="https://www.cctvnews.co.kr/news/photo/201909/136595_148460_5049.jpg"
-      alt="텔레그램 공유하기"
-    />
-  </button> -->
-
-  <!-- <button type="button" class="sns_btn">
-    <a href="https://telegram.me/share/url?url=https://sample.com/index.php&text=추천코드: <?php echo $member['mb_referer']?>" target="_blank" class="sns_btn">
-      <img src="/images/telegram.png" alt="텔레그램 공유하기">
-    </a>
-  </button>
- -->
 </template>
 
 <script lang="ts" setup>
@@ -144,29 +120,6 @@ const logout = () => {
   console.log("logout");
   googleLogout();
 };
-
-// /*
-// // Telegram
-// const shareTelegram = () => {
-//   const text = "ZeroQuest - 친구초대 이벤트";
-//   const url = "http://localhost:8081";
-//   window.open("https://telegram.me/share/url?url=" + url + "&text=" + text);
-// };
-// //Kakao
-// const shareKakao = () => {
-//   window.Kakao.Link.sendDefault({
-//     objectType: "feed",
-//     content: {
-//       title: "ZeroQuest - 친구초대 이벤트",
-//       description: "100 ESGP",
-//       imageUrl: "preview_image.png (1000*1000)",
-//       link: {
-//         mobileWebUrl: "http://localhost:8081",
-//         webUrl: "http://localhost:8081",
-//       },
-//     },
-//   });
-// }; */
 </script>
 
 <style lang="scss">

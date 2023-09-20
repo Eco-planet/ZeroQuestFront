@@ -58,8 +58,8 @@
       </div>
       <div class="h-10"></div>
       <div class="flex justify-between">
-        <div class="w-64 h-20 flex justify-center items-center rounded-lg text-2xl font-medium text-center text-white bg-esg-color1 cursor-pointer" @click="buyNftESGP(nowNft)">ESG Point로 구매</div>
-        <div class="w-64 h-20 flex justify-center items-center rounded-lg text-2xl font-medium text-center text-white bg-esg-color2 cursor-pointer" @click="goToMyWallet()">ESG Point 충전</div>
+        <div class="w-64 h-20 flex justify-center items-center rounded-lg text-2xl font-medium text-center text-white bg-esg-color1 cursor-pointer" @click="buyNftESGP(nowNft)">{{ t("message.buyWithPoint") }}</div>
+        <div class="w-64 h-20 flex justify-center items-center rounded-lg text-2xl font-medium text-center text-white bg-esg-color2 cursor-pointer" @click="goToMyWallet()">{{ t("message.ChargingPoint") }}</div>
       </div>
     </div>
     <div class="h-20"></div>
@@ -104,11 +104,14 @@ import { useStore } from "vuex"
 import { ref, reactive, computed, onMounted, defineProps } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import { nftType } from "@/types/IZeroNftType"
+import { useI18n } from "vue-i18n";
 import recycling from "@/components/common/recycling.vue"
 import stairs from "@/components/common/stairs.vue"
 import tree from "@/components/common/tree.vue"
 import nftbuy from "@/components/Modal/nftBuy.vue"
 import Modal from "@/components/Modal/index.vue";
+
+const { t } = useI18n();
 
 const store = useStore()
 const route = useRoute();
@@ -139,7 +142,6 @@ const updateBalance = () => {
   }
 };
 
-
 const buyNftESGP = (nft: nftType) => {
   http.post("/api/nft/buyNft", {
     symbol: nft.symbol,
@@ -150,6 +152,7 @@ const buyNftESGP = (nft: nftType) => {
     privateKey: getPk
   }).then((res) => {
     console.log("res", res)
+    
     isModalOpen.value = true
   }).catch((err) => {
     console.log("err", err)
@@ -159,10 +162,8 @@ const buyNftESGP = (nft: nftType) => {
       popupTitle.value = "error.notEnoughPoints";
       store.state.isPopup = true;
     } else if (err.response.data.errorCode === 300) {
-      console.log("123")
       store.state.popupType = 'duplicate_nft_buy';
       store.state.isPopup = true;
-      console.log("test")
     }
   })
 }

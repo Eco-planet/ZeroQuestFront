@@ -4,7 +4,7 @@ import LS from "@/utils/localStorage";
 export default {
   namespaced: true,
   state: {
-    locale: LS.getItem("locale") || "en",
+    locale: LS.getItem("locale") || "kr",
     globalLoadNum: 0,
   },
   getters: {

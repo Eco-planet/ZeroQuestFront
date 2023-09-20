@@ -16,6 +16,7 @@ export default {
     status: "상황",
     congratulations: "축하합니다!",
     loading: "Loading",
+    participateChannels: "공식 채널 참여"
   },
 
   route: {
@@ -99,8 +100,9 @@ export default {
     getReward: "{value} 포인트 환전 완료",
     date:"날짜",
     time:"시간",
-    reward:"보상"
-  
+    reward:"보상",
+    buyWithPoint: "ESG Point로 구매",
+    ChargingPoint: "ESG Point 충전"
   },
 
   error: {

@@ -10,7 +10,7 @@
       </div>
       <div v-else>
         <h3 class="p-9 text-2xl text-black">
-          <span class="font-bold">ZeroQuest</span>is a <br>
+          <span class="font-bold">ZeroQuest</span> is a <br>
           platform that combines BlockChain and AI <br>
           <span class="font-bold">voluntary carbon reduction</span> App
         </h3>
