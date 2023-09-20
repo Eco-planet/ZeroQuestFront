@@ -24,6 +24,20 @@ export default {
   },
 
   message: {
+    battleVoteMessage:"이미 투표하셨습니다",
+    battleOwnContents:"본인 컨텐츠에는 투표 할 수 없습니다",
+    battleEntry:"도난당한 아이템의 등록은 우리의 이용 약관에 위반되며 ECO NFT에서는 허용되지 않습니다. 도난당한 아이템의 보상은 취소될 수 있습니다.",
+    WithdrawalPasswordCheck1:"6자리 이상으로 입력해주세요",
+    WithdrawalPasswordCheck2:"패스워드가 일치하지 않습니다",
+    WithdrawalPasswordCheck3:"출금비밀번호 변경이 완료되었습니다",
+    codeTransmissionCompleted:"인증코드가 전송되었습니다",
+    EnterVerificationCode:"인증번호 입력",
+    Complete:"완료",
+    EnterCode:"인증번호를 빈 칸에 입력하세요",
+    VerificationCodeRequest:"인증번호 요청",
+    resetPassword:"출금 비밀번호 초기화",
+    GoogleAuthentication:"Google 인증",
+    forgetPassword:"비밀번호를 잊어버리셨습니까?",
     sorryChecking: "시스템 점검 중.",
     googleLoginButton: "계정으로 로그인",
     // googleLoginTitle: "ECO NFT 에서 구매한 NFT의 아이템에 적합하게 ESG Life를 실천하면 ESG point 를 제공합니다.",
@@ -68,7 +82,11 @@ export default {
     agreeBtn: "동의",
     nftReward: "NFT 리워드",
     rewardBtn: "보상",
-    getReward: "{value} 포인트 환전 완료"
+    getReward: "{value} 포인트 환전 완료",
+    date:"날짜",
+    time:"시간",
+    reward:"보상"
+  
   },
 
   error: {

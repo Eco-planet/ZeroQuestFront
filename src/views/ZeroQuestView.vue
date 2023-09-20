@@ -22,9 +22,7 @@
     </div>
 
     <div class="h-10"></div>
-    <div
-      class="flex w-full pb-2 items-center justify-between border-b border-gray-400"
-    >
+    <div class="flex w-full pb-2 items-center justify-between border-b border-gray-400">
       <div class="text-2xl font-semibold">ESG Point</div>
       <div class="flex items-end">
         <div class="text-3xl font-semibold text-esg-color">{{ esgPoint }}</div>
@@ -45,12 +43,7 @@
       <div class="flex flex-col" v-for="item in myNftList" :key="item.tokenId">
         <div v-if="item.enable === 1">
           <div>
-            <img
-              class="nftImg"
-              :src="nftList[item.nftId].image"
-              alt=""
-              @click="goNftDetail(item.nftId)"
-            />
+            <img class="nftImg" :src="nftList[item.nftId].image" alt="" @click="goNftDetail(item.nftId)" />
           </div>
 
           <div class="h-2"></div>
@@ -58,12 +51,7 @@
         </div>
         <div class="grayscale" v-else>
           <div>
-            <img
-              class="nftImg"
-              :src="nftList[item.nftId].image"
-              alt=""
-              @click="goNftDetail(item.nftId)"
-            />
+            <img class="nftImg" :src="nftList[item.nftId].image" alt="" @click="goNftDetail(item.nftId)" />
           </div>
           <div class="h-2"></div>
           <div class="text-lg text-center">{{ nftList[item.nftId].name }}</div>
@@ -81,49 +69,64 @@
     </div>
     <div class="w-full grid grid-cols-3 gap-card">
       <div class="flex flex-col" v-for="item in nftList" :key="item.tokenId">
-        <img
-          class="nftImg"
-          :src="item.image"
-          alt=""
-          @click="goToDetail(item.idx)"
-        />
+        <img class="nftImg" :src="item.image" alt="" @click="goToDetail(item.idx)" />
         <div class="h-2"></div>
         <div class="text-lg text-center">{{ item.name }}</div>
       </div>
     </div>
     <div class="h-10"></div>
-    
-    <div
-      class="w-66 h-24 bg-gray-400 flex justify-center items-center mb-5 mt-10 cursor-pointer"
-      @click="referPage"
-    >
-      <img src="@/assets/images/fix_banner.jpg" @click="referPage"/>
+
+    <div class="w-66 h-24 flex justify-center items-center mb-5 mt-10 cursor-pointer" @click="referPage">
+      <img src="@/assets/images/fix_banner.jpg" @click="referPage" />
     </div>
 
     <div class="h-10"></div>
 
-    <div
-      class="break-words text-black media-Bottom intro-zeroquest text-center mt-10"
-    >
-      <div class="font-semibold text-2xl">
+    <div class="break-words text-black media-Bottom intro-zeroquest text-center mt-10">
+      <div v-if="locale === 'kr'">
+        <div class="font-semibold text-2xl">
         제로퀘스트와 함께 지구를 살려요!🌍🎮
-      </div>
-      <br />
-      <div class="font-medium text-lg">
-        탄소 발자국을 줄이는 행동, 그게 바로 우리의 게임 미션!<br />
-        성공할 때마다 ESG 포인트도 적립! <br />
-        포인트는 ESG 토큰으로 교환하면 재태크도 됩니다.<br />
+        </div>
+        <br />
+        <div class="font-medium text-lg">
+          탄소 발자국을 줄이는 행동, 그게 바로 우리의 게임 미션!<br />
+          성공할 때마다 ESG 포인트도 적립! <br />
+          포인트는 ESG 토큰으로 교환하면 재태크도 됩니다.<br />
 
-        계단 오르기부터 자전거 타기까지!<br />
-        제로퀘스트와 함께하면, 지구를 살리면서 주머니도 가득!<br />
-        함께 지구를 더 즐겁게, 건강하게 만들어가요!
-      </div>
-      <br />
+          계단 오르기부터 자전거 타기까지!<br />
+          제로퀘스트와 함께하면, 지구를 살리면서 주머니도 가득!<br />
+          함께 지구를 더 즐겁게, 건강하게 만들어가요!
+        </div>
+        <br />
 
-      <div class="pt-4 font-semibold text-xl">
-        지금 바로 시작! <br />
-        제로퀘스트와 지구의 히어로가 되어보세요!🌟🚀<br />
-        쉿! 소문내기까지 하면 추가 보너스도 빵빵합니다.
+        <div class="pt-4 font-semibold text-xl">
+          지금 바로 시작! <br />
+          제로퀘스트와 지구의 히어로가 되어보세요!🌟🚀<br />
+          쉿! 소문내기까지 하면 추가 보너스도 빵빵합니다.
+        </div>
+      </div>
+      <div v-else>
+        <div class="font-semibold text-2xl">
+          Save the Earth with ZeroQuest!🌍🎮
+        </div>
+        <br />
+        <div class="font-medium text-lg">
+          Reduce your carbon footprint; that's our mission! <br />
+          Earn ESG points for every success! <br />
+          More interestingly, points can be redeemed <br/>
+          by exchanging them for ESG tokens.<br />
+
+          From climbing stairs to riding a bike!<br />
+          With ZeroQuest, fill your pockets while saving the planet!<br />
+          Let's make the Earth more enjoyable and healthy together!
+        </div>
+        <br />
+
+        <div class="pt-4 font-semibold text-xl">
+          Start Now! <br />
+          Become a Hero for ZeroQuest and the Earth!🌟🚀<br />
+          Shh! If you spread the word, you'll get a lot of extra bonuses.
+        </div>
       </div>
     </div>
     <div class="h-40"></div>
@@ -152,6 +155,9 @@ const balances = ref();
 const tokenInfos = ref();
 const popupTitle = ref("");
 const referralCode = ref(""); //레퍼럴 코드 확인용
+
+const locale = computed(() => vuexStore.state.system.locale)
+
 
 onMounted(() => {
   getMyNftList();
@@ -268,6 +274,7 @@ function referPage() {
 .text-esg-color {
   color: #24d120;
 }
+
 .nftOn {
   background-color: #24d120;
 }
@@ -275,6 +282,7 @@ function referPage() {
 .nftOff {
   background-color: #ccc;
 }
+
 .grayscale {
   filter: grayscale(100%);
 }

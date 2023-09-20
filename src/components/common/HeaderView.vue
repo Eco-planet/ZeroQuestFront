@@ -5,7 +5,9 @@
       <div class="wp-40 flex justify-center"><h1><a href="/"><img src="@/assets/images/logo.png" alt="ZeroQuest"></a></h1></div>
       <div class="wp-30 login-box">
         <div class="flex justify-end items-center">
-          <!-- <div><Locale /></div> -->
+          <div>
+            <Locale />
+          </div>
           <div class="w-5"></div>
           <Dropdown title="Services" :items="services"/>
         </div>

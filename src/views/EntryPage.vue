@@ -61,10 +61,7 @@
         <input id="entryCheck" type="checkbox" class="border-solid border-gray-300 entryCheckbox"
           v-model="checkboxValue" />
         <label for="entryCheck" class="pl-3 text-start info1">
-          <!-- The entry of stolen item is against our terms of service and not allowed on ECO NFT.
-          The award of the stolen item can be revoked. -->
-          도난당한 아이템의 등록은 우리의 이용 약관에 위반되며 ECO NFT에서는 허용되지 않습니다.
-          도난당한 아이템의 보상은 취소될 수 있습니다.
+          {{ t("message.battleEntry") }}
         </label>
       </div>
     </div>
@@ -92,6 +89,9 @@ import http from "@/api/http"
 import { computed, onMounted, ref } from "vue"
 import { useRoute } from 'vue-router'
 import store from "@/store"
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 //post요청할때 필요 
 const route = useRoute()

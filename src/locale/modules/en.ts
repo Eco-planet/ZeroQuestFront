@@ -24,6 +24,20 @@ export default {
   },
 
   message: {
+    battleVoteMessage:"you have already voted",
+    battleOwnContents:"You can't vote on your own content",
+    battleEntry:"The entry of stolen item is against our terms of service and not allowed on ECO NFT. The award of the stolen item can be revoked",
+    WithdrawalPasswordCheck1:"Please enter at least 6 characters",
+    WithdrawalPasswordCheck2:"The passwords do not match",
+    WithdrawalPasswordCheck3:"Withdrawal password change is complete",
+    codeTransmissionCompleted:"The authentication code has been sent",
+    EnterVerificationCode:"Enter Verification Code",
+    Complete:"Complete",
+    EnterCode:"Enter the verification code in the blank space",
+    VerificationCodeRequest:"Verification Code Request",
+    resetPassword:"Withdrawal Password Reset",
+    GoogleAuthentication:"Google Authentication",
+    forgetPassword: "Did you forget your password?",
     sorryChecking: "The system is being checked.",
     googleLoginButton: "LOGIN",
     googleLoginTitle: "Save the Earth with Zero Quest!🌍🎮Reducing your carbon footprint is our game mission!Earn ESG points for every success!Even more fun, points can be redeemed by exchanging them for ESG tokens.From climbing stairs to riding a bike!With ZeroQuest, you can save the planet and fill your pockets!Let’s make the Earth more enjoyable and healthy together!Start right now! Become a hero of Earth with ZeroQuest!🌟🚀Shh! There are plenty of additional bonuses if you spread the word.",
@@ -66,8 +80,12 @@ export default {
     termsBtn: "OK",
     gameLoginInfo: "{name}, welcome.",
     agreeBtn: "Agree",
-    nftReward: "NFT 리워드",
-    rewardBtn: "보상",
+    nftReward: "NFT Reward",
+    rewardBtn: "reward",
+    date:"date",
+    time:"time",
+    reward:"reward"
+
    },
 
    error: {
