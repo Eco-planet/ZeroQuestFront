@@ -24,7 +24,7 @@
       <div class="h-6"></div>
       <div class="text-2xl" :class="{ select: $route.name === 'mywallet' }" @click="movePage('/mywallet')">My Wallet</div>
       <div class="h-6"></div>
-      <div class="text-2xl" @click="movePage('/market')">Open Market</div>
+      <div class="text-2xl" :class="{ select: $route.name === 'battle' }" @click="movePage('/battle')">Battle</div>
       <div class="h-10"></div>
       <div class="text-2xl font-semibold">About</div>
       <div class="h-3"></div>

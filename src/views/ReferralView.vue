@@ -1,63 +1,66 @@
 <template>
-  <div class="m-7">
-    <div class="w-full p-16 pt-40 relative text-center mx-auto my-8 mt-20">
-      <div class="w-full flex justify-center">
-        <div
-          class="mb-10 pl-10 flex items-center justify-center w-7/10 p-4 bg-custom-green rounded-2xl font-semibold text-4xl text-black refBtn"
-        >
-          지구 지키기 소확행 🌎🌟
-        </div>
+  <div class="referral-contens-area">
+    <div class="w-full flex justify-center">
+      <!-- 추가된 부분: div를 중앙 정렬하기 위해 flex와 justify-center를 사용합니다. -->
+      <div
+        class="mb-10 flex items-center justify-center w-7/10 p-4 rounded-2xl font-semibold text-4xl text-black refBtn"
+      >
+        {{ t('message.referral1') }}
       </div>
     </div>
 
-    <div class="flex justify-center items-center min-h-screen">
-      <div class="w-full mt-10 p-12 mx-auto">
-        <p class="font-semibold text-2xl leading-9 text-black">
-          친구와 함께 탄소감축 실천하자<br />친구가 추천인 코드<br />
-          입력 한 경우, 추천인에게
-        </p>
-        <p class="font-semibold text-3xl leading-9 text-black">
-          <span class="text-green-600">2,000 ESG Point</span><span> 지급</span>
-        </p>
+    <div class="referral-container f0">
+      <p class="tit">
+        {{ t('message.referral2') }}<br />
+        {{ t('message.referral3') }}
+      </p>
+      <p class="tit-bold">
+        <span> {{ t('message.referral5') }} </span>
+        <span>{{ t('message.referral4') }}</span>
+      </p>
+      
 
-        <div
-          @click="showLastSixChars"
-          class="flex items-center justify-between w-1/2 h-32 p-4 my-10 bg-white border border-gray-300 rounded-md shadow-md font-semibold text-2xl text-black mx-auto"
-        >
-          <div class="flex-grow-0"></div>
+      <div
+        @click="showLastSixChars"
+        class="flex items-center justify-between w-auto p-4 my-10 bg-white border border-black font-semibold text-2xl text-black"
+      >
+        <span class="underline referral-code-span">{{
+          slicedReferralValue
+        }}</span>
+        <img
+          class="referral-image"
+          src="../assets/images/refcodeImg.png"
+          alt="Referral Code Image"
+        />
+      </div>
 
-          <span class="underline ml-8">{{ slicedReferralValue }}</span>
+      <p class="tit">{{ t('message.referral6') }}</p>
+      <p class="tit-bold">
+        <span>{{ t('message.referral5') }}</span>
+        <span> {{ t('message.referral7') }}</span>
+      </p>
 
-          <div class="flex-grow"></div>
-
-          <img
-            src="../assets/images/refcodeImg.png"
-            alt="Referral Code Image"
-          />
-        </div>
-
-        <div class="font-semibold text-2xl leading-9 text-black">
-          소문내기만 해도
-        </div>
-        <div class="font-semibold text-2xl leading-9 text-black">
-          <span class="text-green-600">50 ESG Point</span><span> 지급</span>
-        </div>
-
-        <div class="mt-7 mb-4 flex justify-center items-center">
-          <button @click="shareKakao" class="mr-8">
+      <div class="mt-7 mb-4">
+        <!-- 카카오 공유 -->
+        <button type="button">
+          <a id="kakao-link-btn" @click="shareKakao">
             <img
               src="./../assets/images/kakao_logo.png"
               alt="카카오톡 공유하기"
             />
-          </button>
-          <button @click="shareTelegram">
-            <img src="./../assets/images/telog.png" alt="텔레그램 공유하기" />
-          </button>
-        </div>
+          </a>
+        </button>
 
-        <div class="h-9"></div>
+        <!-- 텔레그램 공유 -->
+        <button type="button" class="sns_btn" @click="shareTelegram">
+          <img src="./../assets/images/telog.png" alt="텔레그램 공유하기" />
+        </button>
+      </div>
 
-        <div class="font-medium text-sm text-gray-400">
+      <div class="h-9"></div>
+
+      <div>
+        <div v-if="locale === 'kr'" class="font-medium text-sm text-gray-400">
           주의사항 : 추천인으로 자기 자신을 추천할 수 없습니다.<br />
           같은 사람에게 여러 번 소문내기를 하더라도<br />
           50 ESG Point가 지급됩니다.<br />
@@ -66,43 +69,55 @@
           한 번에 한 사람에게만 소문내기를 할 수 있습니다.<br />
           하루에 5명의 레퍼럴을 할 수 있습니다.
         </div>
+        <div  v-else class="font-medium text-sm text-gray-400">
+          Notice: You cannot refer yourself as a referrer.<br />
+          Even if you spread the word to the same person multiple times,<br />
+          you will be awarded 50 ESG Points.<br />
+          Only when a third-party signs up for the first time,<br />
+          the person who spread the word will receive 2,000 ESG Points.<br />
+          You can spread the word to only one person at a time.<br />
+          You can make up to 5 referrals a day.
+        </div>
+      </div>
 
-        <div class="h-10"></div>
 
-        <div
-          class="py-10 bg-gray-200 rounded-xl mb-20 mb-[100px] mx-auto w-full max-w-lg"
-        >
-          <br />
+      <div class="h-10"></div>
+
+      <div class="py-5 bg-gray-200 rounded-xl">
+        <div>
+          <span class="text-3xl font-bold mb-4 block">
+            {{ t('message.referral8') }}
+          </span>
           <div>
-            <span class="text-3xl font-bold mb-4 block">
-              추천인 코드 입력란
-            </span>
-            <span class="text-lg font-bold block py-2">
+            <span v-if="locale==='kr'" class="text-lg font-bold block py-2">
               아래 칸에 추천인 코드를 입력한 후<br />
               확인 버튼을 눌러주세요
             </span>
+            <span v-else class="text-lg font-bold block py-2">
+              Please enter the referral code in the box below<br />
+              and press the confirm button
+            </span>
           </div>
-
-          <div
-            class="flex flex-col items-center justify-center space-y-10 mt-5 mb-10"
-          >
-            <input
-              type="text"
-              placeholder="추천인 코드 입력란"
-              class="px-10 py-4 text-center border border-black border-b-2"
-              v-model="referralCode"
-            />
-          </div>
-
-          <button
-            @click="referralInput"
-            class="w-36 py-2 text-white font-medium border rounded-full text-xl refBtn mx-auto relative top-[-24px]"
-          >
-            확인
-          </button>
-          <br /><br />
+    
         </div>
-        <br /><br /><br /><br /><br /><br />
+
+        <div
+          class="flex flex-col items-center justify-center space-y-10 mt-5 mb-10"
+        >
+          <input
+            type="text"
+            :placeholder="t('message.referral8')"
+            class="px-10 py-4 text-center border border-black border-b-2"
+            v-model="referralCode"
+          />
+        </div>
+
+        <button
+          @click="referralInput"
+          class="w-36 py-2 text-white font-medium border rounded-full text-xl refBtn"
+        >
+          {{ t('message.termsBtn') }}
+        </button>
       </div>
     </div>
   </div>
@@ -119,6 +134,7 @@ import MyNftCard from "@/components/OpenNftView.vue";
 import { Carousel, Pagination, Slide } from "vue3-carousel";
 import { errorMsg } from "@/utils/util";
 import { useStore } from "vuex";
+import { useI18n } from "vue-i18n";
 import "vue3-carousel/dist/carousel.css";
 const vuexStore = useStore(); // Use a different variable name for the store
 const referral = computed(() => vuexStore.getters["auth/getReferral"]);
@@ -130,6 +146,9 @@ const balances = ref();
 const tokenInfos = ref();
 const popupTitle = ref("");
 const referralCode = ref(""); //레퍼럴 코드 확인용
+
+const locale = computed(() => vuexStore.state.system.locale)
+const { t } = useI18n();
 
 // 소셜 공유하기, 텔레그램
 
@@ -261,7 +280,87 @@ const slicedReferralValue = computed(() => {
 </script>
 
 <style>
+.referral-contens-area {
+  width: 100%;
+  padding: 60px 50px 170px;
+  text-align: center;
+  position: relative;
+}
+
+.referral-container {
+  width: 100%;
+  margin-top: 40px;
+  padding: 50px 48px;
+  border: 2px solid #ddd;
+}
+
+.referral-code-span {
+  flex-grow: 1;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  /* 수직 중앙 정렬을 위한 속성 */
+  justify-content: center;
+  /* 수평 중앙 정렬을 위한 속성 */
+}
+
+.referral-image {
+  margin-left: 1rem;
+  /* 이미지와 텍스트 사이의 간격 조절 */
+}
+
+.referral-container > .tit {
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 36px;
+  color: #000;
+}
+
+.referral-container > .tit-bold {
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 36px;
+  color: #000;
+}
+
 .refBtn {
   background-color: #70ad47;
+}
+
+@media only screen and (max-width: 1024px) {
+  .referral-contens-area {
+    padding: 8.3333vw 6.9444vw 23.6111vw;
+  }
+
+  .referral-container {
+    margin-top: 5.5556vw;
+    padding: 6.9444vw 6.6667vw;
+    border-width: 0.2778vw;
+  }
+
+  h2 {
+    margin-bottom: 6.9444vw;
+    font-size: 6.1111vw;
+    height: 9.7222vw;
+  }
+
+  .referral-container > .tit {
+    font-size: 3.6111vw;
+    line-height: 5vw;
+  }
+
+  .referral-container > .tit-bold {
+    font-size: 4vw;
+    line-height: 5vw;
+  }
+
+  .referral-container > .tit-bold > span:nth-child(2) {
+    font-weight: 600;
+    color: #70ad47;
+  }
+
+  .referral-container > .tit-bold > span:nth-child(1) {
+    font-weight: 600;
+  }
 }
 </style>

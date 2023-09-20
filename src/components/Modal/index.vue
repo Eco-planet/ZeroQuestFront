@@ -236,7 +236,7 @@
           </div>
         </template>
         
-        <template v-if="popupType === 'nft_buy'">
+        <template v-if="popupType === 'duplicate_nft_buy'">
           <div class="flex flex-col justify-center items-center">
             <div class="h-5"></div>
             <div class="text-2xl text-center">NFT 를 활성화하기 위해서는<br />{{ nftList[store.state.nftId].name }} App 을<br />설치해야
@@ -280,8 +280,23 @@
             </div>
           </div>
         </template>
+
+        <template v-if="popupType === 'game_off'">
+          <div class="flex flex-col justify-center items-center">
+            <div class="h-5"></div>
+            <div class="text-2xl text-center">NFT 를 <span style='color:red;'>OFF</span> 하면<br />탄소절감 데이터가 적용<br />되지 않습니다.
+            </div>
+            <div class="h-10"></div>
+            <div class="h-10"></div>
+            <div class="h-10"></div>
+            <div class="w-full flex justify-center items-center">
+              <button class="wp-60 p-2 font-semibold text-2xl text-white off-btn" @click="resData('OFF')">OFF 하기</button>
+            </div>
+          </div>
+        </template>
+
         <template
-          v-if="popupType !== 'qr_code' && popupType !== 'withdraw_pass' && popupType !== 'withdraw_pass_update' && popupType !== 'resetPW'&& popupType !== 'send_coin' && popupType !== 'game_install' && popupType !== 'game_off'">
+          v-if="popupType !== 'qr_code' && popupType !== 'withdraw_pass' && popupType !== 'withdraw_pass_update' && popupType !== 'resetPW'&& popupType !== 'send_coin' && popupType !== 'game_install' && popupType !== 'game_off' && popupType !== 'duplicate_nft_buy'">
           <div>
             <img class="error-icon" src="@/assets/images/icon_error.png" />
           </div>

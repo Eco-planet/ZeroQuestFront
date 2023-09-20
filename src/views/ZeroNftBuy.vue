@@ -88,19 +88,19 @@
     <tree v-else-if="nftId === 3"></tree>
     <div class="h-96"></div>
 
-    <nftbuy v-if="isModalOpen" @close-modal="isModalChange"></nftbuy>
-
     <Modal
       :visible="store.state.isPopup"
       @hide="closeModal"
       :title="popupTitle"
     />
+    <nftbuy v-if="isModalOpen" @close-modal="isModalChange"></nftbuy>
+
   </div>
 </template>
   
 <script lang="ts" setup>
 import http from "@/api/http";
-import store from "@/store";
+import { useStore } from "vuex"
 import { ref, reactive, computed, onMounted, defineProps } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import { nftType } from "@/types/IZeroNftType"
@@ -110,7 +110,7 @@ import tree from "@/components/common/tree.vue"
 import nftbuy from "@/components/Modal/nftBuy.vue"
 import Modal from "@/components/Modal/index.vue";
 
-
+const store = useStore()
 const route = useRoute();
 const router = useRouter();
 const nftId = parseInt(route.params.idx)
@@ -158,6 +158,11 @@ const buyNftESGP = (nft: nftType) => {
       store.state.popupType = "message";
       popupTitle.value = "error.notEnoughPoints";
       store.state.isPopup = true;
+    } else if (err.response.data.errorCode === 300) {
+      console.log("123")
+      store.state.popupType = 'duplicate_nft_buy';
+      store.state.isPopup = true;
+      console.log("test")
     }
   })
 }
