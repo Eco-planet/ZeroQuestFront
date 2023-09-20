@@ -35,7 +35,7 @@ export default {
     introduction1:"#GlobalWarming #ClimateCrisis #CarbonNeutral",
     introduction2:"A topic you've been pondering about?",
     introduction3:"donation for tree planting",
-    introduction4:"donation for tree planting",
+    introduction4:"Use Module",
     introduction5:"Request 'Stair Climbing' setup in our area",
     introduction6:"This app is currently available for download on Google Play",
     battleVoteMessage:"you have already voted",
