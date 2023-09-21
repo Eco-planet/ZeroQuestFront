@@ -86,20 +86,13 @@
           <button type="button" class="
             moduleBtnBg
             text-white 
-            hover:bg-green-800 
-            focus:outline-none 
-            focus:ring-4 
-            focus:ring-green-300 
             font-medium
             text-sm 
             mt-4
             wp-80
             h-24
             text-2xl
-            text-center 
-            dark:bg-green-600 
-            dark:hover:bg-green-700 
-            dark:focus:ring-green-800" @click="goToGoogleForm">우리동네 '계단오르기' 설치 요청
+            text-center" @click="goToGoogleForm">우리동네 '계단오르기' 설치 요청
           </button>
           <div class="pb-8 mt-12 font-bold text-2xl">
             우리동네 계단 오르기 설치 신청이 가능합니다
@@ -203,20 +196,13 @@
           <button type="button" class="
             moduleBtnBg
             text-white 
-            hover:bg-green-800 
-            focus:outline-none 
-            focus:ring-4 
-            focus:ring-green-300 
             font-medium
             text-sm 
             mt-4
             wp-80
             h-24
             text-2xl
-            text-center 
-            dark:bg-green-600 
-            dark:hover:bg-green-700 
-            dark:focus:ring-green-800" @click="goToGoogleForm">Request to install 'Stair Climbing'
+            text-center" @click="goToGoogleForm">Request to install 'Stair Climbing'
           </button>
           <div class="pb-8 mt-12 font-bold text-2xl">
             You can apply for a stair climbing installation

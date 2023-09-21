@@ -39,11 +39,6 @@
               rounded-lg
               text-xl
               text-white 
-              focus:ring-4 
-              focus:ring-gray-300 
-              dark:bg-gray-600 
-              dark:hover:bg-gray-700 
-              dark:focus:ring-gray-800
               VoteBtn"
               @click ="closeModal"
               >

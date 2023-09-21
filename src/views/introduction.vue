@@ -90,19 +90,13 @@
             <button type="button" class="
             moduleBtnBg
             text-white 
-            hover:bg-green-800 
-            focus:outline-none 
-            focus:ring-4 
-            focus:ring-green-300 
-            font-medium rounded-full 
+            font-medium 
+            rounded-full 
             text-sm 
             mt-4
             px-5
             py-4 
-            text-center 
-            dark:bg-green-600 
-            dark:hover:bg-green-700 
-            dark:focus:ring-green-800" @click="transferOnft">
+            text-center" @click="transferOnft">
               {{ t('message.introduction4') }}
             </button>
           </div>
@@ -117,19 +111,13 @@
             <button type="button" class="
             moduleBtnBg
             text-white 
-            hover:bg-green-800 
-            focus:outline-none 
-            focus:ring-4 
-            focus:ring-green-300 
-            font-medium rounded-full 
+            font-medium 
+            rounded-full 
             text-sm 
             mt-4
             px-5
             py-4 
-            text-center 
-            dark:bg-green-600 
-            dark:hover:bg-green-700 
-            dark:focus:ring-green-800" @click="transferOnft">{{ t('message.introduction4') }}</button>
+            text-center" @click="transferOnft">{{ t('message.introduction4') }}</button>
           </div>
         </div>
       </div>
@@ -139,22 +127,13 @@
         <div v-else class="mt-32 mb-16 font-bold">Living in an apartment?<br> Through the 'Stair Climbing' NFT, <br>you
           can earn ESG points.</div>
       </div>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSc0DY0h1l9CM2bP9yWwBbmJFbjXq1owwtO8tAuJgXm8Ej6Sbg/viewform" class="
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSc0DY0h1l9CM2bP9yWwBbmJFbjXq1owwtO8tAuJgXm8Ej6Sbg/viewform" target="_blank" class="
         moduleBtnBg
+        block
         text-white 
-        hover:bg-green-800 
-        focus:outline-none 
-        focus:ring-4 
-        focus:ring-green-300 
         font-medium
-        text-sm 
         py-8
-        px-4
-        text-2xl
-        text-center 
-        dark:bg-green-600 
-        dark:hover:bg-green-700 
-        dark:focus:ring-green-800">{{ t('message.introduction5') }}
+        text-center">{{ t('message.introduction5') }}
       </a>
       <div class="mt-40">
         <div>

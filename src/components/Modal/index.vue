@@ -323,9 +323,23 @@
             </div>
           </div>
         </template>
+        <template v-if="popupType === 'serviceChecking'">
+          <div>
+            <div class="mb-10 flex justify-center">
+              <img class="" src="@/assets/images/icon_error.png" />
+            </div>
+            <div class="mb-10 text-3xl font-bold">
+              {{ t('message.serviceChecking') }}
+            </div>
+            <div>
+              <button class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
+                @click="hide">{{ t('message.termsBtn') }}</button>
+              </div>
+          </div>
+        </template>
 
         <template
-          v-if="popupType !== 'qr_code' && popupType !== 'withdraw_pass' && popupType !== 'withdraw_pass_update' && popupType !== 'resetPW'&& popupType !== 'send_coin' && popupType !== 'game_install' && popupType !== 'game_off' && popupType !== 'duplicate_nft_buy'">
+          v-if="popupType !== 'qr_code' && popupType !== 'withdraw_pass' && popupType !== 'withdraw_pass_update' && popupType !== 'resetPW'&& popupType !== 'send_coin' && popupType !== 'game_install' && popupType !== 'game_off' && popupType !== 'duplicate_nft_buy'&& popupType !== 'serviceChecking'">
           <div>
             <img class="error-icon" src="@/assets/images/icon_error.png" />
           </div>
@@ -350,6 +364,7 @@
             <div><button class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
                 @click="hide">Closed</button></div>
           </div>
+         
         </template>
       </div>
     </div>

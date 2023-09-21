@@ -139,11 +139,11 @@
       <img class="sessionImg" src="../assets/images/img_icon_trangle.png" />
     </button>
   </div>
-  <Modal
+  <!-- <Modal
     :visible="store.state.isPopup"
     @hide="closeModal"
     :title="popupTitle"
-  />
+  /> -->
 </template>
 
 <script lang="ts" setup>
@@ -209,9 +209,9 @@ const battleSession = () => {
       isLoading.value = false
     })
     .catch((error) => {
-      store.state.popupType = "message";
-      popupTitle.value = "error.commingSoon";
-      store.state.isPopup = true;
+      // store.state.popupType = "message";
+      // popupTitle.value = "error.commingSoon";
+      // store.state.isPopup = true;
     })
 }
 

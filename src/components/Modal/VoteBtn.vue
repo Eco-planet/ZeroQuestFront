@@ -39,11 +39,6 @@
               rounded-lg
               text-xl
               text-white 
-              focus:ring-4 
-              focus:ring-gray-300 
-              dark:bg-gray-600 
-              dark:hover:bg-gray-700 
-              dark:focus:ring-gray-800
               cancleBtn"
               @click ="closeModal"
               >
@@ -59,11 +54,6 @@
               rounded-lg
               text-xl
               text-white 
-              focus:ring-4 
-              focus:ring-green-300 
-              dark:bg-green-600 
-              dark:hover:bg-green-700 
-              dark:focus:ring-green-800
               VoteBtn"
               @click="isCheckModal"
               >
@@ -80,11 +70,6 @@
             rounded-lg
             text-xl
             text-white 
-            focus:ring-4 
-            focus:ring-green-300 
-            dark:bg-green-600 
-            dark:hover:bg-green-700 
-            dark:focus:ring-green-800
             VoteBtn"
             @click ="closeModal"
             >

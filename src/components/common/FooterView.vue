@@ -22,8 +22,8 @@ const { t } = useI18n();
  
 const isPopup = ref(false);
 
-const showModal = () => {
-  store.state.popupType = 'message';
+const showModal = (type) => {
+  store.state.popupType = type;
   isPopup.value = true;
 };
 
@@ -41,8 +41,13 @@ const afterLogin = () => {
 
 const movePage = (page: string) => {
   if (page === "/market") {
-    showModal();
-  } else {
+    showModal('message');
+  } else if(page === "/battle"){
+    showModal('serviceChecking');
+    // store.state.popupType = "message";
+    // store.state.isPopup = true;
+    //serviceChecking
+  }else {
     router.push(page);
   }
 };
