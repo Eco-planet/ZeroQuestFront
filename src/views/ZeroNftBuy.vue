@@ -23,7 +23,8 @@
             <div class="w-full h-full relative flex items-center justify-center">
               <img :src="nowNft?.image">
             </div>
-            <div class="mt-10 text-3xl font-semibold text-black">{{nowNft?.name}}</div>
+            <div class="mt-10 text-3xl font-semibold text-black" v-if="locale === 'kr'">{{nowNft?.name.kor}}</div>
+            <div class="mt-10 text-3xl font-semibold text-black" v-else>{{nowNft?.name.eng}}</div>
             <div class="mt-10 text-xl">
               <div class="flex justify-between mb-4">
                 <span>Expiration Date</span>
@@ -117,6 +118,7 @@ const store = useStore()
 const route = useRoute();
 const router = useRouter();
 const nftId = parseInt(route.params.idx)
+const vuexStore = useStore();
 
 const nowNft = Object.values(store.getters["auth/getNftList"]).filter(item => item.idx === nftId)[0]
 console.log("nowNft",nowNft)
@@ -126,6 +128,7 @@ const getBalances = store.getters["auth/getBalances"].ESGP.balance
 const esgPoint = ref("");
 const balances = ref();
 const popupTitle = ref("");
+const locale = computed(() => vuexStore.state.system.locale)
 
 onMounted(() => {
   updateBalance();
@@ -156,7 +159,6 @@ const buyNftESGP = (nft: nftType) => {
     isModalOpen.value = true
   }).catch((err) => {
     console.log("err", err)
-    console.log("err", err.response.data.errorCode)
     if (err.response.data.errorCode === 505) {
       store.state.popupType = "message";
       popupTitle.value = "error.notEnoughPoints";

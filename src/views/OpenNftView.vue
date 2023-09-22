@@ -8,7 +8,10 @@
     <div class="w-full">
       <Carousel :autoplay="3000" :wrap-around="true">
         <Slide v-for="slide in bannerList" :key="slide">
-          <div class="carousel__item" style="overflow: hidden;"><img :src="slide.url" @click="goToLink(slide.link)" /></div>
+          <div class="carousel__item" style="overflow: hidden;">
+            <img v-if="locale === 'kr'" :src="slide.url.kor" @click="goToLink(slide.link)" />
+            <img v-else :src="slide.url.eng" @click="goToLink(slide.link)" />
+          </div>
         </Slide>
       </Carousel>
     </div>
@@ -33,10 +36,12 @@
 import store from "@/store";
 import router from "@/router";
 import http from "@/api/http";
-import { onMounted, onUnmounted, ref } from "vue";
+import { onMounted, onUnmounted, ref, computed } from "vue";
 import MyNftCard from "@/components/OpenNftView.vue";
 import { Carousel, Pagination, Slide } from "vue3-carousel";
-
+import { useStore } from "vuex";
+const vuexStore = useStore();
+const locale = computed(() => vuexStore.state.system.locale)
 import "vue3-carousel/dist/carousel.css";
 
 const nftList = store.getters["auth/getNftList"];

@@ -44,9 +44,7 @@ const movePage = (page: string) => {
     showModal('message');
   } else if(page === "/battle"){
     showModal('serviceChecking');
-    // store.state.popupType = "message";
-    // store.state.isPopup = true;
-    //serviceChecking
+
   }else {
     router.push(page);
   }

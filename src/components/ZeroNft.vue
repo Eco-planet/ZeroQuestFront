@@ -6,8 +6,8 @@
           <div class="w-full h-full relative">
             <img :src="nft.image" alt="" class="w-full h-full object-contain object-top">
           </div>
-          <div class="mt-4 text-xl font-medium text-black">{{ nft.name }}</div>
-          <!-- <div class="mt-2 text-lg font-light text-gray-700">0 / </div> -->
+          <div class="mt-4 text-xl font-medium text-black" v-if="locale === 'kr'">{{ nft.name.kor }}</div>
+          <div class="mt-4 text-xl font-medium text-black" v-else>{{ nft.name.eng }}</div>
           <div class="text-lg font-light text-gray-400">{{ Number(nft.buyPrice2).toLocaleString() }} ESG point</div>
         </div>
       </li>
@@ -17,13 +17,16 @@
   
 <script lang="ts" setup>
 import http from "@/api/http";
-import store from "@/store";
 import { reactive, ref, onMounted, Ref, computed } from "vue";
 import { useRouter } from "vue-router"
 import { NFTSampleType } from "@/types/IZeroNftType"
+import { useStore } from "vuex";
 
 const router = useRouter();
+const vuexStore = useStore();
 const nftList = ref()
+
+const locale = computed(() => vuexStore.state.system.locale)
 
 onMounted(() => {
   getNftList();
@@ -32,7 +35,17 @@ onMounted(() => {
 const getNftList = () => {
   http.get("/api/nft/zeroNft")
     .then((res) => {
-      nftList.value = res.data.data;
+      const parsedData = res.data.data.map((item: any) => {
+        if (item.name) {
+          try {
+            return { ...item, name: JSON.parse(item.name) }
+          } catch(e) {
+            console.error("Failed to parse name:", e);
+          }
+        }
+        return item
+      })
+      nftList.value = parsedData;
     });
 };
 

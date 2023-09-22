@@ -22,13 +22,8 @@ import http from "@/api/http";
 import LoadingSpinner from "@/components/common/LoadingSpinner.vue";
 import Header from "@/components/common/HeaderView.vue";
 import Footer from "@/components/common/FooterView.vue";
-import { onMounted } from "vue";
-
-const { t } = useI18n();
-
-const aboutBattle= () =>{
-
-}
+import { onMounted, computed } from "vue";
+import { useStore } from "vuex";
 
 onMounted(() => {
   if (store.getters["auth/getTokenInfos"] === undefined || store.getters["auth/getTokenInfos"] === "") {
@@ -74,6 +69,14 @@ onMounted(() => {
         } else {
           nftList[res.idx]['metaData'] = '';
         }
+
+        if (res.name !== '' && res.name !== undefined) {
+          try {
+            nftList[res.idx]['name'] = JSON.parse(res.name);
+          } catch(e) {
+            console.error("Failed to parse name:", e)
+          }
+        }
       });
 
       store.commit("auth/setNftList", { 'info': nftList });
@@ -91,6 +94,14 @@ onMounted(() => {
 
       bannerListData.forEach((res: any) => {
         bannerList[res.idx] = res;
+
+        if (res.url !== '' && res.url !== undefined) {
+          try {
+            bannerList[res.idx]['url'] = JSON.parse(res.url)
+          } catch(e) {
+            console.error("Failed to parse name:", e)
+          }
+        }
       });
 
       store.commit("auth/setBannerList", { 'info': bannerList });

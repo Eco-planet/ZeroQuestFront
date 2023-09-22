@@ -10,7 +10,8 @@
       </div>
     </div> -->
     <div class="h-3"></div>
-    <div class="text-lg text-center">{{ nftInfo.name }}</div>
+    <div class="text-lg text-center" v-if="locale === 'kr'">{{ nftInfo.name.kor }}</div>
+    <div class="text-lg text-center" v-else>{{ nftInfo.name.eng }}</div>
     <div class="h-1"></div>
     <div class="flex justify-center items-center">
       <template v-if="nftCard.enable === 0">
@@ -27,7 +28,10 @@
 import store from "@/store";
 import router from "@/router";
 import http from "@/api/http";
-import { toRefs, watch } from "vue";
+import { toRefs, watch, computed } from "vue";
+import { useStore } from "vuex";
+const vuexStore = useStore();
+const locale = computed(() => vuexStore.state.system.locale)
 
 const props = defineProps({
   nftCard: {

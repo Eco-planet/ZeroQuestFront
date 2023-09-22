@@ -17,7 +17,8 @@
     <div class="w-full h-px bg-gray-200"></div>
     <div class="h-10"></div>
     <div class="photo-link p-7 w-full h-full">
-      <div class="flex font-semibold text-2xl pb-8">{{ nftInfo.name }}</div>
+      <div class="flex font-semibold text-2xl pb-8" v-if="locale === 'kr'">{{ nftInfo.name.kor }}</div>
+      <div class="flex font-semibold text-2xl pb-8" v-else>{{ nftInfo.name.eng }}</div>
       <div class="flex items-center justify-center pt-9" style="position:relative;">
         <img :src="nftInfo.image" />
         <div v-if="nftDetail === undefined || nftDetail.enable === 0" class="nftBg"></div>
@@ -87,7 +88,8 @@ import router from "@/router";
 import store from "@/store";
 import http from "@/api/http";
 import { useI18n } from "vue-i18n";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, computed } from "vue";
+import { useStore } from "vuex";
 import recycling from "@/components/common/recycling.vue"
 import stairs from "@/components/common/stairs.vue"
 import tree from "@/components/common/tree.vue"
@@ -100,8 +102,11 @@ const tokenId = Number(router.currentRoute.value.params.tokenId);
 const nftInfo = nftList[nftId];
 const questRewards = ref();
 const popupTitle = ref("");
+const vuexStore = useStore();
 
 const { t } = useI18n();
+
+const locale = computed(() => vuexStore.state.system.locale)
 
 onMounted(() => {
   getNftDetail();
