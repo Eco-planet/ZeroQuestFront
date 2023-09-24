@@ -81,7 +81,8 @@
     <div class="h-10"></div>
 
     <div class="w-66 h-24 flex justify-center items-center mb-5 mt-10 cursor-pointer" @click="referPage">
-      <img src="@/assets/images/fix_banner.jpg" @click="referPage" />
+      <img v-if="locale === 'kr'" src="@/assets/images/fix_banner.jpg" @click="referPage" />
+      <img v-else src="@/assets/images/fix_banner_eng.jpg" @click="referPage" />
     </div>
 
     <div class="h-10"></div>
