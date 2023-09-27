@@ -7,7 +7,7 @@
           <div class="flex flex-col justify-center items-center">
             <div class="font-semibold text-2xl">My Address</div>
             <div class="h-5"></div>
-            <QRCodeVue3 :width="200" :height="200" value="{{ myAddress }}" :dotsOptions="{
+            <QRCodeVue3 :width="200" :height="200" :value="myAddress" :dotsOptions="{
               type: 'square'
             }" :cornersSquareOptions="{ type: 'square', color: '#000000' }" />
             <div class="h-10"></div>
