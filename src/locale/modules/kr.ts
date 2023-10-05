@@ -109,6 +109,7 @@ export default {
     termsAgree01: "[필수] 이용약관",
     termsAgree02: "[필수] 개인정보처리방침",
     termsAgree03: "[선택] 선택사항 동의 내용이 들어갑니다.",
+    termsAgree04: "이미 동의하였습니다.",
     termsBtn: "확인",
     terms:"보기",
     gameLoginInfo: "{name} 님 반갑습니다.",

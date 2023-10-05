@@ -108,6 +108,7 @@ export default {
     termsAgree01: "[Requirement] Required Agreements",
     termsAgree02: "[Requirement] Required Agreements",
     termsAgree03: "[Select] Contains your consent.",
+    termsAgree04: "You already agreed",
     termsBtn: "OK",
     terms:"terms",
     gameLoginInfo: "{name}, welcome.",

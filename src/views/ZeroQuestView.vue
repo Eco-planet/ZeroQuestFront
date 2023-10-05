@@ -85,9 +85,7 @@
       <img v-else src="@/assets/images/fix_banner_eng.jpg" @click="referPage" />
     </div>
 
-    <div class="h-10">
-      {{ accessToken }}
-    </div>
+    <div class="h-10"></div>
 
     <div class="break-words text-black media-Bottom intro-zeroquest text-center mt-10">
       <div v-if="locale === 'kr'">
@@ -155,7 +153,6 @@ import { useI18n } from "vue-i18n";
 import "vue3-carousel/dist/carousel.css";
 const vuexStore = useStore(); // Use a different variable name for the store
 const referral = computed(() => vuexStore.getters["auth/getReferral"]);
-const accessToken = computed(() => vuexStore.getters["auth/getAccessToken"]);
 const bannerList = store.getters["auth/getBannerList"];
 const nftList = store.getters["auth/getNftList"];
 const myNftList = ref<nftType>();

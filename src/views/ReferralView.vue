@@ -77,7 +77,6 @@
           the person who spread the word will receive 2,000 ESG Points.<br />
           You can spread the word to only one person at a time.<br />
           You can make up to 5 referrals a day.
-          {{ accessToken }}
         </div>
       </div>
 
@@ -142,7 +141,7 @@ const vuexStore = useStore(); // Use a different variable name for the store
 const referral = computed(() => vuexStore.getters["auth/getReferral"]);
 const bannerList = store.getters["auth/getBannerList"];
 const nftList = store.getters["auth/getNftList"];
-const accessToken = computed(() => vuexStore.getters["auth/getAccessToken"]);
+const accessToken = store.getters["auth/getAccessToken"];
 const myNftList = ref<nftType>();
 const esgPoint = ref(0);
 const balances = ref();
@@ -168,7 +167,15 @@ const shareTelegram = () => {
 
     const infoShareTelegram = {
       content: {
+        objectType: "feed",
         title: `ZeroQuest - 친구초대 이벤트 ${referralSlice}을 입력하세요`,
+        description: `https://play.google.com/store/apps/details?id=com.aiblue.zrqst_webview_app&pcampaignid=web_share`,
+        imageUrl:
+          "https://play-lh.googleusercontent.com/VaCMJUHxqjCtqNJ3oKFDdDCZUHdIOu5nZRARVnxSNssiYK6HXZ6JOTcA3vAcLPYfrJI=w240-h480-rw",
+        link: {
+          mobileWebUrl: `https://zeroquest.io`, 
+          webUrl: `https://zeroquest.io`,
+        },
         accessToken: accessToken,
       }
     }

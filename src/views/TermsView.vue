@@ -50,7 +50,7 @@
   </div>
   <div class="h-10"></div>
   <Terms :visible="termsVisiable" @hide="closeModal" @termsAgree="setTerms" :termsType="termsType" />
-  <Modal :visible="store.state.isPopup" @hide="closeModal" title="message.agreeTerms" />
+  <Modal :visible="store.state.isPopup" @hide="closeModal" :title="popupTitle" />
  </template>
 
 <script lang="ts" setup>
@@ -67,9 +67,11 @@ const check_all = ref(false);
 const check_01 = ref(false);
 const check_02 = ref(false);
 const check_03 = ref(false);
+const popupTitle = ref("");
 
 const termsVisiable = ref(false);
 const termsType = ref(0);
+const termsStatus = store.getters["auth/getTerms"];
 
 const setTerms = (type: number) => {
   if (type === 1) {
@@ -110,8 +112,13 @@ const updateCheck = (type: number) => {
 };
 
 const updateTerms = () => {
-  if (check_01.value === false || check_02.value === false) {
+  if (termsStatus === '1') {
     store.state.popupType = 'message';
+    popupTitle.value = "message.termsAgree04";
+    store.state.isPopup = true;
+  } else if (check_01.value === false || check_02.value === false) {
+    store.state.popupType = 'message';
+    popupTitle.value = "message.agreeTerms";
     store.state.isPopup = true;
   } else {
     let agree = '1,' + Number(check_03.value);
