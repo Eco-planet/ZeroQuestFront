@@ -72,7 +72,6 @@ const aniVisible = ref(false);
 
 //battle modal창
 const movePage1 = () => {
-  console.log("battle")
   store.state.popupType = 'serviceChecking';
   store.state.isPopup = true;
 } 

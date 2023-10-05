@@ -1,6 +1,6 @@
 <template>
   <div class="global-modal" v-if="wrapperVisible" @click="clickMask">
-    <div :class="['global-modal-container', innerClass]" :style="containerStyle" @click.stop>
+    <div class="w-auto" :class="['global-modal-container', innerClass]" :style="containerStyle" @click.stop>
       <img v-if="showClose" class="close-icon" src="@/assets/images/img_close_black.png" @click="hide" />
       <div class="h-10"></div>
       <div class="flex flex-col justify-center items-center">
