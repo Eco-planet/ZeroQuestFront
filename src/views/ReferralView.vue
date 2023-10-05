@@ -77,6 +77,7 @@
           the person who spread the word will receive 2,000 ESG Points.<br />
           You can spread the word to only one person at a time.<br />
           You can make up to 5 referrals a day.
+          {{ accessToken }}
         </div>
       </div>
 
@@ -136,10 +137,12 @@ import { errorMsg } from "@/utils/util";
 import { useStore } from "vuex";
 import { useI18n } from "vue-i18n";
 import "vue3-carousel/dist/carousel.css";
+import { access } from "fs";
 const vuexStore = useStore(); // Use a different variable name for the store
 const referral = computed(() => vuexStore.getters["auth/getReferral"]);
 const bannerList = store.getters["auth/getBannerList"];
 const nftList = store.getters["auth/getNftList"];
+const accessToken = computed(() => vuexStore.getters["auth/getAccessToken"]);
 const myNftList = ref<nftType>();
 const esgPoint = ref(0);
 const balances = ref();
@@ -156,14 +159,21 @@ const shareTelegram = () => {
   const referralValue = referral.value;
 
   if (referralValue) {
-    const text = `ZeroQuest - 친구초대 이벤트 :`;
-    const url = `https://play.google.com/store/apps/details?id=com.aiblue.zrqst_webview_app`;
     const referralSlice = referralValue.slice(-6); // Use slice if referralValue is a string
-    const telegramShareUrl = `https://telegram.me/share/url?url=${encodeURIComponent(
-      url
-    )}  &text=${encodeURIComponent(text + referralSlice)}`;
-    // window.open(telegramShareUrl);
-    window.flutter_inappwebview.callHandler('handleTelegramShareBtn', {infoShareTelegram: telegramShareUrl}).then((res: any) => {
+    // const url = `https://play.google.com/store/apps/details?id=com.aiblue.zrqst_webview_app`;
+    // const telegramShareUrl = `https://telegram.me/share/url?url=${encodeURIComponent(
+    //   url
+    //   )}  &text=${encodeURIComponent(text + referralSlice)}`;
+    // const title = `ZeroQuest - 친구초대 이벤트 ${referralSlice}을 입력하세요`;
+
+    const infoShareTelegram = {
+      content: {
+        title: `ZeroQuest - 친구초대 이벤트 ${referralSlice}을 입력하세요`,
+        accessToken: accessToken,
+      }
+    }
+
+    window.flutter_inappwebview.callHandler('handleTelegramShareBtn', {infoShareTelegram: infoShareTelegram}).then((res: any) => {
       console.log(res)
     })
     // Assuming that you want to send the referral after sharing on Telegram
@@ -202,6 +212,7 @@ const shareKakao = () => {
           mobileWebUrl: `https://zeroquest.io`, 
           webUrl: `https://zeroquest.io`,
         },
+        accessToken: accessToken
       },
     }
 
@@ -238,13 +249,13 @@ const shareKakao = () => {
     //   });
 
     // 여기서 api/user/sendReferral 호출하기
-    sendReferralRequest(referralValue)
-      .then((response) => {
-        console.log("sendReferral Response:", response.data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    // sendReferralRequest(referralValue)
+    //   .then((response) => {
+    //     console.log("sendReferral Response:", response.data);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error:", error);
+    //   });
   } else {
     console.error("store.state.referral is not defined or is empty");
   }
@@ -255,11 +266,11 @@ const referralInput = () => {
   const userReferralSlice = referral.value.slice(-6);
 
   if (referralCode.value === userReferralSlice) {
-    alert("본인의 추천인 코드 마지막 6자리는 입력할 수 없습니다.");
+    alert(t("message.ref3"));
     return;
   }
 
-  console.log("레퍼럴 코드는", referralCode.value, typeof referralCode.value);
+  // console.log("레퍼럴 코드는", referralCode.value, typeof referralCode.value);
 
   http
     .post(`/api/user/checkReferral`, {
@@ -270,9 +281,9 @@ const referralInput = () => {
     })
     .catch((error) => {
       console.error("Error:", error);
-      alert("이미 등록된 레퍼럴 코드입니다.");
+      alert(t("message.ref4"));
       // 오류 발생시 해당 메시지를 표시
-      alert("입력한 코드는 존재하지 않는 레퍼럴 코드입니다.");
+      alert(t("message.ref5"));
     });
 };
 
@@ -282,15 +293,16 @@ const showLastSixChars = () => {
     const slicedValue = referralValue.slice(-6);
 
     // 클립보드에 slicedValue를 복사
-    navigator.clipboard
-      .writeText(slicedValue)
-      .then(() => {
-        alert(slicedValue + "은 추천인 코드입니다."); // 뒷부분 6자리를 알림창으로 표시.
-        alert("추천인 코드가 클립보드에 복사되었습니다.");
-      })
-      .catch((err) => {
-        console.error("Could not copy text: ", err);
-      });
+    window.flutter_inappwebview.callHandler('handleCopyBtn', {content: slicedValue})
+    // navigator.clipboard
+    //   .writeText(slicedValue)
+    //   .then(() => {
+    //     alert(slicedValue + t("message.ref1")); // 뒷부분 6자리를 알림창으로 표시.
+    //     alert(t("message.ref2"));
+    //   })
+    //   .catch((err) => {
+    //     console.error("Could not copy text: ", err);
+    //   });
   }
 };
 

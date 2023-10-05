@@ -49,6 +49,14 @@ const movePage = (page: string) => {
     router.push(page);
   }
 };
+
+// const movePage = (page: string) => {
+//   if (page === "/market") {
+//     showModal('message');
+//   } else {
+//     router.push(page);
+//   }
+// };
 </script>
 
 <style scoped lang="scss">

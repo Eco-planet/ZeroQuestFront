@@ -131,6 +131,8 @@ import voting from "@/components/Modal/VoteBtn.vue"
 import completedVote from "@/components/Modal/completedVote.vue"
 import http from "@/api/http"
 import { useStore } from "vuex"
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
 
 const store = useStore()
 
@@ -206,7 +208,7 @@ const openModal = (voteDataidx: number, voteUid:string) => {
   voteIdx.value = voteDataidx
 
   if(myUid.value === voteUid){
-    alert("본인 컨텐츠에는 투표를 할 수 없습니다")
+    alert(t("message.vote"))
   }else {
     if(userVote.value>0){
       isModalOpen.value = true

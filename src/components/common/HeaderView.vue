@@ -24,7 +24,8 @@
       <div class="h-6"></div>
       <div class="text-2xl" :class="{ select: $route.name === 'mywallet' }" @click="movePage('/mywallet')">My Wallet</div>
       <div class="h-6"></div>
-      <div class="text-2xl" :class="{ select: $route.name === 'battle' }" @click="movePage('/battle')">Battle</div>
+      <!-- <div class="text-2xl" :class="{ select: $route.name === 'battle' }" @click="movePage('/battle')">Battle</div> -->
+      <div class="text-2xl" :class="{ select: $route.name === 'battle' }" @click="movePage1()">Battle</div>
       <div class="h-10"></div>
       <div class="text-2xl font-semibold">About</div>
       <div class="h-3"></div>
@@ -68,6 +69,13 @@ const logos = computed(()=>store.getters.logos);
 const modalVisible = ref(false);
 const menuVisible = ref(false);
 const aniVisible = ref(false);
+
+//battle modal창
+const movePage1 = () => {
+  console.log("battle")
+  store.state.popupType = 'serviceChecking';
+  store.state.isPopup = true;
+} 
 
 const forceLogout = () => {
   store.commit("auth/setClearToken");

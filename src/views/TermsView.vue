@@ -21,7 +21,7 @@
         <label for="clause-check01">{{ t("message.termsAgree01") }}</label>
         <div class="flex justify-center items-center">
           <div class="w-2"></div>
-          <button class="p-2 h-8 flex justify-center items-center font-semibold text-lg text-white terms-enable" @click="showTerms(1)">보기</button>
+          <button class="p-2 h-8 flex justify-center items-center font-semibold text-lg text-white terms-enable" @click="showTerms(1)">{{t("message.terms")}}</button>
         </div>
       </div>
     </div>
@@ -31,7 +31,7 @@
         <label for="clause-check02">{{ t("message.termsAgree02") }}</label>
         <div class="flex justify-center items-center">
           <div class="w-2"></div>
-          <button class="p-2 h-8 flex justify-center items-center font-semibold text-lg text-white terms-enable" @click="showTerms(2)">보기</button>
+          <button class="p-2 h-8 flex justify-center items-center font-semibold text-lg text-white terms-enable" @click="showTerms(2)">{{ t("message.terms") }}</button>
         </div>
       </div>
     </div>

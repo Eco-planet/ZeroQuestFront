@@ -384,6 +384,7 @@ import "vue3-carousel/dist/carousel.css";
 const store = useStore()
 
 const locale = computed(() => store.state.system.locale)
+const accessToken = store.getters["auth/getAccessToken"];
 
 const { t } = useI18n();
 
@@ -534,9 +535,10 @@ const clickMask = () => {
 }
 
 const doCopy = () => {
-  window.navigator.clipboard.writeText(store.getters["auth/getAddress"]).then(() => {
-    //console.log('copy');
-  });
+  window.flutter_inappwebview.callHandler('handleCopyBtn', {content: store.getters["auth/getAddress"]})
+  // window.navigator.clipboard.writeText(store.getters["auth/getAddress"]).then(() => {
+  //   //console.log('copy');
+  // });
 
   hide();
 };
@@ -623,9 +625,10 @@ const codeRequest = () => {
 //초기화요청검증
 const resetRequest = () => {
   if(!md5Hash.value){
-    alert("인증코드 요청을 먼저 진행해주세요")
+    alert(t("message.verificationCode1"))
   }else if(!certificationNumber.value){
-    alert("인증번호를 입력해주세요")
+    // alert("인증번호를 입력해주세요")
+    alert(t("message.verificationCode2"))
   }else if(md5Hash.value && certificationNumber.value){
     http.post("/auth/signVerify", {
     verifyToken: md5Hash.value,
@@ -646,7 +649,7 @@ const resetRequest = () => {
       }
     })
     .catch((error) => {
-      alert("인증번호를 확인후 다시입력해주세요")
+      alert(t("message.verificationCode3"))
     })
   }
 }
@@ -689,6 +692,7 @@ const sendReferralRequest = (code) => {
 };
 
 // 소셜 공유하기, 카카오
+// 소셜 공유하기, 카카오
 const shareKakao = () => {
   const referralValue = referral.value;
   if (referralValue) {
@@ -704,6 +708,7 @@ const shareKakao = () => {
           mobileWebUrl: `https://zeroquest.io`, 
           webUrl: `https://zeroquest.io`,
         },
+        accessToken: accessToken
       },
     }
 
@@ -712,14 +717,6 @@ const shareKakao = () => {
       console.log(res)
     })
 
-    // 여기서 api/user/sendReferral 호출하기
-    sendReferralRequest(referralValue)
-      .then((response) => {
-        console.log("sendReferral Response:", response.data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
   } else {
     console.error("store.state.referral is not defined or is empty");
   }
@@ -730,11 +727,12 @@ const referralInput = () => {
   const userReferralSlice = referral.value.slice(-6);
 
   if (referralCode.value === userReferralSlice) {
-    alert("본인의 추천인 코드 마지막 6자리는 입력할 수 없습니다.");
+    alert(t("message.ref6"));
+
     return;
   }
 
-  console.log("레퍼럴 코드는", referralCode.value, typeof referralCode.value);
+  // console.log("레퍼럴 코드는", referralCode.value, typeof referralCode.value);
 
   http
     .post(`/api/user/checkReferral`, {
@@ -745,9 +743,10 @@ const referralInput = () => {
     })
     .catch((error) => {
       console.error("Error:", error);
-      alert("이미 등록된 레퍼럴 코드입니다.");
+      alert(t("message.ref4"));
       // 오류 발생시 해당 메시지를 표시
-      alert("입력한 코드는 존재하지 않는 레퍼럴 코드입니다.");
+      alert(t("message.ref5"));
+  
     });
 };
 
@@ -760,8 +759,8 @@ const showLastSixChars = () => {
     navigator.clipboard
       .writeText(slicedValue)
       .then(() => {
-        alert(slicedValue + "은 추천인 코드입니다."); // 뒷부분 6자리를 알림창으로 표시.
-        alert("추천인 코드가 클립보드에 복사되었습니다.");
+        alert(slicedValue + t("message.ref1")); // 뒷부분 6자리를 알림창으로 표시.
+        alert(t("message.ref2"));
       })
       .catch((err) => {
         console.error("Could not copy text: ", err);

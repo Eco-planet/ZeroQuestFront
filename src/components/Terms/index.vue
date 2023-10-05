@@ -6,10 +6,12 @@
       <div class="flex flex-col justify-center items-center">
         <div class="text-2xl text-center">
           <template v-if="termsType === 1">
-            <textarea class="terms" cols="60" rows="40">{{ terms1 }}</textarea>
+            <textarea v-if="locale === 'kr'" class="terms" cols="60" rows="40">{{ termsKR1 }}</textarea>
+            <textarea v-else class="terms" cols="60" rows="40">{{ termsEN1 }}</textarea>
           </template>
           <template v-if="termsType === 2">
-            <textarea class="terms" cols="60" rows="40">{{ terms2 }}</textarea>
+            <textarea v-if="locale === 'kr'" class="terms" cols="60" rows="40">{{ termsKR2 }}</textarea>
+            <textarea v-else class="terms" cols="60" rows="40">{{ termsEN2 }}</textarea>
           </template>
         </div>
         <div class="h-10"></div>
@@ -23,9 +25,14 @@
 import store from "@/store";
 import { computed, ref, toRefs, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import terms1 from "!raw-loader!@/assets/terms/terms1.md";
-import terms2 from "!raw-loader!@/assets/terms/terms2.md";
+import { useStore } from "vuex";
+import termsKR1 from "!raw-loader!@/assets/terms/termsKR1.md";
+import termsKR2 from "!raw-loader!@/assets/terms/termsKR2.md";
+import termsEN1 from "!raw-loader!@/assets/terms/termsEN1.md";
+import termsEN2 from "!raw-loader!@/assets/terms/termsEN2.md";
 
+const vuexStore = useStore(); // Use a different variable name for the store
+const locale = computed(() => vuexStore.state.system.locale)
 const { t } = useI18n();
 
 const props = defineProps({

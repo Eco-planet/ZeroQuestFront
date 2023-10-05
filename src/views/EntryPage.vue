@@ -137,8 +137,7 @@ const handleFileValue = ((event) => {
 
   if (imageValue.value) {
       if (imageValue.value.size > maxSize) {
-          // alert('File size is too large. Please select a file under 10MB.')
-          alert('이미지는 10MB이하로 선택해주세요')
+          alert(t("message.entryPage1"))
           
           imagePreviewUrl.value = undefined; // clear the preview URL
           return; // exit the function early
@@ -173,8 +172,7 @@ const enrollmentBtn = (() => {
   if (sessionId.value) {
     //entryAdd코드
     if (!titleValue.value || !descValue.value || checkboxValue.value === false || !imageValue.value) {
-      // alert("Please fill in all fields and check the checkboxes")
-      alert("빠짐없이 모두 작성후에 체크버튼을 눌러주세요")
+      alert(t("message.entryPage2"))
       return
 
     } else if (titleValue.value && descValue.value && checkboxValue.value && imageValue.value) {
@@ -187,8 +185,7 @@ const enrollmentBtn = (() => {
 
       http.post("/api/battle/entry", formData)
         .then((response) => {
-          // alert("Finished appointment")
-          alert("등록되었습니다")
+          alert(t("message.entryPage3"))
           router.push({
             path: '/battle',
             name: 'battle'
@@ -203,8 +200,7 @@ const enrollmentBtn = (() => {
 
     //필드를 안채웠을경우
     if (!titleValue.value || !descValue.value || checkboxValue.value === false || !imageValue.value) {
-      // alert("Please fill in all fields and check the checkboxes")
-      alert("빠짐없이 모두 작성후에 체크버튼을 눌러주세요")
+      alert(t("message.entryPage2"))
       return
 
       //수정하러들어왔지만 수정하지않고 그냥 나가는 경우 
@@ -238,8 +234,7 @@ const enrollmentBtn = (() => {
 
       http.post(`/api/battle/editEntry/${entryIdx.value}/${entrySessionId.value}`, formData)
         .then((response) => {
-          alert("수정이 완료되었습니다")
-          // alert("Finished edit")
+          alert(t("message.entryPage4"))
           router.push({
             path: '/myEntry',
             name: 'myEntry'

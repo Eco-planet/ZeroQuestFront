@@ -72,6 +72,8 @@ import { ref, reactive, onMounted, computed} from 'vue'
 import router from "@/router"
 import http from "@/api/http"
 import { useStore } from 'vuex'
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
 
 const store = useStore()
 
@@ -115,13 +117,11 @@ const battleMyEntry = () => {
 const deleteBtn = (contents_id) => {
   http.delete(`/api/battle/deleteEntry/${contents_id}`)
   .then((response) => {
-    alert("삭제되었습니다")
-    // alert("has been deleted")
+    alert(t("message.myEntry1"))
     battleMyEntry()
   })
   .catch((error) => {
-      alert("삭제가 되지 않았습니다. 다시 시도해주세요");
-      // alert("There was a problem deleting the item. please try again");
+      alert(t("message.myEntry2"));
   })
 }
 
