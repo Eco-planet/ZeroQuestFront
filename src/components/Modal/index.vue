@@ -337,9 +337,23 @@
               </div>
           </div>
         </template>
+        <template v-if="popupType === 'successReferral'">
+          <div>
+            <div class="mb-10 flex justify-center">
+              <img class="wp-30" src="@/assets/images/icon_success.png" />
+            </div>
+            <div class="mb-10 text-3xl font-bold">
+              {{ t('message.successReferral') }}
+            </div>
+            <div>
+              <button class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
+                @click="hide">{{ t('message.termsBtn') }}</button>
+              </div>
+          </div>
+        </template>
 
         <template
-          v-if="popupType !== 'qr_code' && popupType !== 'withdraw_pass' && popupType !== 'withdraw_pass_update' && popupType !== 'resetPW'&& popupType !== 'send_coin' && popupType !== 'game_install' && popupType !== 'game_off' && popupType !== 'duplicate_nft_buy'&& popupType !== 'serviceChecking'">
+          v-if="popupType !== 'qr_code' && popupType !== 'withdraw_pass' && popupType !== 'withdraw_pass_update' && popupType !== 'resetPW'&& popupType !== 'send_coin' && popupType !== 'game_install' && popupType !== 'game_off' && popupType !== 'duplicate_nft_buy' && popupType !== 'serviceChecking' && popupType !== 'successReferral'">
           <div>
             <img class="error-icon" src="@/assets/images/icon_error.png" />
           </div>

@@ -37,10 +37,10 @@ export default {
     myEntry2:"It was not deleted. please try again.",
     ref1:" is the referral code.",
     ref2:"Referral code has been copied to your clipboard.",
-    ref3:"The last 6 digits of the referral code cannot be entered.",
+    ref3:"You cannot enter your own referral code.",
     ref4:"This is a referral code that has already been registered.",
     ref5:"The code you entered is a non-existent referral code.",
-    ref6:"You cannot enter the last 6 digits of your referral code.",
+    ref6:"Enter the referral code shared with you.",
     referral1:"Saving the Earth's Small but Certain Happiness 🌎🌟",
     referral2:"Practice carbon reduction with friends",
     referral3:"If a friend enters a referral code, the referrer",
@@ -119,7 +119,8 @@ export default {
     time:"time",
     reward:"reward",
     buyWithPoint: "Purchase with ESG points",
-    ChargingPoint: "ESG Point charging"
+    ChargingPoint: "ESG Point charging",
+    successReferral: "Success checking referral"
    },
 
    error: {

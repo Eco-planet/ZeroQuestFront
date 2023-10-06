@@ -37,10 +37,10 @@ export default {
     myEntry2:"삭제가 되지 않았습니다. 다시 시도해주세요",
     ref1:"은 추천인 코드입니다.",
     ref2:"추천인 코드가 클립보드에 복사되었습니다.",
-    ref3:"본인의 추천인 코드 마지막 6자리는 입력할 수 없습니다.",
+    ref3:"본인의 추천인 코드는 입력할 수 없습니다.",
     ref4:"이미 등록된 레퍼럴 코드입니다.",
     ref5:"입력한 코드는 존재하지 않는 레퍼럴 코드입니다.",
-    ref6:"본인의 추천인 코드 마지막 6자리는 입력할 수 없습니다.",
+    ref6:"공유받은 레퍼럴 코드를 입력하세요.",
     referral1:"지구 지키기 소확행 🌎🌟",
     referral2:"친구와 함께 탄소감축 실천하자",
     referral3:"친구가 추천인 코드 입력 한 경우, 추천인에게",
@@ -121,7 +121,8 @@ export default {
     time:"시간",
     reward:"보상",
     buyWithPoint: "ESG Point로 구매",
-    ChargingPoint: "ESG Point 충전"
+    ChargingPoint: "ESG Point 충전",
+    successReferral: "레퍼럴 코드 확인 완료"
   },
 
   error: {

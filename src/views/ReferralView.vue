@@ -121,6 +121,7 @@
       </div>
     </div>
   </div>
+  <Modal :visible="store.state.isPopup" @hide="closeModal" :title="popupTitle"/>
 </template>
 
 <script lang="ts" setup>
@@ -137,6 +138,7 @@ import { useStore } from "vuex";
 import { useI18n } from "vue-i18n";
 import "vue3-carousel/dist/carousel.css";
 import { access } from "fs";
+import Modal from "@/components/Modal/index.vue";
 const vuexStore = useStore(); // Use a different variable name for the store
 const referral = computed(() => vuexStore.getters["auth/getReferral"]);
 const bannerList = store.getters["auth/getBannerList"];
@@ -273,24 +275,38 @@ const referralInput = () => {
   const userReferralSlice = referral.value.slice(-6);
 
   if (referralCode.value === userReferralSlice) {
-    alert(t("message.ref3"));
+    store.state.popupType = "message";
+    store.state.isPopup = true;
+    popupTitle.value = "message.ref3";
+    return;
+  } else if (!referralCode.value) {
+    store.state.popupType = "message";
+    store.state.isPopup = true;
+    popupTitle.value = "message.ref6";
     return;
   }
-
-  // console.log("레퍼럴 코드는", referralCode.value, typeof referralCode.value);
 
   http
     .post(`/api/user/checkReferral`, {
       referralCode: referralCode.value,
     })
     .then((response) => {
-      console.log("200", response.data);
+      store.state.popupType = "successReferral";
+      store.state.isPopup = true;
+      popupTitle.value = "message.successReferral";
     })
     .catch((error) => {
       console.error("Error:", error);
-      alert(t("message.ref4"));
-      // 오류 발생시 해당 메시지를 표시
-      alert(t("message.ref5"));
+      
+      if (error.response.data.errorCode === 303) {    // 존재하지 않는 레퍼럴 코드를 입력 했을 때
+        store.state.popupType = "message";
+        store.state.isPopup = true;
+        popupTitle.value = "message.ref5";
+      } else if (error.response.data.errorCode === 304) {   // 이미 등록된 레퍼럴 코드를 입력 했을 때
+        store.state.popupType = "message";
+        store.state.isPopup = true;
+        popupTitle.value = "message.ref4";
+      }
     });
 };
 
@@ -319,6 +335,10 @@ const slicedReferralValue = computed(() => {
   }
   return "";
 });
+
+const closeModal = () => {
+  store.state.isPopup = false;
+};
 </script>
 
 <style>
