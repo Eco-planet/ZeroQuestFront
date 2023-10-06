@@ -73,7 +73,7 @@ const aniVisible = ref(false);
 //battle modal창
 const movePage1 = () => {
   store.state.popupType = 'serviceChecking';
-  store.state.isPopup = true;
+  modalVisible.value = true;
 } 
 
 const forceLogout = () => {
@@ -126,7 +126,7 @@ const movePage = (page: string) => {
   menuVisible.value = false;
   aniVisible.value = false;
 
-  if (page === "/market") {
+  if (page === "/battle") {
     showModal();
   } else {
     router.push(page);
