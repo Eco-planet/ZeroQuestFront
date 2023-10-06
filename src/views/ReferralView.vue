@@ -185,16 +185,6 @@ const shareTelegram = () => {
     window.flutter_inappwebview.callHandler('handleTelegramShareBtn', {infoShareTelegram: infoShareTelegram}).then((res: any) => {
       console.log(res)
     })
-    // Assuming that you want to send the referral after sharing on Telegram
-    if (window.confirm("텔레그램으로 친구 공유합니다")) {
-      sendReferralRequest(referralValue)
-        .then((response) => {
-          console.log("sendReferral Response:", response.data);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    }
   } else {
     console.error("store.state.referral is not defined or is empty");
   }
@@ -246,16 +236,6 @@ const shareKakao = () => {
     //     // serverCallbackArgs: '{"key":"value"}',
     //   },
     // });
-
-    // GET 요청을 서버에 보내기
-    // http
-    //   .get("/api/test", { data: "Kakao share button clicked!" })
-    //   .then((response) => {
-    //     console.log("GET request sent successfully:", response.data);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error sending GET request:", error);
-    //   });
 
     // 여기서 api/user/sendReferral 호출하기
     // sendReferralRequest(referralValue)
