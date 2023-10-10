@@ -115,9 +115,9 @@
         <div class="font-bold">·</div>
         <div class="ml-2">{{ t("message.swapCaution1") }}</div>
       </div>
-      <div class="flex justify-start items-center">
+      <div class="flex justify-start">
         <div class="font-bold">·</div>
-        <div class="ml-2">{{ t("message.swapCaution2") }}</div>
+        <div class="ml-2 text-left">{{ t("message.swapCaution2") }}</div>
       </div>
     </div>
     <div class="h-10"></div>
