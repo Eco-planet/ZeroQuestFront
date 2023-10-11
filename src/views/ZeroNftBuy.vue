@@ -94,8 +94,6 @@
       @hide="closeModal"
       :title="popupTitle"
     />
-    <nftbuy v-if="isModalOpen" @close-modal="isModalChange"></nftbuy>
-
   </div>
 </template>
   
@@ -109,7 +107,6 @@ import { useI18n } from "vue-i18n";
 import recycling from "@/components/common/recycling.vue"
 import stairs from "@/components/common/stairs.vue"
 import tree from "@/components/common/tree.vue"
-import nftbuy from "@/components/Modal/nftBuy.vue"
 import Modal from "@/components/Modal/index.vue";
 
 const { t } = useI18n();
@@ -155,8 +152,9 @@ const buyNftESGP = (nft: nftType) => {
     privateKey: getPk
   }).then((res) => {
     console.log("res", res)
-    
-    isModalOpen.value = true
+    store.state.popupType = "successMinting";
+    store.state.isPopup = true;
+    popupTitle.value = "message.successMinting";
   }).catch((err) => {
     console.log("err", err)
     if (err.response.data.errorCode === 505) {
