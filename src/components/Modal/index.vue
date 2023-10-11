@@ -668,26 +668,26 @@ const shareTelegram = () => {
   const referralValue = referral.value;
 
   if (referralValue) {
-    const text = `ZeroQuest - 친구초대 이벤트 :`;
-    const url = `https://play.google.com/store/apps/details?id=com.aiblue.zrqst_webview_app`;
     const referralSlice = referralValue.slice(-6); // Use slice if referralValue is a string
-    const telegramShareUrl = `https://telegram.me/share/url?url=${encodeURIComponent(
-      url
-    )}  &text=${encodeURIComponent(text + referralSlice)}`;
-    // window.open(telegramShareUrl);
-    window.flutter_inappwebview.callHandler('handleTelegramShareBtn', {infoShareTelegram: telegramShareUrl}).then((res: any) => {
+
+    const infoShareTelegram = {
+      content: {
+        objectType: "feed",
+        title: `ZeroQuest - 친구초대 이벤트 ${referralSlice}을 입력하세요`,
+        description: `https://play.google.com/store/apps/details?id=com.aiblue.zrqst_webview_app&pcampaignid=web_share`,
+        imageUrl:
+          "https://play-lh.googleusercontent.com/VaCMJUHxqjCtqNJ3oKFDdDCZUHdIOu5nZRARVnxSNssiYK6HXZ6JOTcA3vAcLPYfrJI=w240-h480-rw",
+        link: {
+          mobileWebUrl: `https://zeroquest.io`, 
+          webUrl: `https://zeroquest.io`,
+        },
+        accessToken: accessToken,
+      }
+    }
+
+    window.flutter_inappwebview.callHandler('handleTelegramShareBtn', {infoShareTelegram: infoShareTelegram}).then((res: any) => {
       console.log(res)
     })
-    // Assuming that you want to send the referral after sharing on Telegram
-    if (window.confirm("텔레그램으로 친구 공유합니다")) {
-      sendReferralRequest(referralValue)
-        .then((response) => {
-          console.log("sendReferral Response:", response.data);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    }
   } else {
     console.error("store.state.referral is not defined or is empty");
   }
