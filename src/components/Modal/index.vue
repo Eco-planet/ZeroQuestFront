@@ -355,12 +355,26 @@
             <div>
               <button class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
                 @click="hide">{{ t('message.termsBtn') }}</button>
+            </div>
+          </div>
+        </template>
+        <template v-if="popupType === 'tree_nft'">
+          <div>
+            <div>
+              <img class="error-icon" src="@/assets/images/icon_error.png" />
+            </div>
+            <div class="mb-10 text-3xl font-bold">
+                {{ t('error.commingSoon') }}
+            </div>
+            <div>
+              <button class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
+                @click="hide">{{ t('message.termsBtn') }}</button>
               </div>
           </div>
         </template>
 
         <template
-          v-if="popupType !== 'qr_code' && popupType !== 'withdraw_pass' && popupType !== 'withdraw_pass_update' && popupType !== 'resetPW'&& popupType !== 'send_coin' && popupType !== 'game_install' && popupType !== 'game_off' && popupType !== 'duplicate_nft_buy' && popupType !== 'serviceChecking' && popupType !== 'successReferral' && popupType !== 'successMinting'">
+          v-if="popupType !== 'qr_code' && popupType !== 'withdraw_pass' && popupType !== 'withdraw_pass_update' && popupType !== 'resetPW'&& popupType !== 'send_coin' && popupType !== 'game_install' && popupType !== 'game_off' && popupType !== 'duplicate_nft_buy' && popupType !== 'serviceChecking' && popupType !== 'successReferral' && popupType !== 'successMinting' && popupType !== 'tree_nft'">
           <div>
             <img class="error-icon" src="@/assets/images/icon_error.png" />
           </div>
@@ -373,7 +387,9 @@
             <div>{{ t('message.getReward', { value: store.state.popupValue }) }}</div>
           </div>
           <div v-else class="text-2xl text-center">{{ t(showTitle) }}</div>
+
           <div class="h-10"></div>
+
           <div v-if="popupType !== 'message'" class="flex justify-center">
             <div><button class="w-36 h-12 font-semibold text-white text-xl rounded close-btn"
                 @click="resData('yes')">YES</button></div>

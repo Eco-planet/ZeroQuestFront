@@ -183,10 +183,6 @@ const exchangeReward = () => {
     })
 }
 
-const showPopup = () => {
-  store.state.isPopup = true;
-};
-
 const closeModal = () => {
   store.state.isPopup = false;
 };

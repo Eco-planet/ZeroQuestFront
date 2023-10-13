@@ -15,7 +15,7 @@
     <div class="h-1"></div>
     <div class="flex justify-center items-center">
       <template v-if="nftCard.enable === 0 && nftInfo.type === 2">
-        <div class="wp-40 p-1 font-semibold text-center text-white nftOff" @click="showModal">Play</div>
+        <div class="wp-40 p-1 font-semibold text-center text-white nftOff" @click="updateNftEnable('TREE')">Play</div>
       </template>
       <template v-else-if="nftCard.enable === 0">
         <div class="wp-40 p-1 font-semibold text-center text-white nftOff" @click="updateNftEnable('INSTALL')">Play</div>
@@ -92,16 +92,12 @@ const updateNftEnable = (type: String) => {
     emit("updateRun");
   } else if (type == 'REWARD') {
     emit("updateReward");
+  } else if (type == 'TREE') {
+    console.log("debug1")
+    store.state.popupType = "tree_nft";
+    store.state.isPopup = true;
   }
 };
-
-const popupTitle = ref("");
-
-const showModal = () => {
-  store.state.popupType = "message";
-  store.state.isPopup = true;
-  popupTitle.value = "error.commingSoon";
-}
 
 const closeModal = () => {
   store.state.isPopup = false;
