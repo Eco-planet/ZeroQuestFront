@@ -105,8 +105,17 @@
 
         <template v-if="popupType === 'send_coin'">
           <div class="flex flex-col justify-center items-center">
-            <div class="font-semibold text-2xl">
-              {{ t('message.withdraw') }}
+            <div class="flex items-center">
+              <div class="font-semibold text-2xl">
+                {{ t('message.withdraw') }}
+              </div>
+              <div>
+                <img 
+                src="@/assets/images/qr2.png"
+                class="w-12"
+                @click="withdrawalCamera"
+                >
+              </div>
             </div>
             <div class="h-5"></div>
             <div class="h-10"></div>
@@ -569,6 +578,11 @@ const containerStyle = computed(() => ({
 
 const clickMask = () => {
   hide();
+}
+
+const withdrawalCamera = () => {
+  console.log("됐니?")
+  window.flutter_inappwebview.callHandler('handleCopyBtn', {content: slicedValue})
 }
 
 const doCopy = () => {

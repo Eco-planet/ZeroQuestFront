@@ -90,7 +90,7 @@
     <div class="h-96"></div>
 
     <Modal
-      :visible=".isPopup"
+      :visible="store.state.isPopup"
       @hide="closeModal"
       :title="popupTitle"
     />

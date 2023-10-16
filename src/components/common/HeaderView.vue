@@ -47,6 +47,12 @@
           <img :src="logo.src" @mouseover="switchLogo(logo, true)" @mouseout="switchLogo(logo, false)"/>
         </a>
       </div>
+      <div class="h-10"></div>
+      <a href="https://open.kakao.com/o/gEkf2eMf" target="_blank">
+        <div class="pb-2 text-2xl font-semibold">사용방법문의</div>
+        <img src="@/assets/images/sns05_off.png">
+      </a>
+     
     </div>
     <div class="wp-20" @click="toggleMenu()"></div>
   </div>
