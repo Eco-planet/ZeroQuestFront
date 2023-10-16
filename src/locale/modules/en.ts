@@ -121,7 +121,8 @@ export default {
     reward:"reward",
     buyWithPoint: "Purchase with ESG points",
     ChargingPoint: "ESG Point charging",
-    successReferral: "Success checking referral"
+    successReferral: "Success checking referral",
+    successMinting: "Success NFT Minting!"
    },
 
    error: {
@@ -138,6 +139,9 @@ export default {
     notSupportSwap: "Unsupported swap coin.",
     lessMiniumCostSwap: "Swap quantity is less than minimum quantity.",
     failedPointSwap: "Point swap failed.",
+    commingSoon: "Coming soon.",
+    notActivated: "NFT is inactive.",
+    notReward: "There are no points to be rewarded.",
     notFoundFlutter: "Not Found 'flutter_inappwebview'",
     notEnoughPoints: "ESG points are lacking.",
   },

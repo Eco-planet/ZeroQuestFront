@@ -112,7 +112,7 @@ const updateCheck = (type: number) => {
 };
 
 const updateTerms = () => {
-  if (termsStatus === '1') {
+  if (termsStatus === 1) {
     store.state.popupType = 'message';
     popupTitle.value = "message.termsAgree04";
     store.state.isPopup = true;

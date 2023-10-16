@@ -344,9 +344,37 @@
               </div>
           </div>
         </template>
+        <template v-if="popupType === 'successMinting'">
+          <div>
+            <div class="mb-10 flex justify-center">
+              <img class="wp-30" src="@/assets/images/icon_success.png" />
+            </div>
+            <div class="mb-10 text-3xl font-bold">
+              {{ t('message.successMinting') }}
+            </div>
+            <div>
+              <button class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
+                @click="hide">{{ t('message.termsBtn') }}</button>
+            </div>
+          </div>
+        </template>
+        <template v-if="popupType === 'tree_nft'">
+          <div>
+            <div>
+              <img class="error-icon" src="@/assets/images/icon_error.png" />
+            </div>
+            <div class="mb-10 text-3xl font-bold">
+                {{ t('error.commingSoon') }}
+            </div>
+            <div>
+              <button class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
+                @click="hide">{{ t('message.termsBtn') }}</button>
+              </div>
+          </div>
+        </template>
 
         <template
-          v-if="popupType !== 'qr_code' && popupType !== 'withdraw_pass' && popupType !== 'withdraw_pass_update' && popupType !== 'resetPW'&& popupType !== 'send_coin' && popupType !== 'game_install' && popupType !== 'game_off' && popupType !== 'duplicate_nft_buy' && popupType !== 'serviceChecking' && popupType !== 'successReferral'">
+          v-if="popupType !== 'qr_code' && popupType !== 'withdraw_pass' && popupType !== 'withdraw_pass_update' && popupType !== 'resetPW'&& popupType !== 'send_coin' && popupType !== 'game_install' && popupType !== 'game_off' && popupType !== 'duplicate_nft_buy' && popupType !== 'serviceChecking' && popupType !== 'successReferral' && popupType !== 'successMinting' && popupType !== 'tree_nft'">
           <div>
             <img class="error-icon" src="@/assets/images/icon_error.png" />
           </div>
@@ -359,7 +387,9 @@
             <div>{{ t('message.getReward', { value: store.state.popupValue }) }}</div>
           </div>
           <div v-else class="text-2xl text-center">{{ t(showTitle) }}</div>
+
           <div class="h-10"></div>
+
           <div v-if="popupType !== 'message'" class="flex justify-center">
             <div><button class="w-36 h-12 font-semibold text-white text-xl rounded close-btn"
                 @click="resData('yes')">YES</button></div>
@@ -668,26 +698,26 @@ const shareTelegram = () => {
   const referralValue = referral.value;
 
   if (referralValue) {
-    const text = `ZeroQuest - 친구초대 이벤트 :`;
-    const url = `https://play.google.com/store/apps/details?id=com.aiblue.zrqst_webview_app`;
     const referralSlice = referralValue.slice(-6); // Use slice if referralValue is a string
-    const telegramShareUrl = `https://telegram.me/share/url?url=${encodeURIComponent(
-      url
-    )}  &text=${encodeURIComponent(text + referralSlice)}`;
-    // window.open(telegramShareUrl);
-    window.flutter_inappwebview.callHandler('handleTelegramShareBtn', {infoShareTelegram: telegramShareUrl}).then((res: any) => {
+
+    const infoShareTelegram = {
+      content: {
+        objectType: "feed",
+        title: `ZeroQuest - 친구초대 이벤트 ${referralSlice}을 입력하세요`,
+        description: `https://play.google.com/store/apps/details?id=com.aiblue.zrqst_webview_app&pcampaignid=web_share`,
+        imageUrl:
+          "https://play-lh.googleusercontent.com/VaCMJUHxqjCtqNJ3oKFDdDCZUHdIOu5nZRARVnxSNssiYK6HXZ6JOTcA3vAcLPYfrJI=w240-h480-rw",
+        link: {
+          mobileWebUrl: `https://zeroquest.io`, 
+          webUrl: `https://zeroquest.io`,
+        },
+        accessToken: accessToken,
+      }
+    }
+
+    window.flutter_inappwebview.callHandler('handleTelegramShareBtn', {infoShareTelegram: infoShareTelegram}).then((res: any) => {
       console.log(res)
     })
-    // Assuming that you want to send the referral after sharing on Telegram
-    if (window.confirm("텔레그램으로 친구 공유합니다")) {
-      sendReferralRequest(referralValue)
-        .then((response) => {
-          console.log("sendReferral Response:", response.data);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    }
   } else {
     console.error("store.state.referral is not defined or is empty");
   }

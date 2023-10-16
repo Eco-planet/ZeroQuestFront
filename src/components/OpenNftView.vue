@@ -14,7 +14,10 @@
     <div class="text-lg text-center" v-else>{{ nftInfo.name.eng }}</div>
     <div class="h-1"></div>
     <div class="flex justify-center items-center">
-      <template v-if="nftCard.enable === 0">
+      <template v-if="nftCard.enable === 0 && nftInfo.type === 2">
+        <div class="wp-40 p-1 font-semibold text-center text-white nftOff" @click="updateNftEnable('TREE')">Play</div>
+      </template>
+      <template v-else-if="nftCard.enable === 0">
         <div class="wp-40 p-1 font-semibold text-center text-white nftOff" @click="updateNftEnable('INSTALL')">Play</div>
       </template>
       <template v-else>
@@ -22,14 +25,16 @@
       </template>
     </div>
   </div>
+  <Modal :visible="store.state.isPopup" @hide="closeModal" :title="popupTitle" />
 </template>
 
 <script lang="ts" setup>
 import store from "@/store";
 import router from "@/router";
 import http from "@/api/http";
-import { toRefs, watch, computed } from "vue";
+import { ref, toRefs, watch, computed } from "vue";
 import { useStore } from "vuex";
+
 const vuexStore = useStore();
 const locale = computed(() => vuexStore.state.system.locale)
 
@@ -87,7 +92,15 @@ const updateNftEnable = (type: String) => {
     emit("updateRun");
   } else if (type == 'REWARD') {
     emit("updateReward");
+  } else if (type == 'TREE') {
+    console.log("debug1")
+    store.state.popupType = "tree_nft";
+    store.state.isPopup = true;
   }
+};
+
+const closeModal = () => {
+  store.state.isPopup = false;
 };
 
 const goNftDetail = (nftId: number, tokenId: number) => {
