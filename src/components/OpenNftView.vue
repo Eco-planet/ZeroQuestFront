@@ -75,6 +75,11 @@ const updateNftEnable = (type: String) => {
     }
     store.state.packageName = packageName
 
+  
+        store.state.popupType = 'game_install';
+        store.state.isPopup = true; 
+      
+
     window.flutter_inappwebview.callHandler('checkAppInstalled', {packageName:packageName}).then((res:any) => {
       //console.log(JSON.stringify(res));
 
