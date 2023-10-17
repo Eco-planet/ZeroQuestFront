@@ -3,7 +3,7 @@ export const SNS = {
     src:require("@/assets/images/sns01_off.png"),
     srcOn:require("@/assets/images/sns01_on.png"),
     srcOff:require("@/assets/images/sns01_off.png"),
-    href:"https://github.com/Eco-planet/econft-market-battle"
+    href:"https://github.com/Eco-planet"
   },
   Telegram:{
     src:require("@/assets/images/sns02_off.png"),

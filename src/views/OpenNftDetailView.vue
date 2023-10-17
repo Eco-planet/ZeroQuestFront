@@ -148,6 +148,18 @@ const getQuestReward = () => {
   })
     .then((response) => {
       console.log(response);
+      // UTC+9로 변경하는 함수
+      const convertToKST = (utcDateStr) => {
+        let date = new Date(utcDateStr);
+        date.setTime(date.getTime() + 9 * 60 * 60 * 1000); // 9시간을 더함
+        return date.toISOString(); // 변환된 날짜를 다시 문자열로 반환
+      };
+
+      // response.data.data 배열의 각 항목에 대해 createdAt을 UTC+9로 변경
+      response.data.data.forEach(item => {
+        item.createdAt = convertToKST(item.createdAt);
+      });
+
       questRewards.value = response.data.data.reverse();
     })
     .catch(() => {
