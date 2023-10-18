@@ -49,8 +49,14 @@
       </div>
       <div class="h-10"></div>
       <a href="https://open.kakao.com/o/gEkf2eMf" target="_blank">
-        <div class="pb-2 text-2xl font-semibold">사용방법문의</div>
-        <img src="@/assets/images/sns05_off.png">
+        <div class="pb-2 text-2xl font-semibold">{{ t("message.howToUse")}}</div>
+        <img 
+        :src="kakaoLogo" 
+        @mouseover="switchKakaoLogo(true)" 
+        @mouseout="switchKakaoLogo(false)"
+        :class="kakaoHover? 'w-14':'w-auto'"
+  
+        >
       </a>
      
     </div>
@@ -71,6 +77,9 @@ import Dropdown from './Dropdown.vue';
 const { t } = useI18n();
 
 const logos = computed(()=>store.getters.logos);
+
+const kakaoLogo = ref(require("@/assets/images/sns05_off.png"))
+const kakaoHover = ref()
 
 const modalVisible = ref(false);
 const menuVisible = ref(false);
@@ -126,6 +135,16 @@ const toggleMenu = () => {
 //Logo전환함수
 const switchLogo = (logo:any, isHover:boolean) => {
   return logo.src = isHover ? logo.srcOn : logo.srcOff;
+}
+
+const switchKakaoLogo = (isHover:boolean) => {
+  if(isHover){
+    kakaoLogo.value = require("@/assets/images/kakao_logo.png");
+    kakaoHover.value = true
+  }else{
+    kakaoLogo.value = require("@/assets/images/sns05_off.png")
+    kakaoHover.value = false
+  }
 }
 
 const movePage = (page: string) => {

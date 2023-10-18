@@ -122,7 +122,8 @@ export default {
     buyWithPoint: "Purchase with ESG points",
     ChargingPoint: "ESG Point charging",
     successReferral: "Success checking referral",
-    successMinting: "Success NFT Minting!"
+    successMinting: "Success NFT Minting!",
+    howToUse:"Inquiry on how to use"
    },
 
    error: {

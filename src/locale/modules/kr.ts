@@ -123,7 +123,8 @@ export default {
     buyWithPoint: "ESG Point로 구매",
     ChargingPoint: "ESG Point 충전",
     successReferral: "레퍼럴 코드 확인 완료",
-    successMinting: "NFT 민팅 성공!"
+    successMinting: "NFT 민팅 성공!",
+    howToUse:"사용방법문의"
   },
 
   error: {
