@@ -293,7 +293,7 @@
         <template v-if="popupType === 'game_install'">
           <div v-if="locale === 'kr'" class="flex flex-col justify-center items-center">
             <div class="h-5"></div>
-            <div class="text-2xl text-center">NFT 를 활성화하기 위해서는<br />분리수거 AI 카메라 NFT App 을<br />설치해야
+            <div class="text-2xl text-center">NFT 를 활성화하기 위해서는<br />{{ nftList[store.state.nftId].name.kor }} App 을<br />설치해야
               합니다.</div>
             <div class="h-10"></div>
             <div class="flex items-center justify-center">
@@ -308,7 +308,7 @@
           </div>
           <div v-else class="flex flex-col justify-center items-center">
             <div class="h-5"></div>
-            <div class="text-2xl text-center">To activate NFTs,<br />you need to install<br />the Smart AI NFT APP.</div>
+            <div class="text-2xl text-center">To activate NFTs,<br />you need to install<br />the {{ nftList[store.state.nftId].name.eng }}.</div>
             <div class="h-10"></div>
             <div class="flex items-center justify-center">
               <img :src="nftList[store.state.nftId].image"/>
@@ -506,6 +506,7 @@ const withdrawPass = ref("");
 const withdrawMsg = ref("");
 
 const nftList = store.getters["auth/getNftList"];
+console.log("nftList",nftList.value)
 const pwHash = computed(() => store.getters["auth/getPwHash"])
 const pwNumber = computed(() => store.getters["auth/getPwNumber"])
 
