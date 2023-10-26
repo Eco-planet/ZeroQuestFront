@@ -1,104 +1,168 @@
 <template>
   <div class="global-modal" v-if="wrapperVisible" @click="clickMask">
-    <div :class="['global-modal-container', innerClass]" :style="containerStyle" @click.stop>
-      <img v-if="showClose" class="close-icon" src="@/assets/images/img_close_black.png" @click="hide" />
+    <div
+      :class="['global-modal-container', innerClass]"
+      :style="containerStyle"
+      @click.stop
+    >
+      <img
+        v-if="showClose"
+        class="close-icon"
+        src="@/assets/images/img_close_black.png"
+        @click="hide"
+      />
       <div class="flex flex-col justify-center items-center">
         <template v-if="popupType === 'qr_code'">
           <div class="flex flex-col justify-center items-center">
             <div class="font-semibold text-2xl">My Address</div>
             <div class="h-5"></div>
-            <QRCodeVue3 :width="200" :height="200" :value="myAddress" :dotsOptions="{
-              type: 'square'
-            }" :cornersSquareOptions="{ type: 'square', color: '#000000' }" />
+            <QRCodeVue3
+              :width="200"
+              :height="200"
+              :value="myAddress"
+              :dotsOptions="{
+                type: 'square',
+              }"
+              :cornersSquareOptions="{ type: 'square', color: '#000000' }"
+            />
             <div class="h-10"></div>
-            <div class="p-3 text-xl bg-gray-500 rounded text-white">{{ store.getters["auth/getAddress"] }}</div>
-            <div class="h-10"></div>
-            <div class="p-3 flex justify-center items-center qrcode-bg" @click="doCopy">
-              <div class="text-2xl text-white">Copy Address</div>
-              <div class="w-5"></div>
-              <div class="wp-10"><img src="@/assets/images/icon_copy.png" /></div>
+            <div class="p-3 text-xl bg-gray-500 rounded text-white">
+              {{ store.getters["auth/getAddress"] }}
             </div>
             <div class="h-10"></div>
-            <div class="w-full flex">- {{ t('message.addressCaution1') }}</div>
-            <div class="w-full flex text-left">- {{ t('message.addressCaution2') }}</div>
-            <div class="w-full flex text-left">- {{ t('message.addressCaution3') }}</div>
+            <div
+              class="p-3 flex justify-center items-center qrcode-bg"
+              @click="doCopy"
+            >
+              <div class="text-2xl text-white">Copy Address</div>
+              <div class="w-5"></div>
+              <div class="wp-10">
+                <img src="@/assets/images/icon_copy.png" />
+              </div>
+            </div>
+            <div class="h-10"></div>
+            <div class="w-full flex">- {{ t("message.addressCaution1") }}</div>
+            <div class="w-full flex text-left">
+              - {{ t("message.addressCaution2") }}
+            </div>
+            <div class="w-full flex text-left">
+              - {{ t("message.addressCaution3") }}
+            </div>
           </div>
         </template>
         <template v-if="popupType === 'withdraw_pass'">
           <div class="flex flex-col justify-center items-center">
             <div class="font-semibold text-2xl">
-              {{ t('message.withdrawPassRegister') }}
+              {{ t("message.withdrawPassRegister") }}
             </div>
             <div class="h-5"></div>
             <div class="h-10"></div>
             <div class="p-5 flex flex-col text-xl rounded pass-back-bg">
               <div class="flex justify-start items-center">
                 <div>
-                  {{ t('message.withdrawPassInput') }}
+                  {{ t("message.withdrawPassInput") }}
                 </div>
                 <div class="ml-4">
-                  <input type="password" v-model="passwd1" size="20"
-                    class="text-lg border-solid border-1 border-gray-300" />
+                  <input
+                    type="password"
+                    v-model="passwd1"
+                    size="20"
+                    class="text-lg border-solid border-1 border-gray-300"
+                  />
                 </div>
               </div>
               <div class="h-5"></div>
               <div class="flex justify-start items-center">
                 <div>
-                  {{ t('message.withdrawPassCheck') }}
+                  {{ t("message.withdrawPassCheck") }}
                 </div>
                 <div class="ml-4">
-                  <input type="password" v-model="passwd2" size="20"
-                    class="text-lg border-solid border-1 border-gray-300" />
+                  <input
+                    type="password"
+                    v-model="passwd2"
+                    size="20"
+                    class="text-lg border-solid border-1 border-gray-300"
+                  />
                 </div>
               </div>
               <div class="h-5"></div>
-              <div v-if="passwdMsg !== ''" class="text-red-500">{{ passwdMsg }}</div>
+              <div v-if="passwdMsg !== ''" class="text-red-500">
+                {{ passwdMsg }}
+              </div>
             </div>
             <div class="h-5"></div>
             <div class="wp-90">
-              <div class="text-left">- {{ t('message.withdrawPassCaution1') }}</div>
-              <div class="text-left">- {{ t('message.withdrawPassCaution2') }}</div>
+              <div class="text-left">
+                - {{ t("message.withdrawPassCaution1") }}
+              </div>
+              <div class="text-left">
+                - {{ t("message.withdrawPassCaution2") }}
+              </div>
             </div>
             <div class="h-10"></div>
-            <div class="p-3 flex justify-center items-center pass-bg rounded" @click="doPass">
+            <div
+              class="p-3 flex justify-center items-center pass-bg rounded"
+              @click="doPass"
+            >
               <div class="p-2 text-2xl text-white">
-                {{ t('message.withdrawPassRegister') }}
+                {{ t("message.withdrawPassRegister") }}
               </div>
             </div>
           </div>
         </template>
         <template v-if="popupType === 'withdraw_pass_update'">
           <div class="flex flex-col justify-center items-center">
-            <div class="font-semibold text-2xl">{{ t('message.withdrawPassReset') }}</div>
+            <div class="font-semibold text-2xl">
+              {{ t("message.withdrawPassReset") }}
+            </div>
             <div class="h-5"></div>
             <div class="h-10"></div>
             <div class="p-5 flex flex-col text-xl rounded pass-back-bg">
               <div class="flex justify-between items-center">
-                <div>{{ t('message.withdrawPassInput') }}</div>
+                <div>{{ t("message.withdrawPassInput") }}</div>
                 <div class="ml-4">
-                  <input type="password" v-model.trim="updatePW1" size="20"
-                    class="text-lg border-solid border-1 border-gray-300" />
+                  <input
+                    type="password"
+                    v-model.trim="updatePW1"
+                    size="20"
+                    class="text-lg border-solid border-1 border-gray-300"
+                  />
                 </div>
               </div>
               <div class="h-5"></div>
               <div class="flex justify-between items-center">
-                <div>{{ t('message.withdrawPassCheck') }}</div>
+                <div>{{ t("message.withdrawPassCheck") }}</div>
                 <div class="ml-4">
-                  <input type="password" v-model.trim="updatePW2" size="20"
-                    class="text-lg border-solid border-1 border-gray-300" />
+                  <input
+                    type="password"
+                    v-model.trim="updatePW2"
+                    size="20"
+                    class="text-lg border-solid border-1 border-gray-300"
+                  />
                 </div>
               </div>
               <div class="h-5"></div>
-              <div v-if="passwdMsg !== ''" class="text-red-500">{{ passwdMsg }}</div>
+              <div v-if="passwdMsg !== ''" class="text-red-500">
+                {{ passwdMsg }}
+              </div>
             </div>
             <div class="h-5"></div>
             <div class="text-lg">
-              <div class="text-left">- {{ t('message.withdrawPassCaution1') }}</div>
-              <div class="text-left">- {{ t('message.withdrawPassCaution2') }}</div>
+              <div class="text-left">
+                - {{ t("message.withdrawPassCaution1") }}
+              </div>
+              <div class="text-left">
+                - {{ t("message.withdrawPassCaution2") }}
+              </div>
             </div>
             <div class="h-10"></div>
-            <div class="wp-70 p-3 flex justify-center items-center pass-bg rounded" @click="requestUpdatePW">
-              <div class="p-2 text-2xl text-white">{{ t('message.withdrawPassUpdate') }}</div>
+            <div
+              class="wp-70 p-3 flex justify-center items-center pass-bg rounded"
+              @click="requestUpdatePW"
+            >
+              <div class="p-2 text-2xl text-white">
+                {{ t("message.withdrawPassUpdate") }}
+              </div>
             </div>
           </div>
         </template>
@@ -107,14 +171,14 @@
           <div class="flex flex-col justify-center items-center">
             <div class="flex items-center">
               <div class="font-semibold text-2xl">
-                {{ t('message.withdraw') }}
+                {{ t("message.withdraw") }}
               </div>
-              <div>
-                <img 
-                src="@/assets/images/qr2.png"
-                class="w-12"
-                @click="withdrawalCamera"
-                >
+              <div style="position: relative; left: 65px">
+                <img
+                  src="@/assets/images/qr2.png"
+                  class="w-12"
+                  @click="withdrawalCamera"
+                />
               </div>
             </div>
             <div class="h-5"></div>
@@ -123,38 +187,41 @@
               <div class="flex justify-end items-center">
                 <div>Address</div>
                 <div class="ml-4">
-                  <input 
-                    type="text" 
-                    v-model="withdrawAddress" 
+                  <input
+                    type="text"
+                    v-model="withdrawAddress"
                     size="20"
-                    class="text-lg border-solid border-1 border-gray-300" />
-                  </div>
+                    class="text-lg border-solid border-1 border-gray-300"
+                  />
+                </div>
               </div>
               <div class="h-5"></div>
               <div class="flex justify-end items-center">
                 <div>
-                  {{ t('message.withdrawCount') }}
+                  {{ t("message.withdrawCount") }}
                 </div>
                 <div class="ml-4">
-                  <input 
-                    type="number" 
-                    v-model="withdrawCount" 
+                  <input
+                    type="number"
+                    v-model="withdrawCount"
                     size="20"
-                    class="text-lg border-solid border-1 border-gray-300" />
-                  </div>
+                    class="text-lg border-solid border-1 border-gray-300"
+                  />
+                </div>
               </div>
               <div class="h-5"></div>
               <div class="flex justify-end items-center">
                 <div>
-                  {{ t('message.withdrawPassInput') }}
+                  {{ t("message.withdrawPassInput") }}
                 </div>
                 <div class="ml-4">
-                  <input 
-                    type="password" 
-                    v-model="withdrawPass" 
+                  <input
+                    type="password"
+                    v-model="withdrawPass"
                     size="20"
-                    class="text-lg border-solid border-1 border-gray-300" />
-                  </div>
+                    class="text-lg border-solid border-1 border-gray-300"
+                  />
+                </div>
               </div>
               <div class="h-5"></div>
               <div v-if="withdrawMsg !== ''" class="text-red-500">
@@ -163,115 +230,124 @@
             </div>
             <div class="h-5"></div>
             <div class="wp-90 text-lg">
-              <div class="text-left">- {{ t('message.withdrawCaution1') }}</div>
-              <div class="text-left">- {{ t('message.withdrawCaution2') }}</div>
+              <div class="text-left">- {{ t("message.withdrawCaution1") }}</div>
+              <div class="text-left">- {{ t("message.withdrawCaution2") }}</div>
               <div class="h-2"></div>
-              <div class="text-left"><span class='font-semibold'>{{ t('message.withdrawCaution3') }}</span> : {{
-                t('message.withdrawCaution4') }}</div>
+              <div class="text-left">
+                <span class="font-semibold">{{
+                  t("message.withdrawCaution3")
+                }}</span>
+                : {{ t("message.withdrawCaution4") }}
+              </div>
             </div>
             <div class="h-10"></div>
-            <div class="p-3 flex justify-center items-center pass-bg rounded" @click="doSendCoin">
-              <div class="p-2 text-2xl text-white px-7">{{ t('message.withdrawBtnRegister') }}</div>
+            <div
+              class="p-3 flex justify-center items-center pass-bg rounded"
+              @click="doSendCoin"
+            >
+              <div class="p-2 text-2xl text-white px-7">
+                {{ t("message.withdrawBtnRegister") }}
+              </div>
             </div>
-            <div class="pt-4 font-semibold underline text-lg" @click="openResetPW">{{ t('message.forgetPassword') }}</div>
+            <div
+              class="pt-4 font-semibold underline text-lg"
+              @click="openResetPW"
+            >
+              {{ t("message.forgetPassword") }}
+            </div>
           </div>
         </template>
 
         <template v-if="popupType === 'resetPW'">
           <div class="flex flex-col justify-center items-center">
             <div class="bg-white px-4 pb-4">
-    
               <div class="mb-10 text-center">
-                <h3 class="mt-4 font-semibold text-black voteText text-2xl" id="modal-title">{{ t('message.resetPassword') }} <br>
-                  {{ t('message.GoogleAuthentication') }}</h3>
+                <h3
+                  class="mt-4 font-semibold text-black voteText text-2xl"
+                  id="modal-title"
+                >
+                  {{ t("message.resetPassword") }} <br />
+                  {{ t("message.GoogleAuthentication") }}
+                </h3>
               </div>
               <div>
-                <div v-if="locale === 'kr'" class="py-3 px-10 bg-gray-100 rounded-lg font-medium text-xl">인증코드 요청 시<br>
-                  현재 로그인 된 구글 메일로 <br>
+                <div
+                  v-if="locale === 'kr'"
+                  class="py-3 px-10 bg-gray-100 rounded-lg font-medium text-xl"
+                >
+                  인증코드 요청 시<br />
+                  현재 로그인 된 구글 메일로 <br />
                   임의로 생성된 인증번호를 전송합니다.
                 </div>
-                <div v-else class="py-3 px-10 bg-gray-100 rounded-lg font-medium text-xl">When requesting an authentication code,
-                  a randomly generated verification number 
-                  will be sent to the currently logged-in Google email.
+                <div
+                  v-else
+                  class="py-3 px-10 bg-gray-100 rounded-lg font-medium text-xl"
+                >
+                  When requesting an authentication code, a randomly generated
+                  verification number will be sent to the currently logged-in
+                  Google email.
                 </div>
               </div>
-         
-              <button 
-              type="button" 
-              class="
-              mb-16
-              text-white 
-              hover:bg-gray-400
-              focus:outline-none 
-              focus:ring-4 
-              focus:ring-gray-200 
-              font-medium
-              text-sm 
-              rounded-lg
-              mt-7
-              w-full
-              h-16
-              text-2xl
-              text-center 
-              getCode
-              "
-              @click="codeRequest"
+
+              <button
+                type="button"
+                class="mb-16 text-white hover:bg-gray-400 focus:outline-none focus:ring-4 focus:ring-gray-200 font-medium text-sm rounded-lg mt-7 w-full h-16 text-2xl text-center getCode"
+                @click="codeRequest"
               >
-              {{ t('message.VerificationCodeRequest') }}
+                {{ t("message.VerificationCodeRequest") }}
               </button>
-              <div class="font-medium text-xl">{{ t('message.EnterCode') }}</div>
-              <input type="text" v-model.trim="certificationNumber" class="mt-4 border-solid border-gray-300 wp-70" :placeholder="t('message.EnterVerificationCode')">
-              <button type="button" 
-              class="
-              moduleBtnBg
-              wp-70
-              text-white 
-              hover:bg-green-800 
-              focus:outline-none 
-              focus:ring-4 
-              focus:ring-green-300 
-              font-medium
-              text-sm 
-              rounded-lg
-              mt-9
-              h-16
-              text-2xl
-              text-center"
-              @click="resetRequest"
+              <div class="font-medium text-xl">
+                {{ t("message.EnterCode") }}
+              </div>
+              <input
+                type="text"
+                v-model.trim="certificationNumber"
+                class="mt-4 border-solid border-gray-300 wp-70"
+                :placeholder="t('message.EnterVerificationCode')"
+              />
+              <button
+                type="button"
+                class="moduleBtnBg wp-70 text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium text-sm rounded-lg mt-9 h-16 text-2xl text-center"
+                @click="resetRequest"
               >
-              {{ t("message.Complete") }}
+                {{ t("message.Complete") }}
               </button>
             </div>
           </div>
         </template>
-        
+
         <template v-if="popupType === 'duplicate_nft_buy'">
-          <div >
-            <div v-if="locale ==='kr'" class="mb-16 text-3xl font-bold text-black">
-              자발적 탄소감축을 위한 <br/>
+          <div>
+            <div
+              v-if="locale === 'kr'"
+              class="mb-16 text-3xl font-bold text-black"
+            >
+              자발적 탄소감축을 위한 <br />
               NFT는 반복 구매할 수 없습니다.
             </div>
             <div v-else class="mb-16 text-3xl font-bold text-black">
-              Voluntary carbon reduction <br/>
+              Voluntary carbon reduction <br />
               NFTs cannot be purchased repeatedly.
             </div>
           </div>
-         
+
           <div>
-            <div v-if="locale === 'kr'" class="font-semibold text-xl text-black text-2xl">
-              자발적 탄소감축 "제로퀘스트"를 <br/>
-              친구들에게 추천하면<br/>
-              <span class="text-esg-color font-bold">50ESG point</span> 를 드립니다
+            <div
+              v-if="locale === 'kr'"
+              class="font-semibold text-xl text-black text-2xl"
+            >
+              자발적 탄소감축 "제로퀘스트"를 <br />
+              친구들에게 추천하면<br />
+              <span class="text-esg-color font-bold">50ESG point</span> 를
+              드립니다
             </div>
             <div v-else class="font-semibold text-xl text-black text-2xl">
-              If you refer 'ZeroQuest' to friends, <br/>
-              you'll earn<br/>
+              If you refer 'ZeroQuest' to friends, <br />
+              you'll earn<br />
               <span class="text-esg-color font-bold">50ESG points</span>
             </div>
           </div>
 
-       
-    
           <div class="mt-7 mb-4">
             <!-- 카카오 공유 -->
             <button type="button">
@@ -282,7 +358,7 @@
                 />
               </a>
             </button>
-    
+
             <!-- 텔레그램 공유 -->
             <button type="button" class="sns_btn" @click="shareTelegram">
               <img src="@/assets/images/telog.png" alt="텔레그램 공유하기" />
@@ -291,53 +367,99 @@
         </template>
 
         <template v-if="popupType === 'game_install'">
-          <div v-if="locale === 'kr'" class="flex flex-col justify-center items-center">
+          <div
+            v-if="locale === 'kr'"
+            class="flex flex-col justify-center items-center"
+          >
             <div class="h-5"></div>
-            <div class="text-2xl text-center">NFT 를 활성화하기 위해서는<br />{{ nftList[store.state.nftId].name.kor }} App 을<br />설치해야
-              합니다.</div>
+            <div class="text-2xl text-center">
+              NFT 를 활성화하기 위해서는<br />{{
+                nftList[store.state.nftId].name.kor
+              }}
+              App 을<br />설치해야 합니다.
+            </div>
             <div class="h-10"></div>
             <div class="flex items-center justify-center">
               <img :src="nftList[store.state.nftId].image" />
             </div>
             <div class="h-10"></div>
-            <div class="text-xl text-center">연동되는 어플리케이션은 설치 후 동일한<br />구글 로그인을 사용해야 합니다.</div>
+            <div class="text-xl text-center">
+              연동되는 어플리케이션은 설치 후 동일한<br />구글 로그인을 사용해야
+              합니다.
+            </div>
             <div class="h-10"></div>
             <div class="w-full flex justify-center items-center">
-              <button class="wp-40 p-2 font-semibold text-2xl text-white game-btn" @click="resData(store.state.nftId.toString())">설치하기</button>
+              <button
+                class="wp-40 p-2 font-semibold text-2xl text-white game-btn"
+                @click="resData(store.state.nftId.toString())"
+              >
+                설치하기
+              </button>
             </div>
           </div>
           <div v-else class="flex flex-col justify-center items-center">
             <div class="h-5"></div>
-            <div class="text-2xl text-center">To activate NFTs,<br />you need to install<br />the {{ nftList[store.state.nftId].name.eng }}.</div>
-            <div class="h-10"></div>
-            <div class="flex items-center justify-center">
-              <img :src="nftList[store.state.nftId].image"/>
+            <div class="text-2xl text-center">
+              To activate NFTs,<br />you need to install<br />the
+              {{ nftList[store.state.nftId].name.eng }}.
             </div>
             <div class="h-10"></div>
-            <div class="text-xl text-center">The connected application should use<br />the same Google login after installation.</div>
+            <div class="flex items-center justify-center">
+              <img :src="nftList[store.state.nftId].image" />
+            </div>
+            <div class="h-10"></div>
+            <div class="text-xl text-center">
+              The connected application should use<br />the same Google login
+              after installation.
+            </div>
             <div class="h-10"></div>
             <div class="w-full flex justify-center items-center">
-              <button class="wp-40 p-2 font-semibold text-2xl text-white game-btn" @click="resData(store.state.nftId.toString())">설치하기</button>
+              <button
+                class="wp-40 p-2 font-semibold text-2xl text-white game-btn"
+                @click="resData(store.state.nftId.toString())"
+              >
+                설치하기
+              </button>
             </div>
           </div>
         </template>
         <template v-if="popupType === 'game_off'">
-          <div v-if="locale === 'kr'" class="flex flex-col justify-center items-center">
+          <div
+            v-if="locale === 'kr'"
+            class="flex flex-col justify-center items-center"
+          >
             <div class="h-5"></div>
-            <div class="text-2xl text-center font-medium">NFT 를 <span style='color:red;'>OFF</span> 하면<br />탄소절감 데이터가 적용<br />되지 않습니다.
+            <div class="text-2xl text-center font-medium">
+              NFT 를 <span style="color: red">OFF</span> 하면<br />탄소절감
+              데이터가 적용<br />되지 않습니다.
             </div>
             <div class="h-10"></div>
             <div class="w-full flex justify-center items-center">
-              <button class="wp-60 p-2 font-semibold text-2xl text-white off-btn" @click="resData('OFF')">OFF</button>
+              <button
+                class="wp-60 p-2 font-semibold text-2xl text-white off-btn"
+                @click="resData('OFF')"
+              >
+                OFF
+              </button>
             </div>
           </div>
-          <div v-else class="flex flex-col justify-center items-center font-medium">
+          <div
+            v-else
+            class="flex flex-col justify-center items-center font-medium"
+          >
             <div class="h-5"></div>
-            <div class="text-2xl text-center font-medium">If you <span style='color:red;'>OFF</span> NFT,<br />carbon reduction data <br />will not be applied.
+            <div class="text-2xl text-center font-medium">
+              If you <span style="color: red">OFF</span> NFT,<br />carbon
+              reduction data <br />will not be applied.
             </div>
             <div class="h-10"></div>
             <div class="w-full flex justify-center items-center">
-              <button class="wp-60 p-2 font-semibold text-2xl text-white off-btn" @click="resData('OFF')">OFF</button>
+              <button
+                class="wp-60 p-2 font-semibold text-2xl text-white off-btn"
+                @click="resData('OFF')"
+              >
+                OFF
+              </button>
             </div>
           </div>
         </template>
@@ -347,12 +469,16 @@
               <img class="" src="@/assets/images/icon_error.png" />
             </div>
             <div class="mb-10 text-3xl font-bold">
-              {{ t('message.serviceChecking') }}
+              {{ t("message.serviceChecking") }}
             </div>
             <div>
-              <button class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
-                @click="hide">{{ t('message.termsBtn') }}</button>
-              </div>
+              <button
+                class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
+                @click="hide"
+              >
+                {{ t("message.termsBtn") }}
+              </button>
+            </div>
           </div>
         </template>
         <template v-if="popupType === 'successReferral'">
@@ -361,12 +487,16 @@
               <img class="wp-30" src="@/assets/images/icon_success.png" />
             </div>
             <div class="mb-10 text-3xl font-bold">
-              {{ t('message.successReferral') }}
+              {{ t("message.successReferral") }}
             </div>
             <div>
-              <button class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
-                @click="hide">{{ t('message.termsBtn') }}</button>
-              </div>
+              <button
+                class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
+                @click="hide"
+              >
+                {{ t("message.termsBtn") }}
+              </button>
+            </div>
           </div>
         </template>
         <template v-if="popupType === 'successMinting'">
@@ -375,11 +505,15 @@
               <img class="wp-30" src="@/assets/images/icon_success.png" />
             </div>
             <div class="mb-10 text-3xl font-bold">
-              {{ t('message.successMinting') }}
+              {{ t("message.successMinting") }}
             </div>
             <div>
-              <button class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
-                @click="hide">{{ t('message.termsBtn') }}</button>
+              <button
+                class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
+                @click="hide"
+              >
+                {{ t("message.termsBtn") }}
+              </button>
             </div>
           </div>
         </template>
@@ -389,44 +523,93 @@
               <img class="error-icon" src="@/assets/images/icon_error.png" />
             </div>
             <div class="mb-10 text-3xl font-bold">
-                {{ t('error.commingSoon') }}
+              {{ t("error.commingSoon") }}
             </div>
             <div>
-              <button class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
-                @click="hide">{{ t('message.termsBtn') }}</button>
-              </div>
+              <button
+                class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
+                @click="hide"
+              >
+                {{ t("message.termsBtn") }}
+              </button>
+            </div>
           </div>
         </template>
 
         <template
-          v-if="popupType !== 'qr_code' && popupType !== 'withdraw_pass' && popupType !== 'withdraw_pass_update' && popupType !== 'resetPW'&& popupType !== 'send_coin' && popupType !== 'game_install' && popupType !== 'game_off' && popupType !== 'duplicate_nft_buy' && popupType !== 'serviceChecking' && popupType !== 'successReferral' && popupType !== 'successMinting' && popupType !== 'tree_nft'">
+          v-if="
+            popupType !== 'qr_code' &&
+            popupType !== 'withdraw_pass' &&
+            popupType !== 'withdraw_pass_update' &&
+            popupType !== 'resetPW' &&
+            popupType !== 'send_coin' &&
+            popupType !== 'game_install' &&
+            popupType !== 'game_off' &&
+            popupType !== 'duplicate_nft_buy' &&
+            popupType !== 'serviceChecking' &&
+            popupType !== 'successReferral' &&
+            popupType !== 'successMinting' &&
+            popupType !== 'tree_nft'
+          "
+        >
           <div>
             <img class="error-icon" src="@/assets/images/icon_error.png" />
           </div>
           <div class="h-10"></div>
-          <div v-if="showTitle == 'message.swapRequestEnd'" class="text-2xl text-center">
+          <div
+            v-if="showTitle == 'message.swapRequestEnd'"
+            class="text-2xl text-center"
+          >
             <div>{{ t(showTitle) }}</div>
-            <div>({{ t('message.swapRequestValue', { value: store.state.popupValue }) }})</div>
+            <div>
+              ({{
+                t("message.swapRequestValue", {
+                  value: store.state.popupValue,
+                })
+              }})
+            </div>
           </div>
-          <div v-else-if="showTitle == 'message.getReward'" class="text-2xl text-center">
-            <div>{{ t('message.getReward', { value: store.state.popupValue }) }}</div>
+          <div
+            v-else-if="showTitle == 'message.getReward'"
+            class="text-2xl text-center"
+          >
+            <div>
+              {{ t("message.getReward", { value: store.state.popupValue }) }}
+            </div>
           </div>
           <div v-else class="text-2xl text-center">{{ t(showTitle) }}</div>
 
           <div class="h-10"></div>
 
           <div v-if="popupType !== 'message'" class="flex justify-center">
-            <div><button class="w-36 h-12 font-semibold text-white text-xl rounded close-btn"
-                @click="resData('yes')">YES</button></div>
+            <div>
+              <button
+                class="w-36 h-12 font-semibold text-white text-xl rounded close-btn"
+                @click="resData('yes')"
+              >
+                YES
+              </button>
+            </div>
             <div class="w-20"></div>
-            <div><button class="w-36 h-12 font-semibold text-white text-xl rounded close-btn"
-                @click="resData('no')">NO</button></div>
+            <div>
+              <button
+                class="w-36 h-12 font-semibold text-white text-xl rounded close-btn"
+                @click="resData('no')"
+              >
+                NO
+              </button>
+            </div>
           </div>
           <div v-if="popupType === 'message'" class="flex justify-center">
-            <div><button class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
-                @click="hide">Closed</button></div>
+            <div>
+              <button
+                class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
+                @click="hide"
+              >
+                Closed
+              </button>
+            </div>
           </div>
-         
         </template>
       </div>
     </div>
@@ -440,12 +623,12 @@ import QRCodeVue3 from "qr-code-generator-vue3";
 import http from "@/api/http";
 import CryptoJS from "crypto";
 import openSSLCrypto from "@/utils/openSSLCrypto";
-import { useStore } from "vuex"
+import { useStore } from "vuex";
 import "vue3-carousel/dist/carousel.css";
 
-const store = useStore()
+const store = useStore();
 
-const locale = computed(() => store.state.system.locale)
+const locale = computed(() => store.state.system.locale);
 const accessToken = store.getters["auth/getAccessToken"];
 
 const { t } = useI18n();
@@ -496,27 +679,27 @@ const showTitle = ref(title.value);
 const passwd1 = ref("");
 const passwd2 = ref("");
 const passwdMsg = ref("");
-const updatePW1 = ref()
-const updatePW2 = ref()
+const updatePW1 = ref();
+const updatePW2 = ref();
 
-const myAddress = store.getters['auth/getAddress'];
+const myAddress = store.getters["auth/getAddress"];
 const withdrawAddress = ref("");
 const withdrawCount = ref();
 const withdrawPass = ref("");
 const withdrawMsg = ref("");
 
 const nftList = store.getters["auth/getNftList"];
-console.log("nftList",nftList.value)
-const pwHash = computed(() => store.getters["auth/getPwHash"])
-const pwNumber = computed(() => store.getters["auth/getPwNumber"])
+console.log("nftList", nftList.value);
+const pwHash = computed(() => store.getters["auth/getPwHash"]);
+const pwNumber = computed(() => store.getters["auth/getPwNumber"]);
 
 const popupType = ref("");
 
 //출금번호 초기화
-const userEmail = computed(() => store.getters["auth/getUserEmail"])
+const userEmail = computed(() => store.getters["auth/getUserEmail"]);
 
-const certificationNumber = ref()
-const md5Hash = ref()
+const certificationNumber = ref();
+const md5Hash = ref();
 
 const referral = computed(() => store.getters["auth/getReferral"]);
 const referralCode = ref(""); //레퍼럴 코드 확인용
@@ -560,7 +743,7 @@ const show = () => {
 
 const hide = () => {
   store.state.popupValue = 0;
-  store.state.popupType = '';
+  store.state.popupType = "";
 
   passwd1.value = "";
   passwd2.value = "";
@@ -595,15 +778,19 @@ const containerStyle = computed(() => ({
 
 const clickMask = () => {
   hide();
-}
+};
 
 const withdrawalCamera = () => {
-  console.log("됐니?")
-  window.flutter_inappwebview.callHandler('handleCopyBtn', {content: slicedValue})
-}
+  console.log("됐니?");
+  window.flutter_inappwebview.callHandler("handleCopyBtn", {
+    content: slicedValue,
+  });
+};
 
 const doCopy = () => {
-  window.flutter_inappwebview.callHandler('handleCopyBtn', {content: store.getters["auth/getAddress"]})
+  window.flutter_inappwebview.callHandler("handleCopyBtn", {
+    content: store.getters["auth/getAddress"],
+  });
   // window.navigator.clipboard.writeText(store.getters["auth/getAddress"]).then(() => {
   //   //console.log('copy');
   // });
@@ -627,37 +814,39 @@ const doPass = () => {
 
 const requestUpdatePW = () => {
   if (updatePW1.value.length < 6 || updatePW2.value.length < 6) {
-    alert(t('message.WithdrawalPasswordCheck1'))
+    alert(t("message.WithdrawalPasswordCheck1"));
   } else if (updatePW1.value !== updatePW2.value) {
-    alert(t('message.WithdrawalPasswordCheck2'))
+    alert(t("message.WithdrawalPasswordCheck2"));
   } else {
     //해쉬, 변경비번, 인증번호 넘겨줘야됨
     //pwHash.pwNumber
-    http.post("/auth/resetWithdrawPw", {
-      verifyToken: pwHash.value,
-      verifyCode: pwNumber.value,
-      password: openSSLCrypto.encode(CryptoJS.createHash('md5').update(updatePW1.value).digest('hex'))
-
-    })
-    .then((response) => {
-      if(response.data.data === true){
-        alert(t('message.WithdrawalPasswordCheck3'))
-        store.state.isPopup = false;                   
-      }
-    })
-    .catch((error) => {
-      alert(error.response.data.message)
-    })
+    http
+      .post("/auth/resetWithdrawPw", {
+        verifyToken: pwHash.value,
+        verifyCode: pwNumber.value,
+        password: openSSLCrypto.encode(
+          CryptoJS.createHash("md5").update(updatePW1.value).digest("hex")
+        ),
+      })
+      .then((response) => {
+        if (response.data.data === true) {
+          alert(t("message.WithdrawalPasswordCheck3"));
+          store.state.isPopup = false;
+        }
+      })
+      .catch((error) => {
+        alert(error.response.data.message);
+      });
   }
-}
+};
 
 const doSendCoin = () => {
   if (withdrawAddress.value === "") {
-    withdrawMsg.value = "출금하실 주소를 입력해주세요."
+    withdrawMsg.value = "출금하실 주소를 입력해주세요.";
   } else if (withdrawCount.value < 0) {
-    withdrawMsg.value = "출금 수량을 입력해주세요."
+    withdrawMsg.value = "출금 수량을 입력해주세요.";
   } else if (withdrawPass.value === "") {
-    withdrawMsg.value = "출금 비밀번호를 입력해주세요."
+    withdrawMsg.value = "출금 비밀번호를 입력해주세요.";
   } else {
     var res = {
       address: withdrawAddress.value,
@@ -674,54 +863,53 @@ const doSendCoin = () => {
 };
 
 const openResetPW = () => {
-  popupType.value = 'resetPW';
+  popupType.value = "resetPW";
   store.state.isPopup = true;
-}
+};
 
 //인증코드요청
 const codeRequest = () => {
-  http.post("/auth/signStart",{ email: userEmail.value })
+  http
+    .post("/auth/signStart", { email: userEmail.value })
     .then((response) => {
-      md5Hash.value = response.data.data
-      alert(t('message.codeTransmissionCompleted'))
-  })
-  .catch((error) => {
-    alert(error)
-  })
-}
+      md5Hash.value = response.data.data;
+      alert(t("message.codeTransmissionCompleted"));
+    })
+    .catch((error) => {
+      alert(error);
+    });
+};
 
 //초기화요청검증
 const resetRequest = () => {
-  if(!md5Hash.value){
-    alert(t("message.verificationCode1"))
-  }else if(!certificationNumber.value){
+  if (!md5Hash.value) {
+    alert(t("message.verificationCode1"));
+  } else if (!certificationNumber.value) {
     // alert("인증번호를 입력해주세요")
-    alert(t("message.verificationCode2"))
-  }else if(md5Hash.value && certificationNumber.value){
-    http.post("/auth/signVerify", {
-    verifyToken: md5Hash.value,
-    verifyCode: certificationNumber.value
+    alert(t("message.verificationCode2"));
+  } else if (md5Hash.value && certificationNumber.value) {
+    http
+      .post("/auth/signVerify", {
+        verifyToken: md5Hash.value,
+        verifyCode: certificationNumber.value,
+      })
+      .then((response) => {
+        if (response && response.data) {
+          console.log("response", response.data.data);
+          //스토어에 해쉬, 인증번호 넣어주고 비밀번호 입력모달에서 가져와서 쓰기
+          store.dispatch("auth/pwHash", md5Hash.value);
+          store.dispatch("auth/pwNumber", certificationNumber.value);
 
-    })
-    .then((response) => {
-  
-      if(response && response.data){
-        console.log("response",response.data.data)
-        //스토어에 해쉬, 인증번호 넣어주고 비밀번호 입력모달에서 가져와서 쓰기
-        store.dispatch("auth/pwHash", md5Hash.value)
-        store.dispatch("auth/pwNumber", certificationNumber.value)
+          popupType.value = "withdraw_pass_update";
 
-        popupType.value = 'withdraw_pass_update';
-
-        store.state.isPopup = true;
-      }
-    })
-    .catch((error) => {
-      alert(t("message.verificationCode3"))
-    })
+          store.state.isPopup = true;
+        }
+      })
+      .catch((error) => {
+        alert(t("message.verificationCode3"));
+      });
   }
-}
-
+};
 
 // 소셜 공유하기, 텔레그램
 
@@ -739,16 +927,20 @@ const shareTelegram = () => {
         imageUrl:
           "https://play-lh.googleusercontent.com/VaCMJUHxqjCtqNJ3oKFDdDCZUHdIOu5nZRARVnxSNssiYK6HXZ6JOTcA3vAcLPYfrJI=w240-h480-rw",
         link: {
-          mobileWebUrl: `https://zeroquest.io`, 
+          mobileWebUrl: `https://zeroquest.io`,
           webUrl: `https://zeroquest.io`,
         },
         accessToken: accessToken,
-      }
-    }
+      },
+    };
 
-    window.flutter_inappwebview.callHandler('handleTelegramShareBtn', {infoShareTelegram: infoShareTelegram}).then((res: any) => {
-      console.log(res)
-    })
+    window.flutter_inappwebview
+      .callHandler("handleTelegramShareBtn", {
+        infoShareTelegram: infoShareTelegram,
+      })
+      .then((res: any) => {
+        console.log(res);
+      });
   } else {
     console.error("store.state.referral is not defined or is empty");
   }
@@ -773,18 +965,19 @@ const shareKakao = () => {
         imageUrl:
           "https://play-lh.googleusercontent.com/VaCMJUHxqjCtqNJ3oKFDdDCZUHdIOu5nZRARVnxSNssiYK6HXZ6JOTcA3vAcLPYfrJI=w240-h480-rw",
         link: {
-          mobileWebUrl: `https://zeroquest.io`, 
+          mobileWebUrl: `https://zeroquest.io`,
           webUrl: `https://zeroquest.io`,
         },
-        accessToken: accessToken
+        accessToken: accessToken,
       },
-    }
+    };
 
     // 모바일 버전
-    window.flutter_inappwebview.callHandler('handleKakaoShareBtn', {infoShareKakao: infoShareKakao}).then((res: any) => {
-      console.log(res)
-    })
-
+    window.flutter_inappwebview
+      .callHandler("handleKakaoShareBtn", { infoShareKakao: infoShareKakao })
+      .then((res: any) => {
+        console.log(res);
+      });
   } else {
     console.error("store.state.referral is not defined or is empty");
   }
@@ -814,7 +1007,6 @@ const referralInput = () => {
       alert(t("message.ref4"));
       // 오류 발생시 해당 메시지를 표시
       alert(t("message.ref5"));
-  
     });
 };
 
@@ -835,7 +1027,6 @@ const showLastSixChars = () => {
       });
   }
 };
-
 </script>
 
 <style lang="scss">
@@ -936,12 +1127,13 @@ const showLastSixChars = () => {
       font-size: clamp(1.7rem, 2.5vw, 2.5rem);
     }
 
-    .getCode{
-      background-color: #21B750;
+    .getCode {
+      background-color: #21b750;
     }
-    
-    .moduleBtnBg{
-      background-color: #0C5D25
+
+    .moduleBtnBg {
+      background-color: #0c5d25;
     }
   }
-}</style>
+}
+</style>
