@@ -170,10 +170,13 @@
         <template v-if="popupType === 'send_coin'">
           <div class="flex flex-col justify-center items-center">
             <div class="flex items-center">
-              <div class="font-semibold text-2xl">
+              <div
+                class="font-semibold text-2xl"
+                style="position: relative; left: 20px"
+              >
                 {{ t("message.withdraw") }}
               </div>
-              <div style="position: relative; left: 65px">
+              <div style="position: relative; left: 85px">
                 <img
                   src="@/assets/images/qr2.png"
                   class="w-12"
