@@ -692,7 +692,7 @@ const withdrawPass = ref("");
 const withdrawMsg = ref("");
 
 const nftList = store.getters["auth/getNftList"];
-console.log("nftList", nftList.value);
+console.log("nftList는", nftList);
 const pwHash = computed(() => store.getters["auth/getPwHash"]);
 const pwNumber = computed(() => store.getters["auth/getPwNumber"]);
 

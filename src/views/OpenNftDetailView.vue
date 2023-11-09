@@ -17,32 +17,54 @@
     <div class="w-full h-px bg-gray-200"></div>
     <div class="h-10"></div>
     <div class="photo-link p-7 w-full h-full">
-      <div class="flex font-semibold text-2xl pb-8" v-if="locale === 'kr'">{{ nftInfo.name.kor }}</div>
-      <div class="flex font-semibold text-2xl pb-8" v-else>{{ nftInfo.name.eng }}</div>
-      <div class="flex items-center justify-center pt-9" style="position:relative;">
+      <div class="flex font-semibold text-2xl pb-8" v-if="locale === 'kr'">
+        {{ nftInfo.name.kor }}
+      </div>
+      <div class="flex font-semibold text-2xl pb-8" v-else>
+        {{ nftInfo.name.eng }}
+      </div>
+      <div
+        class="flex items-center justify-center pt-9"
+        style="position: relative"
+      >
         <img :src="nftInfo.image" />
-        <div v-if="nftDetail === undefined || nftDetail.enable === 0" class="nftBg"></div>
+        <div
+          v-if="nftDetail === undefined || nftDetail.enable === 0"
+          class="nftBg"
+        ></div>
       </div>
       <div class="h-10"></div>
       <div class="flex justify-center items-center">
         <template v-if="nftDetail !== undefined && nftDetail.enable === 0">
           <div class="btn-on-off">
-            <button type="button" @click="updateNftEnable('INSTALL')"><strong>ON</strong><strong>OFF</strong></button>
+            <button type="button" @click="updateNftEnable('INSTALL')">
+              <strong>ON</strong><strong>OFF</strong>
+            </button>
           </div>
         </template>
         <template v-else>
           <div class="btn-on-off on">
-            <button type="button" @click="updateNftEnable('OFF')"><strong>ON</strong><strong>OFF</strong></button>
+            <button type="button" @click="updateNftEnable('OFF')">
+              <strong>ON</strong><strong>OFF</strong>
+            </button>
           </div>
         </template>
       </div>
 
       <div class="h-10"></div>
       <div class="h-10"></div>
-      <template v-if="questRewards !== undefined && questRewards !== null && Object.keys(questRewards).length > 0">
+      <template
+        v-if="
+          questRewards !== undefined &&
+          questRewards !== null &&
+          Object.keys(questRewards).length > 0
+        "
+      >
         <div class="px-0 w-full flex justify-between items-center text-2xl">
           <div class="font-semibold">{{ t("message.nftReward") }}</div>
-          <div class="px-5 nftOn" @click="exchangeReward">{{ t("message.rewardBtn") }}</div>
+          <div class="px-5 nftOn" @click="exchangeReward">
+            {{ t("message.rewardBtn") }}
+          </div>
         </div>
         <div class="h-5"></div>
         <div class="h-px h-5 bg-gray-200"></div>
@@ -69,7 +91,6 @@
         </div>
       </template>
     </div>
-
   </div>
   <div class="h-20"></div>
 
@@ -77,10 +98,14 @@
   <stairs v-else-if="nftId === 2"></stairs>
   <tree v-else-if="nftId === 3"></tree>
 
+  <Modal
+    :visible="store.state.isPopup"
+    @hide="closeModal"
+    :title="t('error.commingSoon')"
+  />
 
   <div class="h-20"></div>
   <div class="h-20"></div>
-  <Modal :visible="store.state.isPopup" @hide="closeModal" @resData="checkData" :title="popupTitle"/>
 </template>
 
 <script lang="ts" setup>
@@ -90,9 +115,9 @@ import http from "@/api/http";
 import { useI18n } from "vue-i18n";
 import { onMounted, ref, computed } from "vue";
 import { useStore } from "vuex";
-import recycling from "@/components/common/recycling.vue"
-import stairs from "@/components/common/stairs.vue"
-import tree from "@/components/common/tree.vue"
+import recycling from "@/components/common/recycling.vue";
+import stairs from "@/components/common/stairs.vue";
+import tree from "@/components/common/tree.vue";
 
 const nftList = store.getters["auth/getNftList"];
 const nftDetail = ref();
@@ -106,7 +131,7 @@ const vuexStore = useStore();
 
 const { t } = useI18n();
 
-const locale = computed(() => vuexStore.state.system.locale)
+const locale = computed(() => vuexStore.state.system.locale);
 
 onMounted(() => {
   getNftDetail();
@@ -115,39 +140,42 @@ onMounted(() => {
 });
 
 const getNftDetail = () => {
-  http.get("/api/nft/detail", {
-    params: {
-      nftId: nftId,
-      tokenId: tokenId,
-    }
-  })
+  http
+    .get("/api/nft/detail", {
+      params: {
+        nftId: nftId,
+        tokenId: tokenId,
+      },
+    })
     .then((response) => {
       nftDetail.value = response.data.data;
     });
 };
 
 const getEsgpBalance = () => {
-  http.get("/api/token/balance", {
-    params: {
-      symbol: 'ESGP',
-    }
-  })
+  http
+    .get("/api/token/balance", {
+      params: {
+        symbol: "ESGP",
+      },
+    })
     .then((response) => {
       const balance = parseFloat(response.data.data.balance);
-      esgPoint.value = balance.toLocaleString()
-    })
+      esgPoint.value = balance.toLocaleString();
+    });
 };
 
 const getQuestReward = () => {
-  http.get("/api/quest/reward", {
-    params: {
-      symbol: nftList[nftId].symbol,
-      tokenId,
-      nftId,
-    }
-  })
+  http
+    .get("/api/quest/reward", {
+      params: {
+        symbol: nftList[nftId].symbol,
+        tokenId,
+        nftId,
+      },
+    })
     .then((response) => {
-      console.log(response);
+      console.log("response얌", response);
       // UTC+9로 변경하는 함수
       const convertToKST = (utcDateStr) => {
         let date = new Date(utcDateStr);
@@ -156,24 +184,25 @@ const getQuestReward = () => {
       };
 
       // response.data.data 배열의 각 항목에 대해 createdAt을 UTC+9로 변경
-      response.data.data.forEach(item => {
+      response.data.data.forEach((item) => {
         item.createdAt = convertToKST(item.createdAt);
       });
 
       questRewards.value = response.data.data.reverse();
     })
     .catch(() => {
-      console.log('err');
+      console.log("err");
       questRewards.value = {};
-    })
+    });
 };
 
 const exchangeReward = () => {
-  http.post("/api/quest/reward", {
-    symbol: nftList[nftId].symbol,
-    tokenId,
-    nftId
-  })
+  http
+    .post("/api/quest/reward", {
+      symbol: nftList[nftId].symbol,
+      tokenId,
+      nftId,
+    })
     .then((response) => {
       console.log(response);
       if (response.data.data.reward === 0) {
@@ -181,7 +210,7 @@ const exchangeReward = () => {
         popupTitle.value = "error.notReward";
         store.state.isPopup = true;
       } else {
-        console.log("response.data.data.reward", response.data.data.reward)
+        console.log("response.data.data.reward", response.data.data.reward);
         store.state.popupValue = response.data.data.reward;
         store.state.popupType = "message";
         popupTitle.value = "message.getReward";
@@ -192,26 +221,27 @@ const exchangeReward = () => {
       store.state.popupType = "message";
       popupTitle.value = "error.notActivated";
       store.state.isPopup = true;
-    })
-}
+    });
+};
 
 const closeModal = () => {
   store.state.isPopup = false;
 };
 
 const checkData = (type: String) => {
-  if (type === 'OFF') {
+  if (type === "OFF") {
     if (nftDetail.value.enable === 1) {
-      http.post("/api/nft/enableNft", {
-        'symbol': nftDetail.value.symbol,
-        'tokenId': nftDetail.value.tokenId,
-        'enable': 0,
-      })
+      http
+        .post("/api/nft/enableNft", {
+          symbol: nftDetail.value.symbol,
+          tokenId: nftDetail.value.tokenId,
+          enable: 0,
+        })
         .then((response) => {
           getNftDetail();
         });
     }
-  } else if (type !== '') {
+  } else if (type !== "") {
     gameDownload(type);
   }
 };
@@ -220,11 +250,12 @@ const gameDownload = (type: String) => {
   const enableType = nftDetail.value.enable;
 
   if (enableType == 0) {
-    http.post("/api/nft/enableNft", {
-      'symbol': nftDetail.value.symbol,
-      'tokenId': nftDetail.value.tokenId,
-      'enable': 1,
-    })
+    http
+      .post("/api/nft/enableNft", {
+        symbol: nftDetail.value.symbol,
+        tokenId: nftDetail.value.tokenId,
+        enable: 1,
+      })
       .then((response) => {
         getNftDetail();
         gameDownUrl(type);
@@ -235,36 +266,39 @@ const gameDownload = (type: String) => {
 };
 
 const gameDownUrl = (type: String) => {
-  let packageName = '';
+  let packageName = "";
 
   if (navigator.userAgent.toLowerCase().indexOf("android") > -1) {
     packageName = store.state.packageName;
   } else if (navigator.userAgent.toLowerCase().indexOf("iphone") > -1) {
     packageName = store.state.packageName;
   }
-  window.flutter_inappwebview.callHandler('handleInstallBtn', {packageName: packageName})
+  window.flutter_inappwebview.callHandler("handleInstallBtn", {
+    packageName: packageName,
+  });
 };
 
 const gameRun = () => {
   let nftType = nftList[nftId].type;
-  let linkUrl = '';
+  let linkUrl = "";
 
   if (nftType > 0) {
-    linkUrl = "/api/quest/apptoken"
+    linkUrl = "/api/quest/apptoken";
     //linkUrl = "/api/quest/gametoken"
   } else {
     return false;
   }
 
-  http.get(linkUrl, {
-    params: {
-      symbol: nftDetail.value.symbol,
-      nftId: nftId,
-      tokenId: tokenId,
-    }
-  })
+  http
+    .get(linkUrl, {
+      params: {
+        symbol: nftDetail.value.symbol,
+        nftId: nftId,
+        tokenId: tokenId,
+      },
+    })
     .then((response) => {
-      let deepLink = '';
+      let deepLink = "";
 
       if (navigator.userAgent.toLowerCase().indexOf("android") > -1) {
         deepLink = nftList[nftId].and_deeplink;
@@ -273,16 +307,30 @@ const gameRun = () => {
       }
 
       //window.open(deepLink + '?token=' + response.data.data.appToken + '&name=' + store.getters["auth/getUserName"] + '&email=' + store.getters["auth/getUserEmail"] + '&uid=' + store.getters["auth/getUserId"], '_blank');
-      window.flutter_inappwebview.callHandler('handlePlayBtn', { deepLink: deepLink, token: response.data.data.appToken, name: store.getters["auth/getUserName"], email: store.getters["auth/getUserEmail"], uid: store.getters["auth/getUserId"] });
+      window.flutter_inappwebview.callHandler("handlePlayBtn", {
+        deepLink: deepLink,
+        token: response.data.data.appToken,
+        name: store.getters["auth/getUserName"],
+        email: store.getters["auth/getUserEmail"],
+        uid: store.getters["auth/getUserId"],
+      });
     });
 };
 
 const updateNftEnable = (type: String) => {
-  if (type == 'INSTALL') {
+  if (type == "INSTALL") {
+    console.log("nftInfo는", nftInfo); // idx3이랑, cid, type이 잘 받아지는 것이 확인이 된다.
     store.state.nftId = nftId;
     store.state.nftIdx = nftInfo.idx;
 
-    let packageName = '';
+    // idx가 3인 경우 모달 창 띄우기
+    if (nftInfo.idx === 3) {
+      store.state.popupType = "tree_nft";
+      store.state.isPopup = true;
+      return; // 모달 창을 띄운 후 함수를 종료한다.
+    }
+
+    let packageName = "";
 
     if (navigator.userAgent.toLowerCase().indexOf("android") > -1) {
       packageName = nftInfo.and_packagename;
@@ -290,33 +338,37 @@ const updateNftEnable = (type: String) => {
       packageName = nftInfo.ios_packagename;
     }
 
-    window.flutter_inappwebview.callHandler('checkAppInstalled', { packageName: packageName }).then((res: any) => {
-      //console.log(JSON.stringify(res));
+    window.flutter_inappwebview
+      .callHandler("checkAppInstalled", { packageName: packageName })
+      .then((res: any) => {
+        //console.log(JSON.stringify(res));
 
-      if (res.result == true) {
-        http.post("/api/nft/enableNft", {
-          'symbol': nftDetail.value.symbol,
-          'tokenId': nftDetail.value.tokenId,
-          'enable': 1,
-        })
-          .then((response) => {
-            getNftDetail();
-          });
-      } else {
-        store.state.popupType = 'game_install';
+        if (res.result == true) {
+          http
+            .post("/api/nft/enableNft", {
+              symbol: nftDetail.value.symbol,
+              tokenId: nftDetail.value.tokenId,
+              enable: 1,
+            })
+            .then((response) => {
+              getNftDetail();
+            });
+        } else {
+          store.state.popupType = "game_install";
+          store.state.isPopup = true;
+        }
+      })
+      .catch(() => {
+        store.state.popupType = "game_install";
         store.state.isPopup = true;
-      }
-    }).catch(() => {
-      store.state.popupType = 'game_install';
-      store.state.isPopup = true;
-    });
-  } else if (type === 'OFF') {
+      });
+  } else if (type === "OFF") {
     store.state.nftId = nftId;
     store.state.nftIdx = nftInfo.idx;
 
-    store.state.popupType = 'game_off';
+    store.state.popupType = "game_off";
     store.state.isPopup = true;
-  } else if (type === 'RUN') {
+  } else if (type === "RUN") {
     gameRun();
   }
 };
@@ -338,19 +390,19 @@ const updateNftEnable = (type: String) => {
   line-height: 0;
 }
 
-*+.nTable {
+* + .nTable {
   margin-top: 0px;
 }
 
-.nTable>table {
+.nTable > table {
   width: 100%;
   border-spacing: 2px;
   background-color: #999;
   table-layout: fixed;
 }
 
-.nTable>table th,
-.nTable>table td {
+.nTable > table th,
+.nTable > table td {
   height: 40px;
   padding: 15px 10px;
   background-color: #fff;
@@ -366,7 +418,7 @@ const updateNftEnable = (type: String) => {
   word-wrap: break-word;
 }
 
-.nTable>table th {
+.nTable > table th {
   padding: 0;
   background-color: #edf5ec;
   font-weight: 400;
@@ -385,14 +437,14 @@ const updateNftEnable = (type: String) => {
   background-color: #24d120;
   border-radius: 5px;
   font-size: 10px;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .nftOff {
   background-color: #ccc;
   border-radius: 5px;
   font-size: 10px;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .btn-on-off {
@@ -429,10 +481,10 @@ const updateNftEnable = (type: String) => {
   left: calc(100% - 50px);
   top: 0px;
   border-radius: 999px;
-  transition: all .3s ease-out;
+  transition: all 0.3s ease-out;
 }
 
-.btn-on-off button>strong {
+.btn-on-off button > strong {
   min-width: 50px;
   height: 18px;
   font-weight: bold;
@@ -447,11 +499,12 @@ const updateNftEnable = (type: String) => {
   z-index: 2;
 }
 
-.btn-on-off button>strong+strong {
+.btn-on-off button > strong + strong {
   margin-left: -20px;
 }
 
 .btn-on-off.on button:before {
   background-color: #24d120;
   left: 0;
-}</style>
+}
+</style>
