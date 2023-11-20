@@ -119,7 +119,7 @@ export default {
     date:"date",
     time:"time",
     reward:"reward",
-    buyWithPoint: "Purchase with ESG points",
+    buyWithPoint: "Buy with ESG points",
     ChargingPoint: "ESG Point charging",
     successReferral: "Success checking referral",
     successMinting: "Success NFT Minting!",
