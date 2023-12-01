@@ -39,24 +39,24 @@ const afterLogin = () => {
   router.push("/");
 }
 
-const movePage = (page: string) => {
-  if (page === "/market") {
-    showModal('message');
-  } else if(page === "/battle"){
-    showModal('serviceChecking');
-
-  }else {
-    router.push(page);
-  }
-};
-
 // const movePage = (page: string) => {
 //   if (page === "/market") {
 //     showModal('message');
-//   } else {
+//   } else if(page === "/battle"){
+//     showModal('serviceChecking');
+
+//   }else {
 //     router.push(page);
 //   }
 // };
+
+const movePage = (page: string) => {
+  if (page === "/market") {
+    showModal('message');
+  } else {
+    router.push(page);
+  }
+};
 </script>
 
 <style scoped lang="scss">
