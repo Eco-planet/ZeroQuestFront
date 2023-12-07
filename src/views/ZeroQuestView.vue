@@ -135,6 +135,8 @@
       </div>
     </div>
     <div class="h-40"></div>
+    <div @click="goTop" class="text-xl">[TOP]</div>
+    <div class="h-40"></div>
   </div>
 </template>
 
@@ -174,6 +176,12 @@ onMounted(() => {
     getBalanceAll();
   }
 });
+
+const goTop = () => {
+  const scMain:any = document.getElementById("appMain");
+
+  scMain.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+}
 
 const getMyNftList = () => {
   http

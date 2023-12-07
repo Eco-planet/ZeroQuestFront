@@ -8,6 +8,7 @@
       <router-link to="/mypage">MyPage</router-link>
     </nav> -->
   <div
+    id="appMain"
     class="wrap"
     :class="{
       battleBg:
