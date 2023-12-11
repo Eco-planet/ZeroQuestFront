@@ -101,7 +101,7 @@
   <Modal
     :visible="store.state.isPopup"
     @hide="closeModal"
-    :title="t('error.commingSoon')"
+    :title="popupTitle"
   />
 
   <div class="h-20"></div>
@@ -176,6 +176,7 @@ const getQuestReward = () => {
     })
     .then((response) => {
       console.log("response얌", response);
+      console.log("response얌2", response.data.data[0]);
       // UTC+9로 변경하는 함수
       const convertToKST = (utcDateStr) => {
         let date = new Date(utcDateStr);
