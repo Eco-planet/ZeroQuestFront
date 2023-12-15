@@ -21,10 +21,10 @@
       </div>
     </div> -->
     <div class="h-3"></div>
-    <div class="text-lg text-center" v-if="locale === 'kr'">
+    <div class="font-semibold text-center" v-if="locale === 'kr'">
       {{ nftInfo.name.kor }}
     </div>
-    <div class="text-lg text-center" v-else>{{ nftInfo.name.eng }}</div>
+    <div class="font-semibold text-center" v-else>{{ nftInfo.name.eng }}</div>
     <div class="h-1"></div>
     <div class="flex justify-center items-center">
       <template v-if="nftCard.enable === 0 && nftInfo.type === 2">
@@ -141,8 +141,8 @@ const closeModal = () => {
   store.state.isPopup = false;
 };
 
-const goNftDetail = (nftId: number, tokenId: number) => {
-  router.push({ name: "onft-detail", params: { nftId, tokenId } });
+const goNftDetail = (idx: number, tokenId: number) => {
+  router.push({ name: "onft-detail", params: { idx, tokenId } });
 };
 </script>
 
