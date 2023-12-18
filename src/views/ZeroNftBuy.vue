@@ -47,6 +47,13 @@
                 <span>Price</span>
                 <span>{{ Number(nowNft?.buyPrice2).toLocaleString() }} ESG point</span>
               </div>
+              <div class="flex justify-between mb-4" v-if="nftId !== 1 && nftId !==2 && nftId !==3">
+                <span>Remaining Number</span>
+                <div>
+                  <span>{{nowNft?.metaData?.sale}}</span> /
+                  <span>1000</span>
+                </div>
+              </div>
             </div>
             <!-- <div class="flex justify-end items-center">
               <button @click="decrease" class="bg-red-500 text-white px-4 py-2 rounded">-</button>
@@ -87,6 +94,7 @@
     <recycling v-if="nftId === 1"></recycling>
     <stairs v-else-if="nftId === 2"></stairs>
     <tree v-else-if="nftId === 3"></tree>
+    <panda v-else></panda>
     <div class="h-96"></div>
 
     <Modal
@@ -108,6 +116,7 @@ import recycling from "@/components/common/recycling.vue"
 import stairs from "@/components/common/stairs.vue"
 import tree from "@/components/common/tree.vue"
 import Modal from "@/components/Modal/index.vue";
+import panda from "@/components/common/panda.vue"
 
 const { t } = useI18n();
 

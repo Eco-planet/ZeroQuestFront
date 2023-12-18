@@ -32,7 +32,7 @@
       </div>
     </div>
     <div class="h-10"></div>
-    <div class="flex justify-between items-center">
+    <div class="pb-4 flex justify-between items-center">
       <div class="text-3xl font-semibold text-left">O!NFT</div>
       <div class="border rounded-full">
         <div class="text-lg text-gray-400 mx-4 my-1" @click="goToOnft()">
@@ -48,21 +48,21 @@
           </div>
 
           <div class="h-2"></div>
-          <div class="text-lg text-center" v-if="locale === 'kr'">{{ nftList[item.nftId].name.kor }}</div>
-          <div class="text-lg text-center" v-else>{{ nftList[item.nftId].name.eng }}</div>
+          <div class="font-semibold text-center" v-if="locale === 'kr'">{{ nftList[item.nftId].name.kor }}</div>
+          <div class="font-semibold text-center" v-else>{{ nftList[item.nftId].name.eng }}</div>
         </div>
         <div class="grayscale" v-else>
           <div>
             <img class="nftImg" :src="nftList[item.nftId].image" alt="" @click="goNftDetail(item.nftId)" />
           </div>
           <div class="h-2"></div>
-          <div class="text-lg text-center" v-if="locale === 'kr'">{{ nftList[item.nftId].name.kor }}</div>
-          <div class="text-lg text-center" v-else>{{ nftList[item.nftId].name.eng }}</div>
+          <div class="font-semibold text-center" v-if="locale === 'kr'">{{ nftList[item.nftId].name.kor }}</div>
+          <div class="font-semibold text-center" v-else>{{ nftList[item.nftId].name.eng }}</div>
         </div>
       </div>
     </div>
     <div class="h-10"></div>
-    <div class="flex justify-between items-center">
+    <div class="pb-4 flex justify-between items-center">
       <div class="text-3xl font-semibold text-left">NEW NFT</div>
       <div class="border rounded-full">
         <div class="text-lg text-gray-400 mx-4 my-1" @click="goToZeroNft()">
@@ -74,8 +74,8 @@
       <div class="flex flex-col" v-for="item in nftList" :key="item.tokenId">
         <img class="nftImg" :src="item.image" alt="" @click="goToDetail(item.idx)" />
         <div class="h-2"></div>
-        <div class="text-lg text-center" v-if="locale === 'kr'">{{ item.name.kor }}</div>
-        <div class="text-lg text-center" v-else>{{ item.name.eng }}</div>
+        <div class="font-semibold text-center" v-if="locale === 'kr'">{{ item.name.kor }}</div>
+        <div class="font-semibold text-center" v-else>{{ item.name.eng }}</div>
       </div>
     </div>
     <div class="h-10"></div>

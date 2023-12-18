@@ -40,9 +40,10 @@ import { onMounted, onUnmounted, ref, computed } from "vue";
 import MyNftCard from "@/components/OpenNftView.vue";
 import { Carousel, Pagination, Slide } from "vue3-carousel";
 import { useStore } from "vuex";
+import "vue3-carousel/dist/carousel.css";
+
 const vuexStore = useStore();
 const locale = computed(() => vuexStore.state.system.locale)
-import "vue3-carousel/dist/carousel.css";
 
 const nftList = store.getters["auth/getNftList"];
 const myNftList = ref();
@@ -198,7 +199,6 @@ function goToLink(link: string) {
 }
 
 .nftDisable {
-  background-color: rgba(0, 0, 0, 0.2);
   width:100%;
   height:100%;
   height: 100px;

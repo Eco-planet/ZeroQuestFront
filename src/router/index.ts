@@ -45,7 +45,7 @@ const routes: Array<RouteRecordRaw> = [
       import(/* webpackChunkName: "onft" */ "../views/OpenNftView.vue"),
   },
   {
-    path: "/onft-detail/:nftId/:tokenId",
+    path: "/onft-detail/:idx/:tokenId",
     name: "onft-detail",
     component: () =>
       import(

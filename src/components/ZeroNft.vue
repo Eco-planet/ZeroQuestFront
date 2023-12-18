@@ -7,7 +7,7 @@
             <img :src="nft.image" alt="" class="w-full h-full object-contain object-top">
           </div>
           <div class="mt-4 text-xl font-medium text-black" v-if="locale === 'kr'">{{ nft.name.kor }}</div>
-          <div class="mt-4 text-xl font-medium text-black" v-else>{{ nft.name.eng }}</div>
+          <div class="mt-4 text-lg font-medium text-black" v-else>{{ nft.name.eng }}</div>
           <div class="text-lg font-light text-gray-400">{{ Number(nft.buyPrice2).toLocaleString() }} ESG point</div>
         </div>
       </li>
