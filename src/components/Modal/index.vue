@@ -1,5 +1,5 @@
 <template>
-  <div class="global-modal" v-if="wrapperVisible" @click="clickMask">
+  <div class="global-modal" v-if="wrapperVisible || wrapperVisible2" @click="clickMask">
     <div
       :class="['global-modal-container', innerClass]"
       :style="containerStyle"
@@ -538,6 +538,57 @@
             </div>
           </div>
         </template>
+        <template v-if="popupType === 'withDraw'">
+          <div class="mb-10 text-3xl font-bold">
+            Are you sure you want to withdraw?
+          </div>
+          <div>
+            <div class="mb-10 text-2xl font-semibold">
+              When you withdraw, your accumulated points and NFT information will be permanently deleted, and recovery will not be possible.
+            </div>
+
+            <div class="mb-10 text-2xl font-semibold">
+              Also, if you rejoin on the same day after withdrawing, you will not receive WMU voting rights. Please keep this in mind.
+            </div>
+            <div class="flex justify-between">
+              <button class="
+                w-44 
+                h-12 
+                font-semibold 
+                text-xl 
+                rounded 
+                close-btn 
+                bg-white 
+                text-green-800
+                border
+                border-gray-300
+                border-solid
+                "
+                @click="hide">Cancel
+              </button>
+              <button class="w-44 h-12 font-semibold text-white text-xl rounded close-btn bg-green-700"
+                @click="withdrawBtn">Withdraw
+              </button>
+            </div>
+          </div>
+        </template>
+        <template v-if="popupType === 'successWithdraw'">
+          <div>
+            <div class="mb-4 text-2xl font-bold">
+              Your membership withdrawal is complete.<br>
+            </div>
+            <div class="mb-10 text-xl font-semibold">
+              It's a pity, but we look forward to<br>
+              our next meeting with you.<br>
+            </div>
+            <div>
+              <button class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
+                @click="voteHide">Confirm
+              </button>
+            </div>
+          </div>
+        </template>
+
 
         <template
           v-if="
@@ -552,6 +603,8 @@
             popupType !== 'serviceChecking' &&
             popupType !== 'successReferral' &&
             popupType !== 'successMinting' &&
+            popupType !== 'withDraw' &&
+            popupType !== 'successWithdraw' &&
             popupType !== 'tree_nft'
           "
         >
@@ -641,6 +694,10 @@ const props = defineProps({
     type: Boolean,
     default: () => false,
   },
+  withdrawVisible: {
+    type: Boolean,
+    default: () => false,
+  },
   innerStyle: {
     type: Object,
     default: () => ({}),
@@ -672,9 +729,12 @@ const emit = defineEmits([
   "update:visible",
   "resData",
   "resJson",
+  "voteHide",
+  "clickWithdraw"
 ]);
-const { visible, innerStyle, title } = toRefs(props); // 弹框组件显隐
+const { visible, withdrawVisible, innerStyle, title } = toRefs(props); // 弹框组件显隐
 const wrapperVisible = ref(false); // 弹框外部容器显隐
+const wrapperVisible2 = ref(false); // 弹框外部容器显隐
 const innerVisible = ref(false); // 弹框中间容器显隐
 const resolvePromise = ref(null);
 const showTitle = ref(title.value);
@@ -706,9 +766,14 @@ const md5Hash = ref();
 const referral = computed(() => store.getters["auth/getReferral"]);
 const referralCode = ref(""); //레퍼럴 코드 확인용
 
-watch(visible, (val) => {
-  if (val) {
+watch([visible, withdrawVisible], ([newVisible, newWithdrawVisible]) => {
+  if (newVisible || newWithdrawVisible) {
     popupType.value = store.state.popupType;
+  
+    if (popupType.value === "successWithdraw") {
+      wrapperVisible.value = false;
+      innerVisible.value = false;
+    }
 
     if (store.state.isLogin === true) {
       showTitle.value = "error.useAfterLogin";
@@ -716,7 +781,8 @@ watch(visible, (val) => {
       showTitle.value = title.value;
     }
 
-    wrapperVisible.value = true;
+    wrapperVisible.value = newVisible;
+    wrapperVisible2.value = newWithdrawVisible;
     setTimeout(() => {
       innerVisible.value = true;
       emit("afterShow");
@@ -725,6 +791,7 @@ watch(visible, (val) => {
     innerVisible.value = false;
     setTimeout(() => {
       wrapperVisible.value = false;
+      wrapperVisible2.value = false;
       emit("afterHide");
 
       if (store.state.isLogin === true) {
@@ -759,6 +826,21 @@ const hide = () => {
   emit("hide");
 };
 
+const voteHide = () => {
+  store.state.popupType = '';
+
+  passwd1.value = "";    
+  passwd2.value = "";    
+  passwdMsg.value = "";    
+
+  withdrawAddress.value = "";
+  withdrawCount.value = null;
+  withdrawPass.value = "";
+ 
+  emit("update:visible", false);
+  emit("voteHide");
+};
+
 const resData = (res: string) => {
   emit("resData", res);
   emit("update:visible", false);
@@ -771,6 +853,9 @@ const resJson = (res: any) => {
   emit("hide");
 };
 
+const withdrawBtn = () => {
+  emit("clickWithdraw")
+}
 const containerStyle = computed(() => ({
   transform: innerVisible.value
     ? "translate(-50%, -50%) scale(1,1)"
