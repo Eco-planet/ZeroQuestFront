@@ -62,14 +62,14 @@
       >
         <div class="px-0 w-full flex justify-between items-center text-2xl">
           <div class="font-semibold">{{ t("message.nftReward") }}</div>
-          <div class="px-5 nftOn" @click="exchangeReward">
+          <div class="px-5 nftOn" @click="exchangeReward" v-if="nftId === 1 || nftId === 2">
             {{ t("message.rewardBtn") }}
           </div>
         </div>
         <div class="h-5"></div>
         <div class="h-px h-5 bg-gray-200"></div>
         <div class="h-5"></div>
-        <div class="nTable text-lg">
+        <div class="nTable text-lg h-96 overflow-x-auto">
           <table>
             <thead>
               <tr>
@@ -170,35 +170,47 @@ const getEsgpBalance = () => {
 };
 
 const getQuestReward = () => {
-  http
-    .get("/api/quest/reward", {
+  if (nftId !== 1 || nftId !== 2) {
+    console.log("test")
+    http.get("/api/quest/nftReward", {
       params: {
         symbol: nftList[nftId].symbol,
         tokenId,
         nftId,
-      },
+      }
+    }).then((res) => {
+      console.log("pandaReward", res)
+      questRewards.value = res.data.data
     })
-    .then((response) => {
-      console.log("response얌", response);
-      console.log("response얌2", response.data.data[0]);
-      // UTC+9로 변경하는 함수
-      const convertToKST = (utcDateStr) => {
-        let date = new Date(utcDateStr);
-        date.setTime(date.getTime() + 9 * 60 * 60 * 1000); // 9시간을 더함
-        return date.toISOString(); // 변환된 날짜를 다시 문자열로 반환
-      };
-
-      // response.data.data 배열의 각 항목에 대해 createdAt을 UTC+9로 변경
-      response.data.data.forEach((item) => {
-        item.createdAt = convertToKST(item.createdAt);
-      });
-
-      questRewards.value = response.data.data.reverse();
+  } else {
+    http.get("/api/quest/reward", {
+      params: {
+        symbol: nftList[nftId].symbol,
+        tokenId,
+        nftId,
+      }
     })
-    .catch(() => {
-      console.log("err");
-      questRewards.value = {};
-    });
+      .then((response) => {
+        console.log(response);
+        // UTC+9로 변경하는 함수
+        const convertToKST = (utcDateStr) => {
+          let date = new Date(utcDateStr);
+          date.setTime(date.getTime() + 9 * 60 * 60 * 1000); // 9시간을 더함
+          return date.toISOString(); // 변환된 날짜를 다시 문자열로 반환
+        };
+  
+        // response.data.data 배열의 각 항목에 대해 createdAt을 UTC+9로 변경
+        response.data.data.forEach(item => {
+          item.createdAt = convertToKST(item.createdAt);
+        });
+  
+        questRewards.value = response.data.data.reverse();
+      })
+      .catch(() => {
+        console.log('err');
+        questRewards.value = {};
+      })
+  }
 };
 
 const exchangeReward = () => {

@@ -44,7 +44,7 @@ export default {
     referral1:"Saving the Earth's Small but Certain Happiness 🌎🌟",
     referral2:"Practice carbon reduction with friends",
     referral3:"If a friend enters a referral code, the referrer",
-    referral4:"2,000 ESG Points",
+    referral4:"1,000 ESG Points",
     referral5:"receives ",
     referral6:"Just by spreading the word",
     referral7:"50 ESG Point",
