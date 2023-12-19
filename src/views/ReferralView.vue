@@ -65,7 +65,7 @@
           같은 사람에게 여러 번 소문내기를 하더라도<br />
           50 ESG Point가 지급됩니다.<br />
           제 3자의 최초가입시에만 소문내기 한 사람에게<br />
-          2,000 ESG Point가 지급됩니다.<br />
+          1,000 ESG Point가 지급됩니다.<br />
           한 번에 한 사람에게만 소문내기를 할 수 있습니다.<br />
           하루에 5명의 레퍼럴을 할 수 있습니다.
         </div>
@@ -74,7 +74,7 @@
           Even if you spread the word to the same person multiple times,<br />
           you will be awarded 50 ESG Points.<br />
           Only when a third-party signs up for the first time,<br />
-          the person who spread the word will receive 2,000 ESG Points.<br />
+          the person who spread the word will receive 1,000 ESG Points.<br />
           You can spread the word to only one person at a time.<br />
           You can make up to 5 referrals a day.
         </div>

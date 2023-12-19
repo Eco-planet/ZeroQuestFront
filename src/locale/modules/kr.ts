@@ -44,7 +44,7 @@ export default {
     referral1:"지구 지키기 소확행 🌎🌟",
     referral2:"친구와 함께 탄소감축 실천하자",
     referral3:"친구가 추천인 코드 입력 한 경우, 추천인에게",
-    referral4:"2,000 ESG Point",
+    referral4:"1,000 ESG Point",
     referral5:"지급!! ",
     referral6:"소문내기만 해도",
     referral7:"50 ESG Point",
