@@ -58,12 +58,12 @@
   
         >
       </a>
-      <div class="text-lg font-semibold mt-4 cursor-pointer" @click="Withdrawal">Withdrawal</div>
+      <div class="text-2xl font-semibold mt-4 cursor-pointer" @click="Withdrawal">Withdrawal</div>
      
     </div>
     <div class="wp-20" @click="toggleMenu()"></div>
   </div>
-  <Modal :showClose="showClose" :visible="modalVisible" :withdrawVisible="modalWithdrawVisible" @clickWithdraw="clickWithdraw" @voteHide="WithdrawCloseModal" @hide="closeModal" title="message.sorryChecking"/>
+  <!-- <Modal :showClose="showClose" :visible="modalVisible" :withdrawVisible="modalWithdrawVisible" @clickWithdraw="clickWithdraw" @voteHide="WithdrawCloseModal" @hide="closeModal" title="message.sorryChecking"/> -->
 </template>
 
 <script lang="ts" setup>
@@ -87,10 +87,8 @@ const kakaoHover = ref()
 
 const showClose = ref(true)
 
-const modalVisible = ref(false);
 const menuVisible = ref(false);
 const aniVisible = ref(false);
-const modalWithdrawVisible = ref(false);
 
 //battle modal창
 const movePage1 = () => {
@@ -180,42 +178,13 @@ const services = ref([
   },
 ]);
 
-//회원탈퇴
-const clickWithdraw = () => {
-  console.log("회원탈퇴클릭")
-
-  //탈퇴되었습니다 모달 띄워야됨
-  // store.state.popupType = "successWithdraw";
-  // modalWithdrawVisible.value = true;
-  // showClose.value = false
-  http.delete("/auth/withdraw")
-  .then((response) => {
-    if(response.data.message === "Success"){
-      console.log("success")
-      //db삭제됨
-      modalVisible.value = false;
-
-      //탈퇴되었습니다 모달 띄워야됨
-      store.state.popupType = "successWithdraw";
-      modalWithdrawVisible.value = true;
-      showClose.value = false
-    }
-  })
-}
-
 const Withdrawal = () => { 
-  store.state.popupType = "withDraw";
-  modalVisible.value = true;
+   router.push({
+    path:'/Withdraw',
+    name:"Withdraw"
+  })
+  toggleMenu() 
 }
-
-const WithdrawCloseModal = () => {
-  console.log("탈퇴완료버튼누름")
-  modalVisible.value = false;
-  router.go(0)
-  router.push("/")
-}
-
-
 
 </script>
 

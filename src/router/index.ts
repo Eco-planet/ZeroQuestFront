@@ -115,6 +115,12 @@ const routes: Array<RouteRecordRaw> = [
         /* webpackChunkName: "introduction" */ "../views/introduction.vue"
       ),
   },
+  {
+    path:"/Withdraw",
+    name:"Withdraw",
+    component:() =>
+    import(/* webpackChunkName: "terms" */ "../views/Withdraw.vue")
+  }
 ];
 
 const router = createRouter({
