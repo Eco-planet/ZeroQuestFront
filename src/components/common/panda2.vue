@@ -2,21 +2,22 @@
   <div>
     <div>
       <h5 class="pb-8 text-3xl text-black font-semibold">
-          Interest in endangered animals part 1<br>
-          Red Panda Series NFT"
+        Interest in endangered animals part 2<br>
+        Red Panda Series NFT"
       </h5>
       <p class=" mb-16 font-medium text-xl">
-          Introducing Adventure Red Panda.  <br>
-          This panda is a curious and driven adventurer.  <br>
-          It symbolizes the pioneers of the Age of Exploration and is constantly <br>
-          on the move to explore the world. <br>
+        The Sapiens Red Panda NFT is  <br>
+        a primitive panda equipped with a stone axe, <br>
+        reminiscent of ancient humans in nature.<br>
+        The Red Panda seeks to live in harmony<br>
+        with nature amidst the disharmony of modern society. <br>
       </p>
       <div class="flex justify-center">
         <p class="mb-16 font-bold text-2xl text-left">
-          1. Sales schedule: December 8 ~ TBC<br>
+          1. Sales schedule: December 15 ~ TBC<br>
           2. Price: 500 ESG points.<br>
           3. Reward: 50 ESG points are paid <br>
-          every day for 300 days.
+          every day for 300 days. 
         </p>
       </div>
       <p class="mb-10 font-medium text-xl">

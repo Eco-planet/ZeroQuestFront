@@ -147,5 +147,6 @@ export default {
     notReward: "보상 받을 포인트가 없습니다.",
     notFoundFlutter: "Not Found 'flutter_inappwebview'",
     notEnoughPoints: "ESG point가 부족합니다.",
+    notEnoughGasFee: "민팅 수수료가 부족합니다. 관리자에게 문의하세요.",
    },
 };
