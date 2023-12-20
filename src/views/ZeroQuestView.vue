@@ -44,7 +44,7 @@
       <div class="flex flex-col" v-for="item in myNftList" :key="item.tokenId">
         <div v-if="item.enable === 1">
           <div>
-            <img class="nftImg" :src="nftList[item.nftId].image" alt="" @click="goNftDetail(item.nftId, item.tokenId)" />
+            <img class="nftImg" :src="nftList[item.nftId].image" alt="" @click="goNftDetail(item.nftId)" />
           </div>
 
           <div class="h-2"></div>
@@ -53,7 +53,7 @@
         </div>
         <div class="grayscale" v-else>
           <div>
-            <img class="nftImg" :src="nftList[item.nftId].image" alt="" @click="goNftDetail(item.nftId, item.tokenId)" />
+            <img class="nftImg" :src="nftList[item.nftId].image" alt="" @click="goNftDetail(item.nftId)" />
           </div>
           <div class="h-2"></div>
           <div class="font-semibold text-center" v-if="locale === 'kr'">{{ nftList[item.nftId].name.kor }}</div>
@@ -265,8 +265,8 @@ function goToLink(link: string) {
   });
 }
 
-const goNftDetail = (nftId: number, tokenId: number) => {
-  router.push({ name: "onft-detail", params: { nftId, tokenId } });
+const goNftDetail = (nftId: number) => {
+  router.push({ name: "onft-detail", params: { nftId } });
 };
 
 function referPage() {
