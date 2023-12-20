@@ -52,6 +52,8 @@ const getNftList = () => {
 const nftListSort = computed(() => {
   if (!nftList.value) {
     return [];
+  } else if (props.selectedIdx === 0){
+    return nftList.value
   } else {
     return nftList.value.filter(item => item.cid === props.selectedIdx)
   }

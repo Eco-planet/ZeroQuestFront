@@ -10,6 +10,10 @@
           멸종위기 동물관심 2탄<br> 
           레드판다 시리즈 NFT
         </h5>
+        <h5 v-if="nftId === '6'" class="pb-8 text-3xl text-black font-semibold">
+          멸종위기 동물관심 3탄<br> 
+          레드판다 시리즈 NFT
+        </h5>
       </div>
 
       <div>
@@ -30,11 +34,30 @@
           2탄으로 제로퀘스트가 준비한 레드판다 NFT에  <br>
           많은 관심 부탁드립니다.
         </p>
+        <p  v-else-if="nftId === '6'" class=" mb-16 font-medium text-xl">
+          Adventure Red Panda NFT는 <br>
+          호기심 많고 추진력 끝내주는 모험가입니다. <br>
+          대항해 시대의 개척자를 상징하며, <br>
+          세상을 탐구하기 위해 끊임없이 모험을 합니다.<br>
+          멸종위기 동물에 대한 관심가지기, <br>
+          2탄으로 제로퀘스트가 준비한 레드판다 NFT에  <br>
+          많은 관심 부탁드립니다.
+        </p>
       </div>
    
       <div class="flex justify-center">
-        <p class="mb-16 font-bold text-2xl text-left">
+        <p v-if="nftId === '4'" class="mb-16 font-bold text-2xl text-left">
           1. 판매일정 : 12월 8일 ~ 미정 <br>
+          2. 가격 : 500ESG point<br>
+          3. 리워드 : 300일 동안 매일 <br>50 ESG point를 지급합니다 
+        </p>
+        <p v-if="nftId === '5'" class="mb-16 font-bold text-2xl text-left">
+          1. 판매일정 : 12월 15일 ~ 미정 <br>
+          2. 가격 : 500ESG point<br>
+          3. 리워드 : 300일 동안 매일 <br>50 ESG point를 지급합니다 
+        </p>
+        <p v-if="nftId === '6'" class="mb-16 font-bold text-2xl text-left">
+          1. 판매일정 : 12월 22일 ~ 미정 <br>
           2. 가격 : 500ESG point<br>
           3. 리워드 : 300일 동안 매일 <br>50 ESG point를 지급합니다 
         </p>
@@ -84,6 +107,10 @@
           Interest in endangered animals part 2<br>
           Red Panda Series NFT"
         </h5>
+        <h5 v-if="nftId === '6'" class="pb-8 text-3xl text-black font-semibold">
+          Interest in endangered animals part 3<br>
+          Red Panda Series NFT"
+        </h5>
       </div>
       <div>
         <p v-if="nftId === '4'" class=" mb-16 font-medium text-xl">
@@ -94,6 +121,12 @@
           We ask for your interest.
         </p>
         <p v-if="nftId === '5'" class=" mb-16 font-medium text-xl">
+          Introducing Adventure Red Panda.<br>
+        This panda is a curious and driven adventurer.<br>
+        It symbolizes the pioneers of the Age of Exploration and is constantly <br>
+        on the move to explore the world.
+        </p>
+        <p v-if="nftId === '6'" class=" mb-16 font-medium text-xl">
           He is a curious and driven adventurer.  <br>
           Symbolizing the pioneers of the Age of Exploration,  <br>
           We constantly go on adventures to explore the world.<br>
@@ -102,8 +135,20 @@
         </p>
       </div>
       <div class="flex justify-center">
-        <p class="mb-16 font-bold text-2xl text-left">
+        <p v-if="nftId ==='4'" class="mb-16 font-bold text-2xl text-left">
           1. Sales schedule: December 8 ~ TBC<br>
+          2. Price: 500 ESG points.<br>
+          3. Reward: 50 ESG points are paid <br>
+          every day for 300 days.
+        </p>
+        <p v-if="nftId ==='5'" class="mb-16 font-bold text-2xl text-left">
+          1. Sales schedule: December 15 ~ TBC<br>
+          2. Price: 500 ESG points.<br>
+          3. Reward: 50 ESG points are paid <br>
+          every day for 300 days.
+        </p>
+        <p v-if="nftId ==='6'" class="mb-16 font-bold text-2xl text-left">
+          1. Sales schedule: December 22 ~ TBC<br>
           2. Price: 500 ESG points.<br>
           3. Reward: 50 ESG points are paid <br>
           every day for 300 days.

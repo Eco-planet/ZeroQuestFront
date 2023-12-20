@@ -18,7 +18,7 @@
     <div class="w-full relative overflow-x-auto pb-4">
       <ul class="text-xl font-medium text-center text-white space-x-2 whitespace-nowrap">
         <li v-for="tab in categoryList" :key="tab.name" @click="switchTab(tab)"
-          class="inline-block px-4 py-3 rounded-full bg-disable text-white cursor-pointer"
+          class="w-44 inline-block py-3 rounded-full bg-disable text-white cursor-pointer"
           :class="['tab', currentTab?.name === tab.name ? 'active' : '']">
       
           <p v-if="locale === 'kr'">{{ tab.name.kor }}</p>
@@ -79,7 +79,10 @@ const getNftCategory = () => {
         const nameObj = JSON.parse(i.name)
         return { ...i, name: nameObj }
       })
-      categoryList.value = res.data.data;
+      categoryList.value = [{
+        idx:0,
+        name:{ "kor" : "전체", "eng":"ALL"}
+      }, ...res.data.data]
 
       currentTab.value = categoryList.value[0];
 
