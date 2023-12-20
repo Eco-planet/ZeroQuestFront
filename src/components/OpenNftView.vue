@@ -141,8 +141,8 @@ const closeModal = () => {
   store.state.isPopup = false;
 };
 
-const goNftDetail = (nftId: number, tokenId: number) => {
-  router.push({ name: "onft-detail", params: { nftId, tokenId } });
+const goNftDetail = (idx: number, tokenId: number) => {
+  router.push({ name: "onft-detail", params: { idx, tokenId } });
 };
 </script>
 

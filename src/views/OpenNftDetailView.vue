@@ -128,7 +128,7 @@ import panda2 from "@/components/common/panda2.vue"
 const nftList = store.getters["auth/getNftList"];
 const nftDetail = ref();
 const esgPoint = ref("");
-const nftId = Number(router.currentRoute.value.params.nftId);
+const nftId = Number(router.currentRoute.value.params.idx);
 console.log("nftId",nftId)
 const tokenId = Number(router.currentRoute.value.params.tokenId);
 const nftInfo = nftList[nftId];
