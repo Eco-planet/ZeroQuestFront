@@ -2,18 +2,18 @@
   <div>
     <div v-if="locale === 'kr'">
       <div>
-        <h5 v-if="nftId === '7'" class="pb-8 text-3xl text-black font-semibold">
+        <h5 v-if="nftId === '4'" class="pb-8 text-3xl text-black font-semibold">
           멸종위기 동물관심 1탄<br> 
           레드판다 시리즈 NFT
         </h5>
-        <h5 v-if="nftId === '8'" class="pb-8 text-3xl text-black font-semibold">
+        <h5 v-if="nftId === '5'" class="pb-8 text-3xl text-black font-semibold">
           멸종위기 동물관심 2탄<br> 
           레드판다 시리즈 NFT
         </h5>
       </div>
 
       <div>
-        <p  v-if="nftId === '7'" class=" mb-16 font-medium text-xl">
+        <p  v-if="nftId === '4'" class=" mb-16 font-medium text-xl">
           Sapiens Red Panda NFT는  <br>
           돌도끼를 장착한 원시 팬더의 모습으로,  <br>
           고대의 자연 속 인간을 떠올리게 합니다.<br>
@@ -21,7 +21,7 @@
           제로퀘스트가 준비한 레드판다 NFT에 <br>
           많은 관심 부탁드립니다. 
         </p>
-        <p  v-else-if="nftId === '8'" class=" mb-16 font-medium text-xl">
+        <p  v-else-if="nftId === '5'" class=" mb-16 font-medium text-xl">
           Adventure Red Panda NFT는 <br>
           호기심 많고 추진력 끝내주는 모험가입니다. <br>
           대항해 시대의 개척자를 상징하며, <br>
@@ -76,24 +76,24 @@
     </div>
     <div v-else>
       <div>
-        <h5 v-if="nftId === '7'" class="pb-8 text-3xl text-black font-semibold">
+        <h5 v-if="nftId === '4'" class="pb-8 text-3xl text-black font-semibold">
           Interest in endangered animals part 1<br>
           Red Panda Series NFT"
         </h5>
-        <h5 v-if="nftId === '8'" class="pb-8 text-3xl text-black font-semibold">
+        <h5 v-if="nftId === '5'" class="pb-8 text-3xl text-black font-semibold">
           Interest in endangered animals part 2<br>
           Red Panda Series NFT"
         </h5>
       </div>
       <div>
-        <p v-if="nftId === '7'" class=" mb-16 font-medium text-xl">
+        <p v-if="nftId === '4'" class=" mb-16 font-medium text-xl">
           In the form of a primitive panda equipped with a stone axe,  <br>
           It reminds me of humans in ancient nature.  <br>
           Part 1 of becoming interested in endangered animals<br>
           Red Panda NFT prepared by ZeroQuest <br>
           We ask for your interest.
         </p>
-        <p v-if="nftId === '8'" class=" mb-16 font-medium text-xl">
+        <p v-if="nftId === '5'" class=" mb-16 font-medium text-xl">
           He is a curious and driven adventurer.  <br>
           Symbolizing the pioneers of the Age of Exploration,  <br>
           We constantly go on adventures to explore the world.<br>
@@ -162,6 +162,7 @@ import router from "@/router"
 const store = useStore()
 const locale = computed(() => store.state.system.locale)
 const nftId = router.currentRoute.value.params.idx 
+console.log("nftId",nftId)
 </script>
 
 <style lang="scss" scoped>
