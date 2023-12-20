@@ -94,8 +94,6 @@
     <recycling v-if="nftId === 1"></recycling>
     <stairs v-else-if="nftId === 2"></stairs>
     <tree v-else-if="nftId === 3"></tree>
-    <panda v-else-if="nftId === 4"></panda>
-    <panda2 v-else-if="nftId === 5"></panda2>
     <panda v-else></panda>
     <div class="h-96"></div>
 
