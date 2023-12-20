@@ -62,6 +62,7 @@
       >
         <div class="px-0 w-full flex justify-between items-center text-2xl">
           <div class="font-semibold">{{ t("message.nftReward") }}</div>
+          <div class="font-semibold" >{{ t("message.totalReward") }} : {{totalRewards}} point</div>
           <div class="px-5 nftOn" @click="exchangeReward" v-if="nftId === 1 || nftId === 2">
             {{ t("message.rewardBtn") }}
           </div>
@@ -130,6 +131,7 @@ console.log("nftId",nftId)
 const tokenId = Number(router.currentRoute.value.params.tokenId);
 const nftInfo = nftList[nftId];
 const questRewards = ref();
+const totalRewards = ref();
 const popupTitle = ref("");
 const vuexStore = useStore();
 
@@ -169,49 +171,42 @@ const getEsgpBalance = () => {
     });
 };
 
-const getQuestReward = () => {
-  if (nftId !== 1 || nftId !== 2) {
-    console.log("test")
-    http.get("/api/quest/nftReward", {
-      params: {
-        symbol: nftList[nftId].symbol,
-        tokenId,
-        nftId,
-      }
-    }).then((res) => {
-      console.log("pandaReward", res)
-      questRewards.value = res.data.data
-    })
-  } else {
-    http.get("/api/quest/reward", {
-      params: {
-        symbol: nftList[nftId].symbol,
-        tokenId,
-        nftId,
-      }
-    })
-      .then((response) => {
-        console.log(response);
-        // UTC+9로 변경하는 함수
-        const convertToKST = (utcDateStr) => {
-          let date = new Date(utcDateStr);
-          date.setTime(date.getTime() + 9 * 60 * 60 * 1000); // 9시간을 더함
-          return date.toISOString(); // 변환된 날짜를 다시 문자열로 반환
-        };
-  
-        // response.data.data 배열의 각 항목에 대해 createdAt을 UTC+9로 변경
-        response.data.data.forEach(item => {
-          item.createdAt = convertToKST(item.createdAt);
-        });
-  
-        questRewards.value = response.data.data.reverse();
-      })
-      .catch(() => {
-        console.log('err');
-        questRewards.value = {};
-      })
-  }
+// UTC+9로 날짜 변환하는 함수
+const convertToKST = (utcDateStr) => {
+  let date = new Date(utcDateStr);
+  date.setTime(date.getTime() + 9 * 60 * 60 * 1000); // 9시간을 더함
+  return date.toISOString().replace('Z', ''); // 변환된 날짜를 다시 문자열로 반환하며, 'Z'를 제거
 };
+
+// Quest 보상 데이터를 가져오는 함수
+const fetchQuestRewardData = (url, params) => {
+  http.get(url, { params })
+    .then((response) => {
+      // 받아온 데이터의 createdAt을 UTC+9로 변경하고, 배열을 뒤집어 최신 순으로 정렬
+      questRewards.value = response.data.data.map(item => ({
+        ...item,
+        createdAt: convertToKST(item.createdAt)
+      })).reverse();
+      console.log("🚀 ~ file: OpenNftDetailView.vue:161 ~ .then ~ questRewards.value:", questRewards.value)
+       // reward 속성의 합계 계산
+      totalRewards.value = questRewards.value.reduce((sum, item) => sum + parseFloat(item.reward), 0);
+      console.log("Total Rewards:", totalRewards.value);
+    })
+    .catch((error) => {
+      console.error('Error fetching quest rewards:', error);
+      questRewards.value = [];
+    });
+};
+
+const getQuestReward = () => {
+  const symbol = nftList[nftId]?.symbol;
+  // nftId가 1 또는 2가 아닐 때 조건 검사
+  if (nftId !== 1 && nftId !== 2) {
+    fetchQuestRewardData("/api/quest/nftReward", { symbol, tokenId, nftId });
+  } else {
+    fetchQuestRewardData("/api/quest/reward", { symbol, tokenId, nftId });
+  }
+}
 
 const exchangeReward = () => {
   http

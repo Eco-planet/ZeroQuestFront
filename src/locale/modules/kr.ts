@@ -116,6 +116,7 @@ export default {
     agreeBtn: "동의",
     nftReward: "NFT 리워드",
     rewardBtn: "보상",
+    totalReward: "총 보상",
     getReward: "{value} 포인트 환전 완료",
     date:"날짜",
     time:"시간",
