@@ -94,6 +94,8 @@
     <recycling v-if="nftId === 1"></recycling>
     <stairs v-else-if="nftId === 2"></stairs>
     <tree v-else-if="nftId === 3"></tree>
+    <panda v-else-if="nftId === 4"></panda>
+    <panda2 v-else-if="nftId === 5"></panda2>
     <panda v-else></panda>
     <div class="h-96"></div>
 
@@ -117,6 +119,7 @@ import stairs from "@/components/common/stairs.vue"
 import tree from "@/components/common/tree.vue"
 import Modal from "@/components/Modal/index.vue";
 import panda from "@/components/common/panda.vue"
+import panda2 from "@/components/common/panda2.vue"
 
 const { t } = useI18n();
 
@@ -169,6 +172,10 @@ const buyNftESGP = (nft: nftType) => {
     if (err.response.data.errorCode === 505) {
       store.state.popupType = "message";
       popupTitle.value = "error.notEnoughPoints";
+      store.state.isPopup = true;
+    } else if (err.response.data.errorCode === 502){
+      store.state.popupType = "message";
+      popupTitle.value = "error.notEnoughGasFee";
       store.state.isPopup = true;
     } else if (err.response.data.errorCode === 300) {
       store.state.popupType = 'duplicate_nft_buy';

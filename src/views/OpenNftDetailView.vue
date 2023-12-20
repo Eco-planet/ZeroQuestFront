@@ -98,7 +98,8 @@
   <recycling v-if="nftId === 1"></recycling>
   <stairs v-else-if="nftId === 2"></stairs>
   <tree v-else-if="nftId === 3"></tree>
-  <panda v-else></panda>
+  <panda v-else-if="nftId === 4"></panda>
+  <panda2 v-else-if="nftId === 5"></panda2>
 
 
   <Modal
@@ -122,11 +123,12 @@ import recycling from "@/components/common/recycling.vue";
 import stairs from "@/components/common/stairs.vue";
 import tree from "@/components/common/tree.vue";
 import panda from "@/components/common/panda.vue"
+import panda2 from "@/components/common/panda2.vue"
 
 const nftList = store.getters["auth/getNftList"];
 const nftDetail = ref();
 const esgPoint = ref("");
-const nftId = Number(router.currentRoute.value.params.idx);
+const nftId = Number(router.currentRoute.value.params.nftId);
 console.log("nftId",nftId)
 const tokenId = Number(router.currentRoute.value.params.tokenId);
 const nftInfo = nftList[nftId];

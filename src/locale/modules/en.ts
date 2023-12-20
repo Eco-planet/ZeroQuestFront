@@ -146,5 +146,6 @@ export default {
     notReward: "There are no points to be rewarded.",
     notFoundFlutter: "Not Found 'flutter_inappwebview'",
     notEnoughPoints: "ESG points are lacking.",
+    notEnoughGasFee: "Minting fees are insufficient. Please contact your administrator.",
   },
 };
