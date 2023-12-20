@@ -617,13 +617,13 @@
             class="text-2xl text-center"
           >
             <div>{{ t(showTitle) }}</div>
-            <div>
+            <!-- <div>
               ({{
                 t("message.swapRequestValue", {
                   value: store.state.popupValue,
                 })
               }})
-            </div>
+            </div> -->
           </div>
           <div
             v-else-if="showTitle == 'message.getReward'"

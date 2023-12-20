@@ -115,6 +115,7 @@ export default {
     agreeBtn: "Agree",
     nftReward: "NFT Reward",
     rewardBtn: "reward",
+    totalReward: "Total reward",
     getReward: "{value} Point exchange completed",
     date:"date",
     time:"time",
