@@ -12,8 +12,20 @@
           on the move to explore the world. <br>
       </p>
       <div class="flex justify-center">
-        <p class="mb-16 font-bold text-2xl text-left">
+        <p v-if="nftId ==='4'" class="mb-16 font-bold text-2xl text-left">
           1. Sales schedule: December 8 ~ TBC<br>
+          2. Price: 500 ESG points.<br>
+          3. Reward: 50 ESG points are paid <br>
+          every day for 300 days.
+        </p>
+        <p v-if="nftId ==='5'" class="mb-16 font-bold text-2xl text-left">
+          1. Sales schedule: December 15 ~ TBC<br>
+          2. Price: 500 ESG points.<br>
+          3. Reward: 50 ESG points are paid <br>
+          every day for 300 days.
+        </p>
+        <p v-if="nftId ==='6'" class="mb-16 font-bold text-2xl text-left">
+          1. Sales schedule: December 22 ~ TBC<br>
           2. Price: 500 ESG points.<br>
           3. Reward: 50 ESG points are paid <br>
           every day for 300 days.
