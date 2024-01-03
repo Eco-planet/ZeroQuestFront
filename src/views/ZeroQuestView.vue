@@ -15,7 +15,11 @@
       <Carousel :autoplay="3000" :wrap-around="true">
         <Slide v-for="slide in bannerList" :key="slide">
           <div class="carousel__item" style="overflow: hidden">
-            <img v-if="locale === 'kr'" :src="slide.url.kor" @click="goToLink(slide.link)" />
+            <img
+              v-if="locale === 'kr'"
+              :src="slide.url.kor"
+              @click="goToLink(slide.link)"
+            />
             <img v-else :src="slide.url.eng" @click="goToLink(slide.link)" />
           </div>
         </Slide>
@@ -23,7 +27,9 @@
     </div>
 
     <div class="h-10"></div>
-    <div class="flex w-full pb-2 items-center justify-between border-b border-gray-400">
+    <div
+      class="flex w-full pb-2 items-center justify-between border-b border-gray-400"
+    >
       <div class="text-2xl font-semibold">ESG Point</div>
       <div class="flex items-end">
         <div class="text-3xl font-semibold text-esg-color">{{ esgPoint }}</div>
@@ -44,20 +50,38 @@
       <div class="flex flex-col" v-for="item in myNftList" :key="item.tokenId">
         <div v-if="item.enable === 1">
           <div>
-            <img class="nftImg" :src="nftList[item.nftId].image" alt="" @click="goNftDetail(item.nftId, item.tokenId)" />
+            <img
+              class="nftImg"
+              :src="nftList[item.nftId].image"
+              alt=""
+              @click="goNftDetail(item.nftId, item.tokenId)"
+            />
           </div>
 
           <div class="h-2"></div>
-          <div class="font-semibold text-center" v-if="locale === 'kr'">{{ nftList[item.nftId].name.kor }}</div>
-          <div class="font-semibold text-center" v-else>{{ nftList[item.nftId].name.eng }}</div>
+          <div class="font-semibold text-center" v-if="locale === 'kr'">
+            {{ nftList[item.nftId].name.kor }}
+          </div>
+          <div class="font-semibold text-center" v-else>
+            {{ nftList[item.nftId].name.eng }}
+          </div>
         </div>
         <div class="grayscale" v-else>
           <div>
-            <img class="nftImg" :src="nftList[item.nftId].image" alt="" @click="goNftDetail(item.nftId, item.tokenId)" />
+            <img
+              class="nftImg"
+              :src="nftList[item.nftId].image"
+              alt=""
+              @click="goNftDetail(item.nftId, item.tokenId)"
+            />
           </div>
           <div class="h-2"></div>
-          <div class="font-semibold text-center" v-if="locale === 'kr'">{{ nftList[item.nftId].name.kor }}</div>
-          <div class="font-semibold text-center" v-else>{{ nftList[item.nftId].name.eng }}</div>
+          <div class="font-semibold text-center" v-if="locale === 'kr'">
+            {{ nftList[item.nftId].name.kor }}
+          </div>
+          <div class="font-semibold text-center" v-else>
+            {{ nftList[item.nftId].name.eng }}
+          </div>
         </div>
       </div>
     </div>
@@ -72,25 +96,50 @@
     </div>
     <div class="w-full grid grid-cols-3 gap-card">
       <div class="flex flex-col" v-for="item in nftList" :key="item.tokenId">
-        <img class="nftImg" :src="item.image" alt="" @click="goToDetail(item.idx)" />
+        <img
+          class="nftImg"
+          :src="item.image"
+          alt=""
+          @click="goToDetail(item.idx)"
+        />
         <div class="h-2"></div>
-        <div class="font-semibold text-center" v-if="locale === 'kr'">{{ item.name.kor }}</div>
+        <div class="font-semibold text-center" v-if="locale === 'kr'">
+          {{ item.name.kor }}
+        </div>
         <div class="font-semibold text-center" v-else>{{ item.name.eng }}</div>
       </div>
     </div>
     <div class="h-10"></div>
 
-    <div class="w-66 h-24 flex justify-center items-center mb-5 mt-10 cursor-pointer" @click="referPage">
+    <!-- <div class="w-66 h-24 flex justify-center items-center mb-5 mt-10 cursor-pointer" @click="referPage">
       <img v-if="locale === 'kr'" src="@/assets/images/fix_banner.jpg" @click="referPage" />
       <img v-else src="@/assets/images/fix_banner_eng.jpg" @click="referPage" />
+    </div> -->
+
+    <div
+      class="w-66 h-24 flex justify-center items-center mb-5 mt-10 cursor-pointer"
+      @click="referPage"
+    >
+      <img
+        v-if="locale === 'kr'"
+        src="@/assets/images/referral_banner.png"
+        @click="referPage"
+      />
+      <img
+        v-else
+        src="@/assets/images/referral_banner_eng.png"
+        @click="referPage"
+      />
     </div>
 
     <div class="h-10"></div>
 
-    <div class="break-words text-black media-Bottom intro-zeroquest text-center mt-10">
+    <div
+      class="break-words text-black media-Bottom intro-zeroquest text-center mt-10"
+    >
       <div v-if="locale === 'kr'">
         <div class="font-semibold text-2xl">
-        제로퀘스트와 함께 지구를 살려요!🌍🎮
+          제로퀘스트와 함께 지구를 살려요!🌍🎮
         </div>
         <br />
         <div class="font-medium text-lg">
@@ -118,7 +167,7 @@
         <div class="font-medium text-lg">
           Reduce your carbon footprint; that's our mission! <br />
           Earn ESG points for every success! <br />
-          More interestingly, points can be redeemed <br/>
+          More interestingly, points can be redeemed <br />
           by exchanging them for ESG tokens.<br />
 
           From climbing stairs to riding a bike!<br />
@@ -162,7 +211,7 @@ const tokenInfos = ref();
 const popupTitle = ref("");
 const referralCode = ref(""); //레퍼럴 코드 확인용
 
-const locale = computed(() => vuexStore.state.system.locale)
+const locale = computed(() => vuexStore.state.system.locale);
 
 const { t } = useI18n();
 
@@ -265,8 +314,8 @@ function goToLink(link: string) {
   });
 }
 
-const goNftDetail = (idx: number,  tokenId: number) => {
-  router.push({ name: "onft-detail", params: { idx , tokenId} });
+const goNftDetail = (idx: number, tokenId: number) => {
+  router.push({ name: "onft-detail", params: { idx, tokenId } });
 };
 
 function referPage() {
@@ -303,7 +352,7 @@ function referPage() {
 }
 
 .media-Bottom {
-  @media(min-width:450px) {
+  @media (min-width: 450px) {
     margin-bottom: 100px;
   }
 }
@@ -323,4 +372,3 @@ function referPage() {
   font-size: 14px;
 }
 </style>
-
