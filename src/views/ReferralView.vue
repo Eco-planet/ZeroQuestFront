@@ -189,10 +189,8 @@ const shareTelegram = () => {
     console.error("store.state.referral is not defined or is empty");
   }
 };
-const sendReferralRequest = (code) => {
-  return http.post(`/api/user/sendReferral`, {
-    referralCode: code,
-  });
+const sendReferralRequest = () => {
+  return http.post(`/api/user/sendReferral`);
 };
 
 // 소셜 공유하기, 카카오
@@ -218,6 +216,7 @@ const shareKakao = () => {
     // 모바일 버전
     window.flutter_inappwebview.callHandler('handleKakaoShareBtn', {infoShareKakao: infoShareKakao}).then((res: any) => {
       console.log(res)
+      sendReferralRequest()
     })
 
     // 웹 버전
