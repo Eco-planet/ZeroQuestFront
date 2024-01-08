@@ -15,12 +15,22 @@
       <Carousel :autoplay="3000" :wrap-around="true">
         <Slide v-for="slide in bannerList" :key="slide">
           <div class="carousel__item" style="overflow: hidden">
-            <img
+            <!-- <img
               v-if="locale === 'kr'"
               :src="slide.url.kor"
               @click="goToLink(slide.link)"
+            /> -->
+            <img
+              v-if="locale === 'kr'"
+              src="@/assets/images/referral_banner.png"
+              @click="goToLink(slide.link)"
             />
-            <img v-else :src="slide.url.eng" @click="goToLink(slide.link)" />
+            <!-- <img v-else :src="slide.url.eng" @click="goToLink(slide.link)" /> -->
+            <img
+              v-else
+              src="@/assets/images/referral_banner_eng.png"
+              @click="goToLink(slide.link)"
+            />
           </div>
         </Slide>
       </Carousel>
@@ -110,11 +120,6 @@
       </div>
     </div>
     <div class="h-10"></div>
-
-    <!-- <div class="w-66 h-24 flex justify-center items-center mb-5 mt-10 cursor-pointer" @click="referPage">
-      <img v-if="locale === 'kr'" src="@/assets/images/fix_banner.jpg" @click="referPage" />
-      <img v-else src="@/assets/images/fix_banner_eng.jpg" @click="referPage" />
-    </div> -->
 
     <div
       class="w-66 h-24 flex justify-center items-center mb-5 mt-10 cursor-pointer"

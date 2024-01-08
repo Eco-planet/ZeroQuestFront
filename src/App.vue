@@ -77,7 +77,7 @@ onMounted(() => {
       })
       .then((response) => {
         const nftListData = response.data.data;
-        console.log("nftListData",nftListData)
+        console.log("nftListData", nftListData);
 
         let nftList: any = {};
 
