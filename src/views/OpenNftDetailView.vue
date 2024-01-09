@@ -62,8 +62,14 @@
       >
         <div class="px-0 w-full flex justify-between items-center text-2xl">
           <div class="font-semibold">{{ t("message.nftReward") }}</div>
-          <div class="font-semibold" >{{ t("message.totalReward") }} : {{totalRewards}} point</div>
-          <div class="px-5 nftOn" @click="exchangeReward" v-if="nftId === 1 || nftId === 2">
+          <div class="font-semibold">
+            {{ t("message.totalReward") }} : {{ totalRewards }} point
+          </div>
+          <div
+            class="px-5 nftOn"
+            @click="exchangeReward"
+            v-if="nftId === 1 || nftId === 2"
+          >
             {{ t("message.rewardBtn") }}
           </div>
         </div>
@@ -98,8 +104,9 @@
   <recycling v-if="nftId === 1"></recycling>
   <stairs v-else-if="nftId === 2"></stairs>
   <tree v-else-if="nftId === 3"></tree>
-  <panda v-else></panda>
-
+  <panda v-else-if="nftId === 4"></panda>
+  <panda v-else-if="nftId === 5"></panda>
+  <panda v-else-if="nftId === 9"></panda>
 
   <Modal
     :visible="store.state.isPopup"
@@ -121,14 +128,14 @@ import { useStore } from "vuex";
 import recycling from "@/components/common/recycling.vue";
 import stairs from "@/components/common/stairs.vue";
 import tree from "@/components/common/tree.vue";
-import panda from "@/components/common/panda.vue"
-import panda2 from "@/components/common/panda2.vue"
+import panda from "@/components/common/panda.vue";
+import panda2 from "@/components/common/panda2.vue";
 
 const nftList = store.getters["auth/getNftList"];
 const nftDetail = ref();
 const esgPoint = ref("");
 const nftId = Number(router.currentRoute.value.params.idx);
-console.log("nftId",nftId)
+console.log("nftId", nftId);
 const tokenId = Number(router.currentRoute.value.params.tokenId);
 const nftInfo = nftList[nftId];
 const questRewards = ref();
@@ -176,25 +183,34 @@ const getEsgpBalance = () => {
 const convertToKST = (utcDateStr) => {
   let date = new Date(utcDateStr);
   date.setTime(date.getTime() + 9 * 60 * 60 * 1000); // 9시간을 더함
-  return date.toISOString().replace('Z', ''); // 변환된 날짜를 다시 문자열로 반환하며, 'Z'를 제거
+  return date.toISOString().replace("Z", ""); // 변환된 날짜를 다시 문자열로 반환하며, 'Z'를 제거
 };
 
 // Quest 보상 데이터를 가져오는 함수
 const fetchQuestRewardData = (url, params) => {
-  http.get(url, { params })
+  http
+    .get(url, { params })
     .then((response) => {
       // 받아온 데이터의 createdAt을 UTC+9로 변경하고, 배열을 뒤집어 최신 순으로 정렬
-      questRewards.value = response.data.data.map(item => ({
-        ...item,
-        createdAt: convertToKST(item.createdAt)
-      })).reverse();
-      console.log("🚀 ~ file: OpenNftDetailView.vue:161 ~ .then ~ questRewards.value:", questRewards.value)
-       // reward 속성의 합계 계산
-      totalRewards.value = questRewards.value.reduce((sum, item) => sum + parseFloat(item.reward), 0);
+      questRewards.value = response.data.data
+        .map((item) => ({
+          ...item,
+          createdAt: convertToKST(item.createdAt),
+        }))
+        .reverse();
+      console.log(
+        "🚀 ~ file: OpenNftDetailView.vue:161 ~ .then ~ questRewards.value:",
+        questRewards.value
+      );
+      // reward 속성의 합계 계산
+      totalRewards.value = questRewards.value.reduce(
+        (sum, item) => sum + parseFloat(item.reward),
+        0
+      );
       console.log("Total Rewards:", totalRewards.value);
     })
     .catch((error) => {
-      console.error('Error fetching quest rewards:', error);
+      console.error("Error fetching quest rewards:", error);
       questRewards.value = [];
     });
 };
@@ -207,7 +223,7 @@ const getQuestReward = () => {
   } else {
     fetchQuestRewardData("/api/quest/reward", { symbol, tokenId, nftId });
   }
-}
+};
 
 const exchangeReward = () => {
   http

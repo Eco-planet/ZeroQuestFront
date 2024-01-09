@@ -27,7 +27,7 @@
     <div class="break-words text-black">
       <div v-if="locale === 'kr'">
         <div class="font-semibold text-2xl">
-        제로퀘스트와 함께 지구를 살려요!🌍🎮
+          제로퀘스트와 함께 지구를 살려요!🌍🎮
         </div>
         <br />
         <div class="font-medium text-lg">
@@ -55,7 +55,7 @@
         <div class="font-medium text-lg">
           Reduce your carbon footprint; that's our mission! <br />
           Earn ESG points for every success! <br />
-          More interestingly, points can be redeemed <br/>
+          More interestingly, points can be redeemed <br />
           by exchanging them for ESG tokens.<br />
 
           From climbing stairs to riding a bike!<br />
@@ -85,14 +85,14 @@ import openSSLCrypto from "@/utils/openSSLCrypto";
 import { googleTokenLogin, googleLogout } from "vue3-google-login";
 import { onMounted, ref } from "vue";
 
-const vuexStore = useStore(); 
+const vuexStore = useStore();
 
 const { t } = useI18n();
 
 const showMode = ref(router.currentRoute.value.query.showMode);
 const isLogin = ref(router.currentRoute.value.query.isLogin);
 
-const locale = computed(() => vuexStore.state.system.locale)
+const locale = computed(() => vuexStore.state.system.locale);
 
 onMounted(() => {
   if (store.state.showMode === "webview" || showMode.value === "webview") {

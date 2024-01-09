@@ -109,11 +109,11 @@ export default {
     getUserVote: (state: Nullable) => {
       return state.vote;
     },
-    getPwHash: (state:Nullable) => {
-      return state.pwHash
+    getPwHash: (state: Nullable) => {
+      return state.pwHash;
     },
-    getPwNumber: (state:Nullable) => {
-      return state.pwNumber
+    getPwNumber: (state: Nullable) => {
+      return state.pwNumber;
     },
   },
   mutations: {
@@ -224,14 +224,14 @@ export default {
       state.vote = vote;
       localStorage.setItem("vote", vote.toString());
     },
-    setPwHash(state:Nullable, { pwHash }: Nullable){
+    setPwHash(state: Nullable, { pwHash }: Nullable) {
       state.pwHash = pwHash;
-      localStorage.setItem("pwHash", pwHash)
+      localStorage.setItem("pwHash", pwHash);
     },
 
-    setPwNumber(state:Nullable, { pwNumber }: Nullable){
+    setPwNumber(state: Nullable, { pwNumber }: Nullable) {
       state.pwNumber = pwNumber;
-      localStorage.setItem("pwNumber", pwNumber)
+      localStorage.setItem("pwNumber", pwNumber);
     },
   },
   actions: {
@@ -296,15 +296,15 @@ export default {
         vote,
       });
     },
-    pwHash(context:Nullable, pwHash:any){
+    pwHash(context: Nullable, pwHash: any) {
       context.commit("setPwHash", {
-        pwHash
-      })
+        pwHash,
+      });
     },
-    pwNumber(context:Nullable, pwNumber:any){
+    pwNumber(context: Nullable, pwNumber: any) {
       context.commit("setPwNumber", {
-        pwNumber
-      })
+        pwNumber,
+      });
     },
     updateRefreshToken(context: Nullable) {
       authApi
