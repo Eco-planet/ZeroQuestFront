@@ -1,21 +1,54 @@
 <template>
   <div class="global-modal" v-if="wrapperVisible" @click="clickMask">
-    <div class="w-auto" :class="['global-modal-container', innerClass]" :style="containerStyle" @click.stop>
-      <img v-if="showClose" class="close-icon" src="@/assets/images/img_close_black.png" @click="hide" />
+    <div
+      class="w-auto"
+      :class="['global-modal-container', innerClass]"
+      :style="containerStyle"
+      @click.stop
+    >
+      <img
+        v-if="showClose"
+        class="close-icon"
+        src="@/assets/images/img_close_black.png"
+        @click="hide"
+      />
       <div class="h-10"></div>
       <div class="flex flex-col justify-center items-center">
         <div class="text-2xl text-center">
           <template v-if="termsType === 1">
-            <textarea v-if="locale === 'kr'" class="terms" cols="60" rows="40">{{ termsKR1 }}</textarea>
-            <textarea v-else class="terms" cols="60" rows="40">{{ termsEN1 }}</textarea>
+            <textarea
+              v-if="locale === 'kr'"
+              class="terms"
+              cols="60"
+              rows="40"
+              >{{ termsKR1 }}</textarea
+            >
+            <textarea v-else class="terms" cols="60" rows="40">{{
+              termsEN1
+            }}</textarea>
           </template>
           <template v-if="termsType === 2">
-            <textarea v-if="locale === 'kr'" class="terms" cols="60" rows="40">{{ termsKR2 }}</textarea>
-            <textarea v-else class="terms" cols="60" rows="40">{{ termsEN2 }}</textarea>
+            <textarea
+              v-if="locale === 'kr'"
+              class="terms"
+              cols="60"
+              rows="40"
+              >{{ termsKR2 }}</textarea
+            >
+            <textarea v-else class="terms" cols="60" rows="40">{{
+              termsEN2
+            }}</textarea>
           </template>
         </div>
         <div class="h-10"></div>
-        <div><button class="w-48 h-12 font-semibold text-white text-xl rounded close-btn" @click="updateAgree">{{ t("message.agreeBtn") }}</button></div>
+        <div>
+          <button
+            class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
+            @click="updateAgree"
+          >
+            {{ t("message.agreeBtn") }}
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -32,7 +65,7 @@ import termsEN1 from "!raw-loader!@/assets/terms/termsEN1.md";
 import termsEN2 from "!raw-loader!@/assets/terms/termsEN2.md";
 
 const vuexStore = useStore(); // Use a different variable name for the store
-const locale = computed(() => vuexStore.state.system.locale)
+const locale = computed(() => vuexStore.state.system.locale);
 const { t } = useI18n();
 
 const props = defineProps({
@@ -58,12 +91,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits([
-  "show",
-  "hide",
-  "update:visible",
-  "termsAgree",
-]);
+const emit = defineEmits(["show", "hide", "update:visible", "termsAgree"]);
 const { visible, innerStyle, termsType } = toRefs(props); // 弹框组件显隐
 const wrapperVisible = ref(false); // 弹框外部容器显隐
 const innerVisible = ref(false); // 弹框中间容器显隐
@@ -100,7 +128,7 @@ const hide = () => {
 
 const clickMask = () => {
   hide();
-}
+};
 
 const containerStyle = computed(() => ({
   transform: innerVisible.value
@@ -111,7 +139,8 @@ const containerStyle = computed(() => ({
 </script>
 
 <style lang="scss">
-.terms, .terms:focus {
+.terms,
+.terms:focus {
   border: none;
   background-color: transparent;
   resize: none;
@@ -120,22 +149,40 @@ const containerStyle = computed(() => ({
   outline-offset: 0px !important;
   box-shadow: none !important;
 }
-
 .global-modal {
   z-index: 100;
   position: fixed;
-  top: 0px;
-  left: 0px;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   &-container {
     background-color: #fff;
-    position: absolute;
-    left: 50%;
-    top: 50%;
+    width: 75%;
+    max-width: 800px;
+    min-width: 400px;
+    height: auto;
+    max-height: 90%;
+    overflow-y: auto;
+    padding: 20px;
+    box-sizing: border-box;
 
+    @media screen and (max-width: 840px) {
+      width: 90%;
+      min-width: 300px;
+      padding: 15px;
+    }
+
+    .terms {
+      width: 100%;
+      max-height: 70vh;
+      overflow-y: auto;
+    }
     @media screen and (min-width: 840px) {
       min-width: 400px;
     }

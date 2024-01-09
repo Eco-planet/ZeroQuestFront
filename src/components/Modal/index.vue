@@ -1,5 +1,9 @@
 <template>
-  <div class="global-modal" v-if="wrapperVisible || wrapperVisible2" @click="clickMask">
+  <div
+    class="global-modal"
+    v-if="wrapperVisible || wrapperVisible2"
+    @click="clickMask"
+  >
     <div
       :class="['global-modal-container', innerClass]"
       :style="containerStyle"
@@ -471,6 +475,7 @@
             <div class="mb-10 flex justify-center">
               <img class="" src="@/assets/images/icon_error.png" />
             </div>
+
             <div class="mb-10 text-3xl font-bold">
               {{ t("message.serviceChecking") }}
             </div>
@@ -489,12 +494,17 @@
             <div class="mb-10 flex justify-center">
               <img class="wp-30" src="@/assets/images/icon_success.png" />
             </div>
-            <div class="mb-10 text-3xl font-bold">
+
+            <div class="mb-10 text-3xl">
+              <span style="font-size: 2.5rem; font-weight: bold">{{
+                t("message.successReferralTitle")
+              }}</span>
+              <br /><br />
               {{ t("message.successReferral") }}
             </div>
             <div>
               <button
-                class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
+                class="w-48 h-16 font-semibold text-white text-xl rounded close-btn"
                 @click="hide"
               >
                 {{ t("message.termsBtn") }}
@@ -544,30 +554,26 @@
           </div>
           <div>
             <div class="mb-10 text-2xl font-semibold">
-              When you withdraw, your accumulated points and NFT information will be permanently deleted, and recovery will not be possible.
+              When you withdraw, your accumulated points and NFT information
+              will be permanently deleted, and recovery will not be possible.
             </div>
 
             <div class="mb-10 text-2xl font-semibold">
-              Also, if you rejoin on the same day after withdrawing, you will not receive WMU voting rights. Please keep this in mind.
+              Also, if you rejoin on the same day after withdrawing, you will
+              not receive WMU voting rights. Please keep this in mind.
             </div>
             <div class="flex justify-between">
-              <button class="
-                w-44 
-                h-12 
-                font-semibold 
-                text-xl 
-                rounded 
-                close-btn 
-                bg-white 
-                text-green-800
-                border
-                border-gray-300
-                border-solid
-                "
-                @click="hide">Cancel
+              <button
+                class="w-44 h-12 font-semibold text-xl rounded close-btn bg-white text-green-800 border border-gray-300 border-solid"
+                @click="hide"
+              >
+                Cancel
               </button>
-              <button class="w-44 h-12 font-semibold text-white text-xl rounded close-btn bg-green-700"
-                @click="withdrawBtn">Withdraw
+              <button
+                class="w-44 h-12 font-semibold text-white text-xl rounded close-btn bg-green-700"
+                @click="withdrawBtn"
+              >
+                Withdraw
               </button>
             </div>
           </div>
@@ -575,20 +581,22 @@
         <template v-if="popupType === 'successWithdraw'">
           <div>
             <div class="mb-4 text-2xl font-bold">
-              Your membership withdrawal is complete.<br>
+              Your membership withdrawal is complete.<br />
             </div>
             <div class="mb-10 text-xl font-semibold">
-              It's a pity, but we look forward to<br>
-              our next meeting with you.<br>
+              It's a pity, but we look forward to<br />
+              our next meeting with you.<br />
             </div>
             <div>
-              <button class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
-                @click="voteHide">Confirm
+              <button
+                class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
+                @click="voteHide"
+              >
+                Confirm
               </button>
             </div>
           </div>
         </template>
-
 
         <template
           v-if="
@@ -730,7 +738,7 @@ const emit = defineEmits([
   "resData",
   "resJson",
   "voteHide",
-  "clickWithdraw"
+  "clickWithdraw",
 ]);
 const { visible, withdrawVisible, innerStyle, title } = toRefs(props); // 弹框组件显隐
 const wrapperVisible = ref(false); // 弹框外部容器显隐
@@ -769,7 +777,7 @@ const referralCode = ref(""); //레퍼럴 코드 확인용
 watch([visible, withdrawVisible], ([newVisible, newWithdrawVisible]) => {
   if (newVisible || newWithdrawVisible) {
     popupType.value = store.state.popupType;
-  
+
     if (popupType.value === "successWithdraw") {
       wrapperVisible.value = false;
       innerVisible.value = false;
@@ -827,16 +835,16 @@ const hide = () => {
 };
 
 const voteHide = () => {
-  store.state.popupType = '';
+  store.state.popupType = "";
 
-  passwd1.value = "";    
-  passwd2.value = "";    
-  passwdMsg.value = "";    
+  passwd1.value = "";
+  passwd2.value = "";
+  passwdMsg.value = "";
 
   withdrawAddress.value = "";
   withdrawCount.value = null;
   withdrawPass.value = "";
- 
+
   emit("update:visible", false);
   emit("voteHide");
 };
@@ -854,8 +862,8 @@ const resJson = (res: any) => {
 };
 
 const withdrawBtn = () => {
-  emit("clickWithdraw")
-}
+  emit("clickWithdraw");
+};
 const containerStyle = computed(() => ({
   transform: innerVisible.value
     ? "translate(-50%, -50%) scale(1,1)"
@@ -1180,7 +1188,7 @@ const showLastSixChars = () => {
     }
 
     .close-btn {
-      background-color: #999;
+      background-color: rgb(15, 83, 15);
     }
 
     .qrcode-bg {
