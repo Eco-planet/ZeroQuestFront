@@ -116,11 +116,11 @@ const routes: Array<RouteRecordRaw> = [
       ),
   },
   {
-    path:"/Withdraw",
-    name:"Withdraw",
-    component:() =>
-    import(/* webpackChunkName: "terms" */ "../views/Withdraw.vue")
-  }
+    path: "/Withdraw",
+    name: "Withdraw",
+    component: () =>
+      import(/* webpackChunkName: "terms" */ "../views/Withdraw.vue"),
+  },
 ];
 
 const router = createRouter({

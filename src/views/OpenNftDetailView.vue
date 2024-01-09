@@ -106,7 +106,7 @@
   <tree v-else-if="nftId === 3"></tree>
   <panda v-else-if="nftId === 4"></panda>
   <panda v-else-if="nftId === 5"></panda>
-  <panda v-else-if="nftId === 9"></panda>
+  <panda v-else-if="nftId === 6"></panda>
 
   <Modal
     :visible="store.state.isPopup"

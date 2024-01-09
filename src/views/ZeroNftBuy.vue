@@ -201,14 +201,17 @@ const buyNftESGP = (nft: nftType) => {
     .catch((err) => {
       console.log("err", err);
       if (err.response.data.errorCode === 505) {
+        console.log("err 505는", err);
         store.state.popupType = "message";
         popupTitle.value = "error.notEnoughPoints";
         store.state.isPopup = true;
       } else if (err.response.data.errorCode === 502) {
+        console.log("err 502는", err);
         store.state.popupType = "message";
         popupTitle.value = "error.notEnoughGasFee";
         store.state.isPopup = true;
       } else if (err.response.data.errorCode === 300) {
+        console.log("err 300는", err);
         store.state.popupType = "duplicate_nft_buy";
         store.state.isPopup = true;
       }
