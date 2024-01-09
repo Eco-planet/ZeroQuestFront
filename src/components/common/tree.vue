@@ -2,7 +2,7 @@
   <div>
     <div v-if="locale === 'kr'">
       <h5 class="pb-8 text-3xl text-black font-medium">
-        나무심기 NFT 사용방법
+        나무심기 NFT 사용방법!
       </h5>
       <p class="mb-6 font-medium text-xl">
         나무심기 NFT 1개를 구매하면 <br />
