@@ -10,7 +10,7 @@
           멸종위기 동물관심 2탄<br />
           레드판다 시리즈 NFT
         </h5>
-        <h5 v-if="nftId === '9'" class="pb-8 text-3xl text-black font-semibold">
+        <h5 v-if="nftId === '6'" class="pb-8 text-3xl text-black font-semibold">
           멸종위기 동물관심 3탄<br />
           하늘다람쥐 시리즈 NFT
         </h5>
