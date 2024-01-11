@@ -238,7 +238,8 @@ const getMyNftList = () => {
     })
     .then((response) => {
       myNftList.value = response.data.data;
-      console.log("zero", response.data.data);
+      console.log("zero는", response.data.data);
+      console.log('response는',response)
     });
 };
 
