@@ -259,7 +259,7 @@ const buyNftESGP = (nft: nftType) => {
     })
     .finally(() => {
       isLoading.value = false;
-      location.reload();
+      // location.reload();
     });
 };
 
