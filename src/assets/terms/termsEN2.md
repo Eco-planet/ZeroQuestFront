@@ -1,229 +1,214 @@
+Personal Information Processing Policy
 
-Personal information Processing Policy
-
-
-
-
-<ZeroQuest> (http://zeroquest.io/ below ZeroQuest) establishes and discloses a personal information processing policy as follows to protect the personal information of the data subject and to handle related grievances quickly and smoothly pursuant to Article 30 of the Personal Information Protection Act.
+In accordance with Article 30 of the Personal Information Protection Act, <Zero Request> (http://zeroquest.co.kr/ ) establishes and discloses a personal information processing policy as follows in order to protect the personal information of the data subject and to handle the grievances quickly and smoothly.
 
 ○ This privacy policy will take effect from January 1, 2023.
 
+Article 1 (Purpose of Processing Personal Information) < Zero Request> ('[http://zeroquest.co.kr/' ] and [http://zeroquest.co.kr/' ]) and 'Zero Request') will process personal information for the following purposes. The personal information being processed will not be used for any purpose other than the following, and if the purpose of use is changed, necessary measures will be taken, such as obtaining separate consent pursuant to Article 18 of the Personal Information Protection Act.
 
-Article 1 (Purpose of Processing Personal Information) <ZeroQuest> (http://zeroquest.io/ below 'ZeroQuest') processes personal information for the following purposes. The personal information being processed is not used for purposes other than the following, and if the purpose of use is changed, necessary measures will be implemented, such as obtaining separate consent pursuant to Article 18 of the Personal Information Protection Act.
+Registering and managing website membership
 
-1. Register and manage home page membership
+We process personal information for the purpose of confirming membership intention, identifying and certifying oneself according to the provision of membership services, maintaining and managing membership status, preventing illegal use of services, and confirming the consent of legal representatives when processing personal information of children under the age of 14.
 
-Personal information is processed for the purpose of confirming membership intention, identifying and certifying oneself according to the provision of membership services, maintaining and managing membership status, preventing fraudulent use of services, confirming the consent of legal representatives when processing personal information of children under the age of 14, and various notifications and notifications.
+handling of civil complaints
 
-2. Complaint handling
+Personal information is processed for the purpose of identification of the complainant, confirmation of complaints, contact and notification for fact-finding, and notification of processing results.
 
-Personal information is processed for the purpose of identifying the complainant's identity, checking civil complaints, contacting and notifying the results of processing.
+the provision of goods or services
 
-3. Provision of goods or services
+Personal information is processed for the purpose of providing services, providing contents, providing customized services, and self-authentication.
 
-It processes personal information for the purpose of providing services, providing content, providing customized services, and self-authentication.
+Use in marketing and advertising
 
-4. Use in marketing and advertising
+Personal information is processed for the purpose of developing new services and providing customized services, providing event and advertising information and providing opportunities to participate, providing services and advertising based on demographic characteristics, verifying the validity of services, identifying access frequencies, or statistics on members' service use.
 
-Personal information is processed for the purpose of developing new services (products) and providing customized services, providing events and advertising information and participation opportunities, providing services and advertising based on demographic characteristics, verifying service validity, identifying access frequency, or statistics on service use by members.
-
-5. Personal image information
+Personal image information
 
 Personal information is processed for the purpose of preventing and investigating crimes, facility safety, and fire prevention.
 
+Article 2 (Period of Processing and Retention of Personal Information)
 
-Article 2 (Processing and Retaining Period of Personal Information)
+① <ZeroQuest> processes and retains personal information within the period of possession and use of personal information under the Act or the period of possession and use of personal information agreed upon when collecting personal information from the data subject.
 
-① <ZeroQuest> processes and holds personal information within the period of holding and using personal information according to laws and regulations or the period of holding and using personal information agreed upon when collecting personal information from the data subject.
+② Each personal information processing and retention period is as follows.
 
-② The processing and retention periods of each personal information are as follows.
+Personal information related to 1 is collected and used for the purpose of use above from the date of consent regarding use.
 
-1collect personal information related to.Hold for the above purpose of use from the date of agreement on [use.It](http://use.it/) will be used.
+Grounds for retention: Act on retention of records concerning the collection and processing and use of credit information
 
-Grounds for holding: Statute of holding records on the collection and use of credit information
+Relevant Acts and subordinate statutes: Records on the collection/processing and use of credit information: 3 years
 
-Related Acts and subordinate statutes: Record of collection/processing and use of credit information: 3 years
+Reason for exception:
 
-Reason for the exception:
+Article 3 (items of personal information to be processed)
 
+① < Zero Request> is processing the following personal information items.
 
-Article 3 (Items of Personal Information to be Processed
-
-① <ZeroQuest> handles the following personal information items.
-
-1 <Use in marketing and advertising>
+1 <Used for marketing and advertising>
 
 Required items: Login ID, email, access IP information, cookies, access logs, service usage history
 
 Selections:
 
+Article 4 (Matters concerning the processing of personal information of children under the age of 14)
 
-Article 4 (Matters concerning the Processing of Personal Information of Children Under the Age of 14)
+① When collecting personal information on children under the age of 14, the minimum personal information required to perform the service is collected with the consent of a legal representative.
 
-① When collecting personal information for children under the age of 14, it collects the minimum personal information necessary to perform the service with the consent of the legal representative.
+Mandatory items: Name, relationship, contact information of legal representative
 
-- Mandatory items: Name, relationship, contact information of the legal representative
+② In addition, when collecting children's personal information for related publicity, separate consent is obtained from the legal representative.
 
-② In addition, when collecting children's personal information for related publicity, a separate consent is obtained from the legal representative.
+③ When collecting personal information of children under the age of 14, the child may be asked for the minimum information, such as the name and contact information of the legal representative, and confirm that the legal representative has agreed in one of the following ways.
 
-③ When collecting personal information of children under the age of 14, the child may be asked for minimum information, such as the name and contact information of the legal representative, and confirm that the legal representative has agreed to it by one of the following methods.
+A method of requiring a legal representative to indicate his or her consent on the Internet site where the contents of consent are posted, and notifying that the personal information controller has confirmed the expression of consent through a text message on the mobile phone of the legal representative
 
-- A method of requiring a legal representative to indicate whether he agrees or not on the Internet site where the consent is posted, and notifying the legal representative's mobile phone text message that the personal information controller has confirmed the consent indication
-  
-- How to require a legal representative to indicate whether he or she agrees on the Internet site where the consent is posted and to receive card information such as a credit card or debit card of a legal representative
-  
-- A method of requiring a legal representative to indicate whether he or she agrees on an Internet site that publishes consent and verifying whether he or she is the legal representative through mobile phone identification, etc
-  
-- A document with consent may be issued directly to the legal representative, Method of delivering by mail or fax and requiring the legal representative to submit the consent after signing and signing
-  
-- How to send an e-mail with consent and receive an e-mail with an expression of consent from a legal representative
-  
-- How to inform the legal representative of consent through the phone and how to obtain consent or check the content of consent such as an Internet address, and obtain consent through a phone call again
-  
-- Other methods of informing the legal representative of the contents of consent and confirming the expression of consent by a method similar to the above
+Method of requiring a legal representative to indicate his/her consent on the Internet site where the contents of consent are posted and receiving card information such as credit card or debit card of the legal representative
 
+Method of requiring a legal representative to indicate his or her consent on the Internet site where the contents of consent are posted, and confirming the identity through the personal authentication of the legal representative's mobile phone
+
+A method of issuing a document with consent directly to a legal representative, delivering it by mail or fax, and requiring the legal representative to submit the consent after signing and sealing it
+
+To send an e-mail with the contents of consent and receive an e-mail with an expression of consent from a legal representative
+
+How to inform the legal representative of the consent through the phone and to obtain consent or to check the consent, such as an Internet address, and to obtain consent through the phone call again
+
+Other methods of informing the legal representative of the details of consent and confirming the expression of intention of consent in the same manner as above
 
 Article 5 (Matters concerning the provision of personal information to third parties)
 
-① <ZeroQuest> processes personal information only within the scope specified in Article 1 (for the purpose of processing personal information), and provides personal information to third parties only when it falls under Articles 17 and 18 of the Personal Information Protection Act, such as the consent of the data subject and special provisions of the law.
+① <ZeroQuest> processes personal information only within the scope specified in Article 1 (Purpose of Processing Personal Information), and provides personal information to third parties only if they fall under Articles 17 and 18 of the Personal Information Protection Act, such as the consent of the data subject and special provisions of the law.
 
 ② <ZeroQuest> provides personal information to third parties as follows.
 
-1. <Application operator linked to ZeroQuest service>
+< Application Operators Linked to Zero Request Service>
 
-Person who receives personal information: Application operators linked to zero-quest service
+Person receiving personal information: an application operator linked to a zero-quest service
 
-Purpose of using the personal information of the recipient: Login ID, email, payment record, access IP information, cookies, access log, service usage record
+Purpose of use of personal information of the recipient: Login ID, e-mail, payment record, access IP information, cookies, access log, service use record
 
-the possession of a recipient.Period of use: Destroy within 6 months of request
+Hold of the recipient. Period of use: Destruction within 6 months of request
 
-
-Article 6 (Matters concerning Entrustment of Personal Information Processing)
+Article 6 (Matters concerning entrustment of personal information processing)
 
 ① <ZeroQuest> entrusts the processing of personal information as follows for smooth processing of personal information.
 
-1. < >
+< >
 
-Entrusted Person (Trustee):
+Consignee (trustee):
 
-Contents of the entrusted work:
+Contents of entrusted affairs:
 
 Consignment period:
 
-② In accordance with Article 26 of the Personal Information Protection Act, <ZeroQuest> stipulates in documents such as contracts and other responsibilities such as prohibition of personal information processing, technical and administrative protection measures, restrictions on re-consignment, management and supervision of the trustee, and compensation for damages, and supervises whether the trustee handles personal information safely.
+② In accordance with Article 26 of the Personal Information Protection Act, <ZeroQuest> stipulates in documents such as contracts that are responsible for prohibiting the processing of personal information other than the purpose of performing consignment work, technical and management protection measures, restrictions on re-entrustment, management and supervision of the trustee, and supervises whether the trustee handles personal information safely.
 
 ③ If the details of the consignment work or the trustee changes, we will disclose it through this personal information processing policy without delay.
 
+Article 7 (Procedures and methods for destroying personal information)
 
-Article 7 (Procedures for Destruction of Personal Information and Methods of Destruction)
+① <Zero Request> destroys personal information without delay when personal information becomes unnecessary, such as the expiration of the personal information retention period and the achievement of the processing purpose.
 
-① When personal information becomes unnecessary, such as the expiration of the personal information retention period and the achievement of the purpose of processing, <ZeroQuest> destroys the personal information without delay.
+② If personal information needs to be preserved in accordance with other laws and regulations despite the expiration of the personal information retention period agreed by the data subject or the purpose of processing has been achieved, the personal information shall be transferred to a separate database (DB) or stored in a different storage location.
 
-② If the period of retention of personal information agreed by the data subject has elapsed or the purpose of processing has been achieved, the personal information should be transferred to a separate database (DB) or stored in different storage locations.
+Legal basis:
 
-1. Statutory grounds:
-   
-2. Personal information items to be preserved: Account information, transaction date
+Personal information items to be preserved: account information, transaction date
 
-③ The procedure and method of destroying personal information are as follows.
+③ The procedures and methods for destroying personal information are as follows.
 
-3. procedure for destruction
+Abandonment procedure
 
-<ZeroQuest> selects personal information for which the reason for destruction has occurred, and destroys personal information with the approval of the person in charge of personal information protection at <ZeroQuest>.
+<ZeroQuest> selects personal information for which the reason for destruction occurred and destroys the personal information with the approval of the person in charge of personal information protection under <ZeroQuest>.
 
-4. Method of destruction
+Method of destruction
 
-Information in the form of electronic files uses a technical method that does not allow records to be played back
+Information in the form of electronic files uses a technical method in which records cannot be reproduced
 
+Article 8 (Matters concerning the rights and obligations of the data subject and legal representative and how to exercise them)
 
-Article 8 (Matters concerning the rights and obligations of the data subject and legal representatives, and the method of exercising them)
+① The data subject may exercise the right to read, modify, delete, and request suspension of personal information at any time for zero requests.
 
-① The data subject may exercise the right to view, correct, delete, and suspend processing of personal information at any time for ZeroQuest.
+② The exercise of rights under paragraph (1) can be done in writing, e-mail, fax, etc. in accordance with Article 41 (1) of the Enforcement Decree of the Personal Information Protection Act, and EcoPlanet will take action without delay.
 
-② The exercise of rights under paragraph (1) can be done in writing, e-mail, and fax in accordance with Article 41 (1) of the Enforcement Decree of the Personal Information Protection Act, and Eco Planet will take action without delay.
+③ The exercise of rights under paragraph (1) may be done through a legal representative of the data subject or a person delegated, etc. In such cases, you shall submit a power of attorney under attached Form 11 of the Notice on How to Process Personal Information (No. 2020-7).
 
-③ The exercise of rights under paragraph 1 may be carried out through an agent, such as a legal representative of the data subject or a person [entrusted.In](http://entrusted.in/) this case, "Notice on how to process personal information (No. 2020-7)" You must submit a power of attorney in attached Form 11.
+④ Requests for suspension of access and processing of personal information may restrict the rights of the data subject under Articles 35 (4) and 37 (2) of the Personal Information Protection Act.
 
-④ Requests to view and suspend processing of personal information may limit the rights of the data subject under Articles 35 (4) and 37 (2) of the Personal Information Protection Act.
+⑤ Requests for correction and deletion of personal information cannot be requested if the personal information is specified as the subject of collection in other laws and regulations.
 
-⑤ A request for correction and deletion of personal information cannot be requested to be deleted if the personal information is specified as a collection target in other laws.
-
-⑥ ZeroQuest checks whether the person who made the request, such as requesting access according to the data subject's right, requesting correction and deletion, and requesting suspension of processing, is himself or a legitimate agent.
-
+⑥ Zero Request checks whether it is the person who made the request for reading, correction or deletion, or suspension of processing in accordance with the data subject's rights, or whether it is the person who made the request.
 
 Article 9 (Matters concerning measures to ensure the safety of personal information)
 
-<ZeroQuest> is taking the following measures to ensure the safety of personal information.
+<ZeroQuest> takes the following measures to ensure the safety of personal information.
 
-1. Establishment and implementation of internal management plan
+Establishment and implementation of internal management plan
 
-For the safe processing of personal information, we establish and implement an internal management plan.
+An internal management plan is established and implemented for the safe processing of personal information.
 
-2. Minimization and training of personnel handling personal information
+Minimize and train personal information handling staff
 
-We are implementing measures to manage personal information by designating employees who handle personal information and minimizing them by limiting them to those in charge.
+We are implementing measures to manage personal information by designating employees who handle personal information and minimizing it by limiting it to the person in charge.
 
-3. Conducting regular self-audit
+Conduct regular self-audit
 
-In order to secure stability related to the handling of personal information, we conduct self-audit on a regular basis (once a quarter).
+In order to secure stability related to handling personal information, we conduct self-audit regularly (once a quarter).
 
-4. Restricting access to personal information
+Restricting access to personal information
 
-We take necessary measures to control access to personal information by granting, changing, and cancelling access to database systems that process personal information, and control unauthorized access from outside using an intrusion prevention system.
+We take necessary measures to control access to personal information by granting, changing, and cancelling access to the database system that processes personal information, and use an intrusion prevention system to control unauthorized access from outside.
 
-5. Storage of access records and prevention of forgery
+Prevention of storage and forgery of access records
 
-Records accessed to the personal information processing system are kept and managed for at least one year, but more than two years are kept and managed when adding personal information or processing unique identification or sensitive information for more than 50,000 data subjects.
+Records of access to the personal information processing system are stored and managed for at least one year, but if personal information is added to more than 50,000 data subjects or unique identification or sensitive information is processed, it is stored and managed for more than two years.
 
-In addition, we use security features to prevent forgery, theft, and loss of access records.
+In addition, security functions are used to prevent forgery, theft, and loss of access records.
 
-6. Encrypting Personal Information
+Encryption of personal information
 
-Your personal information is encrypted and stored and managed, so only you can know it, and important data uses separate security features such as encrypting file and transfer data or using file lock functions.
+As for the user's personal information, the password is encrypted, stored, and managed, so only you can know, and important data uses separate security functions such as encrypting files and transmission data or using file lock functions.
 
-7. Technical countermeasures against hacking, etc
+Technical countermeasures against hacking, etc
 
-<>('') installs security programs to prevent personal information leakage and damage caused by hacking or computer viruses, conducts periodic updates and inspections, installs systems in areas where access is controlled from outside, and monitors and blocks technically and physically.
+<>('') installs security programs, periodically updates and inspects them, and technically and physically monitors and blocks systems in areas where access from outside is controlled to prevent leakage and damage of personal information by hacking or computer viruses.
 
-8. access control for unauthorized persons
+control of access to unauthorized persons
 
-There is a separate physical storage place where personal information is stored, and access control procedures are established and operated.
+We have a separate physical storage place where personal information is stored, and access control procedures are established and operated.
 
-9. Using locks for document security
+Using locks for document security
 
-Documents containing personal information, auxiliary storage media, etc. are stored in a secure place with a lock.
+Documents containing personal information and auxiliary storage media are stored in a safe place with locks.
 
+Article 10 (Matters concerning the installation and operation of a device that automatically collects personal information and its refusal)
 
-Article 10 (Matters concerning the installation and operation of devices that automatically collect personal information and refusal thereof)
+① ZeroQuest uses 'cookie' that stores usage information and calls it from time to time to provide individual customized services to users.
 
-① ZeroQuest uses "cookie," which stores usage information and calls it from time to time to provide individual customized services to users.
+② Cookies are small amounts of information that the server (http) used to run the website sends to the user's computer browser, and are sometimes stored on hard disks in users' PC computers.
 
-② Cookies are small amounts of information sent by the server (http) used to run a website to your computer browser and can also be stored on a hard disk on your PC computer.
+A. Purpose of Cookies: It is used to provide optimized information to users by identifying the types of visits and use of each service and website visited by users, popular search terms, security access, etc.
 
-A. Purpose of use of cookies: It is used to provide optimized information to users by identifying the type of visit and use of each service and website visited by the user, popular search terms, security access, etc.
+B. Installation, operation, and denial of cookies: You can deny saving cookies by setting options on the Tools > Internet Options > Privacy menu at the top of your web browser.
 
-B. Installation, operation, and rejection of cookies: You can refuse to save cookies by setting options in Tools > Internet Options > Privacy Menu at the top of your web browser.
+C. Refusing to save cookies can lead to difficulties in using customized services.
 
-C. Refusing to save cookies may cause difficulty in using customized services.
+Article 11 (Matters concerning the collection, use, provision, and refusal of behavioral information)
 
-
-Article 11 (Matters concerning the collection, use, provision, refusal, etc. of behavioral information)
-
-① In the process of using the service, behavioral information is collected and used to provide customized services and benefits optimized for the data subject, and online customized advertisements.
+① In the process of using the service, we collect and use behavioral information to provide customized services and benefits optimized for data subjects, and online customized advertisements.
 
 ② collects behavioral information as follows.
 
-1. This table is for inputting the items of behavioral information collected, the method of collecting behavioral information, the purpose of collecting behavioral information, the period of retention and use, and the method of processing subsequent information to provide matters related to the collection, use, provision, and refusal of behavioral information.
+This is a table for entering the items of behavioral information collected to provide matters related to collection, use, provision, and rejection of behavioral information, the purpose of collecting behavioral information, the period of possession and use, and the method of processing information afterwards.
 
-Items of behavioral information collected
+Items of behavioral information to be collected
 
-Behavioral Information Collection Method
+How to collect behavioral information
 
 Purpose of collecting behavioral information
 
-Retention/use period and subsequent information processing method
+Retention and use period and subsequent information processing method
 
-User's website and app visit history, application activities of interest,
+The user's website and app visit history, application activities of interest,
 
 Automatically collect when users visit websites and apps
 
@@ -231,103 +216,101 @@ Provide customized advertisements and services tailored to the user's preference
 
 Destroy within 90 days from the date of collection
 
-③ allows online custom ad providers to collect and process behavioral information as follows.
+③ allows online customized advertising providers to collect and process behavioral information as follows.
 
-- Advertisers looking to collect and process behavioral information: Apple, Google, Naver, Daum
+Advertisers looking to collect and process behavioral information: Apple, Google, Naver, Daum
 
-- How to collect behavioral information: Automatically collect and send when users visit our website or run an app
+How to collect behavioral information: Automatically collect and send when users visit our website or run an app
 
-- Behavioral information items collected and processed: User's web/app visit history, search history, purchase history
+Behavioral information items collected and processed: user's web/app visit history, search history, and purchase history
 
-- Retention/use period: 90 days
+Retention and use period: 90 days
 
-④ collects only the minimum behavioral information necessary for online customized advertisements, and does not collect sensitive behavioral information that may clearly infringe on individual rights, interests, or privacy, such as thoughts, beliefs, family and relatives, educational background, military history, and other social activities.
+④ It collects only the minimum behavioral information necessary for online customized advertising, etc. and does not collect sensitive behavioral information that may clearly violate individual rights, interests, or privacy, such as thoughts, beliefs, family and relatives, educational background, medical history, and other social activities.
 
-⑤ does not collect customized advertising behavioral information from children under the age of 14 or online services with children under the age of 14, and does not provide customized advertisements to children under the age of 14.
+⑤ We do not collect behavioral information for the purpose of customized advertising from online services that are primarily users of children under the age of 14, nor do we provide customized advertising to children under the age of 14.
 
-⑥ collects and uses advertising identifiers for online customized advertisements in mobile apps. The data subject can block and allow customized advertisements on the app by changing the settings of the mobile terminal.
+⑥ collects and uses advertisement identifiers for online customized advertisements in mobile apps. The data subject can block and allow customized advertisements in the app by changing the settings of the mobile terminal.
 
-‣ Block/allow advertising identifiers on smartphones
+‣ Block/Allow Smartphone Advertising Identifiers
 
-(1) (Android) ① Settings → ② Privacy → ③ Advertising → ③ Reset advertising ID or delete advertising ID
+(1) (Android) ① Settings → ② Privacy → ③ Advertising → ③ Ad ID Reset or Delete Ad ID
 
-(2) (iPhone) ① Settings → ② Privacy → ③ Tracking → ④ Allow apps to request tracking
+(2) (iPhone) ① Settings → ② Privacy → ③ Tracking → ④ Allow the app to request tracking
 
-※ The menu and methods may vary slightly depending on the mobile OS version.
+※ Depending on the version of the mobile OS, the menu and method may vary slightly.
 
-⑦ The data subject can block and allow online customized advertisements collectively by changing the cookie settings of the web browser. However, changing cookie settings can affect the use of some services, such as automatic login to the website.
+⑦ The data subject can block and allow online customized advertisements at once by changing the cookie settings on the web browser. However, changes in cookie settings may affect the use of some services, such as automatic login to the website.
 
-‣ Block/Allow Customized Advertisements through Web Browser
+‣ Block/Allow Customized Advertisements via Web Browser
 
-(1) Internet Explorer (11 Internet Explorer for Windows 10)
+(1) Internet Explorer (Internet Explorer 11 for Windows 10)
 
-- In Internet Explorer, select the Tools button, and then select Internet options
+In Internet Explorer, select the Tools button, and then select Internet options
 
-- Select the Privacy tab, select Advanced under Settings, and then select Block or Allow Cookies
+Select the Privacy tab, select Advanced in Settings, and then select Block or Allow cookies
 
-(2) Microsoft Edge
+(2) (2) Microsoft Edge
 
-- Top right at Edge'…' Click Show, and then click Settings.
+On the Edge, click the upper right '…' mark, and then click Settings.
 
-- Click 'Personal Information, Search and Services' on the left side of the Settings page, and in the 'Prevent Tracking' section select whether or not to 'Prevent Tracking' and its level.
+Click 'Personal Information, Search and Services' on the left side of the Settings page, and select 'Trace Prevention' and the level in the 'Trace Prevention' section.
 
-- Always select whether to enable "Strict" tracking protection when searching for InPrivate.
+Select "Strictly" Enable Tracking Protection when searching for InPrivate.
 
-- In the "Personal Information" section below, select whether to send a no-trace request.
+In the Personal Information section below, select whether or not to send a 'Do not track request'.
 
 (3) Chrome browser
 
-- Click Show ⋮ in the upper right corner of Chrome (Customize and Control Chrome), and then click Show Settings.
+In Chrome, click Show '⋮' in the upper right corner (Customize and control Chrome), and then click Show Settings.
 
-- Click Show Advanced Settings at the bottom of the Settings page and click Content Settings in the Privacy section.
+Click Show Advanced Settings at the bottom of the Settings page, and click Content Settings in the Privacy section.
 
-- In the Cookies section, select the check box under Block third-party cookies and site data.
+In the Cookies section, select the check box under Block third-party cookies and site data.
 
-52 | General Guidelines for Creating a Privacy Policy
+52 | General guidelines for preparing personal information processing policy
 
-⑧ The data subject can contact the contact information below to inquire about questions, veto rights, and damage reports.
+⑧ The information subject can inquire about the behavioral information, the exercise of veto power, and the reception of damage reports at the contact information below.
 
 ‣ Department in charge of personal information protection
 
-Department Name: Eco Global Team
+Department Name: Eco-Global Team
 
-Manager: Manager
+Person in charge: Manager
 
 Contact: 02-6101-9955
 
+Article 12 (Additional criteria for determining use and provision)
 
-Article 12 (Criteria for judging additional use and provision)
-
-In accordance with Article 15 (3) and Article 17 (4) of the Personal Information Protection Act, <ZeroQuest> may additionally use and provide personal information without the consent of the data subject in consideration of the matters under Article 14-2 of the Enforcement Decree of the Personal Information Protection Act. Accordingly, in order for <Eco Planet> to provide additional use and provision without the consent of the data subject, the following matters were considered.
+In accordance with Article 15 (3) and Article 17 (4) of the Personal Information Protection Act, personal information may be additionally used and provided without the consent of the data subject in consideration of the matters under Article 14-2 of the Enforcement Decree of the Personal Information Protection Act. Accordingly, the following matters have been considered in order for <Eco Planet> to use and provide additional information without the consent of the data subject.
 
 ▶ Whether the purpose of additional use and provision of personal information is related to the original purpose of collection
 
-▶ Is there any predictability of additional use and provision in light of the circumstances in which personal information was collected or processing practices
+▶ Whether there is predictability of additional use and provision in light of the circumstances or processing practices in which personal information is collected
 
-▶ Whether the additional use and provision of personal information unfairly infringes the interests of the data subject
+▶ Whether the additional use and provision of personal information unreasonably infringes the interests of the data subject
 
 ▶ Whether measures necessary for securing safety, such as pseudonymization or encryption, have been taken
 
-※ Criteria for judging matters to be considered in additional use and provision are prepared and disclosed by business operators/organizations themselves
+※ Judgment criteria for additional use and provision considerations are prepared and disclosed voluntarily by the business operator/organization
 
-Article 13 (Matters concerning the processing of pseudonymized information when processing pseudonymized information)
+Article 13 (Matters concerning the processing of pseudonym information in the case of processing pseudonym information)
 
-<ZeroQuest> processes pseudonym information for the following purposes.
+< Zero Request> processes pseudonym information for the following purposes.
 
 ▶ Purpose of processing pseudonym information
 
-- Due to the nature of the platform, it should be processed for users who use pseudonym information.
+Due to the nature of the platform, it is processed for users who use pseudonym information.
 
 ▶ Processing and retention period of pseudonym information
 
-- Keep pseudonym information permanently unless requested by the user.
+The pseudonym information is permanently stored unless requested by the user.
 
+Article 14 (Matters concerning the person in charge of personal information protection)
 
-Article 14 (Matters concerning the person responsible for personal information protection)
+① ZeroQuest is responsible for handling personal information and designates a person responsible for personal information protection as follows for handling complaints and damage relief of data subjects related to personal information processing.
 
-① ZeroQuest is responsible for the processing of personal information, and designates a person in charge of personal information protection as follows to handle complaints and remedy damages from data subjects related to the processing of personal information.
-
-▶ a person information protection officer
+▶ Personal Information Protection Officer
 
 Name: EcoPlanet
 
@@ -335,46 +318,478 @@ Position: PM
 
 Position: PM
 
-연락처 :02-6101-9955, [info@eco-planet.io](mailto:info@eco-planet.io),
+Contact: 02-6101-9955,
 
-② The data subject may contact the person in charge of personal information protection and the department in charge of personal information protection for all inquiries, complaints, and damage relief that occurred while using ZeroQuest's service (or business). EcoPlanet will respond and process the data subject's inquiries without delay.
+info@eco-planet.io
 
+,
 
-Article 15 (Department that receives and processes requests for access to personal information)
+② The data subject may contact the person responsible for personal information protection and the department in charge for all personal information protection inquiries, complaint handling, damage relief, etc. arising while using ZeroQuest's service (or business). EcoPlanet will respond and process the information subject's inquiries without delay.
 
-The data subject may request the following departments to view personal information pursuant to Article 35 of the Personal Information Protection Act.
+Article 15 (department that receives and processes requests for access to personal information)
 
-<ZeroQuest> will make efforts to expedite the request for personal information access by the data subject.
+The data subject may request the following departments to view personal information under Article 35 of the Personal Information Protection Act.
 
-▶ Department for receiving and processing requests for access to personal information
+<Zero Request> will try to expedite the request for personal information access by the data subject.
+
+▶ Department of receipt and processing of requests for access to personal information
 
 Department name: CS
 
-Contact: Eco Global Manager
+Person in charge: Eco Global Manager
 
-Contact: 02-6101-9955
+Contact: 02-6398-0422
 
+Article 16 (How to remedy infringement of rights and interests of the data subject)
 
-Article 16 (Method of remedy for infringement of rights and interests of data subjects)
+The data subject may apply for dispute resolution or counseling to the Personal Information Dispute Mediation Committee, the Personal Information Infringement Reporting Center of the Korea Internet Promotion Agency, etc. in order to receive relief for personal information infringement. In addition, please contact the following institutions for reports and consultations on other personal information infringement.
 
-In order to receive relief from personal information infringement, the data subject may apply for dispute resolution or counseling to the Personal Information Dispute Mediation Committee and the Korea Internet & Security Agency's Personal Information Infringement Reporting Center. In addition, please contact the following institution for reporting and consulting other personal information infringement.
+Personal Information Dispute Mediation Committee: 1833-6972 (www.kopico.go.kr )
 
-1. Personal Information Dispute Mediation Committee: (without country code) 1833-6972 (www.kopico.go.kr)
+Personal Information Infringement Reporting Center: (without national code) 118 (privacy.kisa.or.kr )
 
-2. Personal Information Infringement Reporting Center: (without country code) 118 (privacy.kisa.or.kr)
-   
-3. Supreme Prosecutors' Office: 1301 (without country code) 1301 (www.spo.go.kr)
+Supreme Prosecutors' Office: (without a national code) 1301 (www.spo.go.kr )
 
-4. National Police Agency: 182 (without country code) 182 (ecrm.cyber.go.kr)
+Police Department: (without a national code) 182 (ecrm.cyber.go.kr )
 
+A person who has been infringed on his/her rights or interests due to a disposition or omission made by the head of a public institution in response to a request under Article 35 (view of personal information), Article 36 (correction and deletion of personal information), and Article 37 (suspension of processing of personal information, etc.) of the Personal Information Protection Act may request an administrative trial as prescribed by the Administrative Trial Act.
 
-Article 35 of the Personal Information Protection Act (reading personal information), Article 36 (correction and deletion of personal information), A person who has been infringed on rights or interests due to disposition or omission made by the head of a public institution in response to a request under Article 37 (Suspension of Processing of Personal Information, etc.) may request an administrative trial as prescribed by the Administrative Trial Act.
+※ For more information on administrative trials, please refer to the website of the Central Administrative Appeals Commission (www.simpan.go.kr ).
 
-※ For more information on administrative trials, please refer to the Central Administrative Appeals Commission ([www.simpan.go.kr](http://www.simpan.go.kr/) ) (http://www.simpan.go.kr/)) ).
-
-
-Article 17 (Change of Personal Information Processing Policy)
+Article 17 (Change in Personal Information Processing Policy)
 
 ① This privacy policy will take effect from January 1, 2023.
 
 ② The previous privacy policy can be found below.
+
+Article 18 (Collection of Personal Information)
+
+Collect the minimum amount of personal information required to provide the service.
+
+We collect the minimum personal information necessary to provide services through the website or individual applications or programs when signing up for membership or using the service.
+
+[When signing up for Kakao account]
+
+Essential
+
+Email, password, name (nickname), profile picture, friend list, Kakao Talk phone number (limited to Kakao Talk users), contact information, service usage history, purchase and payment history within the service
+
+Choice
+
+Date of birth, gender, and destination information (receipt name, destination address, phone number)
+
+[When you sign up for Kakao account]
+
+Essential
+
+Email, password, business/organization name, profile photo, friend list, contact information, service usage history, purchase and payment details in the service, person in charge identification information (name, date of birth, gender, ID, encrypted user verification value (CI), duplicate family business verification information (DI), contact information (email address, mobile phone number)
+
+Some services allow users to obtain consent and collect additional personal information to provide a number of specialized functions.
+
+What is essential information?: Information for performing the essential functions of the service
+
+What is Selective Information: Additional information to be collected to provide more specialized services (no restrictions on service use if you do not enter selections)
+
+[When you prove yourself]
+
+Name, gender, date of birth, mobile phone number, carrier, internal/foreigner status, encrypted user verification value (CI), duplicate subscription verification information (DI)
+
+[With the consent of the legal representative]
+
+Legal representative information (name, gender, date of birth, mobile phone number, telecommunications business operator, internal/foreigner status, encrypted user confirmation value (CI), duplicate subscription confirmation information (DI))
+
+○ This privacy policy will take effect from January 1, 2023.
+
+Article 1 (Purpose of Processing Personal Information) <Zero Request> ('http://zeroquest.co.kr/' ) processes personal information for the following purposes. The personal information being processed will not be used for any purpose other than the following, and if the purpose of use is changed, necessary measures will be taken, such as obtaining separate consent pursuant to Article 18 of the Personal Information Protection Act.
+
+Registering and managing website membership
+
+We process personal information for the purpose of confirming membership intention, identifying and certifying oneself according to the provision of membership services, maintaining and managing membership status, preventing illegal use of services, and confirming the consent of legal representatives when processing personal information of children under the age of 14.
+
+handling of civil complaints
+
+Personal information is processed for the purpose of identification of the complainant, confirmation of complaints, contact and notification for fact-finding, and notification of processing results.
+
+the provision of goods or services
+
+Personal information is processed for the purpose of providing services, providing contents, providing customized services, and self-authentication.
+
+Use in marketing and advertising
+
+Personal information is processed for the purpose of developing new services and providing customized services, providing event and advertising information and providing opportunities to participate, providing services and advertising based on demographic characteristics, verifying the validity of services, identifying access frequencies, or statistics on members' service use.
+
+Personal image information
+
+Personal information is processed for the purpose of preventing and investigating crimes, facility safety, and fire prevention.
+
+Article 2 (Period of Processing and Retention of Personal Information)
+
+① <ZeroQuest> processes and retains personal information within the period of possession and use of personal information under the Act or the period of possession and use of personal information agreed upon when collecting personal information from the data subject.
+
+② Each personal information processing and retention period is as follows.
+
+Personal information related to 1 is collected and used for the purpose of use above from the date of consent regarding use.
+
+Grounds for retention: Act on retention of records concerning the collection and processing and use of credit information
+
+Relevant Acts and subordinate statutes: Records on the collection/processing and use of credit information: 3 years
+
+Reason for exception:
+
+Article 3 (items of personal information to be processed)
+
+① < Zero Request> is processing the following personal information items.
+
+1 <Used for marketing and advertising>
+
+Required items: Login ID, email, access IP information, cookies, access logs, service usage history
+
+Selections:
+
+Article 4 (Matters concerning the processing of personal information of children under the age of 14)
+
+① When collecting personal information on children under the age of 14, the minimum personal information required to perform the service is collected with the consent of a legal representative.
+
+Mandatory items: Name, relationship, contact information of legal representative
+
+② In addition, when collecting children's personal information for related publicity, separate consent is obtained from the legal representative.
+
+③ When collecting personal information of children under the age of 14, the child may be asked for the minimum information, such as the name and contact information of the legal representative, and confirm that the legal representative has agreed in one of the following ways.
+
+A method of requiring a legal representative to indicate his or her consent on the Internet site where the contents of consent are posted, and notifying that the personal information controller has confirmed the expression of consent through a text message on the mobile phone of the legal representative
+
+Method of requiring a legal representative to indicate his/her consent on the Internet site where the contents of consent are posted and receiving card information such as credit card or debit card of the legal representative
+
+Method of requiring a legal representative to indicate his or her consent on the Internet site where the contents of consent are posted, and confirming the identity through the personal authentication of the legal representative's mobile phone
+
+A method of issuing a document with consent directly to a legal representative, delivering it by mail or fax, and requiring the legal representative to submit the consent after signing and sealing it
+
+To send an e-mail with the contents of consent and receive an e-mail with an expression of consent from a legal representative
+
+How to inform the legal representative of the consent through the phone and to obtain consent or to check the consent, such as an Internet address, and to obtain consent through the phone call again
+
+Other methods of informing the legal representative of the details of consent and confirming the expression of intention of consent in the same manner as above
+
+Article 5 (Matters concerning the provision of personal information to third parties)
+
+① <ZeroQuest> processes personal information only within the scope specified in Article 1 (Purpose of Processing Personal Information), and provides personal information to third parties only if they fall under Articles 17 and 18 of the Personal Information Protection Act, such as the consent of the data subject and special provisions of the law.
+
+② <ZeroQuest> provides personal information to third parties as follows.
+
+< Application Operators Linked to Zero Request Service>
+
+Person receiving personal information: an application operator linked to a zero-quest service
+
+Purpose of use of personal information of the recipient: Login ID, e-mail, payment record, access IP information, cookies, access log, service use record
+
+Hold of the recipient. Period of use: Destruction within 6 months of request
+
+Article 6 (Matters concerning entrustment of personal information processing)
+
+① <ZeroQuest> entrusts the processing of personal information as follows for smooth processing of personal information.
+
+< >
+
+Consignee (trustee):
+
+Contents of entrusted affairs:
+
+Consignment period:
+
+② In accordance with Article 26 of the Personal Information Protection Act, <ZeroQuest> stipulates in documents such as contracts that are responsible for prohibiting the processing of personal information other than the purpose of performing consignment work, technical and management protection measures, restrictions on re-entrustment, management and supervision of the trustee, and supervises whether the trustee handles personal information safely.
+
+③ If the details of the consignment work or the trustee changes, we will disclose it through this personal information processing policy without delay.
+
+Article 7 (Procedures and methods for destroying personal information)
+
+① <Zero Request> destroys personal information without delay when personal information becomes unnecessary, such as the expiration of the personal information retention period and the achievement of the processing purpose.
+
+② If personal information needs to be preserved in accordance with other laws and regulations despite the expiration of the personal information retention period agreed by the data subject or the purpose of processing has been achieved, the personal information shall be transferred to a separate database (DB) or stored in a different storage location.
+
+Legal basis:
+
+Personal information items to be preserved: account information, transaction date
+
+③ The procedures and methods for destroying personal information are as follows.
+
+Abandonment procedure
+
+<ZeroQuest> selects personal information for which the reason for destruction occurred and destroys the personal information with the approval of the person in charge of personal information protection under <ZeroQuest>.
+
+Method of destruction
+
+Information in the form of electronic files uses a technical method in which records cannot be reproduced
+
+Article 8 (Matters concerning the rights and obligations of the data subject and legal representative and how to exercise them)
+
+① The data subject may exercise the right to read, modify, delete, and request suspension of personal information at any time for zero requests.
+
+② The exercise of rights under paragraph (1) can be done in writing, e-mail, fax, etc. in accordance with Article 41 (1) of the Enforcement Decree of the Personal Information Protection Act, and EcoPlanet will take action without delay.
+
+③ The exercise of rights under paragraph (1) may be done through a legal representative of the data subject or a person delegated, etc. In such cases, you shall submit a power of attorney under attached Form 11 of the Notice on How to Process Personal Information (No. 2020-7).
+
+④ Requests for suspension of access and processing of personal information may restrict the rights of the data subject under Articles 35 (4) and 37 (2) of the Personal Information Protection Act.
+
+⑤ Requests for correction and deletion of personal information cannot be requested if the personal information is specified as the subject of collection in other laws and regulations.
+
+⑥ Zero Request checks whether it is the person who made the request for reading, correction or deletion, or suspension of processing in accordance with the data subject's rights, or whether it is the person who made the request.
+
+Article 9 (Matters concerning measures to ensure the safety of personal information)
+
+<ZeroQuest> takes the following measures to ensure the safety of personal information.
+
+Establishment and implementation of internal management plan
+
+An internal management plan is established and implemented for the safe processing of personal information.
+
+Minimize and train personal information handling staff
+
+We are implementing measures to manage personal information by designating employees who handle personal information and minimizing it by limiting it to the person in charge.
+
+Conduct regular self-audit
+
+In order to secure stability related to handling personal information, we conduct self-audit regularly (once a quarter).
+
+Restricting access to personal information
+
+We take necessary measures to control access to personal information by granting, changing, and cancelling access to the database system that processes personal information, and use an intrusion prevention system to control unauthorized access from outside.
+
+Prevention of storage and forgery of access records
+
+Records of access to the personal information processing system are stored and managed for at least one year, but if personal information is added to more than 50,000 data subjects or unique identification or sensitive information is processed, it is stored and managed for more than two years.
+
+In addition, security functions are used to prevent forgery, theft, and loss of access records.
+
+Encryption of personal information
+
+As for the user's personal information, the password is encrypted, stored, and managed, so only you can know, and important data uses separate security functions such as encrypting files and transmission data or using file lock functions.
+
+Technical countermeasures against hacking, etc
+
+<>('') installs security programs, periodically updates and inspects them, and technically and physically monitors and blocks systems in areas where access from outside is controlled to prevent leakage and damage of personal information by hacking or computer viruses.
+
+control of access to unauthorized persons
+
+We have a separate physical storage place where personal information is stored, and access control procedures are established and operated.
+
+Using locks for document security
+
+Documents containing personal information and auxiliary storage media are stored in a safe place with locks.
+
+Article 10 (Matters concerning the installation and operation of a device that automatically collects personal information and its refusal)
+
+① ZeroQuest uses 'cookie' that stores usage information and calls it from time to time to provide individual customized services to users.
+
+② Cookies are small amounts of information that the server (http) used to run the website sends to the user's computer browser, and are sometimes stored on hard disks in users' PC computers.
+
+A. Purpose of Cookies: It is used to provide optimized information to users by identifying the types of visits and use of each service and website visited by users, popular search terms, security access, etc.
+
+B. Installation, operation, and denial of cookies: You can deny saving cookies by setting options on the Tools > Internet Options > Privacy menu at the top of your web browser.
+
+C. Refusing to save cookies can lead to difficulties in using customized services.
+
+Article 11 (Matters concerning the collection, use, provision, and refusal of behavioral information)
+
+① In the process of using the service, we collect and use behavioral information to provide customized services and benefits optimized for data subjects, and online customized advertisements.
+
+② collects behavioral information as follows.
+
+This is a table for entering the items of behavioral information collected to provide matters related to collection, use, provision, and rejection of behavioral information, the purpose of collecting behavioral information, the period of possession and use, and the method of processing information afterwards.
+
+Items of behavioral information to be collected
+
+How to collect behavioral information
+
+Purpose of collecting behavioral information
+
+Retention and use period and subsequent information processing method
+
+The user's website and app visit history, application activities of interest,
+
+Automatically collect when users visit websites and apps
+
+Provide customized advertisements and services tailored to the user's preferences
+
+Destroy within 90 days from the date of collection
+
+③ allows online customized advertising providers to collect and process behavioral information as follows.
+
+Advertisers looking to collect and process behavioral information: Apple, Google, Naver, Daum
+
+How to collect behavioral information: Automatically collect and send when users visit our website or run an app
+
+Behavioral information items collected and processed: user's web/app visit history, search history, and purchase history
+
+Retention and use period: 90 days
+
+④ It collects only the minimum behavioral information necessary for online customized advertising, etc. and does not collect sensitive behavioral information that may clearly violate individual rights, interests, or privacy, such as thoughts, beliefs, family and relatives, educational background, medical history, and other social activities.
+
+⑤ We do not collect behavioral information for the purpose of customized advertising from online services that are primarily users of children under the age of 14, nor do we provide customized advertising to children under the age of 14.
+
+⑥ collects and uses advertisement identifiers for online customized advertisements in mobile apps. The data subject can block and allow customized advertisements in the app by changing the settings of the mobile terminal.
+
+‣ Block/Allow Smartphone Advertising Identifiers
+
+(1) (Android) ① Settings → ② Privacy → ③ Advertising → ③ Ad ID Reset or Delete Ad ID
+
+(2) (iPhone) ① Settings → ② Privacy → ③ Tracking → ④ Allow the app to request tracking
+
+※ Depending on the version of the mobile OS, the menu and method may vary slightly.
+
+⑦ The data subject can block and allow online customized advertisements at once by changing the cookie settings on the web browser. However, changes in cookie settings may affect the use of some services, such as automatic login to the website.
+
+‣ Block/Allow Customized Advertisements via Web Browser
+
+(1) Internet Explorer (Internet Explorer 11 for Windows 10)
+
+In Internet Explorer, select the Tools button, and then select Internet options
+
+Select the Privacy tab, select Advanced in Settings, and then select Block or Allow cookies
+
+(2) (2) Microsoft Edge
+
+On the Edge, click the upper right '…' mark, and then click Settings.
+
+Click 'Personal Information, Search and Services' on the left side of the Settings page, and select 'Trace Prevention' and the level in the 'Trace Prevention' section.
+
+Select "Strictly" Enable Tracking Protection when searching for InPrivate.
+
+In the Personal Information section below, select whether or not to send a 'Do not track request'.
+
+(3) Chrome browser
+
+In Chrome, click Show '⋮' in the upper right corner (Customize and control Chrome), and then click Show Settings.
+
+Click Show Advanced Settings at the bottom of the Settings page, and click Content Settings in the Privacy section.
+
+In the Cookies section, select the check box under Block third-party cookies and site data.
+
+52 | General guidelines for preparing personal information processing policy
+
+⑧ The information subject can inquire about the behavioral information, the exercise of veto power, and the reception of damage reports at the contact information below.
+
+‣ Department in charge of personal information protection
+
+Department Name: Eco-Global Team
+
+Person in charge: Manager
+
+Contact: 02-6101-9955
+
+Article 12 (Additional criteria for determining use and provision)
+
+In accordance with Article 15 (3) and Article 17 (4) of the Personal Information Protection Act, personal information may be additionally used and provided without the consent of the data subject in consideration of the matters under Article 14-2 of the Enforcement Decree of the Personal Information Protection Act. Accordingly, the following matters have been considered in order for <Eco Planet> to use and provide additional information without the consent of the data subject.
+
+▶ Whether the purpose of additional use and provision of personal information is related to the original purpose of collection
+
+▶ Whether there is predictability of additional use and provision in light of the circumstances or processing practices in which personal information is collected
+
+▶ Whether the additional use and provision of personal information unreasonably infringes the interests of the data subject
+
+▶ Whether measures necessary for securing safety, such as pseudonymization or encryption, have been taken
+
+※ Judgment criteria for additional use and provision considerations are prepared and disclosed voluntarily by the business operator/organization
+
+Article 13 (Matters concerning the processing of pseudonym information in the case of processing pseudonym information)
+
+< Zero Request> processes pseudonym information for the following purposes.
+
+▶ Purpose of processing pseudonym information
+
+Due to the nature of the platform, it is processed for users who use pseudonym information.
+
+▶ Processing and retention period of pseudonym information
+
+The pseudonym information is permanently stored unless requested by the user.
+
+Article 14 (Matters concerning the person in charge of personal information protection)
+
+① ZeroQuest is responsible for handling personal information and designates a person responsible for personal information protection as follows for handling complaints and damage relief of data subjects related to personal information processing.
+
+▶ Personal Information Protection Officer
+
+Name: EcoPlanet
+
+Position: PM
+
+Position: PM
+
+Contact: 02-6101-9955,
+
+info@eco-planet.io
+
+,
+
+② The data subject may contact the person responsible for personal information protection and the department in charge for all personal information protection inquiries, complaint handling, damage relief, etc. arising while using ZeroQuest's service (or business). EcoPlanet will respond and process the information subject's inquiries without delay.
+
+Article 15 (department that receives and processes requests for access to personal information)
+
+The data subject may request the following departments to view personal information under Article 35 of the Personal Information Protection Act.
+
+<Zero Request> will try to expedite the request for personal information access by the data subject.
+
+▶ Department of receipt and processing of requests for access to personal information
+
+Department name: CS
+
+Person in charge: Eco Global Manager
+
+Contact: 02-6398-0422
+
+Article 16 (How to remedy infringement of rights and interests of the data subject)
+
+The data subject may apply for dispute resolution or counseling to the Personal Information Dispute Mediation Committee, the Personal Information Infringement Reporting Center of the Korea Internet Promotion Agency, etc. in order to receive relief for personal information infringement. In addition, please contact the following institutions for reports and consultations on other personal information infringement.
+
+Personal Information Dispute Mediation Committee: 1833-6972 (www.kopico.go.kr )
+
+Personal Information Infringement Reporting Center: (without national code) 118 (privacy.kisa.or.kr )
+
+Supreme Prosecutors' Office: (without a national code) 1301 (www.spo.go.kr )
+
+Police Department: (without a national code) 182 (ecrm.cyber.go.kr )
+
+A person who has been infringed on his/her rights or interests due to a disposition or omission made by the head of a public institution in response to a request under Article 35 (view of personal information), Article 36 (correction and deletion of personal information), and Article 37 (suspension of processing of personal information, etc.) of the Personal Information Protection Act may request an administrative trial as prescribed by the Administrative Trial Act.
+
+※ For more information on administrative trials, please refer to the website of the Central Administrative Appeals Commission (www.simpan.go.kr ).
+
+Article 17 (Change in Personal Information Processing Policy)
+
+① This privacy policy will take effect from January 1, 2023.
+
+② The previous privacy policy can be found below.
+
+Article 18 (Collection of Personal Information)
+
+Collect the minimum amount of personal information required to provide the service.
+
+We collect the minimum personal information necessary to provide services through the website or individual applications or programs when signing up for membership or using the service.
+
+[When signing up for Kakao account]
+
+Essential
+
+Email, password, name (nickname), profile picture, friend list, Kakao Talk phone number (limited to Kakao Talk users), contact information, service usage history, purchase and payment history within the service
+
+Choice
+
+Date of birth, gender, and destination information (receipt name, destination address, phone number)
+
+[When you sign up for Kakao account]
+
+Essential
+
+Email, password, business/organization name, profile photo, friend list, contact information, service usage history, purchase and payment details in the service, person in charge identification information (name, date of birth, gender, ID, encrypted user verification value (CI), duplicate family business verification information (DI), contact information (email address, mobile phone number)
+
+Some services allow users to obtain consent and collect additional personal information to provide a number of specialized functions.
+
+What is essential information?: Information for performing the essential functions of the service
+
+What is Selective Information: Additional information to be collected to provide more specialized services (no restrictions on service use if you do not enter selections)
+
+[When you prove yourself]
+
+Name, gender, date of birth, mobile phone number, carrier, internal/foreigner status, encrypted user verification value (CI), duplicate subscription verification information (DI)
+
+[With the consent of the legal representative]
+
+Legal representative information (name, gender, date of birth, mobile phone number, telecommunications business operator, internal/foreigner status, encrypted user confirmation value (CI), duplicate subscription confirmation information (DI))
