@@ -24,8 +24,19 @@ jobs:
       - name: Run Build
         run: npm run build:dev
 
+      - name: Create SSH Key File
+        run: |
+          echo "${{ secrets.AWS_ZEROQUEST_DEV_KEY }}" > key.pem
+          chmod 600 key.pem
+
       - name: Deploy to AWS EC2
         run: |
-          scp -i /path/to/key.pem -r ./build ec2-user@43.203.182.138:/path/to/deploy
+          scp -i key.pem -P 10022 -r ./build ec2-user@43.203.182.138:/home/ubuntu/ZeroQuestFront
+        env:
+          AWS_ZEROQUEST_DEV_KEY: ${{ secrets.AWS_ZEROQUEST_DEV_KEY }}
+
+      - name: Restart Nginx Server
+        run: |
+          scp -i key.pem -P 10022 -r ./build ec2-user@43.203.182.138 'sudo systemctl restart nginx'
         env:
           AWS_ZEROQUEST_DEV_KEY: ${{ secrets.AWS_ZEROQUEST_DEV_KEY }}
