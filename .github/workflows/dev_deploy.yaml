@@ -37,6 +37,6 @@ jobs:
 
       - name: Restart Nginx Server
         run: |
-          scp -i key.pem -r ./build ec2-user@43.203.182.138 'sudo systemctl restart nginx'
+          ssh -i key.pem -r ./build ec2-user@43.203.182.138 'sudo systemctl restart nginx'
         env:
           AWS_ZEROQUEST_DEV_KEY: ${{ secrets.AWS_ZEROQUEST_DEV_KEY }}
