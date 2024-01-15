@@ -1,0 +1,42 @@
+name: Dev CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - yong
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "16"
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Build
+        run: npm run build:dev
+
+      - name: Create SSH Key File
+        run: |
+          echo "${{ secrets.AWS_ZEROQUEST_DEV_KEY }}" > key.pem
+          chmod 600 key.pem
+
+      - name: Deploy to AWS EC2
+        run: |
+          scp -i key.pem -r ./build ec2-user@43.203.182.138:/home/ubuntu/ZeroQuestFront
+        env:
+          AWS_ZEROQUEST_DEV_KEY: ${{ secrets.AWS_ZEROQUEST_DEV_KEY }}
+
+      - name: Restart Nginx Server
+        run: |
+          ssh -i key.pem -r ./build ec2-user@43.203.182.138 'sudo systemctl restart nginx'
+        env:
+          AWS_ZEROQUEST_DEV_KEY: ${{ secrets.AWS_ZEROQUEST_DEV_KEY }}

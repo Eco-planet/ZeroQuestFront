@@ -44,7 +44,7 @@
       <div class="flex items-end">
         <div class="text-3xl font-semibold text-esg-color">{{ esgPoint }}</div>
         <div class="w-1"></div>
-        <div class="text-2xl text-gray-400">point</div>
+        <div class="text-2xl text-gray-400">point(TEST)</div>
       </div>
     </div>
     <div class="h-10"></div>
@@ -239,7 +239,7 @@ const getMyNftList = () => {
     .then((response) => {
       myNftList.value = response.data.data;
       console.log("zero는", response.data.data);
-      console.log('response는',response)
+      console.log("response는", response);
     });
 };
 
