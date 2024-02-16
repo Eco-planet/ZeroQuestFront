@@ -123,13 +123,13 @@
           class="w-64 h-20 flex justify-center items-center rounded-lg text-2xl font-medium text-center text-white bg-esg-color1 cursor-pointer"
           @click="buyNftESGP(nowNft)"
         >
-          ESG Point로 구매
+          Buy with ESG points
         </div>
         <div
           class="w-64 h-20 flex justify-center items-center rounded-lg text-2xl font-medium text-center text-white bg-esg-color2 cursor-pointer"
           @click="goToMyWallet()"
         >
-          ESG Point 충전
+          ESG Point charging
         </div>
       </div>
     </div>
