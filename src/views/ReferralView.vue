@@ -216,7 +216,6 @@ const shareKakao = () => {
     // 모바일 버전
     window.flutter_inappwebview.callHandler('handleKakaoShareBtn', {infoShareKakao: infoShareKakao}).then((res: any) => {
       console.log(res)
-      sendReferralRequest()
     })
 
     // 웹 버전

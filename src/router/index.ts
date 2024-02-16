@@ -121,6 +121,12 @@ const routes: Array<RouteRecordRaw> = [
     component: () =>
       import(/* webpackChunkName: "terms" */ "../views/Withdraw.vue"),
   },
+  {
+    path: "/firebase",
+    name: "Firebase",
+    component: () =>
+      import(/* webpackChunkName: "terms" */ "../views/Firebase.vue"),
+  },
 ];
 
 const router = createRouter({
