@@ -123,15 +123,13 @@
           class="w-64 h-20 flex justify-center items-center rounded-lg text-2xl font-medium text-center text-white bg-esg-color1 cursor-pointer"
           @click="buyNftESGP(nowNft)"
         >
-          <!-- ESG Point로 구매 -->
-          {{ t("message.ChargingPoint") }}
+          ESG Point로 구매
         </div>
         <div
           class="w-64 h-20 flex justify-center items-center rounded-lg text-2xl font-medium text-center text-white bg-esg-color2 cursor-pointer"
           @click="goToMyWallet()"
         >
-          <!-- ESG Point 충전 -->
-          {{ t("message.buyWithPoint") }}
+          ESG Point 충전
         </div>
       </div>
     </div>
