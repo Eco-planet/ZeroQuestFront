@@ -33,8 +33,10 @@
           <div class="wp-50 flex justify-start">About ZeroQuest</div>
           <div class="wp-50 flex justify-end menu-right">→</div>
         </div>
+
+
         <div class="h-3"></div>
-        <div class="text-2xl w-full flex" :class="{ select: $route.name === 'terms' }" @click="movePage('/terms')">
+        <div class="text-2xl w-full flex" :class="{ select: $route.name === 'Notion' }" @click="movePage('/TermsNotion')">
           <div class="wp-50 flex justify-start">Terms & Conditions</div>
           <div class="wp-50 flex justify-end menu-right">→</div>
         </div>
@@ -43,18 +45,12 @@
         <div class="text-2xl font-semibold">{{ t("common.participateChannels") }}</div>
         <div class="h-3"></div>
         <div class="social-area wp-70 grid grid-cols-5 gap-2">
-
-          
-          <a v-for="logo in logos" :key="logo.id" :class="logo.name" class="snsImg"
+          <a v-for="logo in logos" :key="logo.id" :class="logo.name" class="snsImg" :href="logo.href" target="_blank"
           @mouseover="switchLogo(logo, true)"
           @mouseout="switchLogo(logo, false)"
           @click="handleSocialIconClick(logo)">
            <img :src="logo.src"/>
        </a>
-
-
-
-
         </div>
         <div class="h-10"></div>
         <a href="https://open.kakao.com/o/gEkf2eMf" target="_blank">

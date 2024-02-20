@@ -121,6 +121,13 @@ const routes: Array<RouteRecordRaw> = [
     component: () =>
       import(/* webpackChunkName: "terms" */ "../views/Withdraw.vue"),
   },
+
+  {
+    path: "/TermsNotion",
+    name: "TermsNotion",
+    component: () =>
+      import(/* webpackChunkName: "terms" */ "../views/TermsNotion.vue"),
+  },
 ];
 
 const router = createRouter({
