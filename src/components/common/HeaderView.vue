@@ -43,7 +43,9 @@
         <div class="text-2xl font-semibold">{{ t("common.participateChannels") }}</div>
         <div class="h-3"></div>
         <div class="social-area wp-70 grid grid-cols-5 gap-2">
-          <a v-for="logo in logos" :key="logo.id" :class="logo.name" class="snsImg" :href="logo.href" target="_blank"
+          <!-- <a v-for="logo in logos" :key="logo.id" :class="logo.name" class="snsImg" :href="logo.href" target="_blank" -->
+          <a v-for="logo in logos" :key="logo.id" :class="logo.name" class="snsImg" target="_blank"
+
           @mouseover="switchLogo(logo, true)"
           @mouseout="switchLogo(logo, false)"
           @click="handleSocialIconClick(logo)">
