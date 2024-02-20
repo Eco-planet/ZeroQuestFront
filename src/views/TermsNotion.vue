@@ -53,14 +53,14 @@
       text:"Privacy Policy",
       notionId: "termsEn-2-dfbf8b07a95c4fc99b0de6b4cc2fb887?pvs=4",
     },
-    {
-      text: "이용 약관",
-      notionId: "termsKr-1-89ed3158ae124b9bbbb871a779a52908?pvs=4",
-    },
-    {
-      text: "개인 정보 약관",
-      notionId: "termsKr-2-2de9cfdbedf14970bf1e7c185d18b5a1?pvs=4",
-    },
+    // {
+    //   text: "이용 약관",
+    //   notionId: "termsKr-1-89ed3158ae124b9bbbb871a779a52908?pvs=4",
+    // },
+    // {
+    //   text: "개인 정보 약관",
+    //   notionId: "termsKr-2-2de9cfdbedf14970bf1e7c185d18b5a1?pvs=4",
+    // },
     ];
   
     const selectedTitle = ref(t("message.termsTitle"));
