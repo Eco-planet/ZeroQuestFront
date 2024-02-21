@@ -153,8 +153,11 @@
     <div class="flex justify-center relative">
       <img src="@/assets/images/info2.png" />
       <a href="https://play.google.com/store/apps/details?id=com.aiblue.zrqst_multilingual_webview_app&pli=1">
-        <img class="absolute top-3/4 left-1/2 transform -translate-x-1/2 translate-y-52"
-          src="@/assets/images/info3.png" />
+        <img
+        class="absolute top-3/4 left-1/2 transform -translate-x-1/2 translate-y-52"
+        src="@/assets/images/info3.png"
+        @click="handleGooglePlayStore"
+      />
       </a>
     </div>
     <div class="mt-10 text-xl font-semibold">{{ t("message.introduction6") }}</div>
@@ -178,6 +181,17 @@ const transferOnft = () => {
     name: 'onft'
   })
 }
+
+const handleGooglePlayStore = () => {
+  window.flutter_inappwebview
+    .callHandler("handleGooglePlayStoreCommBtn")
+    .then((res: any) => {
+      console.log(res);
+    });
+}; 
+
+
+
 </script>
 
 <style lang="scss" scoped>
