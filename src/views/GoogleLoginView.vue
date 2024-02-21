@@ -90,11 +90,14 @@ const vuexStore = useStore();
 const { t } = useI18n();
 
 const showMode = ref(router.currentRoute.value.query.showMode);
+console.log("showMode",showMode.value)
+
 const isLogin = ref(router.currentRoute.value.query.isLogin);
-
+console.log("isLogin",isLogin.value)
 const locale = computed(() => vuexStore.state.system.locale);
-
+console.log("root")
 onMounted(() => {
+  console.log("onMounted")
   if (store.state.showMode === "webview" || showMode.value === "webview") {
     store.state.showMode = "webview";
 
@@ -106,13 +109,17 @@ onMounted(() => {
 });
 
 window.webviewLogin = (sub: String, email: String, name: String) => {
+  console.log("webviewLogin")
   login({ sub, email, name });
 };
 
 const loginSdk = () => {
+  console.log("loginSdk")
   if (showMode.value === "webview") {
+    console.log("webviewOK")
     window.Java.jsSignIn();
   } else {
+    console.log("mobile")
     googleTokenLogin().then((response) => {
       axios({
         method: "GET",
@@ -120,8 +127,8 @@ const loginSdk = () => {
           "https://www.googleapis.com/oauth2/v3/userinfo?access_token=" +
           response.access_token,
       }).then((userInfo) => {
-        // console.log(userInfo);
-        login(userInfo.data);
+        console.log(userInfo);
+        // login(userInfo.data);
       });
     });
   }
