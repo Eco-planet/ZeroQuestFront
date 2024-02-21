@@ -133,7 +133,7 @@
         SWAP
       </button>
     </div>
-    <div class="h-10"></div>
+    <div class="h-20"></div>
   </div>
   <Modal
     :visible="store.state.isPopup"

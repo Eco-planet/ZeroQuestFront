@@ -3,11 +3,11 @@
     <div class="flex flex-col">
       <div>
         <img
-          class="nftImg"
-          :src="nftInfo.image"
-          alt=""
-          @click="goNftDetail(nftCard.nftId, nftCard.tokenId)"
-        />
+  class="nftImg max-w-full h-auto fold:h-64"
+  :src="nftInfo.image"
+  alt=""
+  @click="goNftDetail(nftCard.nftId, nftCard.tokenId)"
+/>
       </div>
       <div
         v-if="nftCard.enable === 0"
@@ -153,4 +153,5 @@ const goNftDetail = (idx: number, tokenId: number) => {
   background: rgba(0, 0, 0, 0.3);
   color: #fff;
 }
+
 </style>

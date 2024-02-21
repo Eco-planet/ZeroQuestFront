@@ -8,10 +8,14 @@ module.exports = {
   ],
   //purge: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   darkMode: false, // or 'media' or 'class'
+
   theme: {
     extend: {
       backgroundColor: {
         "custom-green": "#70AD47",
+      },
+      screens: {
+        fold: "600px",
       },
     },
   },
