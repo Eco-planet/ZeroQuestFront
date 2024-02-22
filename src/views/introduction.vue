@@ -150,13 +150,13 @@
         </div>
       </div>
     </div>
-    <div class="flex justify-center relative">
+    <div class="flex justify-center relative"  @click="handleGooglePlayStore">
       <img src="@/assets/images/info2.png" />
       <a>
         <img
         class="absolute top-3/4 left-1/2 transform -translate-x-1/2 translate-y-52"
         src="@/assets/images/info3.png"
-        @click="handleGooglePlayStore"
+       
       />
       </a>
     </div>
