@@ -152,11 +152,11 @@
     </div>
     <div class="flex justify-center relative">
       <img src="@/assets/images/info2.png" />
-      <a>
+      <a href="https://play.google.com/store/apps/details?id=com.aiblue.zrqst_webview_app&hl=ko-KR" @click="handleGooglePlayStore">
+
         <img
         class="absolute top-3/4 left-1/2 transform -translate-x-1/2 translate-y-52"
         src="@/assets/images/info3.png"
-        @click="handleGooglePlayStore"
       />
       </a>
     </div>
@@ -183,7 +183,7 @@ const transferOnft = () => {
 }
 
 const handleGooglePlayStore = () => {
-  window.flutter_inappwebview._callHandler("handleGooglePlayStoreCommBtn").then((res: any) => {
+  window.flutter_inappwebview.callHandler("handleGooglePlayStoreCommBtn").then((res: any) => {
       console.log(res);
     });
 }; 
