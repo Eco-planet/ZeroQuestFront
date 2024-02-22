@@ -150,15 +150,15 @@
         </div>
       </div>
     </div>
-    <div class="flex justify-center relative"  @click="handleGooglePlayStore">
+    <div class="flex justify-center relative"  >
       <img src="@/assets/images/info2.png" />
-      <!-- <a> -->
+      <a> 
         <img
         class="absolute top-3/4 left-1/2 transform -translate-x-1/2 translate-y-52"
-        src="@/assets/images/info3.png"
+        src="@/assets/images/info3.png" @click="handleGooglePlayStore" href="https://play.google.com/store/search?q=zeroquest&c=apps"
        
       />
-      <!-- </a> -->
+      </a>
     </div>
     <div class="mt-10 text-xl font-semibold">{{ t("message.introduction6") }}</div>
     <div class="h-56"></div>
