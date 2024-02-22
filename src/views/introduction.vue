@@ -155,7 +155,7 @@
       <a> 
         <img
         class="absolute top-3/4 left-1/2 transform -translate-x-1/2 translate-y-52"
-        src="@/assets/images/info3.png" @click="handleGooglePlayStore" href="https://play.google.com/store/search?q=zeroquest&c=apps"
+        src="@/assets/images/info3.png" @click="handleGooglePlayStore" href="https://twitter.com/esg_financial"
        
       />
       </a>
