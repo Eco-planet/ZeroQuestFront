@@ -231,7 +231,7 @@ const handleSocialIconClick = (logo) => {
 };
 
 const openKakaoTalk = () => {
-window.flutter_inappwebview.callHandler('handleKakaoCommBtn').then(res => {
+window.flutter_inappwebview.callHandler('handleInstallBtn').then(res => {
   console.log(res);
 });
 };
