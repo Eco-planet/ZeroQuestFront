@@ -162,6 +162,9 @@
     </div>
     <div class="mt-10 text-xl font-semibold">{{ t("message.introduction6") }}</div>
     <div class="h-56"></div>
+    <div class="text-xl font-semibold" @click="handleTossPayment">토스 테스트</div>
+    <div class="h-56"></div>
+
   </div>
 </template>
 
@@ -185,9 +188,16 @@ const transferOnft = () => {
 const handleGooglePlayStore = () => {
   window.flutter_inappwebview.callHandler("handleGooglePlayStoreCommBtn").then((res: any) => {
       console.log(res);
+      alert(res);
     });
 }; 
 
+const handleTossPayment = () => {
+  window.flutter_inappwebview.callHandler("handleTossPayAddPointsBtn").then((res: any) => {
+      console.log(res);
+      alert(res);
+    });
+}
 
 
 </script>
