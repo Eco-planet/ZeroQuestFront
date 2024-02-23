@@ -193,7 +193,7 @@ const handleGooglePlayStore = () => {
 }; 
 
 const handleTossPayment = () => {
-  window.flutter_inappwebview.callHandler("handleTossPayAddPointsBtn").then((res: any) => {
+  window.flutter_inappwebview.callHandler("handleTossPayBtn").then((res: any) => {
       console.log(res);
       alert(res);
     });
