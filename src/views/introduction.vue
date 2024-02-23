@@ -160,9 +160,10 @@
       />
       </a>
     </div>
-    <div class="mt-10 text-xl font-semibold" @click="handleTossPayment">{{ t("message.introduction6") }}</div>
+    <div class="mt-10 text-xl font-semibold" >{{ t("message.introduction6") }}</div>
     <div class="h-56"></div>
-  
+    <div class="text-xl font-semibold" @click="handleTossPayment">토스페이 테스트</div>
+    <div class="h-56"></div>
 
   </div>
 </template>
