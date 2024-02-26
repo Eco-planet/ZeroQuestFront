@@ -74,50 +74,42 @@
         </p>
       </div>
 
-      <div class="mt-20">
+      <div class="mt-32">
         <div class="mb-16 flex justify-center items-center">
-          <img src="@/assets/images/image1.png" />
-          <div class="ml-8 font-medium">{{ t('message.introduction3') }}</div>
+          <img src="@/assets/images/tree.png" class="wp-40 mr-4"/>
+          <div class="font-medium wp-40">{{ t('message.introduction3') }}</div>
         </div>
         <div class="mb-16 flex justify-center items-center">
-          <img src="@/assets/images/image2.png" />
-          <div class="ml-8">
+          <img src="@/assets/images/recycling.png" class="wp-40 mr-4"/>
+          <div class="wp-40">
             <div>
               <div v-if="locale === 'kr'" class="font-medium">재활용페트병<br>인식 모듈</div>
               <div v-else class="font-medium">Recycled PET Bottle<br>Recognition Module</div>
             </div>
 
-            <button type="button" class="
-            moduleBtnBg
-            text-white 
-            font-medium 
-            rounded-full 
-            text-sm 
-            mt-4
-            px-5
-            py-4 
-            text-center" @click="transferOnft">
-              {{ t('message.introduction4') }}
+            <button
+              type="button"
+              class="moduleBtnBg text-white font-medium rounded-full text-sm mt-4 px-5 py-4 text-center"
+              @click="transferOnft"
+            >
+            {{ t('message.introduction4') }}
             </button>
           </div>
         </div>
         <div class="mb-16 flex justify-center items-center">
-          <img src="@/assets/images/image3.png" />
-          <div class="ml-8">
+          <img src="@/assets/images/stair.png" class="wp-40 mr-4"/>
+          <div class="wp-40">
             <div>
               <div v-if="locale === 'kr'" class="font-medium">계단오르기<br>인식 모듈</div>
               <div v-else class="font-medium">Stair Climbing<br>Recognition Module</div>
             </div>
-            <button type="button" class="
-            moduleBtnBg
-            text-white 
-            font-medium 
-            rounded-full 
-            text-sm 
-            mt-4
-            px-5
-            py-4 
-            text-center" @click="transferOnft">{{ t('message.introduction4') }}</button>
+            <button
+              type="button"
+              class="moduleBtnBg text-white font-medium rounded-full text-sm mt-4 px-5 py-4 text-center"
+              @click="transferOnft"
+            >
+            {{ t('message.introduction4') }}
+            </button>
           </div>
         </div>
       </div>
