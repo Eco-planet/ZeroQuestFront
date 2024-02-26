@@ -188,14 +188,13 @@ const transferOnft = () => {
 const handleGooglePlayStore = () => {
   window.flutter_inappwebview.callHandler("handleGooglePlayStoreCommBtn").then((res: any) => {
       console.log(res);
-      alert(res);
     });
 }; 
 
 const handleTossPayment = () => {
   window.flutter_inappwebview.callHandler("handleTossPayBtn").then((res: any) => {
       console.log(res);
-      alert(res);
+  
     });
 }
 
