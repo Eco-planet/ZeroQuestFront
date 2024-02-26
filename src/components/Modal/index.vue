@@ -878,11 +878,12 @@ const clickMask = () => {
 const withdrawalCamera = () => {
   console.log("됐니?");
   window.flutter_inappwebview.callHandler("handleCopyBtn", {
-    content: slicedValue,
+    content: alert('slicedValue는',slicedValue),
   });
 };
 
 const doCopy = () => {
+  console.log('do copy?')
   window.flutter_inappwebview.callHandler("handleCopyBtn", {
     content: store.getters["auth/getAddress"],
   });
