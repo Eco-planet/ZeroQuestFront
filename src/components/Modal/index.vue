@@ -878,7 +878,7 @@ const clickMask = () => {
 const withdrawalCamera = () => {
   console.log("됐니?");
   window.flutter_inappwebview.callHandler("handleCopyBtn", {
-    content: alert('slicedValue는',slicedValue),
+    content: alert(slicedValue),
   });
 };
 

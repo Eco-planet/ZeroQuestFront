@@ -144,7 +144,7 @@
     </div>
     <div class="flex justify-center relative">
       <img src="@/assets/images/info2.png" />
-      <a href="https://play.google.com/store/apps/details?id=com.aiblue.zrqst_webview_app&hl=ko-KR" @click="handleGooglePlayStore">
+      <a href="https://play.google.com/store/apps/details?id=com.aiblue.zrqst_multilingual_webview_app" @click="handleGooglePlayStore">
 
         <img
         class="absolute top-3/4 left-1/2 transform -translate-x-1/2 translate-y-52"
