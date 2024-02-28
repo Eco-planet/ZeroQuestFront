@@ -191,7 +191,18 @@ const handleGooglePlayStore = () => {
 // }
 
 const handleTossPayment = () => {
-  const dataToSend = { points: 100, buyerTel: '01012345678' }; // 예시 데이터
+  const dataToSend = { points: 100, buyerTel: '01012345678', 
+      pg: "tosspayments", //"kakaopay"
+      pay_method: "card",
+      // merchant_uid: "ORD20180131-0000011",
+      name: "esgp 구매",
+      m_redirect_url: "https://dev.zeroquest.kr",
+      amount: 444,
+      buyer_email: "funidea_woo@naver.com",
+      buyer_name: "테스터",
+      buyer_tel: "010-8832-4280",
+      buyer_addr: "서울특별시 영등포구 당산동",
+      buyer_postcode: "07222", }; // 예시 데이터
   window.flutter_inappwebview.callHandler("handleTossPayBtn", dataToSend).then((res: any) => {
     console.log(res);
   });
