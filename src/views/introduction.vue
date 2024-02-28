@@ -197,8 +197,6 @@ const handleTossPayment = () => {
   });
 }
 
-
-
 </script>
 
 <style lang="scss" scoped>
