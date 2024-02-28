@@ -154,8 +154,8 @@
     </div>
     <div class="mt-10 text-xl font-semibold" >{{ t("message.introduction6") }}</div>
     <div class="h-56"></div>
-    <!-- <div class="text-xl font-semibold" @click="handleTossPayment">토스페이 테스트</div>
-    <div class="h-56"></div> -->
+    <div class="text-xl font-semibold" @click="handleTossPayment">토스페이 테스트</div>
+    <div class="h-56"></div>
 
   </div>
 </template>
@@ -183,12 +183,20 @@ const handleGooglePlayStore = () => {
     });
 }; 
 
-const handleTossPayment = () => {
-  window.flutter_inappwebview.callHandler("handleTossPayBtn").then((res: any) => {
-      console.log(res);
+// const handleTossPayment = () => {
+//   window.flutter_inappwebview.callHandler("handleTossPayBtn").then((res: any) => {
+//       console.log(res);
   
-    });
+//     });
+// }
+
+const handleTossPayment = () => {
+  const dataToSend = { points: 100, buyerTel: '01012345678' }; // 예시 데이터
+  window.flutter_inappwebview.callHandler("handleTossPayBtn", dataToSend).then((res: any) => {
+    console.log(res);
+  });
 }
+
 
 
 </script>

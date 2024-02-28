@@ -1020,6 +1020,8 @@ const shareTelegram = () => {
         objectType: "feed",
         title: `ZeroQuest - 친구초대 이벤트 ${referralSlice}을 입력하세요`,
         description: `https://play.google.com/store/apps/details?id=com.aiblue.zrqst_webview_app&pcampaignid=web_share`,
+        //  description: `https://play.google.com/store/apps/details?id=com.aiblue.zrqst_multilingual_webview_app&pcampaignid=web_share`,
+
         imageUrl:
           "https://play-lh.googleusercontent.com/VaCMJUHxqjCtqNJ3oKFDdDCZUHdIOu5nZRARVnxSNssiYK6HXZ6JOTcA3vAcLPYfrJI=w240-h480-rw",
         link: {
