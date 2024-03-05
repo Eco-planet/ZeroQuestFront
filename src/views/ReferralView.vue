@@ -42,14 +42,14 @@
 
       <div class="mt-7 mb-4">
         <!-- 카카오 공유 -->
-        <button type="button">
+        <!-- <button type="button">
           <a id="kakao-link-btn" @click="shareKakao">
             <img
               src="./../assets/images/kakao_logo.png"
               alt="카카오톡 공유하기"
             />
           </a>
-        </button>
+        </button> -->
 
         <!-- 텔레그램 공유 -->
         <button type="button" class="sns_btn" @click="shareTelegram">
@@ -170,8 +170,10 @@ const shareTelegram = () => {
     const infoShareTelegram = {
       content: {
         objectType: "feed",
-        title: `ZeroQuest - 친구초대 이벤트 ${referralSlice}을 입력하세요`,
-        description: `https://play.google.com/store/apps/details?id=com.aiblue.zrqst_webview_app&pcampaignid=web_share`,
+        // title: `ZeroQuest - 친구초대 이벤트 ${referralSlice}을 입력하세요`,
+        title: `ZeroQuest - Please enter ${referralSlice} on Referral COde Entry`,
+
+        description: `https://play.google.com/store/apps/details?id=com.aiblue.zrqst_multilingual_webview_app`,
         imageUrl:
           "https://play-lh.googleusercontent.com/VaCMJUHxqjCtqNJ3oKFDdDCZUHdIOu5nZRARVnxSNssiYK6HXZ6JOTcA3vAcLPYfrJI=w240-h480-rw",
         link: {
@@ -201,8 +203,8 @@ const shareKakao = () => {
     const infoShareKakao = {
       objectType: "feed",
       content: {
-        title: `ZeroQuest-친구초대 이벤트 ${referralSlice}을 입력하세요`,
-        description: `https://play.google.com/store/apps/details?id=com.aiblue.zrqst_webview_app&pcampaignid=web_share`,
+        title: `Please enter ${referralSlice} on Referral COde Entry`,
+        description: `https://play.google.com/store/apps/details?id=com.aiblue.zrqst_multilingual_webview_app`,
         imageUrl:
           "https://play-lh.googleusercontent.com/VaCMJUHxqjCtqNJ3oKFDdDCZUHdIOu5nZRARVnxSNssiYK6HXZ6JOTcA3vAcLPYfrJI=w240-h480-rw",
         link: {
