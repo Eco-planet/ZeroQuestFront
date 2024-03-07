@@ -357,14 +357,14 @@
 
           <div class="mt-7 mb-4">
             <!-- 카카오 공유 -->
-            <button type="button">
+            <!-- <button type="button">
               <a id="kakao-link-btn" @click="shareKakao">
                 <img
                   src="@/assets/images/kakao_logo.png"
                   alt="카카오톡 공유하기"
                 />
               </a>
-            </button>
+            </button> -->
 
             <!-- 텔레그램 공유 -->
             <button type="button" class="sns_btn" @click="shareTelegram">
@@ -948,11 +948,11 @@ const requestUpdatePW = () => {
 
 const doSendCoin = () => {
   if (withdrawAddress.value === "") {
-    withdrawMsg.value = "출금하실 주소를 입력해주세요.";
+    withdrawMsg.value = t("message.withdrawError3");
   } else if (withdrawCount.value < 0) {
-    withdrawMsg.value = "출금 수량을 입력해주세요.";
+    withdrawMsg.value = t("message.withdrawError4");
   } else if (withdrawPass.value === "") {
-    withdrawMsg.value = "출금 비밀번호를 입력해주세요.";
+    withdrawMsg.value = t("message.withdrawError5");
   } else {
     var res = {
       address: withdrawAddress.value,
@@ -968,6 +968,7 @@ const doSendCoin = () => {
   }
 };
 
+
 const openResetPW = () => {
   popupType.value = "resetPW";
   store.state.isPopup = true;
@@ -975,6 +976,7 @@ const openResetPW = () => {
 
 //인증코드요청
 const codeRequest = () => {
+  console.log("인증번호 요청");
   http
     .post("/auth/signStart", { email: userEmail.value })
     .then((response) => {
