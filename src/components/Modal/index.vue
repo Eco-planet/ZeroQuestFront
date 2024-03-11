@@ -198,7 +198,7 @@
                     type="text"
                     v-model="withdrawAddress"
                     size="20"
-                    class="text-lg border-solid border-1 border-gray-300"
+                    class="text-lg border-solid border-1 border-gray-300 input-field"
                   />
                 </div>
               </div>
@@ -212,7 +212,7 @@
                     type="number"
                     v-model="withdrawCount"
                     size="20"
-                    class="text-lg border-solid border-1 border-gray-300"
+                    class="text-lg border-solid border-1 border-gray-300 input-field"
                   />
                 </div>
               </div>
@@ -226,7 +226,7 @@
                     type="password"
                     v-model="withdrawPass"
                     size="20"
-                    class="text-lg border-solid border-1 border-gray-300"
+                    class="text-lg border-solid border-1 border-gray-300 input-field"
                   />
                 </div>
               </div>
@@ -357,14 +357,14 @@
 
           <div class="mt-7 mb-4">
             <!-- 카카오 공유 -->
-            <button type="button">
+            <!-- <button type="button">
               <a id="kakao-link-btn" @click="shareKakao">
                 <img
                   src="@/assets/images/kakao_logo.png"
                   alt="카카오톡 공유하기"
                 />
               </a>
-            </button>
+            </button> -->
 
             <!-- 텔레그램 공유 -->
             <button type="button" class="sns_btn" @click="shareTelegram">
@@ -876,11 +876,21 @@ const clickMask = () => {
 };
 
 const withdrawalCamera = () => {
-  console.log("됐니?");
-  window.flutter_inappwebview.callHandler("handleCopyBtn", {
-    content: alert(slicedValue),
-  });
-};
+  console.log("됐니?")
+  window.flutter_inappwebview.callHandler('handleOpenCamera').TouchEvent((res:any)=>{
+    console.log('res는',res);
+  }) 
+  // window.flutter_inappwebview.callHandler('handleOpenCamera', {
+  //   content: store.getters["auth/getAddress2"]
+  // });  hide();
+  // window.flutter_inappwebview.callHandler('handleOpenCamera').TouchEvent((res:any)=>{
+  //   console.log('res는',res);
+  // }) 
+  };
+
+//   function updateWithdrawAddress(address) {
+//   withdrawAddress.value = address;
+// }
 
 const doCopy = () => {
   console.log('do copy?')
@@ -938,11 +948,11 @@ const requestUpdatePW = () => {
 
 const doSendCoin = () => {
   if (withdrawAddress.value === "") {
-    withdrawMsg.value = "출금하실 주소를 입력해주세요.";
+    withdrawMsg.value = t("message.withdrawError3");
   } else if (withdrawCount.value < 0) {
-    withdrawMsg.value = "출금 수량을 입력해주세요.";
+    withdrawMsg.value = t("message.withdrawError4");
   } else if (withdrawPass.value === "") {
-    withdrawMsg.value = "출금 비밀번호를 입력해주세요.";
+    withdrawMsg.value = t("message.withdrawError5");
   } else {
     var res = {
       address: withdrawAddress.value,
@@ -958,6 +968,7 @@ const doSendCoin = () => {
   }
 };
 
+
 const openResetPW = () => {
   popupType.value = "resetPW";
   store.state.isPopup = true;
@@ -965,6 +976,7 @@ const openResetPW = () => {
 
 //인증코드요청
 const codeRequest = () => {
+  console.log("인증번호 요청");
   http
     .post("/auth/signStart", { email: userEmail.value })
     .then((response) => {
@@ -1051,35 +1063,35 @@ const sendReferralRequest = (code) => {
 
 // 소셜 공유하기, 카카오
 // 소셜 공유하기, 카카오
-const shareKakao = () => {
-  const referralValue = referral.value;
-  if (referralValue) {
-    const referralSlice = referralValue.slice(-6);
-    const infoShareKakao = {
-      objectType: "feed",
-      content: {
-        title: `ZeroQuest-친구초대 이벤트 ${referralSlice}을 입력하세요`,
-        description: `https://play.google.com/store/apps/details?id=com.aiblue.zrqst_webview_app&pcampaignid=web_share`,
-        imageUrl:
-          "https://play-lh.googleusercontent.com/VaCMJUHxqjCtqNJ3oKFDdDCZUHdIOu5nZRARVnxSNssiYK6HXZ6JOTcA3vAcLPYfrJI=w240-h480-rw",
-        link: {
-          mobileWebUrl: `https://zeroquest.io`,
-          webUrl: `https://zeroquest.io`,
-        },
-        accessToken: accessToken,
-      },
-    };
+// const shareKakao = () => {
+//   const referralValue = referral.value;
+//   if (referralValue) {
+//     const referralSlice = referralValue.slice(-6);
+//     const infoShareKakao = {
+//       objectType: "feed",
+//       content: {
+//         title: `ZeroQuest-친구초대 이벤트 ${referralSlice}을 입력하세요`,
+//         description: `https://play.google.com/store/apps/details?id=com.aiblue.zrqst_webview_app&pcampaignid=web_share`,
+//         imageUrl:
+//           "https://play-lh.googleusercontent.com/VaCMJUHxqjCtqNJ3oKFDdDCZUHdIOu5nZRARVnxSNssiYK6HXZ6JOTcA3vAcLPYfrJI=w240-h480-rw",
+//         link: {
+//           mobileWebUrl: `https://zeroquest.io`,
+//           webUrl: `https://zeroquest.io`,
+//         },
+//         accessToken: accessToken,
+//       },
+//     };
 
-    // 모바일 버전
-    window.flutter_inappwebview
-      .callHandler("handleKakaoShareBtn", { infoShareKakao: infoShareKakao })
-      .then((res: any) => {
-        console.log(res);
-      });
-  } else {
-    console.error("store.state.referral is not defined or is empty");
-  }
-};
+//     // 모바일 버전
+//     window.flutter_inappwebview
+//       .callHandler("handleKakaoShareBtn", { infoShareKakao: infoShareKakao })
+//       .then((res: any) => {
+//         console.log(res);
+//       });
+//   } else {
+//     console.error("store.state.referral is not defined or is empty");
+//   }
+// };
 
 // 레퍼럴 입력 가이드 (sendReferral)
 const referralInput = () => {
@@ -1200,6 +1212,12 @@ const showLastSixChars = () => {
 
     .pass-back-bg {
       background-color: #f6f8f5;
+      display: flex;
+    flex-direction: column;
+    padding: 20px; // 패딩 조정
+    gap: 10px; // 항목 사이의 간격
+    background-color: #f6f8f5;
+    border-radius: 10px; // 모서리 둥글게
     }
 
     .pass-bg {
@@ -1234,4 +1252,12 @@ const showLastSixChars = () => {
     }
   }
 }
-</style>
+.input-field {
+  width: 100%; // 너비를 100%로 설정하여 부모 컨테이너에 맞게 조정
+  padding: 10px; // 패딩 추가
+  border: 1px solid #ccc; // 테두리 스타일 조정
+  border-radius: 5px; // 모서리 둥글게
+}
+
+
+</style>callWithErrorHandling, 

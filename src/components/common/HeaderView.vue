@@ -55,7 +55,7 @@
          <img :src="logo.src"/>
      </a>
       </div>
-      <div class="h-10"></div>
+      <!-- <div class="h-10"></div>
       <a href="https://open.kakao.com/o/gEkf2eMf" target="_blank">
         <div class="pb-2 text-2xl font-semibold">{{ t("message.howToUse")}}</div>
         <div class="h-6"></div>
@@ -67,7 +67,7 @@
         :class="kakaoHover? 'w-14':'w-auto'"
   
         >
-      </a>
+      </a> -->
       <div class="text-2xl font-semibold mt-4 cursor-pointer" @click="Withdrawal">Withdrawal</div>
     
     </div>
@@ -230,11 +230,11 @@ const handleSocialIconClick = (logo) => {
   }
 };
 
-const openKakaoTalk = () => {
-window.flutter_inappwebview.callHandler('handleInstallBtn').then(res => {
-  console.log(res);
-});
-};
+// const openKakaoTalk = () => {
+// window.flutter_inappwebview.callHandler('handleInstallBtn').then(res => {
+//   console.log(res);
+// });
+// };
 
 </script>
 

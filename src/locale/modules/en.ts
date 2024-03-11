@@ -102,7 +102,7 @@ export default {
       "When withdrawing, withdrawal is possible only when the main net is the same.",
     withdrawCaution2:
       "The withdrawal will proceed after the withdrawal review.",
-    withdrawCaution3: "withdrawal fee",
+    withdrawCaution3: "Withdrawal fee",
     withdrawCaution4: "Mainnet fee applied",
     withdrawBtnRegister: "withdrawal request",
     withdrawError1: "Please enter at least 6 digits.",
