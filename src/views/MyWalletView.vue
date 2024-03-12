@@ -75,11 +75,11 @@
               class="input-field font-semibold text-xl"
               v-model="swapEsgp"
               :onKeyup="initSwapEsgp"
-              @focus="swapEsgp == 0 ? swapEsgp = '' : ''"
-              style="text-align: left;"
+              @focus="swapEsgp == 0 ? (swapEsgp = '') : ''"
+              style="text-align: left"
             />
             <div class="wp-50 flex justify-end items-center text-gray-400">
-             ESGP
+              ESGP
             </div>
           </div>
         </div>
@@ -101,7 +101,9 @@
               readonly
             />
           </div>
-          <div class="input-field wp-20 flex justify-end items-center text-gray-400">
+          <div
+            class="input-field wp-20 flex justify-end items-center text-gray-400"
+          >
             ESG
           </div>
         </div>
@@ -110,10 +112,12 @@
     </div>
     <div class="h-10"></div>
     <div class="flex flex-col text-xl">
-      <div class="swap-noti flex font-semibold">{{ t("message.swapCaution") }}</div>
-     
+      <div class="swap-noti flex font-semibold">
+        {{ t("message.swapCaution") }}
+      </div>
+
       <div class="h-2"></div>
-      <div class="flex justify-start items-start" style="text-align: left;">
+      <div class="flex justify-start items-start" style="text-align: left">
         <div class="font-bold">·</div>
         <div class="ml-2">{{ t("message.swapCaution1") }}</div>
       </div>
@@ -140,9 +144,11 @@
   <Modal
     :visible="store.state.isPopup"
     @hide="closeModal"
+    @refreshHide="closeSwapModal"
     @resData="checkData"
     @resJson="checkObject"
     :title="popupTitle"
+    :showClose="showClose"
   />
 </template>
 
@@ -168,6 +174,7 @@ const popupTitle = ref("");
 const isUpdate = ref(false);
 const swapEsgp = ref(0);
 const swapEsg = ref(0);
+const showClose = ref(true);
 
 onMounted(() => {
   updateBalance();
@@ -332,6 +339,11 @@ const closeModal = () => {
   store.state.isPopup = false;
 };
 
+const closeSwapModal = () => {
+  store.state.isPopup = false;
+  router.go(0);
+};
+
 const getSwapInfo = () => {
   if (swapEsgp.value < 30000) {
     store.state.popupType = "message";
@@ -381,6 +393,7 @@ const sendSwap = () => {
     .then((response) => {
       store.state.popupValue = swapEsgp.value;
       store.state.popupType = "message";
+      showClose.value = false;
       popupTitle.value = "message.swapRequestEnd";
       store.state.isPopup = true;
 
@@ -394,7 +407,6 @@ const sendSwap = () => {
 
 const initSwapEsgp = () => {
   swapEsg.value = 0;
-
 };
 </script>
 
@@ -484,6 +496,5 @@ const initSwapEsgp = () => {
   border: none; /* 테두리 제거 */
   padding: 10px; /* 패딩을 조정하여 입력 필드의 크기를 조정할 수 있음 */
   border-radius: 5px; /* 필요한 경우 모서리를 둥글게 처리 */
-  
 }
 </style>
