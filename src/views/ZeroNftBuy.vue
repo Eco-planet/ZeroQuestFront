@@ -166,6 +166,7 @@
     <Modal
       :visible="store.state.isPopup"
       @hide="closeModal"
+      @refreshHide="closeMintingModal"
       :title="popupTitle"
     />
   </div>
@@ -305,6 +306,10 @@ const isModalChange = (buyModalEmit: boolean) => {
 
 const closeModal = () => {
   store.state.isPopup = false;
+};
+const closeMintingModal = () => {
+  store.state.isPopup = false;
+  router.go(0);
 };
 </script>
 

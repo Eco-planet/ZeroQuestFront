@@ -15,6 +15,12 @@
         src="@/assets/images/img_close_black.png"
         @click="hide"
       />
+      <img
+        v-else
+        class="close-icon"
+        src="@/assets/images/img_close_black.png"
+        @click="refreshHide"
+      />
       <div class="flex flex-col justify-center items-center">
         <template v-if="popupType === 'qr_code'">
           <div class="flex flex-col justify-center items-center">
@@ -356,17 +362,6 @@
           </div>
 
           <div class="mt-7 mb-4">
-            <!-- 카카오 공유 -->
-            <!-- <button type="button">
-              <a id="kakao-link-btn" @click="shareKakao">
-                <img
-                  src="@/assets/images/kakao_logo.png"
-                  alt="카카오톡 공유하기"
-                />
-              </a>
-            </button> -->
-
-            <!-- 텔레그램 공유 -->
             <button type="button" class="sns_btn" @click="shareTelegram">
               <img src="@/assets/images/telog.png" alt="텔레그램 공유하기" />
             </button>
@@ -505,7 +500,7 @@
             <div>
               <button
                 class="w-48 h-16 font-semibold text-white text-xl rounded close-btn"
-                @click="hide"
+                @click="refreshHide"
               >
                 {{ t("message.termsBtn") }}
               </button>
@@ -523,7 +518,7 @@
             <div>
               <button
                 class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
-                @click="hide"
+                @click="refreshHide"
               >
                 {{ t("message.termsBtn") }}
               </button>
@@ -590,7 +585,7 @@
             <div>
               <button
                 class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
-                @click="voteHide"
+                @click="refreshHide"
               >
                 Confirm
               </button>
@@ -625,13 +620,6 @@
             class="text-2xl text-center"
           >
             <div>{{ t(showTitle) }}</div>
-            <!-- <div>
-              ({{
-                t("message.swapRequestValue", {
-                  value: store.state.popupValue,
-                })
-              }})
-            </div> -->
           </div>
           <div
             v-else-if="showTitle == 'message.getReward'"
@@ -664,7 +652,20 @@
               </button>
             </div>
           </div>
-          <div v-if="popupType === 'message'" class="flex justify-center">
+          <div
+            v-if="showTitle == 'message.swapRequestEnd'"
+            class="flex justify-center"
+          >
+            <div>
+              <button
+                class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
+                @click="refreshHide"
+              >
+                Closed
+              </button>
+            </div>
+          </div>
+          <div v-else-if="popupType === 'message'" class="flex justify-center">
             <div>
               <button
                 class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
@@ -737,7 +738,7 @@ const emit = defineEmits([
   "update:visible",
   "resData",
   "resJson",
-  "voteHide",
+  "refreshHide",
   "clickWithdraw",
 ]);
 const { visible, withdrawVisible, innerStyle, title } = toRefs(props); // 弹框组件显隐
@@ -834,7 +835,7 @@ const hide = () => {
   emit("hide");
 };
 
-const voteHide = () => {
+const refreshHide = () => {
   store.state.popupType = "";
 
   passwd1.value = "";
@@ -846,7 +847,7 @@ const voteHide = () => {
   withdrawPass.value = "";
 
   emit("update:visible", false);
-  emit("voteHide");
+  emit("refreshHide");
 };
 
 const resData = (res: string) => {
@@ -876,24 +877,26 @@ const clickMask = () => {
 };
 
 const withdrawalCamera = () => {
-  console.log("됐니?")
-  window.flutter_inappwebview.callHandler('handleOpenCamera').TouchEvent((res:any)=>{
-    console.log('res는',res);
-  }) 
+  console.log("됐니?");
+  window.flutter_inappwebview
+    .callHandler("handleOpenCamera")
+    .TouchEvent((res: any) => {
+      console.log("res는", res);
+    });
   // window.flutter_inappwebview.callHandler('handleOpenCamera', {
   //   content: store.getters["auth/getAddress2"]
   // });  hide();
   // window.flutter_inappwebview.callHandler('handleOpenCamera').TouchEvent((res:any)=>{
   //   console.log('res는',res);
-  // }) 
-  };
+  // })
+};
 
 //   function updateWithdrawAddress(address) {
 //   withdrawAddress.value = address;
 // }
 
 const doCopy = () => {
-  console.log('do copy?')
+  console.log("do copy?");
   window.flutter_inappwebview.callHandler("handleCopyBtn", {
     content: store.getters["auth/getAddress"],
   });
@@ -967,7 +970,6 @@ const doSendCoin = () => {
     withdrawPass.value = "";
   }
 };
-
 
 const openResetPW = () => {
   popupType.value = "resetPW";
@@ -1055,44 +1057,6 @@ const shareTelegram = () => {
     console.error("store.state.referral is not defined or is empty");
   }
 };
-const sendReferralRequest = (code) => {
-  return http.post(`/api/user/sendReferral`, {
-    referralCode: code,
-  });
-};
-
-// 소셜 공유하기, 카카오
-// 소셜 공유하기, 카카오
-// const shareKakao = () => {
-//   const referralValue = referral.value;
-//   if (referralValue) {
-//     const referralSlice = referralValue.slice(-6);
-//     const infoShareKakao = {
-//       objectType: "feed",
-//       content: {
-//         title: `ZeroQuest-친구초대 이벤트 ${referralSlice}을 입력하세요`,
-//         description: `https://play.google.com/store/apps/details?id=com.aiblue.zrqst_webview_app&pcampaignid=web_share`,
-//         imageUrl:
-//           "https://play-lh.googleusercontent.com/VaCMJUHxqjCtqNJ3oKFDdDCZUHdIOu5nZRARVnxSNssiYK6HXZ6JOTcA3vAcLPYfrJI=w240-h480-rw",
-//         link: {
-//           mobileWebUrl: `https://zeroquest.io`,
-//           webUrl: `https://zeroquest.io`,
-//         },
-//         accessToken: accessToken,
-//       },
-//     };
-
-//     // 모바일 버전
-//     window.flutter_inappwebview
-//       .callHandler("handleKakaoShareBtn", { infoShareKakao: infoShareKakao })
-//       .then((res: any) => {
-//         console.log(res);
-//       });
-//   } else {
-//     console.error("store.state.referral is not defined or is empty");
-//   }
-// };
-
 // 레퍼럴 입력 가이드 (sendReferral)
 const referralInput = () => {
   const userReferralSlice = referral.value.slice(-6);
@@ -1213,11 +1177,11 @@ const showLastSixChars = () => {
     .pass-back-bg {
       background-color: #f6f8f5;
       display: flex;
-    flex-direction: column;
-    padding: 20px; // 패딩 조정
-    gap: 10px; // 항목 사이의 간격
-    background-color: #f6f8f5;
-    border-radius: 10px; // 모서리 둥글게
+      flex-direction: column;
+      padding: 20px; // 패딩 조정
+      gap: 10px; // 항목 사이의 간격
+      background-color: #f6f8f5;
+      border-radius: 10px; // 모서리 둥글게
     }
 
     .pass-bg {
@@ -1258,6 +1222,5 @@ const showLastSixChars = () => {
   border: 1px solid #ccc; // 테두리 스타일 조정
   border-radius: 5px; // 모서리 둥글게
 }
-
-
-</style>callWithErrorHandling, 
+</style>
+callWithErrorHandling,
