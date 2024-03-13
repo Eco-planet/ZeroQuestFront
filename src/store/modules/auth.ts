@@ -75,6 +75,9 @@ export default {
     getAddress: (state: Nullable) => {
       return state.address;
     },
+    getAddress2: (state: Nullable) => {
+      return state.address;
+    },
     getBalances: (state: Nullable) => {
       if (state.balances !== "") {
         return JSON.parse(state.balances);

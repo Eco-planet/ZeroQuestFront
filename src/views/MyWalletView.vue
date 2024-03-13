@@ -69,17 +69,18 @@
     <div class="flex">
       <div class="wp-40 flex flex-col">
         <div class="flex justify-end items-center">
-          <div class="wp-50">
+          <div class="wp-100 input-container">
             <input
               type="number"
-              class="w-36 font-semibold text-xl"
+              class="input-field font-semibold text-xl"
               v-model="swapEsgp"
               :onKeyup="initSwapEsgp"
-              style="text-align: right"
+              @focus="swapEsgp == 0 ? (swapEsgp = '') : ''"
+              style="text-align: left"
             />
-          </div>
-          <div class="wp-50 flex justify-end items-center text-gray-400">
-            ESG Point
+            <div class="wp-50 flex justify-end items-center text-gray-400">
+              ESGP
+            </div>
           </div>
         </div>
         <div class="h-px h-5 bg-gray-200"></div>
@@ -91,7 +92,7 @@
       </div>
       <div class="wp-40 flex flex-col">
         <div class="flex justify-end items-center">
-          <div class="wp-80">
+          <div class="wp-80 input-container">
             <input
               type="number"
               class="w-36 font-semibold text-xl swap-text"
@@ -100,7 +101,9 @@
               readonly
             />
           </div>
-          <div class="wp-20 flex justify-end items-center text-gray-400">
+          <div
+            class="input-field wp-20 flex justify-end items-center text-gray-400"
+          >
             ESG
           </div>
         </div>
@@ -109,13 +112,16 @@
     </div>
     <div class="h-10"></div>
     <div class="flex flex-col text-xl">
-      <div class="swap-noti flex font-semibold">{{ t("message.swapCaution") }}</div>
+      <div class="swap-noti flex font-semibold">
+        {{ t("message.swapCaution") }}
+      </div>
+
       <div class="h-2"></div>
-      <div class="flex justify-start items-center">
+      <div class="flex justify-start items-start" style="text-align: left">
         <div class="font-bold">·</div>
         <div class="ml-2">{{ t("message.swapCaution1") }}</div>
       </div>
-      <div class="flex justify-start">
+      <div class="flex justify-start items-start">
         <div class="font-bold">·</div>
         <div class="ml-2 text-left">{{ t("message.swapCaution2") }}</div>
       </div>
@@ -138,9 +144,11 @@
   <Modal
     :visible="store.state.isPopup"
     @hide="closeModal"
+    @refreshHide="closeSwapModal"
     @resData="checkData"
     @resJson="checkObject"
     :title="popupTitle"
+    :showClose="showClose"
   />
 </template>
 
@@ -166,6 +174,7 @@ const popupTitle = ref("");
 const isUpdate = ref(false);
 const swapEsgp = ref(0);
 const swapEsg = ref(0);
+const showClose = ref(true);
 
 onMounted(() => {
   updateBalance();
@@ -330,6 +339,11 @@ const closeModal = () => {
   store.state.isPopup = false;
 };
 
+const closeSwapModal = () => {
+  store.state.isPopup = false;
+  router.go(0);
+};
+
 const getSwapInfo = () => {
   if (swapEsgp.value < 30000) {
     store.state.popupType = "message";
@@ -379,6 +393,7 @@ const sendSwap = () => {
     .then((response) => {
       store.state.popupValue = swapEsgp.value;
       store.state.popupType = "message";
+      showClose.value = false;
       popupTitle.value = "message.swapRequestEnd";
       store.state.isPopup = true;
 
@@ -392,7 +407,6 @@ const sendSwap = () => {
 
 const initSwapEsgp = () => {
   swapEsg.value = 0;
-
 };
 </script>
 
@@ -437,6 +451,8 @@ const initSwapEsgp = () => {
 
 .swap-text {
   color: #24d120;
+  width: 100%; /* 너비를 100%로 조정하여 더 많은 공간 확보 */
+  text-align: right;
 }
 
 .list-margin {
@@ -465,5 +481,20 @@ const initSwapEsgp = () => {
 .swap-btn-disable {
   background-color: gray;
   border-radius: 5px;
+}
+
+.input-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-left: -5px; /* 기존 값보다 작게 조정하거나, 음수값을 사용해 조정 */
+}
+
+.input-field {
+  text-align: left;
+  width: 100%;
+  border: none; /* 테두리 제거 */
+  padding: 10px; /* 패딩을 조정하여 입력 필드의 크기를 조정할 수 있음 */
+  border-radius: 5px; /* 필요한 경우 모서리를 둥글게 처리 */
 }
 </style>
