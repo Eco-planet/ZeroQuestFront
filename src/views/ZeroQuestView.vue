@@ -44,7 +44,7 @@
       <div class="flex items-end">
         <div class="text-3xl font-semibold text-esg-color">{{ esgPoint }}</div>
         <div class="w-1"></div>
-        <div class="text-2xl text-gray-400">point(TEST)</div>
+        <div class="text-2xl text-gray-400">point</div>
       </div>
     </div>
     <div class="h-10"></div>
@@ -355,6 +355,9 @@ function referPage() {
   object-fit: contain;
   object-position: center top;
   height: 100px;
+  @media (max-width: 280px) and (max-height: 653px) {
+    height: 50px; // Fold 사이즈에서의 높이
+  }
 }
 
 .media-Bottom {

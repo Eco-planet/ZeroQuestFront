@@ -25,41 +25,51 @@
       <div class="text-2xl" :class="{ select: $route.name === 'mywallet' }" @click="movePage('/mywallet')">My Wallet</div>
       <div class="h-6"></div>
       <!-- <div class="text-2xl" :class="{ select: $route.name === 'battle' }" @click="movePage('/battle')">Battle</div> -->
-      <div class="text-2xl" :class="{ select: $route.name === 'battle' }" @click="movePage1()">Battle</div>
+      <!-- <div class="text-2xl" :class="{ select: $route.name === 'battle' }" @click="movePage1()">Battle</div> -->
+      <!-- <div class="text-2xl" :class="{ select: $route.name === 'battle' }" @click="movePage1">Battle</div> -->
+      <div class="text-2xl" :class="{ select: $route.name === 'battle' }" @click="showModal">Battle</div>
+      <Modal :visible="modalVisible" @hide="closeModal" title="message.sorryChecking" />
       <div class="h-10"></div>
       <div class="text-2xl font-semibold">About</div>
       <div class="h-3"></div>
       <div class="text-2xl w-full flex" :class="{ select: $route.name === 'introduction' }" @click="movePage('/introduction')">
-        <div class="wp-50 flex justify-start">About ZeroQuest</div>
+        <div class="w-1/2 flex justify-start whitespace-nowrap">About ZeroQuest</div>
         <div class="wp-50 flex justify-end menu-right">→</div>
       </div>
+
+
       <div class="h-3"></div>
-      <div class="text-2xl w-full flex" :class="{ select: $route.name === 'terms' }" @click="movePage('/terms')">
-        <div class="wp-50 flex justify-start">Terms & Conditions</div>
+      <div class="text-2xl w-full flex" :class="{ select: $route.name === 'Notion' }" @click="movePage('/TermsNotion')">
+        <div class="w-1/2 flex justify-start whitespace-nowrap">Terms & Conditions</div>
         <div class="wp-50 flex justify-end menu-right">→</div>
       </div>
       <div class="h-3"></div>
       <div class="h-10"></div>
-      <div class="text-2xl font-semibold">{{ t("common.participateChannels") }}</div>
-      <div class="h-3"></div>
+      <div class="text-2xl font-semibold whitespace-nowrap">{{ t("common.participateChannels") }}</div>
+      <div class="h-8"></div>
       <div class="social-area wp-70 grid grid-cols-5 gap-2">
-        <a v-for="logo in logos" :key="logo.id" :class="logo.name" class="snsImg" :href="logo.href" target="_blank">
-          <img :src="logo.src" @mouseover="switchLogo(logo, true)" @mouseout="switchLogo(logo, false)"/>
-        </a>
+        <a v-for="logo in logos" :key="logo.id" :class="logo.name" class="snsImg" :href="logo.href" target="_blank"
+        @mouseover="switchLogo(logo, true)"
+        @mouseout="switchLogo(logo, false)"
+        @click="handleSocialIconClick(logo)">
+         <img :src="logo.src"/>
+     </a>
       </div>
       <div class="h-10"></div>
       <a href="https://open.kakao.com/o/gEkf2eMf" target="_blank">
         <div class="pb-2 text-2xl font-semibold">{{ t("message.howToUse")}}</div>
+        <div class="h-6"></div>
         <img 
         :src="kakaoLogo" 
         @mouseover="switchKakaoLogo(true)" 
         @mouseout="switchKakaoLogo(false)"
+        @click = "openKakaoTalk"
         :class="kakaoHover? 'w-14':'w-auto'"
   
         >
       </a>
       <div class="text-2xl font-semibold mt-4 cursor-pointer" @click="Withdrawal">Withdrawal</div>
-     
+    
     </div>
     <div class="wp-20" @click="toggleMenu()"></div>
   </div>
@@ -77,7 +87,6 @@ import Dropdown from './Dropdown.vue';
 import { useStore } from "vuex"
 
 const { t } = useI18n();
-
 const store = useStore()
 
 const logos = computed(()=>store.getters.logos);
@@ -89,11 +98,15 @@ const showClose = ref(true)
 
 const menuVisible = ref(false);
 const aniVisible = ref(false);
+const modalVisible = ref(false);  // 모달 가시성 상태 정의
+
 
 //battle modal창
 const movePage1 = () => {
+  // alert('페이지를 열 수 없습니다.')
   store.state.popupType = 'serviceChecking';
   modalVisible.value = true;
+  
 } 
 
 const forceLogout = () => {
@@ -156,11 +169,8 @@ const movePage = (page: string) => {
   menuVisible.value = false;
   aniVisible.value = false;
 
-  if (page === "/battle") {
-    showModal();
-  } else {
-    router.push(page);
-  }
+  router.push(page);
+
 };
 
 const services = ref([
@@ -179,12 +189,52 @@ const services = ref([
 ]);
 
 const Withdrawal = () => { 
-   router.push({
+  router.push({
     path:'/Withdraw',
     name:"Withdraw"
   })
   toggleMenu() 
 }
+
+const handleSocialIconClick = (logo) => {
+  if (logo.name === 'telegram') {
+    window.flutter_inappwebview
+    .callHandler("handleTelegramCommBtn")
+    .then((res: any) => {
+      console.log(res);
+    });
+  } else if(logo.name === "gitHub") {
+    window.flutter_inappwebview
+    .callHandler("handleGithubCommBtn")
+    .then((res: any) => {
+      console.log(res);
+    });
+  } else if (logo.name === "twitter") {
+    window.flutter_inappwebview
+    .callHandler("handleTwitterCommBtn")
+    .then((res: any) => {
+      console.log(res);
+    });
+  }else if (logo.name === "blog") {
+    window.flutter_inappwebview
+    .callHandler("handleNaverBlogCommBtn")
+    .then((res: any) => {
+      console.log(res);
+    });
+  } else if (logo.name === 'medium') {
+    window.flutter_inappwebview
+    .callHandler("handleMediumCommBtn")
+    .then((res: any) => {
+      console.log(res);
+    });
+  }
+};
+
+const openKakaoTalk = () => {
+window.flutter_inappwebview.callHandler('handleInstallBtn').then(res => {
+  console.log(res);
+});
+};
 
 </script>
 
@@ -213,6 +263,7 @@ const Withdrawal = () => {
 .menu-right {
   font-family:"SUIT Variable", sans-serif !important;
 }
+
 
 
 

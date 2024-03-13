@@ -121,11 +121,12 @@ const routes: Array<RouteRecordRaw> = [
     component: () =>
       import(/* webpackChunkName: "terms" */ "../views/Withdraw.vue"),
   },
+
   {
-    path: "/firebase",
-    name: "Firebase",
+    path: "/TermsNotion",
+    name: "TermsNotion",
     component: () =>
-      import(/* webpackChunkName: "terms" */ "../views/Firebase.vue"),
+      import(/* webpackChunkName: "terms" */ "../views/TermsNotion.vue"),
   },
 ];
 

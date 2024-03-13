@@ -16,10 +16,6 @@
 }
 
 .spinner-container {
-  /* display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 240px; */
   display: block;
   position: fixed;
   top: calc(50% - (50px / 2));
@@ -40,7 +36,6 @@
   from {
     transform: rotate(0deg);
   }
-
   to {
     transform: rotate(360deg);
   }

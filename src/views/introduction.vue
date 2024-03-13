@@ -74,50 +74,42 @@
         </p>
       </div>
 
-      <div class="mt-20">
+      <div class="mt-32">
         <div class="mb-16 flex justify-center items-center">
-          <img src="@/assets/images/image1.png" />
-          <div class="ml-8 font-medium">{{ t('message.introduction3') }}</div>
+          <img src="@/assets/images/tree.png" class="wp-40 mr-4"/>
+          <div class="font-medium wp-40">{{ t('message.introduction3') }}</div>
         </div>
         <div class="mb-16 flex justify-center items-center">
-          <img src="@/assets/images/image2.png" />
-          <div class="ml-8">
+          <img src="@/assets/images/recycling.png" class="wp-40 mr-4"/>
+          <div class="wp-40">
             <div>
               <div v-if="locale === 'kr'" class="font-medium">재활용페트병<br>인식 모듈</div>
               <div v-else class="font-medium">Recycled PET Bottle<br>Recognition Module</div>
             </div>
 
-            <button type="button" class="
-            moduleBtnBg
-            text-white 
-            font-medium 
-            rounded-full 
-            text-sm 
-            mt-4
-            px-5
-            py-4 
-            text-center" @click="transferOnft">
-              {{ t('message.introduction4') }}
+            <button
+              type="button"
+              class="moduleBtnBg text-white font-medium rounded-full text-sm mt-4 px-5 py-4 text-center"
+              @click="transferOnft"
+            >
+            {{ t('message.introduction4') }}
             </button>
           </div>
         </div>
         <div class="mb-16 flex justify-center items-center">
-          <img src="@/assets/images/image3.png" />
-          <div class="ml-8">
+          <img src="@/assets/images/stair.png" class="wp-40 mr-4"/>
+          <div class="wp-40">
             <div>
               <div v-if="locale === 'kr'" class="font-medium">계단오르기<br>인식 모듈</div>
               <div v-else class="font-medium">Stair Climbing<br>Recognition Module</div>
             </div>
-            <button type="button" class="
-            moduleBtnBg
-            text-white 
-            font-medium 
-            rounded-full 
-            text-sm 
-            mt-4
-            px-5
-            py-4 
-            text-center" @click="transferOnft">{{ t('message.introduction4') }}</button>
+            <button
+              type="button"
+              class="moduleBtnBg text-white font-medium rounded-full text-sm mt-4 px-5 py-4 text-center"
+              @click="transferOnft"
+            >
+            {{ t('message.introduction4') }}
+            </button>
           </div>
         </div>
       </div>
@@ -152,13 +144,19 @@
     </div>
     <div class="flex justify-center relative">
       <img src="@/assets/images/info2.png" />
-      <a href="https://play.google.com/store/apps/details?id=com.aiblue.zrqst_multilingual_webview_app&pli=1">
-        <img class="absolute top-3/4 left-1/2 transform -translate-x-1/2 translate-y-52"
-          src="@/assets/images/info3.png" />
+      <a href="https://play.google.com/store/apps/details?id=com.aiblue.zrqst_multilingual_webview_app" @click="handleGooglePlayStore">
+
+        <img
+        class="absolute top-3/4 left-1/2 transform -translate-x-1/2 translate-y-52"
+        src="@/assets/images/info3.png"
+      />
       </a>
     </div>
-    <div class="mt-10 text-xl font-semibold">{{ t("message.introduction6") }}</div>
+    <div class="mt-10 text-xl font-semibold" >{{ t("message.introduction6") }}</div>
     <div class="h-56"></div>
+    <div class="text-xl font-semibold" @click="handleTossPayment">토스페이 테스트</div>
+    <div class="h-56"></div>
+
   </div>
 </template>
 
@@ -178,6 +176,27 @@ const transferOnft = () => {
     name: 'onft'
   })
 }
+
+const handleGooglePlayStore = () => {
+  window.flutter_inappwebview.callHandler("handleGooglePlayStoreCommBtn").then((res: any) => {
+      console.log(res);
+    });
+}; 
+
+// const handleTossPayment = () => {
+//   window.flutter_inappwebview.callHandler("handleTossPayBtn").then((res: any) => {
+//       console.log(res);
+  
+//     });
+// }
+
+const handleTossPayment = () => {
+  const dataToSend = { points: 100, buyerTel: '01012345678' }; // 예시 데이터
+  window.flutter_inappwebview.callHandler("handleTossPayBtn", dataToSend).then((res: any) => {
+    console.log(res);
+  });
+}
+
 </script>
 
 <style lang="scss" scoped>
