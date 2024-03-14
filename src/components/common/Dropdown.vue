@@ -29,8 +29,6 @@
   const router = useRouter(); // useRouter를 사용하여 router 객체를 가져옴.
   const store = useStore();
   
-  localStorage.clear();
-  sessionStorage.clear();
 
   function setLogout(locale: Nullable) {
     store.commit("system/SET_LOCALE", { lang: locale.name });
