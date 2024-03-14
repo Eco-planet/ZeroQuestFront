@@ -10,6 +10,7 @@
       <div class="text-2xl font-semibold">ESG Point</div>
       <div class="flex items-end">
         <div class="text-3xl font-semibold text-esg-color">{{ esgPoint }}</div>
+
         <div class="w-1"></div>
         <div class="text-2xl text-gray-400">point</div>
       </div>

@@ -4,7 +4,7 @@ export interface logosType {
   src:string;
   srcOn:string;
   srcOff:string;
-  href:string;
+  // href:string;
 }
 
 export interface nowSessionType {

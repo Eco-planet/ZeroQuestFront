@@ -29,6 +29,9 @@
   const router = useRouter(); // useRouter를 사용하여 router 객체를 가져옴.
   const store = useStore();
   
+  localStorage.clear();
+  sessionStorage.clear();
+
   function setLogout(locale: Nullable) {
     store.commit("system/SET_LOCALE", { lang: locale.name });
     forceLogout()
@@ -36,12 +39,15 @@
   
   const forceLogout = () => {
     store.commit("auth/setClearToken");
+    
   
     if (store.state.showMode === 'webview') {
       window.Java.jsSignOut();
   
       router.push({ name: 'home', query: { showMode: 'webview', isLogin: 0 } });
     } else {
+      console.log("로그아웃2")
+
       router.push("/");
     }
   };

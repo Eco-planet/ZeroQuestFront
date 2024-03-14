@@ -42,7 +42,7 @@
     >
       <div class="text-2xl font-semibold">ESG Point</div>
       <div class="flex items-end">
-        <div class="text-3xl font-semibold text-esg-color">{{ esgPoint }}</div>
+        <div class="text-3xl font-semibold text-esg-color">{{esgPoint.toLocaleString('en-us')}}</div>
         <div class="w-1"></div>
         <div class="text-2xl text-gray-400">point</div>
       </div>
@@ -259,10 +259,11 @@ const getBalanceAll = () => {
   http
     .get("/api/token/balanceAll")
     .then((response) => {
+      console.log("response getBalanceAll에서",response)
       store.state.isBalanceUpdate = false;
 
       const resData = response.data.data.balances;
-
+      console.log("resData는",resData)
       let balancesData: any = {};
 
       resData.forEach((res: any) => {
