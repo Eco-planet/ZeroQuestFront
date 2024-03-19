@@ -144,17 +144,27 @@ const handleFileValue = ((event) => {
       } 
   }
 
+  //선택한 파일의 내용을 읽는데 도움을 주는 js 웹 API의 일부, 객체
   let reader = new FileReader()
 
-  reader.onload = (event) => {
-    imagePreviewUrl.value = event.target.result
-  }
-
+  //만약 imageValue에 값이 있다는것은 파일이 선택되었다는거
   if (imageValue.value) {
+    //readAsDataURL는 FileReader에 정의된 매서드이다
+    //지정된 file을 읽고 데이터url을 반환한다.
     reader.readAsDataURL(imageValue.value)
   } else if (imageValue.value === undefined) {
     imagePreviewUrl.value = undefined
   }
+
+  // 다음 코드가 성공적으로 실행되어서 ( reader.readAsDataURL(imageValue.value))
+  //파일을 성공적으로 읽었으면 객체에 정의된 onload이벤트가 실행되서 
+  //onload에 할당된 함수가 호출된다 
+  //그함수는 event.target.result를 통해 위에서 반환된 url에 접근할수 있다
+  reader.onload = (event) => {
+    imagePreviewUrl.value = event.target.result
+  }
+
+
 })
 
 
