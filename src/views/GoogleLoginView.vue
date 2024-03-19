@@ -128,7 +128,7 @@ const loginSdk = () => {
           response.access_token,
       }).then((userInfo) => {
         console.log(userInfo);
-        // login(userInfo.data);
+        login(userInfo.data);
       });
     });
   }
