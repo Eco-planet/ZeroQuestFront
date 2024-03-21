@@ -11,7 +11,7 @@
     >
       <div class="text-2xl font-semibold">ESG Point</div>
       <div class="flex items-end">
-        <div class="text-3xl font-semibold text-esg-color">{{ esgPoint }}</div>
+        <div class="text-3xl font-semibold text-esg-color">  {{ esgPoint.toLocaleString() }}</div>
         <div class="w-1"></div>
         <div class="text-2xl text-gray-400">point</div>
       </div>
@@ -193,34 +193,39 @@ const router = useRouter();
 const nftId = parseInt(route.params.idx);
 const vuexStore = useStore();
 const isLoading = ref(false);
+const esgPoint = computed(() => parseInt(vuexStore.state.auth.balances));
 
 const nowNft = Object.values(store.getters["auth/getNftList"]).filter(
   (item) => item.idx === nftId
 )[0];
+
+
 console.log("nowNft", nowNft);
+
 const getPk = store.getters["auth/getPrivateKey"];
 const getAddress = store.getters["auth/getAddress"];
-const getBalances = store.getters["auth/getBalances"].ESGP.balance;
-const esgPoint = ref("");
-const balances = ref();
+// const getBalances = store.getters["auth/getBalances"].ESGP.balance;
+const getBalances = store.getters["auth/getBalances"]
+// const esgPoint = ref("");
+// const balances = ref();
 const popupTitle = ref("");
 const locale = computed(() => vuexStore.state.system.locale);
 console.log("store", store.state.isLoading);
 
-onMounted(() => {
-  updateBalance();
-});
+// onMounted(() => {
+//   updateBalance();
+// });
 
-const updateBalance = () => {
-  balances.value = store.getters["auth/getBalances"];
+// const updateBalance = () => {
+//   balances.value = store.getters["auth/getBalances"];
 
-  for (const key in balances.value) {
-    if (balances.value[key].symbol === "ESGP") {
-      const balance = parseFloat(balances.value[key].balance);
-      esgPoint.value = balance.toLocaleString();
-    }
-  }
-};
+//   for (const key in balances.value) {
+//     if (balances.value[key].symbol === "ESGP") {
+//       const balance = parseFloat(balances.value[key].balance);
+//       esgPoint.value = balance.toLocaleString();
+//     }
+//   }
+// };
 
 const buyNftESGP = (nft: nftType) => {
   isLoading.value = true;
@@ -239,6 +244,8 @@ const buyNftESGP = (nft: nftType) => {
       store.state.popupType = "successMinting";
       store.state.isPopup = true;
       popupTitle.value = "message.successMinting";
+      vuexStore.dispatch("auth/getPointBalance");
+
     })
     .catch((err) => {
       console.log("err", err);

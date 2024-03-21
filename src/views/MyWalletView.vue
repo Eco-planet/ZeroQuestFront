@@ -5,7 +5,7 @@
     <div class="h-10"></div>
     <div class="px-8 py-5 esg-point w-full flex justify-between text-2xl">
       <div>ESG Point</div>
-      <div>{{ esgPoint }}</div>
+      <div>{{ esgPoint.toLocaleString() }}</div>
     </div>
     <div class="h-10"></div>
     <div class="px-8 py-5 my-wallet">
@@ -162,12 +162,15 @@ import { useI18n } from "vue-i18n";
 import { onMounted, ref } from "vue";
 import Modal from "@/components/Modal/index.vue";
 import { errorMsg } from "@/utils/util";
+import { useStore } from "vuex";
+import { computed } from "vue";
+
+
 
 const { t } = useI18n();
-
-const esgPoint = ref("");
-const balances = ref();
-const tokenInfos = ref();
+const vuexStore = useStore();
+const esgPoint = computed(() => parseInt(vuexStore.state.auth.balances));
+const balances = ref({})
 const withdrawSymbol = ref("");
 const popupTitle = ref("");
 
@@ -175,14 +178,21 @@ const isUpdate = ref(false);
 const swapEsgp = ref(0);
 const swapEsg = ref(0);
 const showClose = ref(true);
+const tokenInfos = computed(() => store.getters['auth/getTokenInfos']);
 
-onMounted(() => {
-  updateBalance();
 
-  if (store.state.isBalanceUpdate === true || 1) {
-    getBalanceAll();
-  }
-});
+console.log('tokenInfos는',tokenInfos.value)
+
+// onMounted(async () => {
+  // if(!tokenInfos) {
+// await vuexStore.dispatch("auth/getTokenInfos");
+  // }
+  // updateBalance();
+//   if (store.state.isBalanceUpdate === true || 1) {
+//     // getBalanceAll();
+//   }
+// vuexStore.state.auth.tokenInfos
+// });
 
 const checkError = (status: number, code: number) => {
   if (status === 400) {
@@ -196,40 +206,43 @@ const checkError = (status: number, code: number) => {
   }
 };
 
-const getBalanceAll = () => {
-  http
-    .get("/api/token/balanceAll")
-    .then((response) => {
-      store.state.isBalanceUpdate = false;
+// const getBalanceAll = () => {
+//   http
+//     .get("/api/token/balanceAll")
+//     .then((response) => {
+//       store.state.isBalanceUpdate = false;
 
-      const resData = response.data.data.balances;
+//       const resData = response.data.data.balances;
 
-      let balancesData: any = {};
+//       let balancesData: any = {};
 
-      resData.forEach((res: any) => {
-        balancesData[res.symbol] = res;
-      });
+//       resData.forEach((res: any) => {
+//         balancesData[res.symbol] = res;
+//       });
 
-      store.commit("auth/setBalances", { info: balancesData });
+//       store.commit("auth/setBalances", { info: balancesData });
 
-      updateBalance();
-    })
-    .catch((error) => {
-      checkError(error.response.status, error.response.data.errorCode);
-    });
-};
+//       updateBalance();
+//     })
+//     .catch((error) => {
+//       checkError(error.response.status, error.response.data.errorCode);
+//     });
+// };
 
-const updateBalance = () => {
-  tokenInfos.value = store.getters["auth/getTokenInfos"];
-  balances.value = store.getters["auth/getBalances"];
+// const updateBalance = () => {
+//   tokenInfos.value = store.getters["auth/getTokenInfos"];
+//   balances.value = store.getters["auth/getBalances"];
 
-  for (const key in balances.value) {
-    if (balances.value[key].symbol === "ESGP") {
-      const balance = parseFloat(balances.value[key].balance);
-      esgPoint.value = balance.toLocaleString();
-    }
-  }
-};
+//   for (const key in balances.value) {
+//     if (balances.value[key].symbol === "ESGP") {
+//       const balance = parseFloat(balances.value[key].balance);
+//       esgPoint.value = balance.toLocaleString();
+//     }
+//   }
+// };
+
+// const updateBalance = () => {
+//   tokenInfos.value = store.getters["auth/getTokenInfos"];
 
 const getStatusCheck = (type: string, symbol: string) => {
   if (type === "swap" && swapEsg.value <= 0) return false;
@@ -252,7 +265,7 @@ const getStatusCheck = (type: string, symbol: string) => {
         if (isUpdate.value === true) {
           isUpdate.value = false;
 
-          getBalanceAll();
+          vuexStore.dispatch("auth/getPointBalance");
         }
 
         if (type === "sendCoin") {
@@ -324,6 +337,7 @@ const sendCoin = (
       store.state.popupType = "message";
       popupTitle.value = "message.withdrawRequestEnd";
       store.state.isPopup = true;
+      // store.dispatch('getPointBalanceAll')
     })
     .catch((error) => {
       checkError(error.response.status, error.response.data.errorCode);

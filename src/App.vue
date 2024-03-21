@@ -36,102 +36,32 @@ import Footer from "@/components/common/FooterView.vue";
 import { onMounted, computed } from "vue";
 import { useStore } from "vuex";
 
-onMounted(() => {
-  if (
-    store.getters["auth/getTokenInfos"] === undefined ||
-    store.getters["auth/getTokenInfos"] === ""
-  ) {
-    http
-      .get("/api/tokenInfos", {
-        params: {
-          currency: "USDT",
-        },
-      })
-      .then((response) => {
-        const resTokenData = response.data.data.tokenInfos;
-        const resScannerData = response.data.data.scanner;
+const vuexStore = useStore();
+const bannerList = store.getters['auth/getBannerList'];
+const nftList = store.getters['auth/getNftList'];
+const pointBalance = store.getters['auth/getBalances'];
+const tokenInfos = store.getters['auth/getTokenInfos']
+// const tokenInfos = computed(() => store.getters["auth/getTokenInfos"]);
 
-        let tokenInfos: any = {};
-        let scanners: any = {};
 
-        resTokenData.forEach((res: any) => {
-          tokenInfos[res.symbol] = res;
-        });
+onMounted(async() => {
+  // if(!pointBalance) {
+  vuexStore.dispatch("auth/getPointBalanceAll");
+// }
 
-        resScannerData.forEach((res: any) => {
-          scanners[res.chainId] = res;
-        });
+  if (!bannerList) {
+    await vuexStore.dispatch("auth/getBannerList");
+  }  
 
-        store.commit("auth/setTokenInfos", { info: tokenInfos });
-        store.commit("auth/setScanners", { info: scanners });
-      });
-  }
+if(!nftList) {
+  await vuexStore.dispatch("auth/getnftList");
+}
+if(!tokenInfos) {
+await vuexStore.dispatch("auth/getTokenInfos");
+}
 
-  if (
-    store.getters["auth/getNftList"] === undefined ||
-    store.getters["auth/getNftList"] === ""
-  ) {
-    http
-      .get("/api/nft/zeroNft", {
-        params: {},
-      })
-      .then((response) => {
-        const nftListData = response.data.data;
-        console.log("nftListData", nftListData);
-
-        let nftList: any = {};
-
-        nftListData.forEach((res: any) => {
-          nftList[res.idx] = res;
-
-          if (res.metaData !== "" && res.metaData !== undefined) {
-            nftList[res.idx]["metaData"] = JSON.parse(res.metaData);
-          } else {
-            nftList[res.idx]["metaData"] = "";
-          }
-
-          if (res.name !== "" && res.name !== undefined) {
-            try {
-              nftList[res.idx]["name"] = JSON.parse(res.name);
-            } catch (e) {
-              console.error("Failed to parse name:", e);
-            }
-          }
-        });
-
-        store.commit("auth/setNftList", { info: nftList });
-      });
-  }
-
-  if (
-    store.getters["auth/getBannerList"] === undefined ||
-    store.getters["auth/getBannerList"] === ""
-  ) {
-    http
-      .get("/api/banners", {
-        params: {},
-      })
-      .then((response) => {
-        const bannerListData = response.data.data;
-
-        let bannerList: any = {};
-
-        bannerListData.forEach((res: any) => {
-          bannerList[res.idx] = res;
-
-          if (res.url !== "" && res.url !== undefined) {
-            try {
-              bannerList[res.idx]["url"] = JSON.parse(res.url);
-            } catch (e) {
-              console.error("Failed to parse name:", e);
-            }
-          }
-        });
-
-        store.commit("auth/setBannerList", { info: bannerList });
-      });
-  }
 });
+
 </script>
 
 <style lang="scss">

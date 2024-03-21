@@ -44,8 +44,9 @@ import ZeroNft from '@/components/ZeroNft.vue'
 import { useStore } from "vuex";
 
 const vuexStore = useStore();
-const esgPoint = ref("");
+// const esgPoint = ref("");
 const balances = ref();
+const esgPoint = computed(() => parseInt(vuexStore.state.auth.balances));
 
 const locale = computed(() => vuexStore.state.system.locale)
 

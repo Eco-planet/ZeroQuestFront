@@ -79,6 +79,7 @@ const withdraw = () => {
   modalVisible.value = true;
 };
 const clickWithdraw = () => {
+  store.commit("auth/setClearToken");
   const formData = {
     selectedOption: selectedOption.value,
     withdrawReason: withdrawReason.value,

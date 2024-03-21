@@ -42,7 +42,7 @@
     >
       <div class="text-2xl font-semibold">ESG Point</div>
       <div class="flex items-end">
-        <div class="text-3xl font-semibold text-esg-color">{{esgPoint.toLocaleString('en-us')}}</div>
+        <div class="text-3xl font-semibold text-esg-color">{{esgPoint.toLocaleString()}}</div>
         <div class="w-1"></div>
         <div class="text-2xl text-gray-400">point</div>
       </div>
@@ -201,18 +201,26 @@ import { reactive, onMounted, ref, computed } from "vue";
 import { NFTSampleType, nftType } from "@/types/IZeroNftType";
 import MyNftCard from "@/components/OpenNftView.vue";
 import { Carousel, Pagination, Slide } from "vue3-carousel";
+import { checkBannerLatestTime, checkNftLatestTime } from "@/api/axios.ts";
 import { errorMsg } from "@/utils/util";
 import { useStore } from "vuex";
 import { useI18n } from "vue-i18n";
 import "vue3-carousel/dist/carousel.css";
-const vuexStore = useStore(); // Use a different variable name for the store
+const vuexStore = useStore(); 
 const referral = computed(() => vuexStore.getters["auth/getReferral"]);
 const bannerList = store.getters["auth/getBannerList"];
-const nftList = store.getters["auth/getNftList"];
+const nftList = computed(()=>vuexStore.getters["auth/getNftList"])
+const bannerLatestTime = computed(() =>parseInt(vuexStore.state.auth.bannerLatestTime));
+const nftLatestTime = computed(() =>  parseInt(vuexStore.state.auth.nftLatestTime));
+const esgPoint = computed(() => parseInt(vuexStore.state.auth.balances));
+
 const myNftList = ref<nftType>();
-const esgPoint = ref("");
+// const esgPoint = ref("");
+
 const balances = ref();
-const tokenInfos = ref();
+// const tokenInfos = ref();
+// const tokenInfos = computed(() => store.getters["auth/getTokenInfos"]);
+
 const popupTitle = ref("");
 const referralCode = ref(""); //레퍼럴 코드 확인용
 
@@ -221,12 +229,14 @@ const locale = computed(() => vuexStore.state.system.locale);
 const { t } = useI18n();
 
 onMounted(() => {
+  // updateBalance()
   getMyNftList();
-  updateBalance();
-
-  if (store.state.isBalanceUpdate === true || 1) {
-    getBalanceAll();
-  }
+  checkNftLatestTime(vuexStore, nftLatestTime.value)
+  checkBannerLatestTime(vuexStore, bannerLatestTime.value);
+  // updateBalance();
+  // if (store.state.isBalanceUpdate === true || 1) {
+  //   getBalanceAll();
+  // }
 });
 
 const getMyNftList = () => {
@@ -255,40 +265,40 @@ const checkError = (status: number, code: number) => {
   }
 };
 
-const getBalanceAll = () => {
-  http
-    .get("/api/token/balanceAll")
-    .then((response) => {
-      console.log("response getBalanceAll에서",response)
-      store.state.isBalanceUpdate = false;
+// const getBalanceAll = () => {
+//   http
+//     .get("/api/token/balanceAll")
+//     .then((response) => {
+//       console.log("response getBalanceAll에서",response)
+//       store.state.isBalanceUpdate = false;
 
-      const resData = response.data.data.balances;
-      console.log("resData는",resData)
-      let balancesData: any = {};
+//       const resData = response.data.data.balances;
+//       console.log("resData는",resData)
+//       let balancesData: any = {};
 
-      resData.forEach((res: any) => {
-        balancesData[res.symbol] = res;
-      });
+//       resData.forEach((res: any) => {
+//         balancesData[res.symbol] = res;
+//       });
 
-      store.commit("auth/setBalances", { info: balancesData });
+//       store.commit("auth/setBalances", { info: balancesData });
 
-      updateBalance();
-    })
-    .catch((error) => {
-      checkError(error.response.status, error.response.data.errorCode);
-    });
-};
+//       updateBalance();
+//     })
+//     .catch((error) => {
+//       checkError(error.response.status, error.response.data.errorCode);
+//     });
+// };
 
 const updateBalance = () => {
-  tokenInfos.value = store.getters["auth/getTokenInfos"];
-  balances.value = store.getters["auth/getBalances"];
+  store.getters["auth/getTokenInfos"];
+  // balances.value = store.getters["auth/getBalances"];
 
-  for (const key in balances.value) {
-    if (balances.value[key].symbol === "ESGP") {
-      const balance = parseFloat(balances.value[key].balance);
-      esgPoint.value = balance.toLocaleString();
-    }
-  }
+  // for (const key in balances.value) {
+  //   if (balances.value[key].symbol === "ESGP") {
+  //     const balance = parseFloat(balances.value[key].balance);
+  //     esgPoint.value = balance.toLocaleString();
+  //   }
+  // }
 };
 
 function goToOnft() {
