@@ -1,6 +1,10 @@
 import authApi from "@/api/auth";
-import {  
-  bannerListApi, nftListApi, getPointBalanceAll,tokenInfos} from "@/api/axios"
+import {  bannerListApi, nftListApi, getPointBalanceAll,tokenInfos,} from "@/api/axios"
+// import { bannerList,
+//   bannersTime,
+//   nftTime,
+//   compareBannersTime,
+//   compareNftTime} from "@/api/axios"
 import router from "@/router";
 import { ethers } from "ethers-ts";
 import openSSLCrypto from "@/utils/openSSLCrypto";
