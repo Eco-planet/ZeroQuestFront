@@ -42,7 +42,9 @@
     >
       <div class="text-2xl font-semibold">ESG Point</div>
       <div class="flex items-end">
-        <div class="text-3xl font-semibold text-esg-color">{{esgPoint.toLocaleString()}}</div>
+        <div class="text-3xl font-semibold text-esg-color">
+          {{ esgPoint.toLocaleString() }}
+        </div>
         <div class="w-1"></div>
         <div class="text-2xl text-gray-400">point</div>
       </div>
@@ -206,12 +208,16 @@ import { errorMsg } from "@/utils/util";
 import { useStore } from "vuex";
 import { useI18n } from "vue-i18n";
 import "vue3-carousel/dist/carousel.css";
-const vuexStore = useStore(); 
+const vuexStore = useStore();
 const referral = computed(() => vuexStore.getters["auth/getReferral"]);
 const bannerList = store.getters["auth/getBannerList"];
-const nftList = computed(()=>vuexStore.getters["auth/getNftList"])
-const bannerLatestTime = computed(() =>parseInt(vuexStore.state.auth.bannerLatestTime));
-const nftLatestTime = computed(() =>  parseInt(vuexStore.state.auth.nftLatestTime));
+const nftList = computed(() => vuexStore.getters["auth/getNftList"]);
+const bannerLatestTime = computed(() =>
+  parseInt(vuexStore.state.auth.bannerLatestTime)
+);
+const nftLatestTime = computed(() =>
+  parseInt(vuexStore.state.auth.nftLatestTime)
+);
 const esgPoint = computed(() => parseInt(vuexStore.state.auth.balances));
 
 const myNftList = ref<nftType>();
@@ -231,8 +237,8 @@ const { t } = useI18n();
 onMounted(() => {
   // updateBalance()
   getMyNftList();
-  checkNftLatestTime(vuexStore, nftLatestTime.value)
-  checkBannerLatestTime(vuexStore, bannerLatestTime.value);
+  // checkNftLatestTime(vuexStore, nftLatestTime.value)
+  // checkBannerLatestTime(vuexStore, bannerLatestTime.value);
   // updateBalance();
   // if (store.state.isBalanceUpdate === true || 1) {
   //   getBalanceAll();

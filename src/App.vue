@@ -37,31 +37,27 @@ import { onMounted, computed } from "vue";
 import { useStore } from "vuex";
 
 const vuexStore = useStore();
-const bannerList = store.getters['auth/getBannerList'];
-const nftList = store.getters['auth/getNftList'];
-const pointBalance = store.getters['auth/getBalances'];
-const tokenInfos = store.getters['auth/getTokenInfos']
+const bannerList = store.getters["auth/getBannerList"];
+const nftList = store.getters["auth/getNftList"];
+const pointBalance = store.getters["auth/getBalances"];
+const tokenInfos = store.getters["auth/getTokenInfos"];
 // const tokenInfos = computed(() => store.getters["auth/getTokenInfos"]);
 
-
-onMounted(async() => {
-  // if(!pointBalance) {
+onMounted(async () => {
+  if(!pointBalance) {
   vuexStore.dispatch("auth/getPointBalanceAll");
-// }
+  }
 
   if (!bannerList) {
     await vuexStore.dispatch("auth/getBannerList");
-  }  
-
-if(!nftList) {
-  await vuexStore.dispatch("auth/getnftList");
-}
-if(!tokenInfos) {
-await vuexStore.dispatch("auth/getTokenInfos");
-}
-
+  }
+  if (!nftList) {
+    await vuexStore.dispatch("auth/getNftList");
+  }
+  if (!tokenInfos) {
+    await vuexStore.dispatch("auth/getTokenInfos");
+  }
 });
-
 </script>
 
 <style lang="scss">

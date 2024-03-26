@@ -1,10 +1,10 @@
 import authApi from "@/api/auth";
-import {  bannerListApi, nftListApi, getPointBalanceAll,tokenInfos,} from "@/api/axios"
-// import { bannerList,
-//   bannersTime,
-//   nftTime,
-//   compareBannersTime,
-//   compareNftTime} from "@/api/axios"
+import {
+  bannerListApi,
+  nftListApi,
+  getPointBalanceAll,
+  tokenInfos,
+} from "@/api/axios";
 import router from "@/router";
 import { ethers } from "ethers-ts";
 import openSSLCrypto from "@/utils/openSSLCrypto";
@@ -12,7 +12,7 @@ import { popperContentEmits } from "element-plus";
 import { isContext } from "vm";
 import axios from "axios";
 import store from "..";
-// 
+//
 export default {
   namespaced: true,
   state: {
@@ -33,12 +33,12 @@ export default {
     nftList: localStorage.getItem("nftList") || "",
     nftLatestTime: localStorage.getItem("nftLatestTime") || 0,
     bannerList: localStorage.getItem("bannerList") || "",
-    nftTime :localStorage.getItem("nftTime") || 0,
-    bannersTime : localStorage.getItem("bannersTime") || 0,
+    nftTime: localStorage.getItem("nftTime") || 0,
+    bannersTime: localStorage.getItem("bannersTime") || 0,
     bannerLatestTime: localStorage.getItem("bannerLatestTime") || 0,
-    // compareBannersTime: localStorage.getItem('compareBannersTime') || 0, 
-    compareNftTime: localStorage.getItem('compareNftTime') || 0,
-    getBalance : localStorage.getItem('getBalance') || 0,
+    // compareBannersTime: localStorage.getItem('compareBannersTime') || 0,
+    compareNftTime: localStorage.getItem("compareNftTime") || 0,
+    getBalance: localStorage.getItem("getBalance") || 0,
     // nftListUpdated: false,
     ///////////////////////////////////////////////
     terms: localStorage.getItem("terms") || "",
@@ -223,9 +223,9 @@ export default {
     //   // localStorage.setItem("balances", balance);
     //   localStorage.setItem("balances", JSON.stringify(balance));
     // },
-    setBalances(state :Nullable, balance:Nullable) {
+    setBalances(state: Nullable, balance: Nullable) {
       state.balances = balance; // 상태 업데이트
-     localStorage.setItem("balances", balance);
+      localStorage.setItem("balances", balance);
     },
 
     setWithdrawPw(state: Nullable, { pw }: Nullable) {
@@ -235,7 +235,6 @@ export default {
     },
     setNftList(state: Nullable, { info }: Nullable) {
       state.nftList = JSON.stringify(info);
-
       localStorage.setItem("nftList", JSON.stringify(info));
     },
 
@@ -243,10 +242,15 @@ export default {
       state.nftLatestTime = payload;
       localStorage.setItem("nftLatestTime", payload);
     },
-    setBannerLatestTime(state: Nullable, payload: Nullable) {
-      state.bannerLatestTime = payload;
-      localStorage.setItem("bannerLatestTime", payload);
+    // setBannerLatestTime(state: Nullable, payload: Nullable) {
+    //   state.bannerLatestTime = payload;
+    //   localStorage.setItem("bannerLatestTime", payload);
+    // },
+    setBannerLatestTime(state: Nullable, bannerLatestTime: Nullable) {
+      state.bannerLatestTime = bannerLatestTime;
+      localStorage.setItem("bannerLatestTime", bannerLatestTime);
     },
+
     setBannerList(state: Nullable, { info }: Nullable) {
       state.bannerList = JSON.stringify(info);
       localStorage.setItem("bannerList", JSON.stringify(info));
@@ -259,9 +263,8 @@ export default {
 
     setBannerTime(state: Nullable, payload: Nullable) {
       state.bannerTimes = payload; //payload를 변경
-      localStorage.setItem("bannersTime", payload)
+      localStorage.setItem("bannersTime", payload);
     },
-
 
     setTerms(state: Nullable, { terms }: Nullable) {
       state.terms = terms;
@@ -397,14 +400,16 @@ export default {
 
       router.push("/");
     },
-   
 
     async getPointBalanceAll(context: any) {
       try {
         const response = await getPointBalanceAll();
         if (response.status === 200) {
           const balances = response.data.data.balances;
-          const esgpBalance = balances.find((balance: { symbol: string; balance: string; }) => balance.symbol === "ESGP")?.balance;
+          const esgpBalance = balances.find(
+            (balance: { symbol: string; balance: string }) =>
+              balance.symbol === "ESGP"
+          )?.balance;
           if (esgpBalance) {
             context.commit("setBalances", esgpBalance);
           }
@@ -439,6 +444,8 @@ export default {
       }
     },
 
+
+
     async getNftList(context: Nullable) {
       const response = await nftListApi();
 
@@ -469,28 +476,49 @@ export default {
       }
     },
 
- async getTokenInfos(context: Nullable) {
-  const response = await tokenInfos();
-  if (response.status === 200){
-    const resTokenData = response.data.data.tokenInfos;
-   const resScannerData = response.data.data.scanner;
+    // async getNftList(context: Nullable) {
+    //   try {
+    //     console.log("호출1");
+    //     const response = await compareNftTime();
+    //     console.log('getNftlist에 response는',response)
+    //     // context.commit("setNftList", { info: nftList });
 
-      let tokenInfos: any = {};
-      let scanners: any = {};
+    //   } catch (error) {
+    //     console.error("error");
+    //   }
+    // },
+    
+    // async getBannerList(context: Nullable) {
+    //   try {
+    //     const response = await compareBannersTime();
+    //     console.log('getBannerList actions실행시',response)
+    //     context.commit("setBannerList", {info:bannerList});
+    //     context.commit('setBannerLatestTime',response);
+    //   } catch (error) {
+    //     console.error("error");
+    //   }
+    // },
 
-      resTokenData.forEach((res: any) => {
-        tokenInfos[res.symbol] = res;
-      });
+    async getTokenInfos(context: Nullable) {
+      const response = await tokenInfos();
+      if (response.status === 200) {
+        const resTokenData = response.data.data.tokenInfos;
+        const resScannerData = response.data.data.scanner;
 
-      resScannerData.forEach((res: any) => {
-        scanners[res.chainId] = res;
-      });
+        let tokenInfos: any = {};
+        let scanners: any = {};
 
-      store.commit("auth/setTokenInfos", { info: tokenInfos });
-      store.commit("auth/setScanners", { info: scanners });
-  }
- }
+        resTokenData.forEach((res: any) => {
+          tokenInfos[res.symbol] = res;
+        });
 
+        resScannerData.forEach((res: any) => {
+          scanners[res.chainId] = res;
+        });
 
-  }
-}
+        store.commit("auth/setTokenInfos", { info: tokenInfos });
+        store.commit("auth/setScanners", { info: scanners });
+      }
+    },
+  },
+};

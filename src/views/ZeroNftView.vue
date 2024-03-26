@@ -18,13 +18,18 @@
     <div class="h-10"></div>
     <div class="w-full relative overflow-x-auto pb-4">
       <ul class="text-xl font-medium text-center text-white space-x-2 whitespace-nowrap">
-        <li v-for="tab in categoryList" :key="tab.name" @click="switchTab(tab)"
-          class="w-44 inline-block py-3 rounded-full bg-disable text-white cursor-pointer"
-          :class="['tab', currentTab?.name === tab.name ? 'active' : '']">
-      
-          <p v-if="locale === 'kr'">{{ tab.name.kor }}</p>
-          <p v-else>{{ tab.name.eng }}</p>
-        </li>
+        <!-- <li v-for="tab in categoryList" :key="tab.idx" @click="switchTab(tab)"
+    class="w-44 inline-block py-3 rounded-full bg-disable text-white cursor-pointer"
+    :class="['tab', currentTab?.idx === tab.idx ? 'active' : '']">
+  <p>{{ locale === 'kr' ? tab.name.kor : tab.name.eng }}</p>
+</li> -->
+       <li v-for="tab in categoryList" :key="tab.idx" @click="switchTab(tab)"
+    class="w-44 inline-block py-3 rounded-full bg-disable text-white cursor-pointer"
+    :class="['tab', currentTab?.idx === tab.idx ? 'active' : '']">
+  <p>{{ tab.name }}</p>
+</li>
+
+
       </ul>
     </div>
     <ZeroNft :selectedIdx="currentTab?.idx"></ZeroNft>
@@ -45,55 +50,75 @@ import { useStore } from "vuex";
 
 const vuexStore = useStore();
 // const esgPoint = ref("");
-const balances = ref();
+// const balances = ref();
 const esgPoint = computed(() => parseInt(vuexStore.state.auth.balances));
 
 const locale = computed(() => vuexStore.state.system.locale)
 
-const updateBalance = () => {
-  balances.value = store.getters["auth/getBalances"];
+// const updateBalance = () => {
+//   balances.value = store.getters["auth/getBalances"];
 
-  for (const key in balances.value) {
-    if (balances.value[key].symbol === "ESGP") {
-      const balance = parseFloat(balances.value[key].balance);
-      esgPoint.value = balance.toLocaleString();
-    }
-  }
-};
+//   for (const key in balances.value) {
+//     if (balances.value[key].symbol === "ESGP") {
+//       const balance = parseFloat(balances.value[key].balance);
+//       esgPoint.value = balance.toLocaleString();
+//     }
+//   }
+// };
 
 const categoryList = ref();
+
 const currentTab = ref<NftCategory>();
+console.log("currentTab",currentTab)
 
 
 onMounted(async () => {
-  updateBalance();
+  // updateBalance();
   getNftCategory();
-  if (categoryList.value && categoryList.value.length > 0) {
-    currentTab.value = categoryList.value[0];
-  }
+  // if (categoryList.value && categoryList.value.length > 0) {
+  //   currentTab.value = categoryList.value[0];
+  // }
 })
 
+
+
+// const getNftCategory = () => {
+//   http.get("/api/nft/category").then((res) => {
+//     categoryList.value = [
+//       {
+//         idx: 0,
+//         name: "전체",
+//       },
+//       ...res.data.data,
+//     ];
+//     currentTab.value = categoryList.value[0];
+//   });
+// };
+
 const getNftCategory = () => {
-  http.get("/api/nft/category")
-    .then((res) => {
+  http.get("/api/nft/category").then((res) => {
+    // "전체" 항목을 추가합니다.
+    const allCategory = {
+      idx: 0, 
+      name: locale.value === 'kr' ? '전체' : 'All', // 여기서 locale은 반응형 참조(ref)입니다.
+    };
 
-      res.data.data = res.data.data.map((i) => {
-        const nameObj = JSON.parse(i.name)
-        return { ...i, name: nameObj }
-      })
-      categoryList.value = [{
-        idx:0,
-        name:{ "kor" : "전체", "eng":"ALL"}
-      }, ...res.data.data]
+    // 서버로부터 받은 데이터에 "전체" 항목을 포함시킵니다.
+    categoryList.value = [allCategory, ...res.data.data];
 
-      currentTab.value = categoryList.value[0];
-
-    })
+    // 기본적으로 "전체" 카테고리를 현재 탭으로 설정합니다.
+    currentTab.value = categoryList.value[0];
+  });
 }
+
+console.log('categoryList다',categoryList)
+
 
 const switchTab = async (tab: any) => {
   currentTab.value = tab;
 };
+console.log("switchTab",switchTab)
+
 </script>
 
 <style lang="scss">
