@@ -444,8 +444,6 @@ export default {
       }
     },
 
-
-
     async getNftList(context: Nullable) {
       const response = await nftListApi();
 
@@ -487,7 +485,7 @@ export default {
     //     console.error("error");
     //   }
     // },
-    
+
     // async getBannerList(context: Nullable) {
     //   try {
     //     const response = await compareBannersTime();

@@ -8,7 +8,9 @@
     <div class="px-2 w-full flex justify-between text-2xl">
       <div class="font-semibold">ESG Point</div>
       <div class="flex items-end">
-        <span class="text-3xl font-semibold esgPoint">{{ esgPoint }}</span>
+        <span class="text-3xl font-semibold esgPoint">{{
+          esgPoint.toLocaleString()
+        }}</span>
         <div class="w-1"></div>
         <span class="text-2xl text-gray-400">point</span>
       </div>
@@ -17,11 +19,8 @@
     <div class="w-full h-px bg-gray-200"></div>
     <div class="h-10"></div>
     <div class="photo-link p-7 w-full h-full">
-      <div class="flex font-semibold text-2xl pb-8" v-if="locale === 'kr'">
-        {{ nftInfo.name.kor }}
-      </div>
-      <div class="flex font-semibold text-2xl pb-8" v-else>
-        {{ nftInfo.name.eng }}
+      <div class="flex font-semibold text-2xl pb-8">
+        {{ nftInfo.name }}
       </div>
       <div
         class="flex items-center justify-center pt-9"
@@ -133,7 +132,7 @@ import panda2 from "@/components/common/panda2.vue";
 
 const nftList = store.getters["auth/getNftList"];
 const nftDetail = ref();
-const esgPoint = ref("");
+const esgPoint = computed(() => parseInt(vuexStore.state.auth.balances));
 const nftId = Number(router.currentRoute.value.params.idx);
 console.log("nftId", nftId);
 const tokenId = Number(router.currentRoute.value.params.tokenId);
@@ -145,11 +144,8 @@ const vuexStore = useStore();
 
 const { t } = useI18n();
 
-const locale = computed(() => vuexStore.state.system.locale);
-
 onMounted(() => {
   getNftDetail();
-  getEsgpBalance();
   getQuestReward();
 });
 
@@ -163,19 +159,6 @@ const getNftDetail = () => {
     })
     .then((response) => {
       nftDetail.value = response.data.data;
-    });
-};
-
-const getEsgpBalance = () => {
-  http
-    .get("/api/token/balance", {
-      params: {
-        symbol: "ESGP",
-      },
-    })
-    .then((response) => {
-      const balance = parseFloat(response.data.data.balance);
-      esgPoint.value = balance.toLocaleString();
     });
 };
 
@@ -313,7 +296,6 @@ const gameRun = () => {
 
   if (nftType > 0) {
     linkUrl = "/api/quest/apptoken";
-    //linkUrl = "/api/quest/gametoken"
   } else {
     return false;
   }
@@ -370,8 +352,6 @@ const updateNftEnable = (type: String) => {
     window.flutter_inappwebview
       .callHandler("checkAppInstalled", { packageName: packageName })
       .then((res: any) => {
-        //console.log(JSON.stringify(res));
-
         if (res.result == true) {
           http
             .post("/api/nft/enableNft", {

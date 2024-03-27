@@ -67,8 +67,9 @@
     <div class="h-10"></div>
     <!-- <div class="flex font-semibold text-2xl">SWAP      <span @click="esgtoesgp">{{ fromSymbol.value }}</span>
     </div>  -->
-    <div class="flex font-semibold text-2xl" >
-      SWAP  <span @click="esgtoesgp" style="margin-left:25px;">{{ fromSymbol }}</span>
+    <div class="flex font-semibold text-2xl">
+      SWAP
+      <span @click="esgtoesgp" style="margin-left: 25px">{{ fromSymbol }}</span>
     </div>
     <div class="h-2"></div>
     <div class="flex">
@@ -111,7 +112,7 @@
             class="input-field wp-20 flex justify-end items-center text-gray-400"
           >
             <!-- ESG -->
-            {{ fromSymbol === 'ESGP' ? 'ESG' : 'ESGP' }}
+            {{ fromSymbol === "ESGP" ? "ESG" : "ESGP" }}
           </div>
         </div>
         <div class="h-px h-5 bg-gray-200"></div>
@@ -156,7 +157,7 @@
     @resJson="checkObject"
     :title="popupTitle"
     :showClose="showClose"
-    :popupType = "store.state.popupType"
+    :popupType="store.state.popupType"
   />
   <div class="h-20"></div>
 </template>
@@ -174,11 +175,10 @@ import { errorMsg } from "@/utils/util";
 import { useStore } from "vuex";
 import { computed } from "vue";
 
-
 const { t } = useI18n();
 const vuexStore = useStore();
 const esgPoint = computed(() => parseInt(vuexStore.state.auth.balances));
-const balances = ref({})
+const balances = ref({});
 const withdrawSymbol = ref("");
 const popupTitle = ref("");
 
@@ -186,22 +186,12 @@ const isUpdate = ref(false);
 const swapEsgp = ref(0);
 const swapEsg = ref(0);
 const showClose = ref(true);
-const tokenInfos = computed(() => store.getters['auth/getTokenInfos']);
+const tokenInfos = computed(() => store.getters["auth/getTokenInfos"]);
 
 const fromSymbol = ref("ESGP");
 const toSymbol = ref("ESG");
 
- 
-// onMounted(async () => {
-  // if(!tokenInfos) {
-// await vuexStore.dispatch("auth/getTokenInfos");
-  // }
-  // updateBalance();
-//   if (store.state.isBalanceUpdate === true || 1) {
-//     // getBalanceAll();
-//   }
-// vuexStore.state.auth.tokenInfos
-// });
+onMounted(async () => {});
 
 const checkError = (status: number, code: number) => {
   if (status === 400) {
@@ -215,46 +205,8 @@ const checkError = (status: number, code: number) => {
   }
 };
 
-// const getBalanceAll = () => {
-//   http
-//     .get("/api/token/balanceAll")
-//     .then((response) => {
-//       store.state.isBalanceUpdate = false;
-
-//       const resData = response.data.data.balances;
-
-//       let balancesData: any = {};
-
-//       resData.forEach((res: any) => {
-//         balancesData[res.symbol] = res;
-//       });
-
-//       store.commit("auth/setBalances", { info: balancesData });
-
-//       updateBalance();
-//     })
-//     .catch((error) => {
-//       checkError(error.response.status, error.response.data.errorCode);
-//     });
-// };
-
-// const updateBalance = () => {
-//   tokenInfos.value = store.getters["auth/getTokenInfos"];
-//   balances.value = store.getters["auth/getBalances"];
-
-//   for (const key in balances.value) {
-//     if (balances.value[key].symbol === "ESGP") {
-//       const balance = parseFloat(balances.value[key].balance);
-//       esgPoint.value = balance.toLocaleString();
-//     }
-//   }
-// };
-
-// const updateBalance = () => {
-//   tokenInfos.value = store.getters["auth/getTokenInfos"];
-
 const getStatusCheck = (type: string, symbol: string) => {
-  console.log('클릭')
+  console.log("클릭");
   if (type === "swap" && swapEsg.value <= 0) return false;
 
   // 처리중인 SendCoin/Swap 이 있는지 확인
@@ -359,7 +311,6 @@ const showQrCode = () => {
   console.log("After change:", store.state.popupType, store.state.isPopup);
   console.log("Address:", store.getters["auth/getAddress"]);
 };
-console.log(showQrCode())
 
 const closeModal = () => {
   store.state.isPopup = false;
@@ -383,13 +334,13 @@ const getSwapInfo = () => {
           toAddress: store.getters["auth/getAddress"],
           // fromSymbol: "ESGP",
           // toSymbol: "ESG",
-          fromSymbol: fromSymbol.value, 
-          toSymbol: toSymbol.value, 
+          fromSymbol: fromSymbol.value,
+          toSymbol: toSymbol.value,
           amount: swapEsgp.value,
         },
       })
       .then((response) => {
-        console.log('response getSwapInfo에',response)
+        console.log("response getSwapInfo에", response);
         if (response.data.data.userSendPrice < response.data.data.minSwap) {
           swapEsg.value = 0;
 
@@ -408,7 +359,6 @@ const getSwapInfo = () => {
       });
   }
 };
-getSwapInfo()
 
 const sendSwap = () => {
   http
@@ -417,13 +367,13 @@ const sendSwap = () => {
       toAddress: store.getters["auth/getAddress"],
       // fromSymbol: "ESGP",
       // toSymbol: "ESG",
-      fromSymbol: fromSymbol.value, 
-      toSymbol: toSymbol.value, 
+      fromSymbol: fromSymbol.value,
+      toSymbol: toSymbol.value,
       amount: swapEsgp.value,
       privateKey: store.getters["auth/getPrivateKey"],
     })
     .then((response) => {
-      console.log('response sendSwap에',response)
+      console.log("response sendSwap에", response);
       store.state.popupValue = swapEsgp.value;
       store.state.popupType = "message";
       showClose.value = false;
@@ -438,30 +388,30 @@ const sendSwap = () => {
     });
 };
 
-console.log('sendSwap',sendSwap())
-
 const esgtoesgp = () => {
-  console.log(`Before swap: fromSymbol = ${fromSymbol.value}, toSymbol = ${toSymbol.value}`);
+  console.log(
+    `Before swap: fromSymbol = ${fromSymbol.value}, toSymbol = ${toSymbol.value}`
+  );
   let tempFrom = fromSymbol.value;
   let tempTo = toSymbol.value;
   // fromSymbol과 toSymbol 값을 서로 바꿈
   fromSymbol.value = tempTo;
   toSymbol.value = tempFrom;
-  console.log(`After swap: fromSymbol = ${fromSymbol.value}, toSymbol = ${toSymbol.value}`);
-}
-esgtoesgp()
+  console.log(
+    `After swap: fromSymbol = ${fromSymbol.value}, toSymbol = ${toSymbol.value}`
+  );
+};
 
 const initSwapEsgp = () => {
   swapEsg.value = 0;
 };
 
 const handleInput = () => {
-  const appMain = document.getElementById('appMain');
-      if (appMain) {
-        appMain.scrollTop = 0;
-      }
-}
-
+  const appMain = document.getElementById("appMain");
+  if (appMain) {
+    appMain.scrollTop = 0;
+  }
+};
 </script>
 
 <style lang="scss">

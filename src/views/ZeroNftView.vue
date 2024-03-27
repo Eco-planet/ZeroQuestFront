@@ -6,10 +6,14 @@
       <div class="h-8"></div>
     </div>
     <div class="h-10"></div>
-    <div class="flex w-full pb-2 items-center justify-between border-b border-gray-400">
+    <div
+      class="flex w-full pb-2 items-center justify-between border-b border-gray-400"
+    >
       <div class="text-2xl font-semibold">ESG Point</div>
       <div class="flex items-end">
-        <div class="text-3xl font-semibold text-esg-color">{{ esgPoint }}</div>
+        <div class="text-3xl font-semibold text-esg-color">
+          {{ esgPoint.toLocaleString() }}
+        </div>
 
         <div class="w-1"></div>
         <div class="text-2xl text-gray-400">point</div>
@@ -17,23 +21,21 @@
     </div>
     <div class="h-10"></div>
     <div class="w-full relative overflow-x-auto pb-4">
-      <ul class="text-xl font-medium text-center text-white space-x-2 whitespace-nowrap">
-        <!-- <li v-for="tab in categoryList" :key="tab.idx" @click="switchTab(tab)"
-    class="w-44 inline-block py-3 rounded-full bg-disable text-white cursor-pointer"
-    :class="['tab', currentTab?.idx === tab.idx ? 'active' : '']">
-  <p>{{ locale === 'kr' ? tab.name.kor : tab.name.eng }}</p>
-</li> -->
-       <li v-for="tab in categoryList" :key="tab.idx" @click="switchTab(tab)"
-    class="w-44 inline-block py-3 rounded-full bg-disable text-white cursor-pointer"
-    :class="['tab', currentTab?.idx === tab.idx ? 'active' : '']">
-  <p>{{ tab.name }}</p>
-</li>
-
-
+      <ul
+        class="text-xl font-medium text-center text-white space-x-2 whitespace-nowrap"
+      >
+        <li
+          v-for="tab in categoryList"
+          :key="tab.idx"
+          @click="switchTab(tab)"
+          class="w-44 inline-block py-3 rounded-full bg-disable text-white cursor-pointer"
+          :class="['tab', currentTab?.idx === tab.idx ? 'active' : '']"
+        >
+          <p>{{ tab.name }}</p>
+        </li>
       </ul>
     </div>
     <ZeroNft :selectedIdx="currentTab?.idx"></ZeroNft>
-
 
     <div class="h-72"></div>
   </div>
@@ -43,9 +45,9 @@
 import { computed } from "vue";
 import http from "@/api/http";
 import store from "@/store";
-import { onMounted, ref } from 'vue';
-import { NftCategory } from "@/types/IZeroNftType"
-import ZeroNft from '@/components/ZeroNft.vue'
+import { onMounted, ref } from "vue";
+import { NftCategory } from "@/types/IZeroNftType";
+import ZeroNft from "@/components/ZeroNft.vue";
 import { useStore } from "vuex";
 
 const vuexStore = useStore();
@@ -53,7 +55,7 @@ const vuexStore = useStore();
 // const balances = ref();
 const esgPoint = computed(() => parseInt(vuexStore.state.auth.balances));
 
-const locale = computed(() => vuexStore.state.system.locale)
+const locale = computed(() => vuexStore.state.system.locale);
 
 // const updateBalance = () => {
 //   balances.value = store.getters["auth/getBalances"];
@@ -69,8 +71,7 @@ const locale = computed(() => vuexStore.state.system.locale)
 const categoryList = ref();
 
 const currentTab = ref<NftCategory>();
-console.log("currentTab",currentTab)
-
+console.log("currentTab", currentTab);
 
 onMounted(async () => {
   // updateBalance();
@@ -78,9 +79,7 @@ onMounted(async () => {
   // if (categoryList.value && categoryList.value.length > 0) {
   //   currentTab.value = categoryList.value[0];
   // }
-})
-
-
+});
 
 // const getNftCategory = () => {
 //   http.get("/api/nft/category").then((res) => {
@@ -99,8 +98,8 @@ const getNftCategory = () => {
   http.get("/api/nft/category").then((res) => {
     // "전체" 항목을 추가합니다.
     const allCategory = {
-      idx: 0, 
-      name: locale.value === 'kr' ? '전체' : 'All', // 여기서 locale은 반응형 참조(ref)입니다.
+      idx: 0,
+      name: locale.value === "kr" ? "전체" : "All", // 여기서 locale은 반응형 참조(ref)입니다.
     };
 
     // 서버로부터 받은 데이터에 "전체" 항목을 포함시킵니다.
@@ -109,16 +108,14 @@ const getNftCategory = () => {
     // 기본적으로 "전체" 카테고리를 현재 탭으로 설정합니다.
     currentTab.value = categoryList.value[0];
   });
-}
+};
 
-console.log('categoryList다',categoryList)
-
+console.log("categoryList다", categoryList);
 
 const switchTab = async (tab: any) => {
   currentTab.value = tab;
 };
-console.log("switchTab",switchTab)
-
+console.log("switchTab", switchTab);
 </script>
 
 <style lang="scss">
