@@ -89,10 +89,6 @@ const getMyNftList = () => {
     });
 };
 
-const showPopup = () => {
-  store.state.isPopup = true;
-};
-
 const closeModal = () => {
   store.state.isPopup = false;
 };
@@ -155,7 +151,6 @@ const gameRun = () => {
 
   if (nftType > 0) {
     linkUrl = "/api/quest/apptoken";
-    //linkUrl = "/api/quest/gametoken"
   } else {
     return false;
   }
@@ -177,7 +172,6 @@ const gameRun = () => {
         deepLink = nftList[store.state.nftId].ios_deeplink;
       }
 
-      //window.open(deepLink + '?token=' + response.data.data.appToken + '&name=' + store.getters["auth/getUserName"] + '&email=' + store.getters["auth/getUserEmail"] + '&uid=' + store.getters["auth/getUserId"], '_blank');
       window.flutter_inappwebview.callHandler("handlePlayBtn", {
         deepLink: deepLink,
         token: response.data.data.appToken,

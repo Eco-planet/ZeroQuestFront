@@ -41,17 +41,7 @@ onMounted(() => {
 
 const getNftList = () => {
   http.get("/api/nft/zeroNft").then((res) => {
-    const parsedData = res.data.data.map((item: any) => {
-      if (item.name) {
-        try {
-          return { ...item, name: JSON.parse(item.name) };
-        } catch (e) {
-          console.error("Failed to parse name:", e);
-        }
-      }
-      return item;
-    });
-    nftList.value = parsedData;
+    nftList.value = res.data.data;
   });
 };
 

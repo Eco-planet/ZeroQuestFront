@@ -79,7 +79,6 @@ const withdraw = () => {
   modalVisible.value = true;
 };
 const clickWithdraw = () => {
-  store.commit("auth/setClearToken");
   const formData = {
     selectedOption: selectedOption.value,
     withdrawReason: withdrawReason.value,
@@ -99,6 +98,7 @@ const clickWithdraw = () => {
   });
 };
 const WithdrawCloseModal = () => {
+  store.commit("auth/setClearToken");
   console.log("탈퇴완료버튼누름");
   modalVisible.value = false;
   // router.go(0)

@@ -128,7 +128,6 @@ import recycling from "@/components/common/recycling.vue";
 import stairs from "@/components/common/stairs.vue";
 import tree from "@/components/common/tree.vue";
 import panda from "@/components/common/panda.vue";
-import panda2 from "@/components/common/panda2.vue";
 
 const nftList = store.getters["auth/getNftList"];
 const nftDetail = ref();

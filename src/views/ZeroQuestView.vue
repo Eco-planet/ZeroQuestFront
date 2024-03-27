@@ -157,10 +157,6 @@ const esgPoint = computed(() => parseInt(vuexStore.state.auth.balances));
 
 const myNftList = ref<nftType>();
 
-const popupTitle = ref("");
-
-const { t } = useI18n();
-
 onMounted(() => {
   getMyNftList();
 });
@@ -200,12 +196,6 @@ function goToDetail(idx: number) {
     params: {
       idx: idx,
     },
-  });
-}
-
-function goToLink(link: string) {
-  router.push({
-    path: link,
   });
 }
 

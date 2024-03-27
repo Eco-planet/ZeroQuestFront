@@ -51,55 +51,22 @@ import ZeroNft from "@/components/ZeroNft.vue";
 import { useStore } from "vuex";
 
 const vuexStore = useStore();
-// const esgPoint = ref("");
-// const balances = ref();
 const esgPoint = computed(() => parseInt(vuexStore.state.auth.balances));
-
-const locale = computed(() => vuexStore.state.system.locale);
-
-// const updateBalance = () => {
-//   balances.value = store.getters["auth/getBalances"];
-
-//   for (const key in balances.value) {
-//     if (balances.value[key].symbol === "ESGP") {
-//       const balance = parseFloat(balances.value[key].balance);
-//       esgPoint.value = balance.toLocaleString();
-//     }
-//   }
-// };
 
 const categoryList = ref();
 
 const currentTab = ref<NftCategory>();
-console.log("currentTab", currentTab);
 
 onMounted(async () => {
-  // updateBalance();
   getNftCategory();
-  // if (categoryList.value && categoryList.value.length > 0) {
-  //   currentTab.value = categoryList.value[0];
-  // }
 });
-
-// const getNftCategory = () => {
-//   http.get("/api/nft/category").then((res) => {
-//     categoryList.value = [
-//       {
-//         idx: 0,
-//         name: "전체",
-//       },
-//       ...res.data.data,
-//     ];
-//     currentTab.value = categoryList.value[0];
-//   });
-// };
 
 const getNftCategory = () => {
   http.get("/api/nft/category").then((res) => {
     // "전체" 항목을 추가합니다.
     const allCategory = {
       idx: 0,
-      name: locale.value === "kr" ? "전체" : "All", // 여기서 locale은 반응형 참조(ref)입니다.
+      name: "All", // 여기서 locale은 반응형 참조(ref)입니다.
     };
 
     // 서버로부터 받은 데이터에 "전체" 항목을 포함시킵니다.

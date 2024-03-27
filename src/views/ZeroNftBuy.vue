@@ -47,10 +47,6 @@
                 <span>Ethereum</span>
               </div>
               <div class="flex justify-between mb-4">
-                <span>Remaining NFT</span>
-                <span>0 / </span>
-              </div>
-              <div class="flex justify-between mb-4">
                 <span>Price</span>
                 <span
                   >{{ Number(nowNft?.buyPrice2).toLocaleString() }} ESG
@@ -111,25 +107,6 @@
     </div>
 
     <div class="h-20"></div>
-    <!-- <div class="text-left w-full">
-      <div class="text-2xl font-semibold text-left">CONTENTS</div>
-
-    </div> -->
-    <!-- <div class="mt-10 grid grid-cols-2 gap-x-8 gap-y-8">
-      <div class="shadow-nft-extra">
-        <div class="w-full h-56 relative overflow-hidden">
-          <img :src="filterNft.extra_img1"/>
-        </div>
-        <div class="p-4 text-xl font-medium text-black">모바일 NFT</div>
-      </div>
-      <div class="shadow-nft-extra">
-        <div class="w-full h-56 relative overflow-hidden">
-          <img :src="filterNft.extra_img2"/>
-        </div>
-        <div class="p-4 text-xl font-medium text-black">모바일 NFT</div>
-      </div>
-    </div> -->
-    <!-- <recycling></recycling> -->
 
     <recycling v-if="nftId === 1"></recycling>
     <stairs v-else-if="nftId === 2"></stairs>
@@ -230,39 +207,6 @@ const goToMyWallet = () => {
     path: "/mywallet",
     name: "mywallet",
   });
-};
-
-// 날자 형식 변경
-function formatDate(date: Date): string {
-  const year = date.getFullYear();
-  const month = ("0" + (date.getMonth() + 1)).slice(-2);
-  const day = ("0" + date.getDate()).slice(-2);
-
-  return `${year}-${month}-${day}`;
-}
-
-// 구매 개수 counting
-const count = ref(0);
-const ESGPPerPrice = 5;
-
-const total_eth = computed(() => {
-  return parseFloat((count.value * ESGPPerPrice).toFixed(6));
-});
-
-function increase() {
-  count.value++;
-}
-
-function decrease() {
-  if (count.value > 0) {
-    count.value--;
-  }
-}
-
-const isModalOpen = ref(false);
-
-const isModalChange = (buyModalEmit: boolean) => {
-  isModalOpen.value = buyModalEmit;
 };
 
 const closeModal = () => {
