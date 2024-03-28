@@ -218,11 +218,7 @@ export default {
 
       localStorage.setItem("address", address);
     },
-    // setBalances(state: Nullable, { balance }: Nullable) {
-    //   state.balances = balance;
-    //   // localStorage.setItem("balances", balance);
-    //   localStorage.setItem("balances", JSON.stringify(balance));
-    // },
+
     setBalances(state: Nullable, balance: Nullable) {
       state.balances = balance; // 상태 업데이트
       localStorage.setItem("balances", balance);
@@ -238,17 +234,16 @@ export default {
       localStorage.setItem("nftList", JSON.stringify(info));
     },
 
-    setNftLatestTime(state: Nullable, payload: Nullable) {
-      state.nftLatestTime = payload;
-      localStorage.setItem("nftLatestTime", payload);
+    setNftLatestTime(state: Nullable, nftLatestTime: Nullable) {
+      state.nftLatestTime = nftLatestTime;
+      localStorage.setItem("nftLatestTime", nftLatestTime);
+      console.log('nftLatestTime',nftLatestTime)
     },
-    // setBannerLatestTime(state: Nullable, payload: Nullable) {
-    //   state.bannerLatestTime = payload;
-    //   localStorage.setItem("bannerLatestTime", payload);
-    // },
+
     setBannerLatestTime(state: Nullable, bannerLatestTime: Nullable) {
       state.bannerLatestTime = bannerLatestTime;
       localStorage.setItem("bannerLatestTime", bannerLatestTime);
+      console.log('bannerLatestTime',bannerLatestTime)
     },
 
     setBannerList(state: Nullable, { info }: Nullable) {
@@ -421,7 +416,7 @@ export default {
 
     async getBannerList(context: Nullable) {
       const response = await bannerListApi();
-
+      console.log('getBannerList Response', response)
       if (response.status === 200) {
         const bannerListData = response.data.data;
 
@@ -446,7 +441,7 @@ export default {
 
     async getNftList(context: Nullable) {
       const response = await nftListApi();
-
+      console.log('getNftLIst는', response)
       if (response.status === 200) {
         const nftListData = response.data.data;
 

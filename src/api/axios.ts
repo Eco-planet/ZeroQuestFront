@@ -35,6 +35,7 @@ export const tokenInfos = () => {
     if (checkBannerLatestTime === bannerLatestTime) {
       return;
     }
+    console.log('getBannerList')
     vuexStore.dispatch("auth/getBannerList");
   };
   //////////////////////////
@@ -55,7 +56,7 @@ export const checkNftLatestTime = async (
   if (response.status !== 200) {
     return;
   }
-  const checkBannerLatestTime = Date.parse(response.data.data.nftUpdatedTime);
+  const checkNftLatestTime = Date.parse(response.data.data.nftUpdatedTime);
   if (checkBannerLatestTime === nftLatestTime) {
     return;
   }

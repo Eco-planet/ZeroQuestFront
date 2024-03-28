@@ -49,16 +49,20 @@ import { onMounted, ref } from "vue";
 import { NftCategory } from "@/types/IZeroNftType";
 import ZeroNft from "@/components/ZeroNft.vue";
 import { useStore } from "vuex";
+import { checkNftLatestTime } from "@/api/axios";
 
 const vuexStore = useStore();
 const esgPoint = computed(() => parseInt(vuexStore.state.auth.balances));
-
 const categoryList = ref();
-
 const currentTab = ref<NftCategory>();
+const nftList = computed(() => store.getters["auth/getNftList"]);
+  const nftLatestTime = computed(() =>
+  parseInt(vuexStore.state.auth.nftLatestTime)
+);
 
 onMounted(async () => {
   getNftCategory();
+  checkNftLatestTime(vuexStore,nftLatestTime.value);
 });
 
 const getNftCategory = () => {

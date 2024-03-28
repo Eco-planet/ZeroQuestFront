@@ -47,7 +47,6 @@ onMounted(async () => {
   if(!pointBalance) {
   vuexStore.dispatch("auth/getPointBalanceAll");
   }
-
   if (!bannerList) {
     await vuexStore.dispatch("auth/getBannerList");
   }

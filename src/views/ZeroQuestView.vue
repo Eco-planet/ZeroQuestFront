@@ -145,7 +145,7 @@ import { useI18n } from "vue-i18n";
 import "vue3-carousel/dist/carousel.css";
 const vuexStore = useStore();
 const referral = computed(() => vuexStore.getters["auth/getReferral"]);
-const bannerList = store.getters["auth/getBannerList"];
+const bannerList = computed(()=> store.getters["auth/getBannerList"]);
 const nftList = computed(() => vuexStore.getters["auth/getNftList"]);
 const bannerLatestTime = computed(() =>
   parseInt(vuexStore.state.auth.bannerLatestTime)
@@ -158,6 +158,8 @@ const esgPoint = computed(() => parseInt(vuexStore.state.auth.balances));
 const myNftList = ref<nftType>();
 
 onMounted(() => {
+  checkNftLatestTime(vuexStore, nftLatestTime.value)
+  checkBannerLatestTime(vuexStore, bannerLatestTime.value);
   getMyNftList();
 });
 

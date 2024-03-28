@@ -65,11 +65,14 @@
       </template>
     </div>
     <div class="h-10"></div>
-    <!-- <div class="flex font-semibold text-2xl">SWAP      <span @click="esgtoesgp">{{ fromSymbol.value }}</span>
-    </div>  -->
-    <div class="flex font-semibold text-2xl">
+    <div class="flex font-semibold text-2xl items-center">
       SWAP
-      <span @click="esgtoesgp" style="margin-left: 25px">{{ fromSymbol }}</span>
+      <select v-model="fromSymbol" class="ml-5 border-none focus:border-none focus:outline-none" style="margin-left: 20px;">
+        <option value="ESG">ESG to ESGP</option>
+        <option value="ESGP">ESGP to ESG</option>
+        <option value="ESG">ESG to ETH</option>
+        <option value="ETH">ETH to ESG</option>
+      </select>
     </div>
     <div class="h-2"></div>
     <div class="flex">
@@ -85,7 +88,6 @@
               style="text-align: left"
             />
             <div class="wp-50 flex justify-end items-center text-gray-400">
-              <!-- ESGP -->
               {{ fromSymbol }}
             </div>
           </div>
@@ -111,8 +113,7 @@
           <div
             class="input-field wp-20 flex justify-end items-center text-gray-400"
           >
-            <!-- ESG -->
-            {{ fromSymbol === "ESGP" ? "ESG" : "ESGP" }}
+            {{ displayValue }}
           </div>
         </div>
         <div class="h-px h-5 bg-gray-200"></div>
@@ -123,7 +124,6 @@
       <div class="swap-noti flex font-semibold">
         {{ t("message.swapCaution") }}
       </div>
-
       <div class="h-2"></div>
       <div class="flex justify-start items-start" style="text-align: left">
         <div class="font-bold">·</div>
@@ -173,7 +173,7 @@ import { onMounted, ref } from "vue";
 import Modal from "@/components/Modal/index.vue";
 import { errorMsg } from "@/utils/util";
 import { useStore } from "vuex";
-import { computed } from "vue";
+import { computed, watch } from "vue";
 
 const { t } = useI18n();
 const vuexStore = useStore();
@@ -181,15 +181,16 @@ const esgPoint = computed(() => parseInt(vuexStore.state.auth.balances));
 const balances = ref({});
 const withdrawSymbol = ref("");
 const popupTitle = ref("");
-
 const isUpdate = ref(false);
 const swapEsgp = ref(0);
 const swapEsg = ref(0);
 const showClose = ref(true);
 const tokenInfos = computed(() => store.getters["auth/getTokenInfos"]);
-
 const fromSymbol = ref("ESGP");
 const toSymbol = ref("ESG");
+const eth = ref("ETH");
+const esgp = ref("ESGP");
+const esg = ref('ESG');
 
 onMounted(async () => {});
 
@@ -365,8 +366,7 @@ const sendSwap = () => {
     .post("/api/swap/send", {
       fromAddress: store.getters["auth/getAddress"],
       toAddress: store.getters["auth/getAddress"],
-      // fromSymbol: "ESGP",
-      // toSymbol: "ESG",
+
       fromSymbol: fromSymbol.value,
       toSymbol: toSymbol.value,
       amount: swapEsgp.value,
@@ -388,19 +388,6 @@ const sendSwap = () => {
     });
 };
 
-const esgtoesgp = () => {
-  console.log(
-    `Before swap: fromSymbol = ${fromSymbol.value}, toSymbol = ${toSymbol.value}`
-  );
-  let tempFrom = fromSymbol.value;
-  let tempTo = toSymbol.value;
-  // fromSymbol과 toSymbol 값을 서로 바꿈
-  fromSymbol.value = tempTo;
-  toSymbol.value = tempFrom;
-  console.log(
-    `After swap: fromSymbol = ${fromSymbol.value}, toSymbol = ${toSymbol.value}`
-  );
-};
 
 const initSwapEsgp = () => {
   swapEsg.value = 0;
@@ -412,6 +399,25 @@ const handleInput = () => {
     appMain.scrollTop = 0;
   }
 };
+
+const displayValue = computed(() => {
+  switch (fromSymbol.value) {
+    case "ESG":
+      return "ESGP";
+    case "ESGP":
+      return "ESG";
+    case "ETH":
+      return "ESG";
+    default:
+      return "ESG"; 
+  }
+});
+
+watch(fromSymbol, (newValue, oldValue) => {
+  console.log(`fromSymbol changed from ${oldValue} to ${newValue}`);
+});
+
+
 </script>
 
 <style lang="scss">
