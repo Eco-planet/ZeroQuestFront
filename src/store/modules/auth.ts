@@ -1,10 +1,18 @@
 import authApi from "@/api/auth";
+import {
+  bannerListApi,
+  nftListApi,
+  getPointBalanceAll,
+  tokenInfos,
+} from "@/api/axios";
 import router from "@/router";
 import { ethers } from "ethers-ts";
 import openSSLCrypto from "@/utils/openSSLCrypto";
 import { popperContentEmits } from "element-plus";
 import { isContext } from "vm";
-
+import axios from "axios";
+import store from "..";
+//
 export default {
   namespaced: true,
   state: {
@@ -21,8 +29,18 @@ export default {
     address: localStorage.getItem("address") || "",
     balances: localStorage.getItem("balances") || "",
     withdrawPw: localStorage.getItem("withdrawPw") || false,
+    //bannerList, nftList - nftTime, bannerTime을 비교하기 위해 사용
     nftList: localStorage.getItem("nftList") || "",
+    nftLatestTime: localStorage.getItem("nftLatestTime") || 0,
     bannerList: localStorage.getItem("bannerList") || "",
+    nftTime: localStorage.getItem("nftTime") || 0,
+    bannersTime: localStorage.getItem("bannersTime") || 0,
+    bannerLatestTime: localStorage.getItem("bannerLatestTime") || 0,
+    // compareBannersTime: localStorage.getItem('compareBannersTime') || 0,
+    compareNftTime: localStorage.getItem("compareNftTime") || 0,
+    getBalance: localStorage.getItem("getBalance") || 0,
+    // nftListUpdated: false,
+    ///////////////////////////////////////////////
     terms: localStorage.getItem("terms") || "",
     vote: localStorage.getItem("vote") || 0,
     pwHash: localStorage.getItem("pwHash") || "",
@@ -123,6 +141,8 @@ export default {
     setClearToken(state: Nullable) {
       state.expireAccessToken = 0;
       state.expireRefreshToken = 0;
+      state.accessToken = "";
+      state.refreshToken = "";
 
       let orgTokenInfos = state.tokenInfos;
       let orgNftList = state.nftList;
@@ -198,11 +218,12 @@ export default {
 
       localStorage.setItem("address", address);
     },
-    setBalances(state: Nullable, { info }: Nullable) {
-      state.balances = JSON.stringify(info);
 
-      localStorage.setItem("balances", JSON.stringify(info));
+    setBalances(state: Nullable, balance: Nullable) {
+      state.balances = balance; // 상태 업데이트
+      localStorage.setItem("balances", balance);
     },
+
     setWithdrawPw(state: Nullable, { pw }: Nullable) {
       state.withdrawPw = pw;
 
@@ -210,14 +231,36 @@ export default {
     },
     setNftList(state: Nullable, { info }: Nullable) {
       state.nftList = JSON.stringify(info);
-
       localStorage.setItem("nftList", JSON.stringify(info));
     },
+
+    setNftLatestTime(state: Nullable, nftLatestTime: Nullable) {
+      state.nftLatestTime = nftLatestTime;
+      localStorage.setItem("nftLatestTime", nftLatestTime);
+      console.log('nftLatestTime',nftLatestTime)
+    },
+
+    setBannerLatestTime(state: Nullable, bannerLatestTime: Nullable) {
+      state.bannerLatestTime = bannerLatestTime;
+      localStorage.setItem("bannerLatestTime", bannerLatestTime);
+      console.log('bannerLatestTime',bannerLatestTime)
+    },
+
     setBannerList(state: Nullable, { info }: Nullable) {
       state.bannerList = JSON.stringify(info);
-
       localStorage.setItem("bannerList", JSON.stringify(info));
     },
+
+    // setNftTime(state: Nullable, payload: Nullable) {
+    //   state.NftListTime = payload
+    //   localStorage.setItem('NftTime',payload)
+    // },
+
+    setBannerTime(state: Nullable, payload: Nullable) {
+      state.bannerTimes = payload; //payload를 변경
+      localStorage.setItem("bannersTime", payload);
+    },
+
     setTerms(state: Nullable, { terms }: Nullable) {
       state.terms = terms;
 
@@ -290,7 +333,6 @@ export default {
         }
       } catch (e) {
         console.log("TOKEN ERROR");
-
         router.push("/");
       }
     },
@@ -352,6 +394,124 @@ export default {
       context.commit("setAccessToken", "");
 
       router.push("/");
+    },
+
+    async getPointBalanceAll(context: any) {
+      try {
+        const response = await getPointBalanceAll();
+        if (response.status === 200) {
+          const balances = response.data.data.balances;
+          const esgpBalance = balances.find(
+            (balance: { symbol: string; balance: string }) =>
+              balance.symbol === "ESGP"
+          )?.balance;
+          if (esgpBalance) {
+            context.commit("setBalances", esgpBalance);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching ESGP balance:", error);
+      }
+    },
+
+    async getBannerList(context: Nullable) {
+      const response = await bannerListApi();
+      console.log('getBannerList Response', response)
+      if (response.status === 200) {
+        const bannerListData = response.data.data;
+
+        let bannerList: any = {};
+        let updatedAt: any = [];
+        let latestUpdatedAt = 0;
+
+        bannerListData.forEach((res: any) => {
+          bannerList[res.idx] = res;
+
+          updatedAt.push(Date.parse(res.updatedAt));
+
+          if (updatedAt) {
+            latestUpdatedAt = Math.max(...updatedAt);
+          }
+        });
+
+        context.commit("setBannerLatestTime", latestUpdatedAt);
+        context.commit("setBannerList", { info: bannerList });
+      }
+    },
+
+    async getNftList(context: Nullable) {
+      const response = await nftListApi();
+      console.log('getNftLIst는', response)
+      if (response.status === 200) {
+        const nftListData = response.data.data;
+
+        let nftList: any = {};
+        let updatedAt: any = [];
+        let latestUpdatedAt: any = 0;
+
+        nftListData.forEach((res: any) => {
+          nftList[res.idx] = res;
+          updatedAt.push(Date.parse(res.nftUpdatedTime));
+
+          if (updatedAt) {
+            latestUpdatedAt = Math.max(...updatedAt);
+          }
+
+          if (res.metaData !== "" && res.metaData !== undefined) {
+            nftList[res.idx]["metaData"] = JSON.parse(res.metaData);
+          } else {
+            nftList[res.idx]["metaData"] = "";
+          }
+        });
+
+        context.commit("setNftLatestTime", latestUpdatedAt);
+        context.commit("setNftList", { info: nftList });
+      }
+    },
+
+    // async getNftList(context: Nullable) {
+    //   try {
+    //     console.log("호출1");
+    //     const response = await compareNftTime();
+    //     console.log('getNftlist에 response는',response)
+    //     // context.commit("setNftList", { info: nftList });
+
+    //   } catch (error) {
+    //     console.error("error");
+    //   }
+    // },
+
+    // async getBannerList(context: Nullable) {
+    //   try {
+    //     const response = await compareBannersTime();
+    //     console.log('getBannerList actions실행시',response)
+    //     context.commit("setBannerList", {info:bannerList});
+    //     context.commit('setBannerLatestTime',response);
+    //   } catch (error) {
+    //     console.error("error");
+    //   }
+    // },
+
+    async getTokenInfos(context: Nullable) {
+      const response = await tokenInfos();
+      if (response.status === 200) {
+        const resTokenData = response.data.data.tokenInfos;
+        const resScannerData = response.data.data.scanner;
+
+        let tokenInfos: any = {};
+        let scanners: any = {};
+
+        resTokenData.forEach((res: any) => {
+          tokenInfos[res.symbol] = res;
+        });
+
+        resScannerData.forEach((res: any) => {
+          scanners[res.chainId] = res;
+        });
+
+        store.commit("auth/setTokenInfos", { info: tokenInfos });
+        store.commit("auth/setScanners", { info: scanners });
+      }
     },
   },
 };

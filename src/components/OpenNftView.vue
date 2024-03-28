@@ -3,11 +3,11 @@
     <div class="flex flex-col">
       <div>
         <img
-  class="nftImg max-w-full h-auto fold:h-64"
-  :src="nftInfo.image"
-  alt=""
-  @click="goNftDetail(nftCard.nftId, nftCard.tokenId)"
-/>
+          class="nftImg max-w-full h-auto fold:h-64"
+          :src="nftInfo.image"
+          alt=""
+          @click="goNftDetail(nftCard.nftId, nftCard.tokenId)"
+        />
       </div>
       <div
         v-if="nftCard.enable === 0"
@@ -15,16 +15,8 @@
         @click="goNftDetail(nftCard.nftId, nftCard.tokenId)"
       ></div>
     </div>
-    <!-- <div v-if="nftCard.enable === 1" class="flex justify-center items-center" @click="goNftDetail(nftCard.nftId, nftCard.tokenId)">
-      <div class="pt-2 w-full text-center text-xl nftCardLife">
-        {{ nftCard.balance }} / {{ nftInfo.metaData.maxLife }}
-      </div>
-    </div> -->
     <div class="h-3"></div>
-    <div class="font-semibold text-center" v-if="locale === 'kr'">
-      {{ nftInfo.name.kor }}
-    </div>
-    <div class="font-semibold text-center" v-else>{{ nftInfo.name.eng }}</div>
+    <div class="font-semibold text-center">{{ nftInfo.name }}</div>
     <div class="h-1"></div>
     <div class="flex justify-center items-center">
       <template v-if="nftCard.enable === 0 && nftInfo.type === 2">
@@ -53,11 +45,7 @@
       </template>
     </div>
   </div>
-  <Modal
-    :visible="store.state.isPopup"
-    @hide="closeModal"
-    :title="popupTitle"
-  />
+  <Modal :visible="store.state.isPopup" @hide="closeModal" />
 </template>
 
 <script lang="ts" setup>
@@ -153,5 +141,4 @@ const goNftDetail = (idx: number, tokenId: number) => {
   background: rgba(0, 0, 0, 0.3);
   color: #fff;
 }
-
 </style>

@@ -59,16 +59,7 @@
       <div class="h-9"></div>
 
       <div>
-        <div v-if="locale === 'kr'" class="font-medium text-sm text-gray-400">
-          주의사항 : 추천인으로 자기 자신을 추천할 수 없습니다.<br />
-          같은 사람에게 여러 번 소문내기를 하더라도<br />
-          50 ESG Point가 지급됩니다.<br />
-          제 3자의 최초가입시에만 소문내기 한 사람에게<br />
-          1,000 ESG Point가 지급됩니다.<br />
-          한 번에 한 사람에게만 소문내기를 할 수 있습니다.<br />
-          하루에 5명의 레퍼럴을 할 수 있습니다.
-        </div>
-        <div v-else class="font-medium text-sm text-gray-400">
+        <div class="font-medium text-sm text-gray-400">
           Notice: You cannot refer yourself as a referrer.<br />
           Even if you spread the word to the same person multiple times,<br />
           you will be awarded 50 ESG Points.<br />
@@ -87,11 +78,7 @@
             {{ t("message.referral8") }}
           </span>
           <div>
-            <span v-if="locale === 'kr'" class="text-lg font-bold block py-2">
-              아래 칸에 추천인 코드를 입력한 후<br />
-              확인 버튼을 눌러주세요
-            </span>
-            <span v-else class="text-lg font-bold block py-2">
+            <span class="text-lg font-bold block py-2">
               Please enter the referral code in the box below<br />
               and press the confirm button
             </span>

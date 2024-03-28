@@ -23,6 +23,8 @@
       />
       <div class="flex flex-col justify-center items-center">
         <template v-if="popupType === 'qr_code'">
+          <!-- <template v-if="isQrCodePopup"> -->
+
           <div class="flex flex-col justify-center items-center">
             <div class="font-semibold text-2xl">My Address</div>
             <div class="h-5"></div>
@@ -765,7 +767,7 @@ const pwHash = computed(() => store.getters["auth/getPwHash"]);
 const pwNumber = computed(() => store.getters["auth/getPwNumber"]);
 
 const popupType = ref("");
-
+console.log(popupType.value)
 //출금번호 초기화
 const userEmail = computed(() => store.getters["auth/getUserEmail"]);
 

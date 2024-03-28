@@ -162,10 +162,18 @@ router.beforeEach(async (to: Nullable, from: Nullable, next: Nullable) => {
   next();
 });
 
+const scrollToTop = () => {
+  const topsScroll = document.getElementById("appMain");
+  if (topsScroll) {
+    topsScroll.scrollTo({ top: 0, left: 0 });
+  }
+}
+
 router.afterEach(async (to: Nullable, from: Nullable, next: Nullable) => {
   setTimeout(() => {
     store.state.isLoading = false;
   }, 0);
+  scrollToTop();
 });
 
 export default router;
