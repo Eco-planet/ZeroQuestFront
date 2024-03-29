@@ -145,7 +145,7 @@ import { useI18n } from "vue-i18n";
 import "vue3-carousel/dist/carousel.css";
 const vuexStore = useStore();
 const referral = computed(() => vuexStore.getters["auth/getReferral"]);
-const bannerList = store.getters["auth/getBannerList"];
+const bannerList = computed(() => store.getters["auth/getBannerList"]);
 const nftList = computed(() => vuexStore.getters["auth/getNftList"]);
 const bannerLatestTime = computed(() =>
   parseInt(vuexStore.state.auth.bannerLatestTime)
@@ -153,11 +153,13 @@ const bannerLatestTime = computed(() =>
 const nftLatestTime = computed(() =>
   parseInt(vuexStore.state.auth.nftLatestTime)
 );
-const esgPoint = computed(() => parseInt(vuexStore.state.auth.balances));
-
+const userTokenInfo = computed(() => vuexStore.getters["auth/getBalances"]);
+const esgPoint = parseInt(userTokenInfo.value.ESGP);
 const myNftList = ref<nftType>();
 
-onMounted(() => {
+onMounted(async () => {
+  checkNftLatestTime(vuexStore, nftLatestTime.value);
+  checkBannerLatestTime(vuexStore, bannerLatestTime.value);
   getMyNftList();
 });
 
@@ -170,8 +172,6 @@ const getMyNftList = () => {
     })
     .then((response) => {
       myNftList.value = response.data.data;
-      console.log("zero는", response.data.data);
-      console.log("response는", response);
     });
 };
 

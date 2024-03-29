@@ -10,11 +10,6 @@ const routes: Array<RouteRecordRaw> = [
     component: GoogleView,
   },
   {
-    path: "/login",
-    name: "login",
-    component: GameLoginView,
-  },
-  {
     path: "/myzq",
     name: "myzq",
     component: () =>
@@ -96,12 +91,6 @@ const routes: Array<RouteRecordRaw> = [
       import(/* webpackChunkName: "battle" */ "../views/EntryPage.vue"),
   },
   {
-    path: "/about",
-    name: "about",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
-  },
-  {
     path: "/terms",
     name: "terms",
     component: () =>
@@ -167,7 +156,7 @@ const scrollToTop = () => {
   if (topsScroll) {
     topsScroll.scrollTo({ top: 0, left: 0 });
   }
-}
+};
 
 router.afterEach(async (to: Nullable, from: Nullable, next: Nullable) => {
   setTimeout(() => {

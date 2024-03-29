@@ -287,15 +287,6 @@
               </div>
               <div>
                 <div
-                  v-if="locale === 'kr'"
-                  class="py-3 px-10 bg-gray-100 rounded-lg font-medium text-xl"
-                >
-                  인증코드 요청 시<br />
-                  현재 로그인 된 구글 메일로 <br />
-                  임의로 생성된 인증번호를 전송합니다.
-                </div>
-                <div
-                  v-else
                   class="py-3 px-10 bg-gray-100 rounded-lg font-medium text-xl"
                 >
                   When requesting an authentication code, a randomly generated
@@ -333,30 +324,14 @@
 
         <template v-if="popupType === 'duplicate_nft_buy'">
           <div>
-            <div
-              v-if="locale === 'kr'"
-              class="mb-16 text-3xl font-bold text-black"
-            >
-              자발적 탄소감축을 위한 <br />
-              NFT는 반복 구매할 수 없습니다.
-            </div>
-            <div v-else class="mb-16 text-3xl font-bold text-black">
+            <div class="mb-16 text-3xl font-bold text-black">
               Voluntary carbon reduction <br />
               NFTs cannot be purchased repeatedly.
             </div>
           </div>
 
           <div>
-            <div
-              v-if="locale === 'kr'"
-              class="font-semibold text-xl text-black text-2xl"
-            >
-              자발적 탄소감축 "제로퀘스트"를 <br />
-              친구들에게 추천하면<br />
-              <span class="text-esg-color font-bold">50ESG point</span> 를
-              드립니다
-            </div>
-            <div v-else class="font-semibold text-xl text-black text-2xl">
+            <div class="font-semibold text-xl text-black text-2xl">
               If you refer 'ZeroQuest' to friends, <br />
               you'll earn<br />
               <span class="text-esg-color font-bold">50ESG points</span>
@@ -371,37 +346,7 @@
         </template>
 
         <template v-if="popupType === 'game_install'">
-          <div
-            v-if="locale === 'kr'"
-            class="flex flex-col justify-center items-center"
-          >
-            <div class="h-5"></div>
-            <div class="text-2xl text-center">
-              NFT 를 활성화하기 위해서는<br />{{
-                nftList[store.state.nftId].name.kor
-              }}
-              App 을<br />설치해야 합니다.
-            </div>
-            <div class="h-10"></div>
-            <div class="flex items-center justify-center">
-              <img :src="nftList[store.state.nftId].image" />
-            </div>
-            <div class="h-10"></div>
-            <div class="text-xl text-center">
-              연동되는 어플리케이션은 설치 후 동일한<br />구글 로그인을 사용해야
-              합니다.
-            </div>
-            <div class="h-10"></div>
-            <div class="w-full flex justify-center items-center">
-              <button
-                class="wp-40 p-2 font-semibold text-2xl text-white game-btn"
-                @click="resData(store.state.nftId.toString())"
-              >
-                설치하기
-              </button>
-            </div>
-          </div>
-          <div v-else class="flex flex-col justify-center items-center">
+          <div class="flex flex-col justify-center items-center">
             <div class="h-5"></div>
             <div class="text-2xl text-center">
               To activate NFTs,<br />you need to install<br />the
@@ -428,29 +373,7 @@
           </div>
         </template>
         <template v-if="popupType === 'game_off'">
-          <div
-            v-if="locale === 'kr'"
-            class="flex flex-col justify-center items-center"
-          >
-            <div class="h-5"></div>
-            <div class="text-2xl text-center font-medium">
-              NFT 를 <span style="color: red">OFF</span> 하면<br />탄소절감
-              데이터가 적용<br />되지 않습니다.
-            </div>
-            <div class="h-10"></div>
-            <div class="w-full flex justify-center items-center">
-              <button
-                class="wp-60 p-2 font-semibold text-2xl text-white off-btn"
-                @click="resData('OFF')"
-              >
-                OFF
-              </button>
-            </div>
-          </div>
-          <div
-            v-else
-            class="flex flex-col justify-center items-center font-medium"
-          >
+          <div class="flex flex-col justify-center items-center font-medium">
             <div class="h-5"></div>
             <div class="text-2xl text-center font-medium">
               If you <span style="color: red">OFF</span> NFT,<br />carbon
@@ -767,7 +690,7 @@ const pwHash = computed(() => store.getters["auth/getPwHash"]);
 const pwNumber = computed(() => store.getters["auth/getPwNumber"]);
 
 const popupType = ref("");
-console.log(popupType.value)
+console.log(popupType.value);
 //출금번호 초기화
 const userEmail = computed(() => store.getters["auth/getUserEmail"]);
 

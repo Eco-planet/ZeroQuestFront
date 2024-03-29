@@ -154,7 +154,6 @@ const shareTelegram = () => {
     const infoShareTelegram = {
       content: {
         objectType: "feed",
-        // title: `ZeroQuest - 친구초대 이벤트 ${referralSlice}을 입력하세요`,
         title: `ZeroQuest - Please enter ${referralSlice} on Referral COde Entry`,
 
         description: `https://play.google.com/store/apps/details?id=com.aiblue.zrqst_multilingual_webview_app`,

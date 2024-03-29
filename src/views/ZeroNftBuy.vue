@@ -35,7 +35,6 @@
             <div class="mt-10 text-xl">
               <div class="flex justify-between mb-4">
                 <span>Expiration Date</span>
-                <!-- <span>{{ formatDate(filterNft.expiration_data) }}</span> -->
                 <span>2023-05-31</span>
               </div>
               <div class="flex justify-between mb-4">
@@ -146,7 +145,8 @@ const router = useRouter();
 const nftId = parseInt(route.params.idx);
 const vuexStore = useStore();
 const isLoading = ref(false);
-const esgPoint = computed(() => parseInt(vuexStore.state.auth.balances));
+const userTokenInfo = computed(() => vuexStore.getters["auth/getBalances"]);
+const esgPoint = parseInt(userTokenInfo.value.ESGP);
 
 const nowNft = Object.values(store.getters["auth/getNftList"]).filter(
   (item) => item.idx === nftId
@@ -171,12 +171,12 @@ const buyNftESGP = (nft: nftType) => {
       address: getAddress,
       privateKey: getPk,
     })
-    .then((res) => {
+    .then(async (res) => {
       console.log("res", res);
       store.state.popupType = "successMinting";
       store.state.isPopup = true;
       popupTitle.value = "message.successMinting";
-      vuexStore.dispatch("auth/getPointBalanceAll");
+      await vuexStore.dispatch("auth/getPointBalanceAll");
     })
     .catch((err) => {
       console.log("err", err);
@@ -198,7 +198,6 @@ const buyNftESGP = (nft: nftType) => {
     })
     .finally(() => {
       isLoading.value = false;
-      // location.reload();
     });
 };
 

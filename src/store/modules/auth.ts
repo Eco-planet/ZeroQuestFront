@@ -36,16 +36,11 @@ export default {
     nftTime: localStorage.getItem("nftTime") || 0,
     bannersTime: localStorage.getItem("bannersTime") || 0,
     bannerLatestTime: localStorage.getItem("bannerLatestTime") || 0,
-    // compareBannersTime: localStorage.getItem('compareBannersTime') || 0,
     compareNftTime: localStorage.getItem("compareNftTime") || 0,
-    getBalance: localStorage.getItem("getBalance") || 0,
-    // nftListUpdated: false,
-    ///////////////////////////////////////////////
     terms: localStorage.getItem("terms") || "",
     vote: localStorage.getItem("vote") || 0,
     pwHash: localStorage.getItem("pwHash") || "",
     pwNumber: localStorage.getItem("pwNumber") || "",
-    ///레퍼럴 테스트
     referral: localStorage.getItem("referral") || "",
   },
   getters: {
@@ -91,9 +86,6 @@ export default {
       return state.privateKey;
     },
     getAddress: (state: Nullable) => {
-      return state.address;
-    },
-    getAddress2: (state: Nullable) => {
       return state.address;
     },
     getBalances: (state: Nullable) => {
@@ -218,14 +210,9 @@ export default {
 
       localStorage.setItem("address", address);
     },
-    // setBalances(state: Nullable, { balance }: Nullable) {
-    //   state.balances = balance;
-    //   // localStorage.setItem("balances", balance);
-    //   localStorage.setItem("balances", JSON.stringify(balance));
-    // },
-    setBalances(state: Nullable, balance: Nullable) {
-      state.balances = balance; // 상태 업데이트
-      localStorage.setItem("balances", balance);
+    setBalances(state: Nullable, { balance }: Nullable) {
+      state.balances = JSON.stringify(balance); // 상태 업데이트
+      localStorage.setItem("balances", JSON.stringify(balance));
     },
 
     setWithdrawPw(state: Nullable, { pw }: Nullable) {
@@ -238,28 +225,22 @@ export default {
       localStorage.setItem("nftList", JSON.stringify(info));
     },
 
-    setNftLatestTime(state: Nullable, payload: Nullable) {
-      state.nftLatestTime = payload;
-      localStorage.setItem("nftLatestTime", payload);
+    setNftLatestTime(state: Nullable, nftLatestTime: Nullable) {
+      state.nftLatestTime = nftLatestTime;
+      localStorage.setItem("nftLatestTime", nftLatestTime);
+      console.log("nftLatestTime", nftLatestTime);
     },
-    // setBannerLatestTime(state: Nullable, payload: Nullable) {
-    //   state.bannerLatestTime = payload;
-    //   localStorage.setItem("bannerLatestTime", payload);
-    // },
+
     setBannerLatestTime(state: Nullable, bannerLatestTime: Nullable) {
       state.bannerLatestTime = bannerLatestTime;
       localStorage.setItem("bannerLatestTime", bannerLatestTime);
+      console.log("bannerLatestTime", bannerLatestTime);
     },
 
     setBannerList(state: Nullable, { info }: Nullable) {
       state.bannerList = JSON.stringify(info);
       localStorage.setItem("bannerList", JSON.stringify(info));
     },
-
-    // setNftTime(state: Nullable, payload: Nullable) {
-    //   state.NftListTime = payload
-    //   localStorage.setItem('NftTime',payload)
-    // },
 
     setBannerTime(state: Nullable, payload: Nullable) {
       state.bannerTimes = payload; //payload를 변경
@@ -310,7 +291,9 @@ export default {
           context.commit("setReferral", {
             referral: response.data.data.referral,
           });
-
+          context.commit("setBalances", {
+            balance: response.data.data.userTokenInfo,
+          });
           const seed = openSSLCrypto.decode(response.data.data.wallet.seed);
           const walletData = ethers.Wallet.fromMnemonic(seed);
           const privateKey = openSSLCrypto.encode(walletData.privateKey);
@@ -405,13 +388,9 @@ export default {
       try {
         const response = await getPointBalanceAll();
         if (response.status === 200) {
-          const balances = response.data.data.balances;
-          const esgpBalance = balances.find(
-            (balance: { symbol: string; balance: string }) =>
-              balance.symbol === "ESGP"
-          )?.balance;
-          if (esgpBalance) {
-            context.commit("setBalances", esgpBalance);
+          const balance = response.data.data.userTokenInfo;
+          if (balance) {
+            context.commit("setBalances", { balance });
           }
         }
       } catch (error) {
@@ -421,6 +400,7 @@ export default {
 
     async getBannerList(context: Nullable) {
       const response = await bannerListApi();
+      console.log("getBannerList Response", response);
 
       if (response.status === 200) {
         const bannerListData = response.data.data;
@@ -446,6 +426,7 @@ export default {
 
     async getNftList(context: Nullable) {
       const response = await nftListApi();
+      console.log("getNftLIst는", response);
 
       if (response.status === 200) {
         const nftListData = response.data.data;

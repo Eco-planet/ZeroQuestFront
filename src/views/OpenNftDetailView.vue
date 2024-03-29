@@ -131,7 +131,7 @@ import panda from "@/components/common/panda.vue";
 
 const nftList = store.getters["auth/getNftList"];
 const nftDetail = ref();
-const esgPoint = computed(() => parseInt(vuexStore.state.auth.balances));
+
 const nftId = Number(router.currentRoute.value.params.idx);
 console.log("nftId", nftId);
 const tokenId = Number(router.currentRoute.value.params.tokenId);
@@ -140,6 +140,12 @@ const questRewards = ref();
 const totalRewards = ref();
 const popupTitle = ref("");
 const vuexStore = useStore();
+const esgPoint = computed(() =>
+  parseInt(
+    vuexStore.getters["auth/getBalances"].find((item) => item.symbol === "ESGP")
+      .balance
+  )
+);
 
 const { t } = useI18n();
 
@@ -316,7 +322,6 @@ const gameRun = () => {
         deepLink = nftList[nftId].ios_deeplink;
       }
 
-      //window.open(deepLink + '?token=' + response.data.data.appToken + '&name=' + store.getters["auth/getUserName"] + '&email=' + store.getters["auth/getUserEmail"] + '&uid=' + store.getters["auth/getUserId"], '_blank');
       window.flutter_inappwebview.callHandler("handlePlayBtn", {
         deepLink: deepLink,
         token: response.data.data.appToken,

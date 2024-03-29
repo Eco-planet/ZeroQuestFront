@@ -22,27 +22,23 @@
             </div>
             <div class="flex justify-end">
               <div class="flex flex-col justify-end list-margin">
-                <template v-if="Object.keys(balances).length > 0">
+                <template v-if="Object.keys(userTokenInfo).length > 0">
                   <div class="flex justify-end font-semibold text-2xl">
                     {{
-                      parseFloat(
-                        (1 * balances[key].balance).toFixed(item.decimals)
-                      )
+                      parseFloat(1 * userTokenInfo[key]).toFixed(item.decimals)
                     }}
                   </div>
                   <div class="flex justify-end text-sm">
                     =
                     {{
                       parseFloat(
-                        (item.price * balances[key].balance).toFixed(
-                          item.decimals
-                        )
+                        (item.price * userTokenInfo[key]).toFixed(item.decimals)
                       )
                     }}
                     USDT
                   </div>
                 </template>
-                <template v-if="Object.keys(balances).length === 0">
+                <template v-if="Object.keys(userTokenInfo).length === 0">
                   <div class="flex justify-end font-semibold text-2xl">0</div>
                   <div class="flex justify-end text-sm">= 0 USDT</div>
                 </template>
@@ -65,11 +61,18 @@
       </template>
     </div>
     <div class="h-10"></div>
-    <!-- <div class="flex font-semibold text-2xl">SWAP      <span @click="esgtoesgp">{{ fromSymbol.value }}</span>
-    </div>  -->
-    <div class="flex font-semibold text-2xl">
+    <div class="flex font-semibold text-2xl items-center">
       SWAP
-      <span @click="esgtoesgp" style="margin-left: 25px">{{ fromSymbol }}</span>
+      <select
+        v-model="selectedPair"
+        class="ml-5 border-none focus:border-none focus:outline-none"
+        style="margin-left: 20px"
+      >
+        <option value="ESGP-ESG">ESGP to ESG</option>
+        <option value="ESG-ESGP">ESG to ESGP</option>
+        <option value="ESG-ETH">ESG to ETH</option>
+        <option value="ETH-ESG">ETH to ESG</option>
+      </select>
     </div>
     <div class="h-2"></div>
     <div class="flex">
@@ -85,7 +88,6 @@
               style="text-align: left"
             />
             <div class="wp-50 flex justify-end items-center text-gray-400">
-              <!-- ESGP -->
               {{ fromSymbol }}
             </div>
           </div>
@@ -111,8 +113,7 @@
           <div
             class="input-field wp-20 flex justify-end items-center text-gray-400"
           >
-            <!-- ESG -->
-            {{ fromSymbol === "ESGP" ? "ESG" : "ESGP" }}
+            {{ toSymbol }}
           </div>
         </div>
         <div class="h-px h-5 bg-gray-200"></div>
@@ -132,6 +133,10 @@
       <div class="flex justify-start items-start">
         <div class="font-bold">·</div>
         <div class="ml-2 text-left">{{ t("message.swapCaution2") }}</div>
+      </div>
+      <div class="flex justify-start items-start">
+        <div class="font-bold">·</div>
+        <div class="ml-2 text-left">{{ t("message.swapCaution3") }}</div>
       </div>
     </div>
     <div class="h-10"></div>
@@ -169,15 +174,16 @@ import http from "@/api/http";
 import CryptoJS from "crypto";
 import openSSLCrypto from "@/utils/openSSLCrypto";
 import { useI18n } from "vue-i18n";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, reactive, watchEffect } from "vue";
 import Modal from "@/components/Modal/index.vue";
 import { errorMsg } from "@/utils/util";
 import { useStore } from "vuex";
-import { computed } from "vue";
+import { computed, watch } from "vue";
 
 const { t } = useI18n();
 const vuexStore = useStore();
-const esgPoint = computed(() => parseInt(vuexStore.state.auth.balances));
+const userTokenInfo = computed(() => vuexStore.getters["auth/getBalances"]);
+const esgPoint = parseInt(userTokenInfo.value.ESGP);
 const balances = ref({});
 const withdrawSymbol = ref("");
 const popupTitle = ref("");
@@ -188,10 +194,21 @@ const swapEsg = ref(0);
 const showClose = ref(true);
 const tokenInfos = computed(() => store.getters["auth/getTokenInfos"]);
 
-const fromSymbol = ref("ESGP");
-const toSymbol = ref("ESG");
+// 선택된 쌍을 저장할 ref
+const selectedPair = ref("ESGP-ESG");
+// fromSymbol과 toSymbol을 저장할 ref
+const fromSymbol = ref("");
+const toSymbol = ref("");
 
-onMounted(async () => {});
+watchEffect(() => {
+  const [from, to] = selectedPair.value.split("-");
+  fromSymbol.value = from;
+  toSymbol.value = to;
+});
+
+onMounted(async () => {
+  await vuexStore.dispatch("auth/getPointBalanceAll");
+});
 
 const checkError = (status: number, code: number) => {
   if (status === 400) {
@@ -226,7 +243,7 @@ const getStatusCheck = (type: string, symbol: string) => {
       } else {
         if (isUpdate.value === true) {
           isUpdate.value = false;
-          vuexStore.dispatch("auth/getPointBalance");
+          vuexStore.dispatch("auth/getPointBalanceAll");
         }
 
         if (type === "sendCoin") {
@@ -293,11 +310,12 @@ const sendCoin = (
       privateKey: store.getters["auth/getPrivateKey"],
       password: passwd,
     })
-    .then((response) => {
+    .then(async (response) => {
+      console.log("🚀 ~ .then ~ response:", response);
       store.state.popupType = "message";
       popupTitle.value = "message.withdrawRequestEnd";
       store.state.isPopup = true;
-      // store.dispatch('getPointBalanceAll')
+      await store.dispatch("auth/getPointBalanceAll");
     })
     .catch((error) => {
       checkError(error.response.status, error.response.data.errorCode);
@@ -305,11 +323,8 @@ const sendCoin = (
 };
 
 const showQrCode = () => {
-  console.log("Before change:", store.state.popupType, store.state.isPopup);
   store.state.popupType = "qr_code";
   store.state.isPopup = true;
-  console.log("After change:", store.state.popupType, store.state.isPopup);
-  console.log("Address:", store.getters["auth/getAddress"]);
 };
 
 const closeModal = () => {
@@ -322,7 +337,7 @@ const closeSwapModal = () => {
 };
 
 const getSwapInfo = () => {
-  if (swapEsgp.value < 30000) {
+  if (swapEsgp.value < 30000 && fromSymbol.value === "ESGP") {
     store.state.popupType = "message";
     popupTitle.value = "error.lessMiniumCostSwap";
     store.state.isPopup = true;
@@ -332,8 +347,6 @@ const getSwapInfo = () => {
         params: {
           fromAddress: store.getters["auth/getAddress"],
           toAddress: store.getters["auth/getAddress"],
-          // fromSymbol: "ESGP",
-          // toSymbol: "ESG",
           fromSymbol: fromSymbol.value,
           toSymbol: toSymbol.value,
           amount: swapEsgp.value,
@@ -365,8 +378,6 @@ const sendSwap = () => {
     .post("/api/swap/send", {
       fromAddress: store.getters["auth/getAddress"],
       toAddress: store.getters["auth/getAddress"],
-      // fromSymbol: "ESGP",
-      // toSymbol: "ESG",
       fromSymbol: fromSymbol.value,
       toSymbol: toSymbol.value,
       amount: swapEsgp.value,
@@ -382,24 +393,11 @@ const sendSwap = () => {
 
       swapEsgp.value = 0;
       swapEsg.value = 0;
+      store.dispatch("auth/getPointBalanceAll");
     })
     .catch((error) => {
       checkError(error.response.status, error.response.data.errorCode);
     });
-};
-
-const esgtoesgp = () => {
-  console.log(
-    `Before swap: fromSymbol = ${fromSymbol.value}, toSymbol = ${toSymbol.value}`
-  );
-  let tempFrom = fromSymbol.value;
-  let tempTo = toSymbol.value;
-  // fromSymbol과 toSymbol 값을 서로 바꿈
-  fromSymbol.value = tempTo;
-  toSymbol.value = tempFrom;
-  console.log(
-    `After swap: fromSymbol = ${fromSymbol.value}, toSymbol = ${toSymbol.value}`
-  );
 };
 
 const initSwapEsgp = () => {

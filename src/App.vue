@@ -1,12 +1,5 @@
 <template>
   <Header v-if="$route.name !== 'home' && $route.name !== 'login'" />
-  <!-- <Locale v-if="$route.name !== 'login'" /> -->
-  <!-- <nav v-if="$route.name !== 'login'">
-      <router-link to="/">{{ t("route.Home") }}</router-link> |
-      <router-link to="/about">{{ t("route.About") }}</router-link> |
-      <router-link to="/login">LOGIN</router-link> |
-      <router-link to="/mypage">MyPage</router-link>
-    </nav> -->
   <div
     id="appMain"
     class="wrap"
@@ -41,13 +34,11 @@ const bannerList = store.getters["auth/getBannerList"];
 const nftList = store.getters["auth/getNftList"];
 const pointBalance = store.getters["auth/getBalances"];
 const tokenInfos = store.getters["auth/getTokenInfos"];
-// const tokenInfos = computed(() => store.getters["auth/getTokenInfos"]);
 
 onMounted(async () => {
-  if(!pointBalance) {
-  vuexStore.dispatch("auth/getPointBalanceAll");
+  if (!pointBalance) {
+    vuexStore.dispatch("auth/getPointBalanceAll");
   }
-
   if (!bannerList) {
     await vuexStore.dispatch("auth/getBannerList");
   }

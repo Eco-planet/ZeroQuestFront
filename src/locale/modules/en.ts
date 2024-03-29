@@ -82,6 +82,8 @@ export default {
     swapCaution1: "You can swap from ESG point 30,000 points or higher.",
     swapCaution2:
       "ESG Token's price is based on a 7-day average price for CoinMarketCap.",
+    swapCaution3:
+      "Except for ESGP, the balance of ESG and ETH tokens is reflected after the blockchain transaction is completed and therefore does not change immediately.",
     addressCaution1: "We only support the same main net when making a deposit.",
     addressCaution2:
       "Only matic (polygon mainnet) and ESG (Ethereum) mainnet can be deposited and withdrawn.",
