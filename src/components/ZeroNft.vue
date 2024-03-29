@@ -10,14 +10,8 @@
               class="w-full h-full object-contain object-top"
             />
           </div>
-          <div
-            class="mt-4 text-xl font-medium text-black"
-            v-if="locale === 'kr'"
-          >
-            {{ nft.name.kor }}
-          </div>
-          <div class="mt-4 text-lg font-medium text-black" v-else>
-            {{ nft.name.eng }}
+          <div class="mt-4 text-lg font-medium text-black">
+            {{ nft.name }}
           </div>
           <div class="text-lg font-light text-gray-400">
             {{ Number(nft.buyPrice2).toLocaleString() }} ESG point
@@ -47,17 +41,7 @@ onMounted(() => {
 
 const getNftList = () => {
   http.get("/api/nft/zeroNft").then((res) => {
-    const parsedData = res.data.data.map((item: any) => {
-      if (item.name) {
-        try {
-          return { ...item, name: JSON.parse(item.name) };
-        } catch (e) {
-          console.error("Failed to parse name:", e);
-        }
-      }
-      return item;
-    });
-    nftList.value = parsedData;
+    nftList.value = res.data.data;
   });
 };
 
