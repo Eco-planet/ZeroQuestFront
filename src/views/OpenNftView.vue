@@ -30,9 +30,7 @@
         />
       </template>
     </div>
-    <div class="h-10"></div>
-    <div class="h-10"></div>
-    <div class="h-10"></div>
+    <div class="media-Bottom"></div>
   </div>
   <Modal
     :visible="store.state.isPopup"
@@ -224,5 +222,21 @@ function goToLink(link: string) {
 .nftOff {
   background-color: #ccc;
   border-radius: 5px;
+}
+
+.media-Bottom {
+  margin-bottom: 100px;
+  @media (min-width: 450px) {
+    margin-bottom: 100px;
+  }
+  @media (min-width: 450px) {
+    margin-bottom: 140px;
+  }
+  @media (min-width: 650px) {
+    margin-bottom: 180px;
+  }
+  @media (min-width: 900px) {
+    margin-bottom: 240px;
+  }
 }
 </style>

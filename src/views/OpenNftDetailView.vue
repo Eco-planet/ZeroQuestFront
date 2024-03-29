@@ -140,12 +140,8 @@ const questRewards = ref();
 const totalRewards = ref();
 const popupTitle = ref("");
 const vuexStore = useStore();
-const esgPoint = computed(() =>
-  parseInt(
-    vuexStore.getters["auth/getBalances"].find((item) => item.symbol === "ESGP")
-      .balance
-  )
-);
+const userTokenInfo = computed(() => vuexStore.getters["auth/getBalances"]);
+const esgPoint = parseInt(userTokenInfo.value.ESGP);
 
 const { t } = useI18n();
 

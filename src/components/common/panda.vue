@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>
+    <div class="mx-10">
       <div>
         <h5 v-if="nftId === '4'" class="pb-8 text-3xl text-black font-semibold">
           Endangered Animals Awareness Series 1<br />

@@ -53,6 +53,12 @@ const routes: Array<RouteRecordRaw> = [
     component: () =>
       import(/* webpackChunkName: "mywallet" */ "../views/MyWalletView.vue"),
   },
+  {
+    path: "/challenge",
+    name: "challenge",
+    component: () =>
+      import(/* webpackChunkName: "terms" */ "../views/Challenge.vue"),
+  },
 
   {
     path: "/battle",

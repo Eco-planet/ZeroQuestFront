@@ -46,7 +46,7 @@
           </div>
 
           <div class="h-2"></div>
-          <div class="font-semibold text-center">
+          <div class="font-semibold text-center nftName">
             {{ nftList[item.nftId].name }}
           </div>
         </div>
@@ -60,7 +60,7 @@
             />
           </div>
           <div class="h-2"></div>
-          <div class="font-semibold text-center">
+          <div class="font-semibold text-center nftName">
             {{ nftList[item.nftId].name }}
           </div>
         </div>
@@ -84,7 +84,7 @@
           @click="goToDetail(item.idx)"
         />
         <div class="h-2"></div>
-        <div class="font-semibold text-center">{{ item.name }}</div>
+        <div class="font-semibold text-center nftName">{{ item.name }}</div>
       </div>
     </div>
     <div class="h-10"></div>
@@ -125,7 +125,7 @@
         </div>
       </div>
     </div>
-    <div class="h-40"></div>
+    <div class="media-Bottom"></div>
   </div>
 </template>
 
@@ -233,15 +233,27 @@ function referPage() {
   height: 100%;
   object-fit: contain;
   object-position: center top;
-  height: 100px;
   @media (max-width: 280px) and (max-height: 653px) {
-    height: 50px; // Fold 사이즈에서의 높이
+    height: 80px; // Fold 사이즈에서의 높이
+  }
+  @media (min-width: 450px) {
+    height: 80%;
+  }
+}
+
+.nftName {
+  @media (min-width: 450px) {
+    font-size: 15px;
   }
 }
 
 .media-Bottom {
+  margin-bottom: 60px;
   @media (min-width: 450px) {
     margin-bottom: 100px;
+  }
+  @media (min-width: 450px) {
+    margin-bottom: 120px;
   }
 }
 
