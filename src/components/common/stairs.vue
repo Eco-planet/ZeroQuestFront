@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>
+    <div class="mx-10">
       <div>
         <h5 class="pb-8 text-3xl text-black font-medium">
           How to Use the "Going Up Stairs" NFT
