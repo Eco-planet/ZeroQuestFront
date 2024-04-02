@@ -329,12 +329,13 @@ const gameRun = () => {
 };
 
 const updateNftEnable = (type: String) => {
+  console.log("클릭")
   if (type == "INSTALL") {
     console.log("nftInfo는", nftInfo); // idx3이랑, cid, type이 잘 받아지는 것이 확인이 된다.
     store.state.nftId = nftId;
     store.state.nftIdx = nftInfo.idx;
 
-    // idx가 3인 경우 모달 창 띄우기
+    // idx가 3인 경우 모달 창 띄우기(tree)
     if (nftInfo.idx === 3) {
       store.state.popupType = "tree_nft";
       store.state.isPopup = true;

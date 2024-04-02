@@ -477,11 +477,6 @@
               When you withdraw, your accumulated points and NFT information
               will be permanently deleted, and recovery will not be possible.
             </div>
-
-            <div class="mb-10 text-2xl font-semibold">
-              Also, if you rejoin on the same day after withdrawing, you will
-              not receive WMU voting rights. Please keep this in mind.
-            </div>
             <div class="flex justify-between">
               <button
                 class="w-44 h-12 font-semibold text-xl rounded close-btn bg-white text-green-800 border border-gray-300 border-solid"
