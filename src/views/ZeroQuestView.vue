@@ -5,7 +5,7 @@
       <Carousel :autoplay="3000" :wrap-around="true">
         <Slide v-for="slide in bannerList" :key="slide">
           <div class="carousel__item" style="overflow: hidden">
-            <img :src="slide.url" />
+            <img :src="slide.url" @click="goToLink(slide.link)" />
           </div>
         </Slide>
       </Carousel>
@@ -207,6 +207,11 @@ function referPage() {
   router.push({
     path: "/myzq/referral",
     name: "referral",
+  });
+}
+function goToLink(link: string) {
+  router.push({
+    path: link,
   });
 }
 </script>

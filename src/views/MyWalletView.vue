@@ -297,6 +297,7 @@ const sendCoin = (
   value: number,
   password: string
 ) => {
+  store.state.isLoading = true;
   const passwd = openSSLCrypto.encode(
     CryptoJS.createHash("md5").update(password).digest("hex")
   );
@@ -311,11 +312,11 @@ const sendCoin = (
       password: passwd,
     })
     .then(async (response) => {
-      console.log("🚀 ~ .then ~ response:", response);
-      store.state.popupType = "message";
-      popupTitle.value = "message.withdrawRequestEnd";
-      store.state.isPopup = true;
       await store.dispatch("auth/getPointBalanceAll");
+      store.state.isLoading = false;
+      popupTitle.value = "message.withdrawRequestEnd";
+      store.state.popupType = "message";
+      store.state.isPopup = true;
     })
     .catch((error) => {
       checkError(error.response.status, error.response.data.errorCode);
@@ -337,10 +338,12 @@ const closeSwapModal = () => {
 };
 
 const getSwapInfo = () => {
+  store.state.isLoading = true;
   if (swapEsgp.value < 30000 && fromSymbol.value === "ESGP") {
     store.state.popupType = "message";
     popupTitle.value = "error.lessMiniumCostSwap";
     store.state.isPopup = true;
+    store.state.isLoading = false;
   } else {
     http
       .get("/api/swap/estimate", {
@@ -353,7 +356,7 @@ const getSwapInfo = () => {
         },
       })
       .then((response) => {
-        console.log("response getSwapInfo에", response);
+        store.state.isLoading = false;
         if (response.data.data.userSendPrice < response.data.data.minSwap) {
           swapEsg.value = 0;
 

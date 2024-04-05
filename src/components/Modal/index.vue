@@ -72,7 +72,7 @@
             <div class="p-5 flex flex-col text-xl rounded pass-back-bg">
               <div class="flex justify-start items-center">
                 <div>
-                  {{ t("message.withdrawPassInput") }}
+                  {{ t("message.withdrawNewPassInput") }}
                 </div>
                 <div class="ml-4">
                   <input
@@ -131,7 +131,7 @@
             <div class="h-10"></div>
             <div class="p-5 flex flex-col text-xl rounded pass-back-bg">
               <div class="flex justify-between items-center">
-                <div>{{ t("message.withdrawPassInput") }}</div>
+                <div>{{ t("message.withdrawNewPassInput") }}</div>
                 <div class="ml-4">
                   <input
                     type="password"
