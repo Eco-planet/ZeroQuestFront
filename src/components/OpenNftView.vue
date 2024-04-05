@@ -1,23 +1,27 @@
 <template>
-  <div class="flex flex-col">
-    <div class="flex flex-col">
-      <div>
-        <img
-          class="nftImg max-w-full h-auto fold:h-64"
-          :src="nftInfo.image"
-          alt=""
+  <div class="flex flex-col h-full justify-between">
+    <div>
+      <div class="flex flex-col">
+        <div>
+          <img
+            class="nftImg max-w-full h-auto fold:h-64"
+            :src="nftInfo.image"
+            alt=""
+            @click="goNftDetail(nftCard.nftId, nftCard.tokenId)"
+          />
+        </div>
+        <div
+          v-if="nftCard.enable === 0"
+          class="nftDisable"
           @click="goNftDetail(nftCard.nftId, nftCard.tokenId)"
-        />
+        ></div>
       </div>
-      <div
-        v-if="nftCard.enable === 0"
-        class="nftDisable"
-        @click="goNftDetail(nftCard.nftId, nftCard.tokenId)"
-      ></div>
+      <div class="h-3"></div>
+      <div class="flex flex-col items-center">
+      <div class="font-semibold text-center">{{ nftInfo.name }}</div>
     </div>
-    <div class="h-3"></div>
-    <div class="font-semibold text-center">{{ nftInfo.name }}</div>
-    <div class="h-1"></div>
+    </div>
+    
     <div class="flex justify-center items-center">
       <template v-if="nftCard.enable === 0 && nftInfo.type === 2">
         <div
@@ -84,7 +88,7 @@ watch(
 const updateNftEnable = (type: String) => {
   store.state.nftId = nftCard.value.nftId;
   store.state.nftIdx = nftCard.value.idx;
-
+  console.log(nftCard.value.nftId)
   if (type == "INSTALL") {
     let packageName = "";
 
@@ -101,7 +105,6 @@ const updateNftEnable = (type: String) => {
     window.flutter_inappwebview
       .callHandler("checkAppInstalled", { packageName: packageName })
       .then((res: any) => {
-        //console.log(JSON.stringify(res));
 
         if (res.result == true) {
           emit("updateEnable");
@@ -122,6 +125,10 @@ const updateNftEnable = (type: String) => {
     console.log("debug1");
     store.state.popupType = "tree_nft";
     store.state.isPopup = true;
+  } 
+  if( [4,5,6].includes(nftInfo.value.idx)) {
+    // console.log('nftInfo.value.idx',`/onft-detail/${nftInfo.value.idx}`)
+    router.push(`/onft-detail/${nftInfo.value.idx}`);
   }
 };
 
@@ -132,6 +139,10 @@ const closeModal = () => {
 const goNftDetail = (idx: number, tokenId: number) => {
   router.push({ name: "onft-detail", params: { idx, tokenId } });
 };
+
+// console.log('nftInfo',nftInfo.value)
+
+
 </script>
 
 <style scoped lang="scss">

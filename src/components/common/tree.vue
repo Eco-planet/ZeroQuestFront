@@ -55,7 +55,7 @@
       Voluntary Carbon Reduction Platform
     </div>
     <div class="flex justify-center">
-      <img class="pt-4" src="@/assets/images/zero.png" />
+      <img class="pt-4 img-full" src="@/assets/images/zero.png" />
     </div>
     <!-- <div class="mt-32 font-bold">
       * ESG points can be withdrawn to KakaoPay from My Points
@@ -84,5 +84,11 @@ const locale = computed(() => store.state.system.locale);
 .moduleBtnBg {
   background-color: #0c5d25;
   border-radius: 20px;
+}
+
+.img-full {
+  max-width: 100%; /* 최대 너비를 100%로 설정하여 컨테이너 너비에 맞춤 */
+  height: auto; /* 높이를 자동으로 설정하여 이미지의 원래 비율을 유지 */
+  object-fit: cover; /* 컨테이너를 꽉 채우면서 이미지의 비율을 유지 */
 }
 </style>

@@ -29,7 +29,6 @@
         <img :src="nftInfo.image" />
         <div
           v-if="nftDetail === undefined || nftDetail.enable === 0"
-          class="nftBg"
         ></div>
       </div>
       <div class="h-10"></div>
@@ -329,7 +328,10 @@ const gameRun = () => {
 };
 
 const updateNftEnable = (type: String) => {
+  let newEnableStatus = nftDetail.value.enable === 1 ? 0 : 1;
+  console.log('newEnableStatus',newEnableStatus)
   console.log("클릭")
+  console.log("값은 뭐지",nftDetail.value.enable)
   if (type == "INSTALL") {
     console.log("nftInfo는", nftInfo); // idx3이랑, cid, type이 잘 받아지는 것이 확인이 된다.
     store.state.nftId = nftId;
@@ -379,6 +381,11 @@ const updateNftEnable = (type: String) => {
     store.state.popupType = "game_off";
     store.state.isPopup = true;
   } else if (type === "RUN") {
+    if (nftInfo.idx === 3) {
+			store.state.popupType = 'tree_nft';
+			store.state.isPopup = true;
+			return; // 모달 창을 띄운 후 함수를 종료한다.
+		}
     gameRun();
   }
 };

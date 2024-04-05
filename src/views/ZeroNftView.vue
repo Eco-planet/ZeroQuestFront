@@ -39,6 +39,7 @@
 
     <div class="media-Bottom"></div>
   </div>
+  <div class="mb-20"/>
 </template>
 
 <script lang="ts" setup>
