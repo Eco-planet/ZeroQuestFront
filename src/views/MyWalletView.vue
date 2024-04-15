@@ -84,7 +84,8 @@
               class="input-field font-semibold text-xl"
               v-model="swapEsgp"
               :onKeyup="initSwapEsgp"
-              @focus="swapEsgp == 0 ? (swapEsgp = '') : ''"
+              @focus="handleFocus"
+              placeholder="0"
               style="text-align: left"
             />
             <div class="wp-50 flex justify-end items-center text-gray-400">
@@ -413,6 +414,11 @@ const handleInput = () => {
     appMain.scrollTop = 0;
   }
 };
+
+const handleFocus = () => {
+  swapEsgp.value = ''
+  }
+
 </script>
 
 <style lang="scss">

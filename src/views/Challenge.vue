@@ -16,12 +16,38 @@
       </div>
     </div>
     <div class="h-10"></div>
+
+    <div class="w-full">
+			<div class="mb-4 p-5 border">
+				<div class="mb-6 text-2xl font-bold">Zero Challenge</div>
+				<div class="text-lg font-medium text-left">
+Zero Challenge is a habit tracker that makes practicing environmental protection enjoyable. 
+Various challenges record your carbon reduction efforts and support you. 
+Take on the challenge of carbon reduction now and see it lead to rewards.
+				</div>
+			</div>
+<!-- Carousel 적용하기 -->
+      <Carousel :autoplay="3000" :wrap-around="true">
+				<Slide
+					v-for="(slide, index) in bannerList"
+					:key="index"
+					v-if="bannerList"
+				>
+					<div class="carousel__item" style="overflow: hidden">
+						<img :src="slide.url" @click="goToLink(slide.link)" />
+					</div>
+				</Slide>
+			</Carousel>
+
+		</div>
+
     <!-- challenge배너1 -->
-    <div class="mt-5" v-for="(banner, index) in banners" :key="index">
+    <!-- <div class="mt-5" v-for="(banner, index) in banners" :key="index">
       <div class="flex justify-center pb-2">
         <img class="banner2_borderRadius" :src="banner" />
       </div>
-    </div>
+    </div> -->
+
     <!-- my Ranking-->
     <div class="mt-20">
       <div class="flex justify-center text-4xl font-bold">My Ranking</div>
@@ -122,6 +148,7 @@ import router from "@/router";
 import http from "@/api/http";
 import { useStore } from "vuex";
 import { getRankingApi } from "@/api/axios.ts";
+import { Carousel, Pagination, Slide } from 'vue3-carousel';
 
 const store = useStore();
 
@@ -143,6 +170,7 @@ onMounted(() => {
 
 const userTokenInfo = computed(() => store.getters["auth/getBalances"]);
 const esgPoint = parseInt(userTokenInfo.value.ESGP);
+const bannerList = computed(() => store.getters['auth/getBannerList']);
 
 const getRanking = async () => {
   try {
