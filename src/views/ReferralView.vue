@@ -93,6 +93,7 @@
             :placeholder="t('message.referral8')"
             class="px-10 py-4 text-center border border-black border-b-2"
             v-model="referralCode"
+            @focus="handleFocus"
           />
         </div>
 
@@ -108,7 +109,6 @@
   <Modal
     :visible="store.state.isPopup"
     @hide="closeModal"
-    @refreshHide="closeRefModal"
     :title="popupTitle"
   />
 </template>
@@ -143,6 +143,19 @@ const referralCode = ref(""); //레퍼럴 코드 확인용
 const locale = computed(() => vuexStore.state.system.locale);
 const { t } = useI18n();
 
+const handleFocus = (event) => {
+  const inputField = event.target;
+  setTimeout(() => {
+    inputField.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, 300); // 약간의 지연 후 스크롤, 키보드 나타나는 시간 고려
+};
+
+const showShareModal = async () => {
+  await vuexStore.dispatch("auth/getPointBalanceAll");
+  store.state.popupType = "shareSuccess";
+  store.state.isPopup = true;
+};
+
 // 소셜 공유하기, 텔레그램
 
 const shareTelegram = () => {
@@ -172,7 +185,7 @@ const shareTelegram = () => {
         infoShareTelegram: infoShareTelegram,
       })
       .then((res: any) => {
-        router.go(0);
+        showShareModal();
       });
   } else {
     console.error("store.state.referral is not defined or is empty");
@@ -243,16 +256,13 @@ const slicedReferralValue = computed(() => {
 const closeModal = () => {
   store.state.isPopup = false;
 };
-const closeRefModal = () => {
-  store.state.isPopup = false;
-  router.go(0);
-};
 </script>
 
 <style>
 .referral-contens-area {
   width: 100%;
   padding: 60px 50px 170px;
+  margin-bottom: 50px;
   text-align: center;
   position: relative;
 }

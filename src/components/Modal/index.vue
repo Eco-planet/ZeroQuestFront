@@ -512,6 +512,22 @@
             </div>
           </div>
         </template>
+        <template v-if="popupType === 'shareSuccess'">
+          <div>
+            <div class="mb-10 flex justify-center">
+              <img class="wp-30" src="@/assets/images/icon_success.png" />
+            </div>
+            <div class="font-bold text-2xl pb-8">Sharing was successful.</div>
+            <div>
+              <button
+                class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
+                @click="hide"
+              >
+                Closed
+              </button>
+            </div>
+          </div>
+        </template>
 
         <template
           v-if="
@@ -528,7 +544,8 @@
             popupType !== 'successMinting' &&
             popupType !== 'withDraw' &&
             popupType !== 'successWithdraw' &&
-            popupType !== 'tree_nft'
+            popupType !== 'tree_nft' &&
+            popupType !== 'shareSuccess'
           "
         >
           <div>
