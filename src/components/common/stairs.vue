@@ -105,13 +105,6 @@
             Through a request to install <br />
             'Stair Climb'Try installing NFC
           </div>
-          <button
-            type="button"
-            class="moduleBtnBg text-white font-medium text-sm mt-4 wp-80 h-24 text-2xl text-center"
-            @click="goToGoogleForm"
-          >
-            Request to install 'Stair Climbing'
-          </button>
           <div class="pb-8 mt-12 font-bold text-2xl">
             You can apply for a stair climbing installation in our neighborhood
           </div>

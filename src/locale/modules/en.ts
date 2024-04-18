@@ -94,7 +94,8 @@ export default {
     withdrawPassReset: "Withdrawal Password Reset",
     withdrawPassUpdate: "Reset Password",
     withdrawCount: "Quantity",
-    withdrawPassInput: "New password",
+    withdrawPassInput: "password",
+    withdrawNewPassInput: "New password",
     withdrawPassCheck: "Confirm password",
     withdrawPassCaution1:
       "Password is a total of 6 digits, special character combination",

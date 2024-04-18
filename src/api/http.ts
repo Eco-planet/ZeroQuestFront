@@ -45,23 +45,33 @@ instance.interceptors.response.use(
 
     store.state.errorCount += 1;
 
-    if (store.state.errorCount < 3 && errorRes.status === 401 && store.getters["auth/getRefreshToken"] !== undefined && store.getters["auth/getRefreshToken"] !== '') {
-      return await instance.post("/auth/refresh")
-      .then(async (res) => {
-        if (res.status === 200) {
-          store.commit("auth/setAccessToken", { token: res.data.data.accessToken, expireAt: res.data.data.accessExpiresIn });
+    if (
+      store.state.errorCount < 3 &&
+      errorRes.status === 401 &&
+      store.getters["auth/getRefreshToken"] !== undefined &&
+      store.getters["auth/getRefreshToken"] !== ""
+    ) {
+      return await instance
+        .post("/auth/refresh")
+        .then(async (res) => {
+          if (res.status === 200) {
+            store.commit("auth/setAccessToken", {
+              token: res.data.data.accessToken,
+              expireAt: res.data.data.accessExpiresIn,
+            });
 
-          originalRequest.headers.Authorization = `Bearer ${res.data.data.accessToken}`;
-          return axios(originalRequest);
-        } 
-      }).catch((err) => {
-        //console.log(err)
-        store.commit("auth/setClearToken");
+            originalRequest.headers.Authorization = `Bearer ${res.data.data.accessToken}`;
+            return axios(originalRequest);
+          }
+        })
+        .catch((err) => {
+          //console.log(err)
+          store.commit("auth/setClearToken");
 
-        router.push("/");
-      })
+          router.push("/");
+        });
     }
-    
+
     setTimeout(() => {
       store.state.isLoading = false;
     }, 1000);
@@ -75,6 +85,6 @@ instance.interceptors.response.use(
 
     return Promise.reject(error);
   }
-)
+);
 
 export default instance;

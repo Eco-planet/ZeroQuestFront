@@ -72,7 +72,7 @@
             <div class="p-5 flex flex-col text-xl rounded pass-back-bg">
               <div class="flex justify-start items-center">
                 <div>
-                  {{ t("message.withdrawPassInput") }}
+                  {{ t("message.withdrawNewPassInput") }}
                 </div>
                 <div class="ml-4">
                   <input
@@ -131,7 +131,7 @@
             <div class="h-10"></div>
             <div class="p-5 flex flex-col text-xl rounded pass-back-bg">
               <div class="flex justify-between items-center">
-                <div>{{ t("message.withdrawPassInput") }}</div>
+                <div>{{ t("message.withdrawNewPassInput") }}</div>
                 <div class="ml-4">
                   <input
                     type="password"
@@ -477,11 +477,6 @@
               When you withdraw, your accumulated points and NFT information
               will be permanently deleted, and recovery will not be possible.
             </div>
-
-            <div class="mb-10 text-2xl font-semibold">
-              Also, if you rejoin on the same day after withdrawing, you will
-              not receive WMU voting rights. Please keep this in mind.
-            </div>
             <div class="flex justify-between">
               <button
                 class="w-44 h-12 font-semibold text-xl rounded close-btn bg-white text-green-800 border border-gray-300 border-solid"
@@ -517,6 +512,22 @@
             </div>
           </div>
         </template>
+        <template v-if="popupType === 'shareSuccess'">
+          <div>
+            <div class="mb-10 flex justify-center">
+              <img class="wp-30" src="@/assets/images/icon_success.png" />
+            </div>
+            <div class="font-bold text-2xl pb-8">Sharing was successful.</div>
+            <div>
+              <button
+                class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
+                @click="hide"
+              >
+                Closed
+              </button>
+            </div>
+          </div>
+        </template>
 
         <template
           v-if="
@@ -533,7 +544,8 @@
             popupType !== 'successMinting' &&
             popupType !== 'withDraw' &&
             popupType !== 'successWithdraw' &&
-            popupType !== 'tree_nft'
+            popupType !== 'tree_nft' &&
+            popupType !== 'shareSuccess'
           "
         >
           <div>

@@ -97,12 +97,12 @@
           Through the 'Stair Climbing' NFT, <br />you can earn ESG points.
         </div>
       </div>
-      <a
+      <!-- <a
         href="https://docs.google.com/forms/d/e/1FAIpQLSc0DY0h1l9CM2bP9yWwBbmJFbjXq1owwtO8tAuJgXm8Ej6Sbg/viewform"
         target="_blank"
         class="moduleBtnBg block text-white font-medium py-8 text-center"
         >{{ t("message.introduction5") }}
-      </a>
+      </a> -->
       <div class="mt-40">
         <div>
           <span>

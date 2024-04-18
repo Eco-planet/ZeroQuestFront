@@ -1,5 +1,11 @@
 <template>
-  <Header v-if="$route.name !== 'home' && $route.name !== 'login'" />
+  <Header
+    v-if="
+      $route.name !== 'home' &&
+      $route.name !== 'login' &&
+      $route.name !== 'terms'
+    "
+  />
   <div
     id="appMain"
     class="wrap"
@@ -15,7 +21,13 @@
     <router-view />
     <div class="h-20"></div>
   </div>
-  <Footer v-if="$route.name !== 'home' && $route.name !== 'login'" />
+  <Footer
+    v-if="
+      $route.name !== 'home' &&
+      $route.name !== 'login' &&
+      $route.name !== 'terms'
+    "
+  />
   <LoadingSpinner v-if="store.state.isLoading"></LoadingSpinner>
 </template>
 

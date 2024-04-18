@@ -39,6 +39,7 @@
 
     <div class="media-Bottom"></div>
   </div>
+  <div class="mb-20"/>
 </template>
 
 <script lang="ts" setup>
@@ -94,6 +95,7 @@ console.log("switchTab", switchTab);
 </script>
 
 <style lang="scss">
+
 .text-esg-color {
   color: #24d120;
 }
@@ -125,4 +127,16 @@ console.log("switchTab", switchTab);
     margin-bottom: 220px;
   }
 }
+ul {
+  margin:0;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto; 
+}
+
+li {
+  flex-shrink: 1; 
+  max-width: 100%; 
+}
+
 </style>

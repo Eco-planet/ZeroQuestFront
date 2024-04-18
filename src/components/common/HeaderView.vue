@@ -70,6 +70,14 @@
         My Wallet
       </div>
       <div class="h-6"></div>
+      <div
+        class="text-2xl"
+        :class="{ select: $route.name === 'challenge' }"
+        @click="movePage('/challenge')"
+      >
+        Challenge
+      </div>
+      <div class="h-6"></div>
       <!-- <div class="text-2xl" :class="{ select: $route.name === 'battle' }" @click="movePage('/battle')">Battle</div> -->
       <!-- <div class="text-2xl" :class="{ select: $route.name === 'battle' }" @click="movePage1()">Battle</div> -->
       <!-- <div class="text-2xl" :class="{ select: $route.name === 'battle' }" @click="movePage1">Battle</div> -->
