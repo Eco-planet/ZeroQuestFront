@@ -47,6 +47,7 @@ import http from "@/api/http";
 import { onMounted, onUnmounted, ref, computed } from "vue";
 import MyNftCard from "@/components/OpenNftView.vue";
 import { Carousel, Pagination, Slide } from "vue3-carousel";
+import { checkBannerLatestTime } from "@/api/axios.ts";
 import { useStore } from "vuex";
 import "vue3-carousel/dist/carousel.css";
 
@@ -56,8 +57,12 @@ const myNftList = ref();
 const bannerList = store.getters["auth/getBannerList"];
 const onFlutter = ref(true);
 const popupTitle = ref("");
+const bannerLatestTime = computed(() =>
+  parseInt(vuexStore.state.auth.bannerLatestTime)
+);
 
 onMounted(() => {
+  checkBannerLatestTime(vuexStore, bannerLatestTime.value);
   window.addEventListener("flutterInAppWebViewPlatformReady", readyFlutter);
 
   getMyNftList();
