@@ -39,7 +39,7 @@
 
     <div class="media-Bottom"></div>
   </div>
-  <div class="mb-20"/>
+  <div class="mb-20" />
 </template>
 
 <script lang="ts" setup>
@@ -67,21 +67,20 @@ const nftLatestTime = computed(() =>
 
 onMounted(async () => {
   getNftCategory();
-  checkNftLatestTime(vuexStore, nftLatestTime.value);
+  if (categoryList.value && categoryList.value.length > 0) {
+    currentTab.value = categoryList.value[0];
+  }
 });
 
 const getNftCategory = () => {
   http.get("/api/nft/category").then((res) => {
-    // "전체" 항목을 추가합니다.
-    const allCategory = {
-      idx: 0,
-      name: "All", // 여기서 locale은 반응형 참조(ref)입니다.
-    };
-
-    // 서버로부터 받은 데이터에 "전체" 항목을 포함시킵니다.
-    categoryList.value = [allCategory, ...res.data.data];
-
-    // 기본적으로 "전체" 카테고리를 현재 탭으로 설정합니다.
+    categoryList.value = [
+      {
+        idx: 0,
+        name: "All",
+      },
+      ...res.data.data,
+    ];
     currentTab.value = categoryList.value[0];
   });
 };
@@ -95,7 +94,6 @@ console.log("switchTab", switchTab);
 </script>
 
 <style lang="scss">
-
 .text-esg-color {
   color: #24d120;
 }
@@ -128,15 +126,14 @@ console.log("switchTab", switchTab);
   }
 }
 ul {
-  margin:0;
+  margin: 0;
   display: flex;
   flex-wrap: nowrap;
-  overflow-x: auto; 
+  overflow-x: auto;
 }
 
 li {
-  flex-shrink: 1; 
-  max-width: 100%; 
+  flex-shrink: 1;
+  max-width: 100%;
 }
-
 </style>
