@@ -26,32 +26,31 @@
 import http from "@/api/http";
 import { reactive, ref, onMounted, Ref, computed } from "vue";
 import { useRouter } from "vue-router";
-import { NFTSampleType } from "@/types/IZeroNftType";
 import { useStore } from "vuex";
+import { checkNftLatestTime } from "@/api/axios.ts";
 
 const router = useRouter();
 const vuexStore = useStore();
-const nftList = ref();
 
-const locale = computed(() => vuexStore.state.system.locale);
+const nftList = computed(() => vuexStore.getters["auth/getNftList"]);
+
+const nftLatestTime = computed(() =>
+  parseInt(vuexStore.state.auth.nftLatestTime)
+);
 
 onMounted(() => {
-  getNftList();
+  checkNftLatestTime(vuexStore, nftLatestTime.value);
 });
-
-const getNftList = () => {
-  http.get("/api/nft/zeroNft").then((res) => {
-    nftList.value = res.data.data;
-  });
-};
 
 const nftListSort = computed(() => {
   if (!nftList.value) {
     return [];
   } else if (props.selectedIdx === 0) {
-    return nftList.value;
+    return Object.values(nftList.value);
   } else {
-    return nftList.value.filter((item) => item.cid === props.selectedIdx);
+    return Object.values(nftList.value).filter(
+      (item) => item.cid === props.selectedIdx
+    );
   }
 });
 
@@ -83,9 +82,9 @@ function goToDetail(idx: number) {
   box-shadow: 0 6px 8px 0px rgb(0 0 0 / 0.1), 0 2px 8px 0px rgb(0 0 0 / 0.1) 
 } */
 
- .shadow-nft {
-  border: 1px solid rgba(150, 150, 150, 0.2); 
-  box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.1), 2px 2px 6px 0px rgba(0, 0, 0, 0.1) !important;
-}  
-
+.shadow-nft {
+  border: 1px solid rgba(150, 150, 150, 0.2);
+  box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.1),
+    2px 2px 6px 0px rgba(0, 0, 0, 0.1) !important;
+}
 </style>

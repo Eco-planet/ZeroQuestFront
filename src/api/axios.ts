@@ -28,12 +28,11 @@ export const checkBannerLatestTime = async (
   if (response.status !== 200) {
     return;
   }
-  const checkBannerLatestTime = Date.parse(response.data.data.updatedAt);
+  const checkBannerLatestTime = response.data.data;
 
   if (checkBannerLatestTime === bannerLatestTime) {
     return;
   }
-  console.log("getBannerList");
   vuexStore.dispatch("auth/getBannerList");
 };
 //////////////////////////
@@ -51,13 +50,19 @@ export const checkNftLatestTime = async (
   nftLatestTime: any
 ) => {
   const response = await nftUpdatedAtApi();
+  console.log("🚀 ~ response:", response);
+  console.log("🚀 ~ response.data.data:", response.data.data);
   if (response.status !== 200) {
     return;
   }
-  const checkNftLatestTime = Date.parse(response.data.data.nftUpdatedTime);
+  const checkNftLatestTime = response.data.data;
+  console.log("🚀 ~ nftLatestTime:", nftLatestTime);
+  console.log("🚀 ~ checkNftLatestTime:", checkNftLatestTime);
   if (checkNftLatestTime === nftLatestTime) {
+    console.log("시간이 같에");
     return;
   }
+  console.log("시간이 달라");
   vuexStore.dispatch("auth/getNftList");
 };
 
