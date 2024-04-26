@@ -179,6 +179,21 @@
           </div>
         </template>
 
+        <template v-if="popupType === 'PreparingForService'">
+          <div>
+            <div class="mb-10 text-3xl font-bold">Service is Being Prepared</div>
+            <div>
+              <button
+                class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
+                @click="hide"
+              >
+                OK
+              </button>
+            </div>
+          </div>
+        </template>
+
+
         <template v-if="popupType === 'send_coin'">
           <div class="flex flex-col justify-center items-center">
             <div class="flex items-center">
@@ -268,7 +283,7 @@
               class="pt-4 font-semibold underline text-lg"
               @click="openResetPW"
             >
-              {{ t("message.forgetPassword") }}
+              {{ t("message.forgetPassword") }} 
             </div>
           </div>
         </template>
@@ -545,7 +560,8 @@
             popupType !== 'withDraw' &&
             popupType !== 'successWithdraw' &&
             popupType !== 'tree_nft' &&
-            popupType !== 'shareSuccess'
+            popupType !== 'shareSuccess' &&
+            popupType !== 'PreparingForService'
           "
         >
           <div>
@@ -846,9 +862,9 @@ const doCopy = () => {
 
 const doPass = () => {
   if (passwd1.value.length < 6) {
-    passwdMsg.value = "6자리 이상으로 입력해주세요.";
+    passwdMsg.value = "Please enter at least 6 characters.";
   } else if (passwd1.value !== passwd2.value) {
-    passwdMsg.value = "패스워드가 일치하지 않습니다.";
+    passwdMsg.value = "The passwords do not match.";
   } else {
     resData(passwd1.value);
 
@@ -887,10 +903,12 @@ const requestUpdatePW = () => {
 };
 
 const doSendCoin = () => {
+  console.log('withdrawl request 버튼 클릭');
   if (withdrawAddress.value === "") {
     withdrawMsg.value = t("message.withdrawError3");
-  } else if (withdrawCount.value < 0) {
+  } else if (!withdrawCount.value || withdrawCount.value < 0) {
     withdrawMsg.value = t("message.withdrawError4");
+    return;
   } else if (withdrawPass.value === "") {
     withdrawMsg.value = t("message.withdrawError5");
   } else {
@@ -1160,4 +1178,3 @@ const showLastSixChars = () => {
   border-radius: 5px; // 모서리 둥글게
 }
 </style>
-callWithErrorHandling,

@@ -48,39 +48,47 @@ Take on the challenge of carbon reduction now and see it lead to rewards.
       </div>
     </div> -->
 
-    <!-- my Ranking-->
     <div class="mt-20">
-      <div class="flex justify-center text-4xl font-bold">My Ranking</div>
-      <div class="flex justify-center">
-        <div class="mt-20 border border-8 rounded-full p-7 px-18">
-          <!-- email -->
-          <div
-            v-if="!myInfo || !myInfo.email"
-            class="text-3xl font-semibold pb-4"
-          >
-            -
-          </div>
-          <div v-else class="text-3xl font-semibold pb-4">
-            {{ myInfo.email.split("@")[0] }}
-          </div>
-          <!-- reward -->
-          <div v-if="!myInfo || !myInfo.reward" class="font-bold text-8xl pb-4">
-            0
-          </div>
-          <div v-else class="font-bold text-8xl pb-4">{{ myInfo.reward }}</div>
-          <div class="font-semibold text-3xl">ESGpoint</div>
-          <!-- rank -->
-          <div class="flex justify-center">
-            <div v-if="!myInfo || !myInfo.rank" class="font-semibold text-2xl">
-              (0
+      <div class="flex justify-center text-4xl font-bold mb-10">My Ranking</div>
+      <div class="circle-container">
+        <div class="rounded-circle">
+          <div class="text-center">
+            <!-- email -->
+            <div v-if="!myInfo || !myInfo.email" class="text-3xl font-semibold">
+              -
             </div>
-            <div v-else class="font-semibold text-2xl">({{ myInfo.rank }}</div>
-            <div class="font-semibold text-2xl">/</div>
-            <div class="font-semibold text-2xl">{{ totalCnt }})</div>
+            <div v-else class="text-3xl font-semibold">
+              {{ myInfo.email.split("@")[0] }}
+            </div>
+            <br> <!-- Line break -->
+            <!-- reward -->
+            <div v-if="!myInfo || !myInfo.reward" class="font-bold text-4xl">
+              0
+            </div>
+            <div v-else class="font-bold text-8xl">
+              {{ myInfo.reward }}
+            </div>
+            <br> <!-- Line break -->
+            <div class="font-semibold text-3xl">ESGpoint</div>
+            <br> <!-- Line break -->
+            <!-- rank -->
+            <div class="flex justify-center">
+              <div v-if="!myInfo || !myInfo.rank" class="font-semibold text-2xl">
+                (0
+              </div>
+              <div v-else class="font-semibold text-2xl">
+                ({{ myInfo.rank }}
+              </div>
+              <div class="font-semibold text-2xl">/</div>
+              <div class="font-semibold text-2xl">{{ totalCnt }})</div>
+            </div>
+            <br> <!-- Line break -->
           </div>
         </div>
       </div>
     </div>
+    
+    
 
     <!-- Total Ranking -->
     <div class="mt-32">
@@ -306,11 +314,37 @@ const closeModal = () => {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 8vw;
-  height: 8vw;
+  width: 8vw; /* 뷰포트 너비에 따라 크기 조절 */
+  height: 8vw; /* 너비와 동일하게 높이 설정 */
+  min-width: 50px; /* 최소 너비 설정 */
+  min-height: 50px; /* 최소 높이 설정 */
   background-color: #d3d5d3;
-  border-radius: 50%;
+  border-radius: 50%; /* 원형 모양 */
   color: white;
   font-size: 5vw;
+  padding: 10px; /* 내부 여백 추가 */
 }
+.circle-container {
+  display: flex;
+  justify-content: center; // 가로 중앙 정렬
+  align-items: center; // 세로 중앙 정렬
+  width: 100%; // 컨테이너 전체 너비
+  height: 100%; // 컨테이너 전체 높이, 이 부분은 필요에 따라 조정
+  flex-direction: column; // 요소들을 세로로 정렬
+}
+
+.rounded-circle {
+  width: 200px; // 원의 크기, 필요에 따라 조정
+  height: 200px; // 원의 높이, width와 같게 설정하여 완벽한 원형 유지
+  border-radius: 50%; // 원형
+  border: 8px solid lightgray; // 테두리
+  display: flex;
+  justify-content: center; // 내부 컨텐츠 가로 중앙 정렬
+  align-items: center; // 내부 컨텐츠 세로 중앙 정렬
+  text-align: center; // 텍스트 중앙 정렬
+  flex-direction: column; // 내부 요소들을 세로로 정렬
+}
+
+
+
 </style>

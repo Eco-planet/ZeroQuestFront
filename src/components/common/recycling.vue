@@ -78,6 +78,14 @@
               <img class="pt-4" src="@/assets/images/esg.png" />
             </div>
           </div>
+            <button
+            type="button"
+            class="text-white bg-red-600 font-semibold rounded-lg text-xl wp-60 py-2.5 mt-12 me-2"
+            @click="Separatecollection"
+          >
+          Special Recycling Event
+          </button>
+
           <div class="mt-40 text-2xl font-medium">
             The more we do zero quests <br />
             The planet's carbon emissions are decreasing<br />
@@ -93,14 +101,34 @@
       </div>
     </div>
   </div>
+
+  <Modal
+  :visible="modalVisible"
+  @hide="closeModal"
+  title="Service is being prepared."
+/>
 </template>
 
 <script lang="ts" setup>
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { useStore } from "vuex";
+import router from "@/router";
+
+
+const modalVisible = ref(false);
 
 const store = useStore();
 const locale = computed(() => store.state.system.locale);
+const closeModal = () => {
+	modalVisible.value = false;
+};
+
+const Separatecollection = () => {
+  console.log('팝업 열려라')
+	store.state.popupType = 'PreparingForService';
+	modalVisible.value = true;
+};
+
 </script>
 
 <style lang="scss" scoped>

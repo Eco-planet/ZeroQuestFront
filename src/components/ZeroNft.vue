@@ -76,15 +76,13 @@ function goToDetail(idx: number) {
 }
 </script>
 
-<style lang="scss">
-/*
-.shadow-nft {
-  box-shadow: 0 6px 8px 0px rgb(0 0 0 / 0.1), 0 2px 8px 0px rgb(0 0 0 / 0.1) 
-} */
+<style lang="scss" scoped>
+
+ul {
+  box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.2);
+}
 
 .shadow-nft {
-  border: 1px solid rgba(150, 150, 150, 0.2);
-  box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.1),
-    2px 2px 6px 0px rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 6px 8px 0px rgb(0 0 0 / 0.1), 0 2px 8px 0px rgb(0 0 0 / 0.1) 
 }
 </style>
