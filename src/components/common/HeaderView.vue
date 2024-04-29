@@ -120,7 +120,7 @@
       </div>
       <div class="h-3"></div>
       <div class="h-10"></div>
-      <div class="text-2xl font-semibold whitespace-nowrap">
+      <!-- <div class="text-2xl font-semibold whitespace-nowrap">
         {{ t("common.participateChannels") }}
       </div>
       <div class="h-8"></div>
@@ -138,7 +138,7 @@
         >
           <img :src="logo.src" />
         </a>
-      </div>
+      </div> -->
       <!-- <div class="h-10"></div>
       <a href="https://open.kakao.com/o/gEkf2eMf" target="_blank">
         <div class="pb-2 text-2xl font-semibold">{{ t("message.howToUse")}}</div>

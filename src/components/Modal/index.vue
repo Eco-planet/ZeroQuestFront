@@ -75,12 +75,21 @@
                   {{ t("message.withdrawNewPassInput") }}
                 </div>
                 <div class="ml-4">
-                  <input
+                  <!-- <input
                     type="password"
                     v-model="passwd1"
                     size="20"
                     class="text-lg border-solid border-1 border-gray-300"
-                  />
+                  /> -->
+                  <input
+                  type="password"
+                  v-model="passwd1"
+                  @input="validatePassword"
+                  size="20"
+                  class="text-lg border-solid border-1 border-gray-300"
+                />
+                
+
                 </div>
               </div>
               <div class="h-5"></div>
@@ -779,6 +788,18 @@ const hide = () => {
   passwd1.value = "";
   passwd2.value = "";
   passwdMsg.value = "";
+
+  const validatePassword = (event) => {
+  const password = event.target.value; // input 이벤트에서 입력된 값을 가져옴
+  const regex = /^[A-Za-z0-9]+$/; // 영문 대소문자 및 숫자만 허용
+  if (!regex.test(password)) {
+    passwdMsg.value = "Password must contain only alphanumeric characters.";
+    // 조건에 맞지 않는 문자 제거
+    event.target.value = password.replace(/[^A-Za-z0-9]/g, '');
+  } else {
+    passwdMsg.value = ''; // 에러 메시지 초기화
+  }
+};
 
   withdrawAddress.value = "";
   withdrawCount.value = null;
