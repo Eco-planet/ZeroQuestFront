@@ -118,7 +118,7 @@ export default {
     swapRequestEnd: "The swap request has been completed.",
     agreeTerms:
       "You can use it only if you agree to the required terms and conditions.",
-    termsTitle: "Please accept the terms of service",
+    termsTitle: "Terms of service",
     termsAgreeAll: "We all agree.",
     termsAgreeInfo: "There is an explanation related to the whole agreement.",
     termsAgree01: "[Requirement] Terms of Use",
@@ -157,6 +157,7 @@ export default {
     passwordNotMatch: "The withdrawal password does not match.",
     notSupportSwap: "Unsupported swap coin.",
     lessMiniumCostSwap: "Swap quantity is less than minimum quantity.",
+    // firstConvertCostSwap: "Please convert first, then proceed with the swap.",
     failedPointSwap: "Point swap failed.",
     commingSoon: "Coming soon.",
     notActivated: "NFT is inactive.",

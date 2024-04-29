@@ -75,12 +75,21 @@
                   {{ t("message.withdrawNewPassInput") }}
                 </div>
                 <div class="ml-4">
-                  <input
+                  <!-- <input
                     type="password"
                     v-model="passwd1"
                     size="20"
                     class="text-lg border-solid border-1 border-gray-300"
-                  />
+                  /> -->
+                  <input
+                  type="password"
+                  v-model="passwd1"
+                  @input="validatePassword"
+                  size="20"
+                  class="text-lg border-solid border-1 border-gray-300"
+                />
+                
+
                 </div>
               </div>
               <div class="h-5"></div>
@@ -179,6 +188,21 @@
           </div>
         </template>
 
+        <template v-if="popupType === 'PreparingForService'">
+          <div>
+            <div class="mb-10 text-3xl font-bold">Service is Being Prepared</div>
+            <div>
+              <button
+                class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
+                @click="hide"
+              >
+                OK
+              </button>
+            </div>
+          </div>
+        </template>
+
+
         <template v-if="popupType === 'send_coin'">
           <div class="flex flex-col justify-center items-center">
             <div class="flex items-center">
@@ -268,7 +292,7 @@
               class="pt-4 font-semibold underline text-lg"
               @click="openResetPW"
             >
-              {{ t("message.forgetPassword") }}
+              {{ t("message.forgetPassword") }} 
             </div>
           </div>
         </template>
@@ -545,7 +569,8 @@
             popupType !== 'withDraw' &&
             popupType !== 'successWithdraw' &&
             popupType !== 'tree_nft' &&
-            popupType !== 'shareSuccess'
+            popupType !== 'shareSuccess' &&
+            popupType !== 'PreparingForService'
           "
         >
           <div>
@@ -764,6 +789,18 @@ const hide = () => {
   passwd2.value = "";
   passwdMsg.value = "";
 
+  const validatePassword = (event) => {
+  const password = event.target.value; // input 이벤트에서 입력된 값을 가져옴
+  const regex = /^[A-Za-z0-9]+$/; // 영문 대소문자 및 숫자만 허용
+  if (!regex.test(password)) {
+    passwdMsg.value = "Password must contain only alphanumeric characters.";
+    // 조건에 맞지 않는 문자 제거
+    event.target.value = password.replace(/[^A-Za-z0-9]/g, '');
+  } else {
+    passwdMsg.value = ''; // 에러 메시지 초기화
+  }
+};
+
   withdrawAddress.value = "";
   withdrawCount.value = null;
   withdrawPass.value = "";
@@ -846,9 +883,9 @@ const doCopy = () => {
 
 const doPass = () => {
   if (passwd1.value.length < 6) {
-    passwdMsg.value = "6자리 이상으로 입력해주세요.";
+    passwdMsg.value = "Please enter at least 6 characters.";
   } else if (passwd1.value !== passwd2.value) {
-    passwdMsg.value = "패스워드가 일치하지 않습니다.";
+    passwdMsg.value = "The passwords do not match.";
   } else {
     resData(passwd1.value);
 
@@ -887,10 +924,12 @@ const requestUpdatePW = () => {
 };
 
 const doSendCoin = () => {
+  console.log('withdrawl request 버튼 클릭');
   if (withdrawAddress.value === "") {
     withdrawMsg.value = t("message.withdrawError3");
-  } else if (withdrawCount.value < 0) {
+  } else if (!withdrawCount.value || withdrawCount.value < 0) {
     withdrawMsg.value = t("message.withdrawError4");
+    return;
   } else if (withdrawPass.value === "") {
     withdrawMsg.value = t("message.withdrawError5");
   } else {
@@ -1160,4 +1199,3 @@ const showLastSixChars = () => {
   border-radius: 5px; // 모서리 둥글게
 }
 </style>
-callWithErrorHandling,

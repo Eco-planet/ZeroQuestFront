@@ -86,7 +86,7 @@
               :onKeyup="initSwapEsgp"
               @focus="handleFocus"
               placeholder="0"
-              style="text-align: left"
+              style="text-align: right"
             />
             <div class="wp-50 flex justify-end items-center text-gray-400">
               {{ fromSymbol }}
@@ -105,7 +105,7 @@
           <div class="wp-80 input-container">
             <input
               type="number"
-              class="w-36 font-semibold text-xl swap-text"
+              class="w-36 font-semibold text-xl swap-text non-clickable"
               v-model="swapEsg"
               style="text-align: right"
               readonly
@@ -225,8 +225,15 @@ const checkError = (status: number, code: number) => {
 
 const getStatusCheck = (type: string, symbol: string) => {
   console.log("클릭");
-  if (type === "swap" && swapEsg.value <= 0) return false;
-
+  // store.state.isPopup = true;
+  // store.state.popupType = "message";
+  // popupTitle.value = "Please convert first, then proceed with the swap.";
+  if (type === "swap" && swapEsg.value <= 0 && swapEsgp.value <=0) {
+   store.state.isPopup = true;
+  store.state.popupType = "message";
+  popupTitle.value = "Please convert first, then proceed with the swap.";
+}
+  
   // 처리중인 SendCoin/Swap 이 있는지 확인
   http
     .get("/api/statusCheck", {
@@ -248,6 +255,7 @@ const getStatusCheck = (type: string, symbol: string) => {
         }
 
         if (type === "sendCoin") {
+          console.log('나다')
           withdrawSymbol.value = symbol;
 
           if (store.getters["auth/getWithdrawPw"] === true) {
@@ -338,43 +346,72 @@ const closeSwapModal = () => {
   router.go(0);
 };
 
+
+// const getSwapInfo = () => {
+//   console.log('테스트중입니다')
+//   store.state.isLoading = true;
+//   if (swapEsgp.value < 30000 && fromSymbol.value === "ESGP") {
+//     store.state.popupType = "message";
+//     popupTitle.value = "error.lessMiniumCostSwap";
+//     store.state.isPopup = true;
+//     store.state.isLoading = false;
+//   } 
+//   else {
+//     http
+//       .get("/api/swap/estimate", {
+//         params: {
+//           fromAddress: store.getters["auth/getAddress"],
+//           toAddress: store.getters["auth/getAddress"],
+//           fromSymbol: fromSymbol.value,
+//           toSymbol: toSymbol.value,
+//           amount: swapEsgp.value,
+//         },
+//       })
+//       .then((response) => {
+//         store.state.isLoading = false;
+//         if (response.data.data.userSendPrice < response.data.data.minSwap) {
+//           swapEsg.value = 0;
+
+//           store.state.popupType = "message";
+//           popupTitle.value = "error.lessMiniumCostSwap";
+//           store.state.isPopup = true;
+//         } else {
+//           swapEsg.value = response.data.data.swapRecvAmount;
+//         }
+//       })
+//       .catch((error) => {
+//         checkError(error.response.status, error.response.data.errorCode);
+//         store.state.popupType = "message";
+//         popupTitle.value = "error.notEnoughMoney";
+//         store.state.isPopup = true;
+//       });
+//   }
+// };
+
+
 const getSwapInfo = () => {
   store.state.isLoading = true;
-  if (swapEsgp.value < 30000 && fromSymbol.value === "ESGP") {
-    store.state.popupType = "message";
-    popupTitle.value = "error.lessMiniumCostSwap";
-    store.state.isPopup = true;
-    store.state.isLoading = false;
-  } else {
-    http
-      .get("/api/swap/estimate", {
-        params: {
-          fromAddress: store.getters["auth/getAddress"],
-          toAddress: store.getters["auth/getAddress"],
-          fromSymbol: fromSymbol.value,
-          toSymbol: toSymbol.value,
-          amount: swapEsgp.value,
-        },
-      })
-      .then((response) => {
-        store.state.isLoading = false;
-        if (response.data.data.userSendPrice < response.data.data.minSwap) {
-          swapEsg.value = 0;
-
-          store.state.popupType = "message";
-          popupTitle.value = "error.lessMiniumCostSwap";
-          store.state.isPopup = true;
-        } else {
-          swapEsg.value = response.data.data.swapRecvAmount;
-        }
-      })
-      .catch((error) => {
-        checkError(error.response.status, error.response.data.errorCode);
-        store.state.popupType = "message";
-        popupTitle.value = "error.notEnoughMoney";
-        store.state.isPopup = true;
-      });
-  }
+  http
+    .get("/api/swap/estimate", {
+      params: {
+        fromAddress: store.getters["auth/getAddress"],
+        toAddress: store.getters["auth/getAddress"],
+        fromSymbol: fromSymbol.value,
+        toSymbol: toSymbol.value,
+        amount: swapEsgp.value || 0, 
+      },
+    })
+    .then((response) => {
+      store.state.isLoading = false;
+     
+      swapEsg.value = response.data.data.swapRecvAmount;
+    })
+    .catch((error) => {
+      checkError(error.response.status, error.response.data.errorCode);
+      store.state.popupType = "message";
+      popupTitle.value = "error.notEnoughMoney";
+      store.state.isPopup = true;
+    });
 };
 
 const sendSwap = () => {
@@ -507,5 +544,9 @@ const handleFocus = () => {
   border: none; /* 테두리 제거 */
   padding: 10px; /* 패딩을 조정하여 입력 필드의 크기를 조정할 수 있음 */
   border-radius: 5px; /* 필요한 경우 모서리를 둥글게 처리 */
+}
+
+.non-clickable {
+  pointer-events: none; // 포인터 이벤트 비활성화
 }
 </style>

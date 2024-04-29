@@ -43,20 +43,23 @@
       </div>
 
       <div class="flex justify-center">
-        <p v-if="nftId === '4'" class="mb-16 font-bold text-2xl text-left">
-          1. Sale Schedule: December 8th onwards, TBA <br />
+        <p v-if="nftId === '4'" class="mb-16 font-bold text-2xl text-center">
+          1. Sales Schedule: 
+          <br/>December 8th onwards, TBA <br />
           2. Price: 500 ESG points<br />
-          3. Reward: 50 ESG points daily for 300 days
+          3. Reward: 50 ESG points<br/> daily for 300 days<br/>
         </p>
-        <p v-if="nftId === '5'" class="mb-16 font-bold text-2xl text-left">
-          1. Sale Schedule: December 15th onwards, TBA <br />
+        <p v-if="nftId === '5'" class="mb-16 font-bold text-2xl text-center">
+          1. Sales Schedule: 
+          <br/>December 15th onwards, TBA <br />
           2. Price: 500 ESG points<br />
-          3. Reward: 50 ESG points daily for 300 days
+          3. Reward: 50 ESG points <br/>daily for 300 days<br/>
         </p>
-        <p v-if="nftId === '6'" class="mb-16 font-bold text-2xl text-left">
-          1. Sale Schedule: December 22nd onwards, TBA<br />
+        <p v-if="nftId === '6'" class="mb-16 font-bold text-2xl text-center">
+          1. Sales Schedule: 
+          <br/>December 22nd onwards, TBA<br />
           2. Price: 500 ESG points<br />
-          3. Reward: 50 ESG points daily for 300 days
+          3. Reward: 50 ESG points<br/> daily for 300 days<br/>
         </p>
       </div>
       <div>

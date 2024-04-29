@@ -94,13 +94,20 @@
     <panda v-else-if="nftId === 6"></panda>
     <div class="h-96"></div>
 
-    <Modal
+    <!-- <Modal
       :visible="store.state.isPopup"
       @hide="closeModal"
       @refreshHide="closeMintingModal"
       :title="popupTitle"
       :showClose="showClose"
+    /> -->
+    <Modal
+      :visible="store.state.isPopup"
+      @hide="closeModal"
+      @refreshHide="closeMintingModal"
+      :title="popupTitle"
     />
+
   </div>
 </template>
 
