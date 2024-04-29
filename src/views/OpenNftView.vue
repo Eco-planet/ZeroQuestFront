@@ -54,7 +54,7 @@ import "vue3-carousel/dist/carousel.css";
 const vuexStore = useStore();
 const nftList = store.getters["auth/getNftList"];
 const myNftList = ref();
-const bannerList = store.getters["auth/getBannerList"];
+const bannerList = computed(() => store.getters["auth/getBannerList"]);
 const onFlutter = ref(true);
 const popupTitle = ref("");
 const bannerLatestTime = computed(() =>
