@@ -107,7 +107,6 @@
       @refreshHide="closeMintingModal"
       :title="popupTitle"
     />
-
   </div>
 </template>
 
@@ -163,6 +162,7 @@ const buyNftESGP = (nft: nftType) => {
       store.state.popupType = "successMinting";
       store.state.isPopup = true;
       popupTitle.value = "message.successMinting";
+      vuexStore.dispatch("auth/getRemainingNft", nft.idx);
     })
     .catch((err) => {
       console.log("err", err);

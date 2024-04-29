@@ -4,6 +4,7 @@ import {
   nftListApi,
   getPointBalanceAll,
   tokenInfos,
+  getRemainingNft,
 } from "@/api/axios";
 import router from "@/router";
 import { ethers } from "ethers-ts";
@@ -265,6 +266,23 @@ export default {
       state.pwNumber = pwNumber;
       localStorage.setItem("pwNumber", pwNumber);
     },
+    setNftMetadata(state: Nullable, { idx, cnt }: any) {
+      // JSON 문자열을 객체로 파싱
+      const nftList = JSON.parse(state.nftList);
+
+      // 객체를 배열로 변환
+      const nftListToArray = Object.keys(nftList).map((key) => ({
+        idx: key,
+        ...nftList[key],
+      }));
+      const nft = nftListToArray.find((item: any) => item.idx === idx);
+      if (nft) {
+        nft.metaData.sale = cnt;
+        state.nftList = JSON.stringify(nftList);
+        localStorage.setItem("nftList", JSON.stringify(nftList));
+      }
+      //
+    },
   },
   actions: {
     async googleLogin(context: Nullable, { token }: Nullable) {
@@ -497,6 +515,20 @@ export default {
 
         store.commit("auth/setTokenInfos", { info: tokenInfos });
         store.commit("auth/setScanners", { info: scanners });
+      }
+    },
+
+    async getRemainingNft(context: Nullable, idx: number) {
+      try {
+        if (idx === 4 || idx === 5 || idx === 6) {
+          const response = await getRemainingNft(idx);
+          if (response.data.data) {
+            const cnt = response.data.data;
+            context.commit("setNftMetadata", { idx, cnt });
+          }
+        }
+      } catch (error) {
+        console.error("Failed to refresh NFT metaData:", error);
       }
     },
   },

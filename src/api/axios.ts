@@ -69,3 +69,7 @@ export const checkNftLatestTime = async (
 export const getRankingApi = () => {
   return http.get("/api/challenge/info");
 };
+
+export const getRemainingNft = (idx: number) => {
+  return http.get(`api/nft/getRemainingNft/${idx}`);
+};
