@@ -9,12 +9,19 @@
       :style="containerStyle"
       @click.stop
     >
-      <img
+      <!-- <img
         v-if="showClose"
         class="close-icon"
         src="@/assets/images/img_close_black.png"
         @click="hide"
-      />
+      /> -->
+      <img
+      v-if="showClose && popupType !== 'successMinting'"
+      class="close-icon"
+      src="@/assets/images/img_close_black.png"
+      @click="hide"
+    />
+
       <img
         v-else
         class="close-icon"
@@ -86,6 +93,7 @@
                   v-model="passwd1"
                   @input="validatePassword"
                   size="20"
+                  maxlength="6"
                   class="text-lg border-solid border-1 border-gray-300"
                 />
                 
@@ -226,12 +234,18 @@
               <div class="flex justify-end items-center">
                 <div>Address</div>
                 <div class="ml-4">
-                  <input
+                  <!-- <input
                     type="text"
                     v-model="withdrawAddress"
                     size="20"
                     class="text-lg border-solid border-1 border-gray-300 input-field"
-                  />
+                  /> -->
+                  <input
+  type="text"
+  v-model="qrCodeReceived"
+  size="20"
+  class="text-lg border-solid border-1 border-gray-300 input-field"
+/>
                 </div>
               </div>
               <div class="h-5"></div>
@@ -293,6 +307,8 @@
               @click="openResetPW"
             >
               {{ t("message.forgetPassword") }} 
+              <!-- <h1>Scanned QR Code</h1>
+              <p>{{ qrCodeReceived }}</p> -->
             </div>
           </div>
         </template>
@@ -391,7 +407,7 @@
                 class="wp-40 p-2 font-semibold text-2xl text-white game-btn"
                 @click="resData(store.state.nftId.toString())"
               >
-                설치하기
+                Install
               </button>
             </div>
           </div>
@@ -570,11 +586,14 @@
             popupType !== 'successWithdraw' &&
             popupType !== 'tree_nft' &&
             popupType !== 'shareSuccess' &&
+            popupType !== 'notSuccessMinting' &&
             popupType !== 'PreparingForService'
           "
         >
           <div>
-            <img class="error-icon" src="@/assets/images/icon_error.png" />
+            <!-- <img class="error-icon" src="@/assets/images/icon_error.png" /> -->
+            <img :src="swapEsgp >= 30000 ? '/assets/images/icon_success.png' : '/assets/images/icon_error.png'" />
+            <!-- <img :src="swapEsgp >= 30000 ? '/assets/images/icon_success.png' : '/assets/images/icon_success.png'" /> -->
           </div>
           <div class="h-10"></div>
           <div
@@ -583,6 +602,8 @@
           >
             <div>{{ t(showTitle) }}</div>
           </div>
+
+          
           <div
             v-else-if="showTitle == 'message.getReward'"
             class="text-2xl text-center"
@@ -644,7 +665,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, toRefs, watch } from "vue";
+import { computed, ref, toRefs, watch,onMounted, onUnmounted } from "vue";
 import { useI18n } from "vue-i18n";
 import QRCodeVue3 from "qr-code-generator-vue3";
 import http from "@/api/http";
@@ -654,6 +675,20 @@ import { useStore } from "vuex";
 import "vue3-carousel/dist/carousel.css";
 
 const store = useStore();
+const qrCodeReceived = ref('');
+
+onMounted(() => {
+  window.receiveQRCode = (qrCode) => {
+    qrCodeReceived.value = qrCode;
+    console.log("Received QR Code:", qrCode);
+    // 여기에서 추가 로직을 구현할 수 있습니다.
+  };
+});
+
+onUnmounted(() => {
+  delete window.receiveQRCode; // 컴포넌트가 제거될 때 함수를 정리
+});
+
 
 const locale = computed(() => store.state.system.locale);
 const accessToken = store.getters["auth/getAccessToken"];
@@ -689,7 +724,21 @@ const props = defineProps({
     type: Boolean,
     default: () => true,
   },
+  swapEsgp: {
+    type: Number, 
+    default: () => 0,
+  } 
 });
+
+// watch(() => props.swapEsgp, (newValue, oldValue) => {
+//   console.log(`swapEsgp 변경 ${oldValue} to ${newValue}`);
+// }, { immediate: true });
+
+watch(() => props.swapEsgp, (newValue, oldValue) => {
+  console.log(`swapEsgp 변경 from ${oldValue} to ${newValue}`);
+}, { immediate: true });
+
+
 
 const emit = defineEmits([
   "afterShow",
@@ -715,6 +764,7 @@ const passwd2 = ref("");
 const passwdMsg = ref("");
 const updatePW1 = ref();
 const updatePW2 = ref();
+
 
 const myAddress = store.getters["auth/getAddress"];
 const withdrawAddress = ref("");
@@ -788,16 +838,20 @@ const hide = () => {
   passwd1.value = "";
   passwd2.value = "";
   passwdMsg.value = "";
+  qrCodeReceived.value = ""; 
 
   const validatePassword = (event) => {
   const password = event.target.value; // input 이벤트에서 입력된 값을 가져옴
   const regex = /^[A-Za-z0-9]+$/; // 영문 대소문자 및 숫자만 허용
-  if (!regex.test(password)) {
+  // 입력된 비밀번호가 6자리를 초과하는지 검사합니다.
+  if (password.length > 6) {
+    passwdMsg.value = "Password must be no more than 6 characters.";
+    passwd1.value = password.substring(0, 6); // 비밀번호를 6자리로 자릅니다.
+  } else if (!regex.test(password)) {
     passwdMsg.value = "Password must contain only alphanumeric characters.";
-    // 조건에 맞지 않는 문자 제거
-    event.target.value = password.replace(/[^A-Za-z0-9]/g, '');
+    passwd1.value = password.replace(/[^A-Za-z0-9]/g, '');
   } else {
-    passwdMsg.value = ''; // 에러 메시지 초기화
+    passwdMsg.value = ''; // 에러 메시지를 초기화합니다.
   }
 };
 
@@ -810,6 +864,7 @@ const hide = () => {
 };
 
 const refreshHide = () => {
+  console.log("referral code entered")
   store.state.popupType = "";
 
   passwd1.value = "";
@@ -857,12 +912,6 @@ const withdrawalCamera = () => {
     .TouchEvent((res: any) => {
       console.log("res는", res);
     });
-  // window.flutter_inappwebview.callHandler('handleOpenCamera', {
-  //   content: store.getters["auth/getAddress2"]
-  // });  hide();
-  // window.flutter_inappwebview.callHandler('handleOpenCamera').TouchEvent((res:any)=>{
-  //   console.log('res는',res);
-  // })
 };
 
 //   function updateWithdrawAddress(address) {
@@ -884,6 +933,8 @@ const doCopy = () => {
 const doPass = () => {
   if (passwd1.value.length < 6) {
     passwdMsg.value = "Please enter at least 6 characters.";
+  } else if (passwd1.value.length > 6) {
+    passwdMsg.value = "Only 6 characters allowed.";
   } else if (passwd1.value !== passwd2.value) {
     passwdMsg.value = "The passwords do not match.";
   } else {

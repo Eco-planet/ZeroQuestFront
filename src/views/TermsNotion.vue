@@ -33,46 +33,43 @@
   </template>
   
   <script setup>
-  import { defineComponent, ref } from "vue";
+  import { defineComponent, ref } from "vue";  // ref를 여기서 가져옴
   import { useRouter } from "vue-router";
-  
   import { useI18n } from "vue-i18n";
   import Modal from "@/views/Modal.vue"
   
-  
-    const { t } = useI18n();
-    const router = useRouter();
-    const isModalOpen = ref(false);
-    const currentNotionId = ref("")
-    const menuItems = [
-        {
+  const { t } = useI18n();
+  const router = useRouter();
+  const isModalOpen = ref(false);
+  const currentNotionId = ref("");
+  const menuItems = [
+      {
       text: "Terms of Use",
-      notionId: "termsEn1-2773fcc199394980ae365d80f48cfad4?pvs=4",
-    },
-    {
-      text:"Privacy Policy",
-      notionId: "termsEn-2-dfbf8b07a95c4fc99b0de6b4cc2fb887?pvs=4",
-    },
-
-    ];
+      notionId: "Terms-of-Use-a5c46d2598f340728969206a9e5a194a?pvs=4",
+      },
+      {
+      text: "Privacy Policy",
+      notionId: "Privacy-Policy-c9917133bc934eceb66929e3ae4f2ba2?pvs=4",
+      },
+  ];
   
-    const selectedTitle = ref(t("message.termsTitle"));
+  const selectedTitle = ref(t("message.termsTitle"));
   
-    const openModal = (notionId) => {
+  const openModal = (notionId) => {
       currentNotionId.value = notionId;
-      isModalOpen.value = true
-    };
+      isModalOpen.value = true;
+  };
   
-    const closeBtn = (boolean) => {
+  const closeBtn = (boolean) => {
       isModalOpen.value = boolean;
       currentNotionId.value = null;
-    };
+  };
   
-    const goBack = () => {
+  const goBack = () => {
       router.back();
-    };
-  
+  };
   </script>
+  
   
   <style scoped>
   ul {

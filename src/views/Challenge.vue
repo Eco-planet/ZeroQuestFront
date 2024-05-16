@@ -240,6 +240,12 @@ const closeModal = () => {
   modalVisible.value = false;
 };
 
+function goToLink(link: string) {
+  router.push({
+    path: link,
+  });
+}
+
 // const closeVoteModal = () => {
 // 	modalVisible.value = false;
 // 	router.go(0);
@@ -344,7 +350,4 @@ const closeModal = () => {
   text-align: center; // 텍스트 중앙 정렬
   flex-direction: column; // 내부 요소들을 세로로 정렬
 }
-
-
-
 </style>

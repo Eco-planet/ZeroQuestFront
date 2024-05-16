@@ -2,7 +2,7 @@
   <div class="w-full mt-10">
     <ul class="grid grid-cols-2 gap-x-8 gap-y-8">
       <li class="p-4 shadow-nft" v-for="nft in nftListSort" :key="nft.name">
-        <div class="text-left" @click="goToDetail(nft.idx)">
+        <div class="text-left content-center" @click="goToDetail(nft.idx)">
           <div class="w-full h-full relative">
             <img
               :src="nft.image"
@@ -79,10 +79,16 @@ function goToDetail(idx: number) {
 <style lang="scss" scoped>
 
 ul {
-  box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.2);
+  overflow: visible; 
 }
-
 .shadow-nft {
   box-shadow: 0 6px 8px 0px rgb(0 0 0 / 0.1), 0 2px 8px 0px rgb(0 0 0 / 0.1) 
+}
+
+.content-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 </style>
