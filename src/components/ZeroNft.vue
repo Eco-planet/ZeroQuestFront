@@ -2,7 +2,7 @@
   <div class="w-full mt-10">
     <ul class="grid grid-cols-2 gap-x-8 gap-y-8">
       <li class="p-4 shadow-nft" v-for="nft in nftListSort" :key="nft.name">
-        <div class="text-left content-center" @click="goToDetail(nft.idx)">
+        <div class="text-left" @click="goToDetail(nft.idx)">
           <div class="w-full h-full relative">
             <img
               :src="nft.image"
@@ -10,10 +10,10 @@
               class="w-full h-full object-contain object-top"
             />
           </div>
-          <div class="mt-4 text-lg font-medium text-black">
+          <div class="mt-4 text-lg font-medium text-black text-left">
             {{ nft.name }}
           </div>
-          <div class="text-lg font-light text-gray-400">
+          <div class="text-lg font-light text-gray-400 text-left">
             {{ Number(nft.buyPrice2).toLocaleString() }} ESG point
           </div>
         </div>
@@ -77,12 +77,11 @@ function goToDetail(idx: number) {
 </script>
 
 <style lang="scss" scoped>
-
 ul {
-  overflow: visible; 
+  overflow: visible;
 }
 .shadow-nft {
-  box-shadow: 0 6px 8px 0px rgb(0 0 0 / 0.1), 0 2px 8px 0px rgb(0 0 0 / 0.1) 
+  box-shadow: 0 6px 8px 0px rgb(0 0 0 / 0.1), 0 2px 8px 0px rgb(0 0 0 / 0.1);
 }
 
 .content-center {

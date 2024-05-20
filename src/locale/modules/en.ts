@@ -141,7 +141,8 @@ export default {
     successReferralTitle: "Referral code entered!",
     successReferral: "Your referral has been credited with 1000 ESG points",
     successMinting: "Success NFT Minting!",
-    notSuccessMinting: "Please convert a higher amount to proceed with the swap",
+    notSuccessMinting:
+      "Please convert a higher amount to proceed with the swap",
     howToUse: "Inquiry on how to use",
   },
 
@@ -167,5 +168,6 @@ export default {
     notEnoughPoints: "ESG points are lacking.",
     notEnoughGasFee:
       "Minting fees are insufficient. Please contact your administrator.",
+    incorrectValue: "Please enter the correct value.",
   },
 };

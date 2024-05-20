@@ -35,7 +35,7 @@
             <div class="mt-10 text-xl">
               <div class="flex justify-between mb-4">
                 <span>Expiration Date</span>
-                <span>2023-05-31</span>
+                <span>2025-05-31</span>
               </div>
               <div class="flex justify-between mb-4">
                 <span>Asset Protocol</span>

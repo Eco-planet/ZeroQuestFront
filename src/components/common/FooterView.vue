@@ -28,7 +28,7 @@
       @click="movePage('/challenge')"
       >Challenge</a
     >
-    <a
+    <!-- <a
       :class="{
         oPage:
           $route.name === 'battle' ||
@@ -39,7 +39,7 @@
       }"
       @click="movePage('/battle')"
       >Battle</a
-    >
+    > -->
   </div>
   <Modal
     :visible="isPopup"

@@ -20,7 +20,9 @@
       </div>
     </div>
     <div class="h-10"></div>
-    <div class="w-full relative overflow-x-auto pb-4">
+    <div
+      class="w-full relative overflow-x-auto pb-4 flex justify-center items-center"
+    >
       <ul
         class="text-xl font-medium text-center text-white space-x-2 whitespace-nowrap"
       >

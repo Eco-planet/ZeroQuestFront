@@ -16,11 +16,11 @@
         @click="hide"
       /> -->
       <img
-      v-if="showClose && popupType !== 'successMinting'"
-      class="close-icon"
-      src="@/assets/images/img_close_black.png"
-      @click="hide"
-    />
+        v-if="showClose && popupType !== 'successMinting'"
+        class="close-icon"
+        src="@/assets/images/img_close_black.png"
+        @click="hide"
+      />
 
       <img
         v-else
@@ -89,15 +89,13 @@
                     class="text-lg border-solid border-1 border-gray-300"
                   /> -->
                   <input
-                  type="password"
-                  v-model="passwd1"
-                  @input="validatePassword"
-                  size="20"
-                  maxlength="6"
-                  class="text-lg border-solid border-1 border-gray-300"
-                />
-                
-
+                    type="password"
+                    v-model="passwd1"
+                    @input="validatePassword"
+                    size="20"
+                    maxlength="6"
+                    class="text-lg border-solid border-1 border-gray-300"
+                  />
                 </div>
               </div>
               <div class="h-5"></div>
@@ -198,7 +196,9 @@
 
         <template v-if="popupType === 'PreparingForService'">
           <div>
-            <div class="mb-10 text-3xl font-bold">Service is Being Prepared</div>
+            <div class="mb-10 text-3xl font-bold">
+              Service is Being Prepared
+            </div>
             <div>
               <button
                 class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
@@ -209,7 +209,6 @@
             </div>
           </div>
         </template>
-
 
         <template v-if="popupType === 'send_coin'">
           <div class="flex flex-col justify-center items-center">
@@ -241,11 +240,11 @@
                     class="text-lg border-solid border-1 border-gray-300 input-field"
                   /> -->
                   <input
-  type="text"
-  v-model="qrCodeReceived"
-  size="20"
-  class="text-lg border-solid border-1 border-gray-300 input-field"
-/>
+                    type="text"
+                    v-model="qrCodeReceived"
+                    size="20"
+                    class="text-lg border-solid border-1 border-gray-300 input-field"
+                  />
                 </div>
               </div>
               <div class="h-5"></div>
@@ -306,7 +305,7 @@
               class="pt-4 font-semibold underline text-lg"
               @click="openResetPW"
             >
-              {{ t("message.forgetPassword") }} 
+              {{ t("message.forgetPassword") }}
               <!-- <h1>Scanned QR Code</h1>
               <p>{{ qrCodeReceived }}</p> -->
             </div>
@@ -592,7 +591,13 @@
         >
           <div>
             <!-- <img class="error-icon" src="@/assets/images/icon_error.png" /> -->
-            <img :src="swapEsgp >= 30000 ? '/assets/images/icon_success.png' : '/assets/images/icon_error.png'" />
+            <img
+              :src="
+                swapEsgp >= 30000
+                  ? '/assets/images/icon_success.png'
+                  : '/assets/images/icon_error.png'
+              "
+            />
             <!-- <img :src="swapEsgp >= 30000 ? '/assets/images/icon_success.png' : '/assets/images/icon_success.png'" /> -->
           </div>
           <div class="h-10"></div>
@@ -603,7 +608,6 @@
             <div>{{ t(showTitle) }}</div>
           </div>
 
-          
           <div
             v-else-if="showTitle == 'message.getReward'"
             class="text-2xl text-center"
@@ -665,7 +669,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, toRefs, watch,onMounted, onUnmounted } from "vue";
+import { computed, ref, toRefs, watch, onMounted, onUnmounted } from "vue";
 import { useI18n } from "vue-i18n";
 import QRCodeVue3 from "qr-code-generator-vue3";
 import http from "@/api/http";
@@ -675,7 +679,7 @@ import { useStore } from "vuex";
 import "vue3-carousel/dist/carousel.css";
 
 const store = useStore();
-const qrCodeReceived = ref('');
+const qrCodeReceived = ref("");
 
 onMounted(() => {
   window.receiveQRCode = (qrCode) => {
@@ -688,7 +692,6 @@ onMounted(() => {
 onUnmounted(() => {
   delete window.receiveQRCode; // 컴포넌트가 제거될 때 함수를 정리
 });
-
 
 const locale = computed(() => store.state.system.locale);
 const accessToken = store.getters["auth/getAccessToken"];
@@ -725,20 +728,22 @@ const props = defineProps({
     default: () => true,
   },
   swapEsgp: {
-    type: Number, 
+    type: Number,
     default: () => 0,
-  } 
+  },
 });
 
 // watch(() => props.swapEsgp, (newValue, oldValue) => {
 //   console.log(`swapEsgp 변경 ${oldValue} to ${newValue}`);
 // }, { immediate: true });
 
-watch(() => props.swapEsgp, (newValue, oldValue) => {
-  console.log(`swapEsgp 변경 from ${oldValue} to ${newValue}`);
-}, { immediate: true });
-
-
+watch(
+  () => props.swapEsgp,
+  (newValue, oldValue) => {
+    console.log(`swapEsgp 변경 from ${oldValue} to ${newValue}`);
+  },
+  { immediate: true }
+);
 
 const emit = defineEmits([
   "afterShow",
@@ -764,7 +769,6 @@ const passwd2 = ref("");
 const passwdMsg = ref("");
 const updatePW1 = ref();
 const updatePW2 = ref();
-
 
 const myAddress = store.getters["auth/getAddress"];
 const withdrawAddress = ref("");
@@ -838,22 +842,22 @@ const hide = () => {
   passwd1.value = "";
   passwd2.value = "";
   passwdMsg.value = "";
-  qrCodeReceived.value = ""; 
+  qrCodeReceived.value = "";
 
   const validatePassword = (event) => {
-  const password = event.target.value; // input 이벤트에서 입력된 값을 가져옴
-  const regex = /^[A-Za-z0-9]+$/; // 영문 대소문자 및 숫자만 허용
-  // 입력된 비밀번호가 6자리를 초과하는지 검사합니다.
-  if (password.length > 6) {
-    passwdMsg.value = "Password must be no more than 6 characters.";
-    passwd1.value = password.substring(0, 6); // 비밀번호를 6자리로 자릅니다.
-  } else if (!regex.test(password)) {
-    passwdMsg.value = "Password must contain only alphanumeric characters.";
-    passwd1.value = password.replace(/[^A-Za-z0-9]/g, '');
-  } else {
-    passwdMsg.value = ''; // 에러 메시지를 초기화합니다.
-  }
-};
+    const password = event.target.value; // input 이벤트에서 입력된 값을 가져옴
+    const regex = /^[A-Za-z0-9]+$/; // 영문 대소문자 및 숫자만 허용
+    // 입력된 비밀번호가 6자리를 초과하는지 검사합니다.
+    if (password.length > 6) {
+      passwdMsg.value = "Password must be no more than 6 characters.";
+      passwd1.value = password.substring(0, 6); // 비밀번호를 6자리로 자릅니다.
+    } else if (!regex.test(password)) {
+      passwdMsg.value = "Password must contain only alphanumeric characters.";
+      passwd1.value = password.replace(/[^A-Za-z0-9]/g, "");
+    } else {
+      passwdMsg.value = ""; // 에러 메시지를 초기화합니다.
+    }
+  };
 
   withdrawAddress.value = "";
   withdrawCount.value = null;
@@ -864,7 +868,7 @@ const hide = () => {
 };
 
 const refreshHide = () => {
-  console.log("referral code entered")
+  console.log("referral code entered");
   store.state.popupType = "";
 
   passwd1.value = "";
@@ -975,7 +979,7 @@ const requestUpdatePW = () => {
 };
 
 const doSendCoin = () => {
-  console.log('withdrawl request 버튼 클릭');
+  console.log("withdrawl request 버튼 클릭");
   if (withdrawAddress.value === "") {
     withdrawMsg.value = t("message.withdrawError3");
   } else if (!withdrawCount.value || withdrawCount.value < 0) {
@@ -1048,8 +1052,13 @@ const resetRequest = () => {
   }
 };
 
-// 소셜 공유하기, 텔레그램
+const showShareModal = async () => {
+  await store.dispatch("auth/getPointBalanceAll");
+  store.state.popupType = "shareSuccess";
+  store.state.isPopup = true;
+};
 
+// 소셜 공유하기, 텔레그램
 const shareTelegram = () => {
   const referralValue = referral.value;
 
