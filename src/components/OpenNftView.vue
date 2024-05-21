@@ -18,10 +18,10 @@
       </div>
       <div class="h-3"></div>
       <div class="flex flex-col items-center">
-      <div class="font-semibold text-center">{{ nftInfo.name }}</div>
+        <div class="font-semibold text-center">{{ nftInfo.name }}</div>
+      </div>
     </div>
-    </div>
-    
+
     <div class="flex justify-center items-center">
       <template v-if="nftCard.enable === 0 && nftInfo.type === 2">
         <div
@@ -77,18 +77,11 @@ const emit = defineEmits(["updateRun", "updateReward", "updateEnable"]);
 
 const { nftCard, nftInfo } = toRefs(props);
 
-watch(
-  nftCard,
-  (val) => {
-    //console.log("enable nftCard");
-  },
-  { immediate: false, deep: true }
-);
+watch(nftCard, (val) => {}, { immediate: false, deep: true });
 
 const updateNftEnable = (type: String) => {
   store.state.nftId = nftCard.value.nftId;
   store.state.nftIdx = nftCard.value.idx;
-  console.log(nftCard.value.nftId)
   if (type == "INSTALL") {
     let packageName = "";
 
@@ -105,7 +98,6 @@ const updateNftEnable = (type: String) => {
     window.flutter_inappwebview
       .callHandler("checkAppInstalled", { packageName: packageName })
       .then((res: any) => {
-
         if (res.result == true) {
           emit("updateEnable");
         } else {
@@ -122,12 +114,10 @@ const updateNftEnable = (type: String) => {
   } else if (type == "REWARD") {
     emit("updateReward");
   } else if (type == "TREE") {
-    console.log("debug1");
     store.state.popupType = "tree_nft";
     store.state.isPopup = true;
-  } 
-  if( [4,5,6].includes(nftInfo.value.idx)) {
-    // console.log('nftInfo.value.idx',`/onft-detail/${nftInfo.value.idx}`)
+  }
+  if ([4, 5, 6].includes(nftInfo.value.idx)) {
     router.push(`/onft-detail/${nftInfo.value.idx}`);
   }
 };
@@ -139,10 +129,6 @@ const closeModal = () => {
 const goNftDetail = (idx: number, tokenId: number) => {
   router.push({ name: "onft-detail", params: { idx, tokenId } });
 };
-
-// console.log('nftInfo',nftInfo.value)
-
-
 </script>
 
 <style scoped lang="scss">

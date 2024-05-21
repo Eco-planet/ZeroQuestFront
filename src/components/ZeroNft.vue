@@ -10,10 +10,10 @@
               class="w-full h-full object-contain object-top"
             />
           </div>
-          <div class="mt-4 text-lg font-medium text-black">
+          <div class="mt-4 text-lg font-medium text-black text-left">
             {{ nft.name }}
           </div>
-          <div class="text-lg font-light text-gray-400">
+          <div class="text-lg font-light text-gray-400 text-left">
             {{ Number(nft.buyPrice2).toLocaleString() }} ESG point
           </div>
         </div>
@@ -77,12 +77,17 @@ function goToDetail(idx: number) {
 </script>
 
 <style lang="scss" scoped>
-
 ul {
-  box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.2);
+  overflow: visible;
+}
+.shadow-nft {
+  box-shadow: 0 6px 8px 0px rgb(0 0 0 / 0.1), 0 2px 8px 0px rgb(0 0 0 / 0.1);
 }
 
-.shadow-nft {
-  box-shadow: 0 6px 8px 0px rgb(0 0 0 / 0.1), 0 2px 8px 0px rgb(0 0 0 / 0.1) 
+.content-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 </style>

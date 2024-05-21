@@ -1,6 +1,5 @@
 <template>
   <div class="h-10"></div>
-  <input type="number" @input="handleInput" />
   <div class="px-8 flex flex-col">
     <div class="flex font-semibold text-3xl">MyWallet</div>
     <div class="h-10"></div>
@@ -88,7 +87,7 @@
               placeholder="0"
               style="text-align: right"
             />
-            <div class="wp-50 flex justify-end items-center text-gray-400">
+            <div class="wp-15 flex justify-end items-center text-gray-400">
               {{ fromSymbol }}
             </div>
           </div>
@@ -164,6 +163,7 @@
     :title="popupTitle"
     :showClose="showClose"
     :popupType="store.state.popupType"
+    :swapEsgp="currentSwapValue"
   />
   <div class="h-20"></div>
 </template>
@@ -224,16 +224,17 @@ const checkError = (status: number, code: number) => {
 };
 
 const getStatusCheck = (type: string, symbol: string) => {
+  isUpdate.value = false;
   console.log("클릭");
-  // store.state.isPopup = true;
-  // store.state.popupType = "message";
-  // popupTitle.value = "Please convert first, then proceed with the swap.";
-  if (type === "swap" && swapEsg.value <= 0 && swapEsgp.value <=0) {
-   store.state.isPopup = true;
-  store.state.popupType = "message";
-  popupTitle.value = "Please convert first, then proceed with the swap.";
-}
-  
+  if (type === "swap") {
+    if (swapEsgp.value < 30000) {
+      store.state.isPopup = true;
+      store.state.popupType = "message";
+      popupTitle.value = "message.notSuccessMinting";
+      return; // 이 조건을 만족하지 않으면 여기서 함수 실행을 중단
+    }
+  }
+
   // 처리중인 SendCoin/Swap 이 있는지 확인
   http
     .get("/api/statusCheck", {
@@ -246,7 +247,6 @@ const getStatusCheck = (type: string, symbol: string) => {
         store.state.popupType = "message";
         popupTitle.value = "error.notProcessIng";
         store.state.isPopup = true;
-
         isUpdate.value = true;
       } else {
         if (isUpdate.value === true) {
@@ -255,7 +255,7 @@ const getStatusCheck = (type: string, symbol: string) => {
         }
 
         if (type === "sendCoin") {
-          console.log('나다')
+          console.log("나다");
           withdrawSymbol.value = symbol;
 
           if (store.getters["auth/getWithdrawPw"] === true) {
@@ -346,98 +346,85 @@ const closeSwapModal = () => {
   router.go(0);
 };
 
-
-// const getSwapInfo = () => {
-//   console.log('테스트중입니다')
-//   store.state.isLoading = true;
-//   if (swapEsgp.value < 30000 && fromSymbol.value === "ESGP") {
-//     store.state.popupType = "message";
-//     popupTitle.value = "error.lessMiniumCostSwap";
-//     store.state.isPopup = true;
-//     store.state.isLoading = false;
-//   } 
-//   else {
-//     http
-//       .get("/api/swap/estimate", {
-//         params: {
-//           fromAddress: store.getters["auth/getAddress"],
-//           toAddress: store.getters["auth/getAddress"],
-//           fromSymbol: fromSymbol.value,
-//           toSymbol: toSymbol.value,
-//           amount: swapEsgp.value,
-//         },
-//       })
-//       .then((response) => {
-//         store.state.isLoading = false;
-//         if (response.data.data.userSendPrice < response.data.data.minSwap) {
-//           swapEsg.value = 0;
-
-//           store.state.popupType = "message";
-//           popupTitle.value = "error.lessMiniumCostSwap";
-//           store.state.isPopup = true;
-//         } else {
-//           swapEsg.value = response.data.data.swapRecvAmount;
-//         }
-//       })
-//       .catch((error) => {
-//         checkError(error.response.status, error.response.data.errorCode);
-//         store.state.popupType = "message";
-//         popupTitle.value = "error.notEnoughMoney";
-//         store.state.isPopup = true;
-//       });
-//   }
-// };
-
+const isValidNumber = (number) => {
+  return /^\d+$/.test(number);
+};
 
 const getSwapInfo = () => {
-  store.state.isLoading = true;
-  http
-    .get("/api/swap/estimate", {
-      params: {
-        fromAddress: store.getters["auth/getAddress"],
-        toAddress: store.getters["auth/getAddress"],
-        fromSymbol: fromSymbol.value,
-        toSymbol: toSymbol.value,
-        amount: swapEsgp.value || 0, 
-      },
-    })
-    .then((response) => {
-      store.state.isLoading = false;
-     
-      swapEsg.value = response.data.data.swapRecvAmount;
-    })
-    .catch((error) => {
-      checkError(error.response.status, error.response.data.errorCode);
+  if (swapEsgp.value === 0 && fromSymbol.value === "ESGP") {
+    store.state.popupType = "message";
+    popupTitle.value = "error.lessMiniumCostSwap";
+    store.state.isPopup = true;
+    store.state.isLoading = false;
+  } else {
+    if (isValidNumber(swapEsgp.value)) {
+      store.state.isLoading = true;
+      http
+        .get("/api/swap/estimate", {
+          params: {
+            fromAddress: store.getters["auth/getAddress"],
+            toAddress: store.getters["auth/getAddress"],
+            fromSymbol: fromSymbol.value,
+            toSymbol: toSymbol.value,
+            amount: swapEsgp.value || 0,
+          },
+        })
+        .then((response) => {
+          store.state.isLoading = false;
+
+          swapEsg.value = response.data.data.swapRecvAmount;
+        })
+        .catch((error) => {
+          checkError(error.response.status, error.response.data.errorCode);
+          store.state.popupType = "message";
+          popupTitle.value = "error.notEnoughMoney";
+          store.state.isPopup = true;
+        });
+    } else {
       store.state.popupType = "message";
-      popupTitle.value = "error.notEnoughMoney";
+      popupTitle.value = "error.incorrectValue";
       store.state.isPopup = true;
-    });
+      store.state.isLoading = false;
+    }
+  }
 };
 
 const sendSwap = () => {
+  const currentSwapValue = swapEsgp.value; // 요청 전 swapEsgp 값을 저장
+
   http
     .post("/api/swap/send", {
       fromAddress: store.getters["auth/getAddress"],
       toAddress: store.getters["auth/getAddress"],
       fromSymbol: fromSymbol.value,
       toSymbol: toSymbol.value,
-      amount: swapEsgp.value,
+      amount: currentSwapValue,
       privateKey: store.getters["auth/getPrivateKey"],
     })
     .then((response) => {
       console.log("response sendSwap에", response);
-      store.state.popupValue = swapEsgp.value;
-      store.state.popupType = "message";
-      showClose.value = false;
-      popupTitle.value = "message.swapRequestEnd";
-      store.state.isPopup = true;
 
+      // 여기에서 currentSwapValue를 사용하여 조건을 검사
+      if (currentSwapValue >= 30000) {
+        store.state.popupValue = currentSwapValue;
+        store.state.popupType = "successMinting";
+        popupTitle.value = "Swap transaction completed successfully";
+      } else {
+        popupTitle.value = "Swap amount must be at least 30000";
+        store.state.popupType = "error";
+      }
+
+      showClose.value = true;
+      store.state.isPopup = true;
       swapEsgp.value = 0;
       swapEsg.value = 0;
       store.dispatch("auth/getPointBalanceAll");
     })
     .catch((error) => {
       checkError(error.response.status, error.response.data.errorCode);
+      popupTitle.value = "Error during the swap operation";
+      store.state.popupType = "error";
+      store.state.isPopup = true;
     });
 };
 
@@ -453,9 +440,8 @@ const handleInput = () => {
 };
 
 const handleFocus = () => {
-  swapEsgp.value = ''
-  }
-
+  swapEsgp.value = "";
+};
 </script>
 
 <style lang="scss">

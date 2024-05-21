@@ -235,14 +235,19 @@ function goToLink(link: string) {
 
 .nftImg {
   width: 100%;
-  height: 100%;
-  object-fit: contain;
+  height: 110px;
+  object-fit: cover;
   object-position: center top;
-  @media (max-width: 280px) and (max-height: 653px) {
-    height: 80px; // Fold 사이즈에서의 높이
+  @media (max-width: 768px) {
+    .nftImg {
+      height: 150px; // 태블릿과 모바일에서는 높이를 150px로 조절
+    }
   }
-  @media (min-width: 450px) {
-    height: 80%;
+  
+  @media (max-width: 480px) {
+    .nftImg {
+      height: 120px; // 모바일 화면에서는 높이를 120px로 더 줄임
+    }
   }
 }
 
@@ -276,4 +281,6 @@ function goToLink(link: string) {
 .refer-font {
   font-size: 14px;
 }
+
+
 </style>

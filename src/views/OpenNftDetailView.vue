@@ -27,9 +27,7 @@
         style="position: relative"
       >
         <img :src="nftInfo.image" />
-        <div
-          v-if="nftDetail === undefined || nftDetail.enable === 0"
-        ></div>
+        <div v-if="nftDetail === undefined || nftDetail.enable === 0"></div>
       </div>
       <div class="h-10"></div>
       <div class="flex justify-center items-center">
@@ -181,16 +179,12 @@ const fetchQuestRewardData = (url, params) => {
           createdAt: convertToKST(item.createdAt),
         }))
         .reverse();
-      console.log(
-        "🚀 ~ file: OpenNftDetailView.vue:161 ~ .then ~ questRewards.value:",
-        questRewards.value
-      );
+
       // reward 속성의 합계 계산
       totalRewards.value = questRewards.value.reduce(
         (sum, item) => sum + parseFloat(item.reward),
         0
       );
-      console.log("Total Rewards:", totalRewards.value);
     })
     .catch((error) => {
       console.error("Error fetching quest rewards:", error);
@@ -327,74 +321,12 @@ const gameRun = () => {
     });
 };
 
-// const updateNftEnable = (type: String) => {
-//   let newEnableStatus = nftDetail.value.enable === 1 ? 0 : 1;
-//   console.log('newEnableStatus',newEnableStatus)
-//   console.log("클릭")
-//   console.log("값은 뭐지",nftDetail.value.enable)
-//   if (type == "INSTALL") {
-//     console.log("nftInfo는", nftInfo); // idx3이랑, cid, type이 잘 받아지는 것이 확인이 된다.
-//     store.state.nftId = nftId;
-//     store.state.nftIdx = nftInfo.idx;
-
-//     // idx가 3인 경우 모달 창 띄우기(tree)
-//     if (nftInfo.idx === 3) {
-//       store.state.popupType = "tree_nft";
-//       store.state.isPopup = true;
-//       return; // 모달 창을 띄운 후 함수를 종료한다.
-//     }
-
-//     let packageName = "";
-
-//     if (navigator.userAgent.toLowerCase().indexOf("android") > -1) {
-//       packageName = nftInfo.and_packagename;
-//     } else if (navigator.userAgent.toLowerCase().indexOf("iphone") > -1) {
-//       packageName = nftInfo.ios_packagename;
-//     }
-
-//     window.flutter_inappwebview
-//       .callHandler("checkAppInstalled", { packageName: packageName })
-//       .then((res: any) => {
-//         if (res.result == true) {
-//           http
-//             .post("/api/nft/enableNft", {
-//               symbol: nftDetail.value.symbol,
-//               tokenId: nftDetail.value.tokenId,
-//               enable: 1,
-//             })
-//             .then((response) => {
-//               getNftDetail();
-//             });
-//         } else {
-//           store.state.popupType = "game_install";
-//           store.state.isPopup = true;
-//         }
-//       })
-//       .catch(() => {
-//         store.state.popupType = "game_install";
-//         store.state.isPopup = true;
-//       });
-//   } else if (type === "OFF") {
-//     store.state.nftId = nftId;
-//     store.state.nftIdx = nftInfo.idx;
-//     store.state.popupType = "game_off";
-//     store.state.isPopup = true;
-//   } else if (type === "RUN") {
-//     if (nftInfo.idx === 3) {
-// 			store.state.popupType = 'tree_nft';
-// 			store.state.isPopup = true;
-// 			return; // 모달 창을 띄운 후 함수를 종료한다.
-// 		}
-//     gameRun();
-//   }
-// };
-
 const updateNftEnable = (type: String) => {
   if (nftInfo.idx === 3) {
     store.state.popupType = "tree_nft";
     store.state.isPopup = true;
     return; // 모달 띄운 후 종료 됨
-  } 
+  }
   // nftInfo.idx가 1 또는 2인 경우에 대한 특별 처리
   if (nftInfo.idx === 1 || nftInfo.idx === 2) {
     let packageName = "";
@@ -404,21 +336,23 @@ const updateNftEnable = (type: String) => {
       packageName = nftInfo.ios_packagename;
     }
 
-    window.flutter_inappwebview.callHandler("checkAppInstalled", { packageName: packageName })
+    window.flutter_inappwebview
+      .callHandler("checkAppInstalled", { packageName: packageName })
       .then((res) => {
         if (res.result === true || type !== "INSTALL") {
           let newEnableStatus = nftDetail.value.enable === 1 ? 0 : 1;
-          http.post("/api/nft/enableNft", {
-            symbol: nftDetail.value.symbol,
-            tokenId: nftDetail.value.tokenId,
-            enable: newEnableStatus,
-          })
-          .then(response => {
-            getNftDetail(); 
-          })
-          .catch(error => {
-            console.error("Error updating NFT enable status:", error);
-          });
+          http
+            .post("/api/nft/enableNft", {
+              symbol: nftDetail.value.symbol,
+              tokenId: nftDetail.value.tokenId,
+              enable: newEnableStatus,
+            })
+            .then((response) => {
+              getNftDetail();
+            })
+            .catch((error) => {
+              console.error("Error updating NFT enable status:", error);
+            });
         } else {
           store.state.popupType = "game_install";
           store.state.isPopup = true;
@@ -428,25 +362,23 @@ const updateNftEnable = (type: String) => {
         store.state.popupType = "game_install";
         store.state.isPopup = true;
       });
-    
   } else {
     // nftInfo.idx가 4, 5, 6인 경우에 대한 처리
     let newEnableStatus = nftDetail.value.enable === 1 ? 0 : 1;
-    http.post("/api/nft/enableNft", {
-      symbol: nftDetail.value.symbol,
-      tokenId: nftDetail.value.tokenId,
-      enable: newEnableStatus,
-    })
-    .then(response => {
-      getNftDetail(); // 상태 업데이트 후 상세 정보 다시 가져오기
-    })
-    .catch(error => {
-      console.error("Error updating NFT enable status:", error);
-    });
+    http
+      .post("/api/nft/enableNft", {
+        symbol: nftDetail.value.symbol,
+        tokenId: nftDetail.value.tokenId,
+        enable: newEnableStatus,
+      })
+      .then((response) => {
+        getNftDetail(); // 상태 업데이트 후 상세 정보 다시 가져오기
+      })
+      .catch((error) => {
+        console.error("Error updating NFT enable status:", error);
+      });
   }
 };
-
-
 </script>
 
 <style lang="scss">

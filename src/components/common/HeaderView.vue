@@ -13,9 +13,6 @@
       </div>
       <div class="wp-30 login-box">
         <div class="flex justify-end items-center">
-          <!-- <div>
-            <Locale />
-          </div> -->
           <div class="w-5"></div>
           <Dropdown title="Services" :items="services" />
         </div>
@@ -81,13 +78,13 @@
       <!-- <div class="text-2xl" :class="{ select: $route.name === 'battle' }" @click="movePage('/battle')">Battle</div> -->
       <!-- <div class="text-2xl" :class="{ select: $route.name === 'battle' }" @click="movePage1()">Battle</div> -->
       <!-- <div class="text-2xl" :class="{ select: $route.name === 'battle' }" @click="movePage1">Battle</div> -->
-      <div
+      <!-- <div
         class="text-2xl"
         :class="{ select: $route.name === 'battle' }"
         @click="showModal"
       >
         Battle
-      </div>
+      </div> -->
       <Modal
         :visible="modalVisible"
         @hide="closeModal"
@@ -120,38 +117,6 @@
       </div>
       <div class="h-3"></div>
       <div class="h-10"></div>
-      <!-- <div class="text-2xl font-semibold whitespace-nowrap">
-        {{ t("common.participateChannels") }}
-      </div>
-      <div class="h-8"></div>
-      <div class="social-area wp-70 grid grid-cols-5 gap-2">
-        <a
-          v-for="logo in logos"
-          :key="logo.id"
-          :class="logo.name"
-          class="snsImg"
-          :href="logo.href"
-          target="_blank"
-          @mouseover="switchLogo(logo, true)"
-          @mouseout="switchLogo(logo, false)"
-          @click="handleSocialIconClick(logo)"
-        >
-          <img :src="logo.src" />
-        </a>
-      </div> -->
-      <!-- <div class="h-10"></div>
-      <a href="https://open.kakao.com/o/gEkf2eMf" target="_blank">
-        <div class="pb-2 text-2xl font-semibold">{{ t("message.howToUse")}}</div>
-        <div class="h-6"></div>
-        <img 
-        :src="kakaoLogo" 
-        @mouseover="switchKakaoLogo(true)" 
-        @mouseout="switchKakaoLogo(false)"
-        @click = "openKakaoTalk"
-        :class="kakaoHover? 'w-14':'w-auto'"
-  
-        >
-      </a> -->
       <div
         class="text-2xl font-semibold mt-4 cursor-pointer"
         @click="Withdrawal"
@@ -161,7 +126,6 @@
     </div>
     <div class="wp-20" @click="toggleMenu()"></div>
   </div>
-  <!-- <Modal :showClose="showClose" :visible="modalVisible" :withdrawVisible="modalWithdrawVisible" @clickWithdraw="clickWithdraw" @voteHide="WithdrawCloseModal" @hide="closeModal" title="message.sorryChecking"/> -->
 </template>
 
 <script lang="ts" setup>
@@ -316,12 +280,6 @@ const handleSocialIconClick = (logo) => {
       });
   }
 };
-
-// const openKakaoTalk = () => {
-// window.flutter_inappwebview.callHandler('handleInstallBtn').then(res => {
-//   console.log(res);
-// });
-// };
 </script>
 
 <style scoped lang="scss">

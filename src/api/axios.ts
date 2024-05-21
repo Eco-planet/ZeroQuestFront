@@ -35,7 +35,6 @@ export const checkBannerLatestTime = async (
   }
   vuexStore.dispatch("auth/getBannerList");
 };
-//////////////////////////
 
 export const nftListApi = () => {
   return http.get("/api/nft/zeroNft", { params: {} });
@@ -50,19 +49,13 @@ export const checkNftLatestTime = async (
   nftLatestTime: any
 ) => {
   const response = await nftUpdatedAtApi();
-  console.log("🚀 ~ response:", response);
-  console.log("🚀 ~ response.data.data:", response.data.data);
   if (response.status !== 200) {
     return;
   }
   const checkNftLatestTime = response.data.data;
-  console.log("🚀 ~ nftLatestTime:", nftLatestTime);
-  console.log("🚀 ~ checkNftLatestTime:", checkNftLatestTime);
   if (checkNftLatestTime === nftLatestTime) {
-    console.log("시간이 같에");
     return;
   }
-  console.log("시간이 달라");
   vuexStore.dispatch("auth/getNftList");
 };
 

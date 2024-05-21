@@ -9,7 +9,10 @@
       </div>
     </div>
 
-    <div class="referral-container f0">
+    <div
+      class="referral-container f0"
+      :class="{ 'keyboard-active': isKeyboardVisible }"
+    >
       <p class="tit">
         {{ t("message.referral2") }}<br />
         {{ t("message.referral3") }}
@@ -40,17 +43,6 @@
       </p>
 
       <div class="mt-7 mb-4">
-        <!-- 카카오 공유 -->
-        <!-- <button type="button">
-          <a id="kakao-link-btn" @click="shareKakao">
-            <img
-              src="./../assets/images/kakao_logo.png"
-              alt="카카오톡 공유하기"
-            />
-          </a>
-        </button> -->
-
-        <!-- 텔레그램 공유 -->
         <button type="button" class="sns_btn" @click="shareTelegram">
           <img src="./../assets/images/telog.png" alt="텔레그램 공유하기" />
         </button>
@@ -139,15 +131,32 @@ const balances = ref();
 const tokenInfos = ref();
 const popupTitle = ref("");
 const referralCode = ref(""); //레퍼럴 코드 확인용
-
+const isKeyboardVisible = ref(false); // 키보드 활성화 상태 관리
 const locale = computed(() => vuexStore.state.system.locale);
 const { t } = useI18n();
+
+const toggleKeyboardVisibility = () => {
+  isKeyboardVisible.value = !isKeyboardVisible.value; // 상태 토글
+};
 
 const handleFocus = (event) => {
   const inputField = event.target;
   setTimeout(() => {
-    inputField.scrollIntoView({ behavior: "smooth", block: "center" });
-  }, 300); // 약간의 지연 후 스크롤, 키보드 나타나는 시간 고려
+    const offsetTop = inputField.getBoundingClientRect().top; // 입력 필드의 상단 위치 가져오기
+    const offsetHeight = inputField.offsetHeight; // 입력 필드의 높이
+    const screenHeight = window.innerHeight; // 화면의 총 높이
+
+    // 입력 필드를 화면의 중앙보다 약간 위에 위치시키기 위한 계산
+    const idealTopPosition = screenHeight / 2 - offsetHeight * 3;
+
+    if (offsetTop > idealTopPosition) {
+      // 입력 필드가 이상적 위치보다 아래에 있을 때
+      window.scrollBy({
+        top: offsetTop - idealTopPosition, // 스크롤을 위로 올릴 양 계산
+        behavior: "smooth",
+      });
+    }
+  }, 300); // 키보드가 나타나는 데 걸리는 시간을 고려하여 지연시간 설정
 };
 
 const showShareModal = async () => {
@@ -159,6 +168,7 @@ const showShareModal = async () => {
 // 소셜 공유하기, 텔레그램
 
 const shareTelegram = () => {
+  isKeyboardVisible.value = true; // 키보드 표시
   const referralValue = referral.value;
 
   if (referralValue) {
@@ -167,7 +177,7 @@ const shareTelegram = () => {
     const infoShareTelegram = {
       content: {
         objectType: "feed",
-        title: `ZeroQuest - Please enter ${referralSlice} on Referral COde Entry`,
+        title: `ZeroQuest - Please enter ${referralSlice} on Referral Code Entry`,
 
         description: `https://play.google.com/store/apps/details?id=com.aiblue.zrqst_multilingual_webview_app`,
         imageUrl:
@@ -342,5 +352,17 @@ const closeModal = () => {
   .referral-container > .tit-bold > span:nth-child(1) {
     font-weight: 600;
   }
+}
+
+.keyboard-active {
+  margin-bottom: 1000px; /* 필요한 margin-bottom 값 */
+}
+
+/* 기존 스타일 */
+.referral-container {
+  width: 100%;
+  margin-top: 40px;
+  padding: 50px 48px;
+  border: 2px solid #ddd;
 }
 </style>

@@ -35,7 +35,7 @@
             <div class="mt-10 text-xl">
               <div class="flex justify-between mb-4">
                 <span>Expiration Date</span>
-                <span>2023-05-31</span>
+                <span>2025-05-31</span>
               </div>
               <div class="flex justify-between mb-4">
                 <span>Asset Protocol</span>
@@ -94,13 +94,6 @@
     <panda v-else-if="nftId === 6"></panda>
     <div class="h-96"></div>
 
-    <!-- <Modal
-      :visible="store.state.isPopup"
-      @hide="closeModal"
-      @refreshHide="closeMintingModal"
-      :title="popupTitle"
-      :showClose="showClose"
-    /> -->
     <Modal
       :visible="store.state.isPopup"
       @hide="closeModal"
@@ -138,8 +131,6 @@ const showClose = ref(false);
 const nowNft = Object.values(store.getters["auth/getNftList"]).filter(
   (item) => item.idx === nftId
 )[0];
-
-console.log("nowNft", nowNft);
 
 const getPk = store.getters["auth/getPrivateKey"];
 const getAddress = store.getters["auth/getAddress"];
