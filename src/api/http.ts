@@ -65,7 +65,6 @@ instance.interceptors.response.use(
           }
         })
         .catch((err) => {
-          //console.log(err)
           store.commit("auth/setClearToken");
 
           router.push("/");
@@ -81,7 +80,6 @@ instance.interceptors.response.use(
 
       router.push("/");
     }
-    //throw error
 
     return Promise.reject(error);
   }

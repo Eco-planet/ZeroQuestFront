@@ -18,35 +18,28 @@
     <div class="h-10"></div>
 
     <div class="w-full">
-			<div class="mb-4 p-5 border">
-				<div class="mb-6 text-2xl font-bold">Zero Challenge</div>
-				<div class="text-lg font-medium text-left">
-Zero Challenge is a habit tracker that makes practicing environmental protection enjoyable. 
-Various challenges record your carbon reduction efforts and support you. 
-Take on the challenge of carbon reduction now and see it lead to rewards.
-				</div>
-			</div>
-<!-- Carousel 적용하기 -->
-      <Carousel :autoplay="3000" :wrap-around="true">
-				<Slide
-					v-for="(slide, index) in bannerList"
-					:key="index"
-					v-if="bannerList"
-				>
-					<div class="carousel__item" style="overflow: hidden">
-						<img :src="slide.url" @click="goToLink(slide.link)" />
-					</div>
-				</Slide>
-			</Carousel>
-
-		</div>
-
-    <!-- challenge배너1 -->
-    <!-- <div class="mt-5" v-for="(banner, index) in banners" :key="index">
-      <div class="flex justify-center pb-2">
-        <img class="banner2_borderRadius" :src="banner" />
+      <div class="mb-4 p-5 border">
+        <div class="mb-6 text-2xl font-bold">Zero Challenge</div>
+        <div class="text-lg font-medium text-left">
+          Zero Challenge is a habit tracker that makes practicing environmental
+          protection enjoyable. Various challenges record your carbon reduction
+          efforts and support you. Take on the challenge of carbon reduction now
+          and see it lead to rewards.
+        </div>
       </div>
-    </div> -->
+      <!-- Carousel 적용하기 -->
+      <Carousel :autoplay="3000" :wrap-around="true">
+        <Slide
+          v-for="(slide, index) in bannerList"
+          :key="index"
+          v-if="bannerList"
+        >
+          <div class="carousel__item" style="overflow: hidden">
+            <img :src="slide.url" @click="goToLink(slide.link)" />
+          </div>
+        </Slide>
+      </Carousel>
+    </div>
 
     <div class="mt-20">
       <div class="flex justify-center text-4xl font-bold mb-10">My Ranking</div>
@@ -60,7 +53,8 @@ Take on the challenge of carbon reduction now and see it lead to rewards.
             <div v-else class="text-3xl font-semibold">
               {{ myInfo.email.split("@")[0] }}
             </div>
-            <br> <!-- Line break -->
+            <br />
+            <!-- Line break -->
             <!-- reward -->
             <div v-if="!myInfo || !myInfo.reward" class="font-bold text-4xl">
               0
@@ -68,12 +62,17 @@ Take on the challenge of carbon reduction now and see it lead to rewards.
             <div v-else class="font-bold text-8xl">
               {{ myInfo.reward }}
             </div>
-            <br> <!-- Line break -->
+            <br />
+            <!-- Line break -->
             <div class="font-semibold text-3xl">ESGpoint</div>
-            <br> <!-- Line break -->
+            <br />
+            <!-- Line break -->
             <!-- rank -->
             <div class="flex justify-center">
-              <div v-if="!myInfo || !myInfo.rank" class="font-semibold text-2xl">
+              <div
+                v-if="!myInfo || !myInfo.rank"
+                class="font-semibold text-2xl"
+              >
                 (0
               </div>
               <div v-else class="font-semibold text-2xl">
@@ -82,13 +81,12 @@ Take on the challenge of carbon reduction now and see it lead to rewards.
               <div class="font-semibold text-2xl">/</div>
               <div class="font-semibold text-2xl">{{ totalCnt }})</div>
             </div>
-            <br> <!-- Line break -->
+            <br />
+            <!-- Line break -->
           </div>
         </div>
       </div>
     </div>
-    
-    
 
     <!-- Total Ranking -->
     <div class="mt-32">
@@ -156,7 +154,7 @@ import router from "@/router";
 import http from "@/api/http";
 import { useStore } from "vuex";
 import { getRankingApi } from "@/api/axios.ts";
-import { Carousel, Pagination, Slide } from 'vue3-carousel';
+import { Carousel, Pagination, Slide } from "vue3-carousel";
 
 const store = useStore();
 
@@ -178,7 +176,7 @@ onMounted(() => {
 
 const userTokenInfo = computed(() => store.getters["auth/getBalances"]);
 const esgPoint = parseInt(userTokenInfo.value.ESGP);
-const bannerList = computed(() => store.getters['auth/getBannerList']);
+const bannerList = computed(() => store.getters["auth/getBannerList"]);
 
 const getRanking = async () => {
   try {

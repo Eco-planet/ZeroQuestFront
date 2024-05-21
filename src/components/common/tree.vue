@@ -57,9 +57,6 @@
     <div class="flex justify-center">
       <img class="pt-4 img-full" src="@/assets/images/zero.png" />
     </div>
-    <!-- <div class="mt-32 font-bold">
-      * ESG points can be withdrawn to KakaoPay from My Points
-    </div> -->
   </div>
 </template>
 

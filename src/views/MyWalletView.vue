@@ -1,6 +1,5 @@
 <template>
   <div class="h-10"></div>
-  <!-- <input type="number" @input="handleInput" /> -->
   <div class="px-8 flex flex-col">
     <div class="flex font-semibold text-3xl">MyWallet</div>
     <div class="h-10"></div>

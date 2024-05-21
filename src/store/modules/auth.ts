@@ -405,6 +405,7 @@ export default {
     async getPointBalanceAll(context: any) {
       try {
         const response = await getPointBalanceAll();
+        console.log("🚀 ~ getPointBalanceAll ~ response:", response);
         if (response.status === 200) {
           const balance = response.data.data.userTokenInfo;
           if (balance) {
@@ -472,29 +473,6 @@ export default {
         context.commit("setNftList", { info: nftList });
       }
     },
-
-    // async getNftList(context: Nullable) {
-    //   try {
-    //     console.log("호출1");
-    //     const response = await compareNftTime();
-    //     console.log('getNftlist에 response는',response)
-    //     // context.commit("setNftList", { info: nftList });
-
-    //   } catch (error) {
-    //     console.error("error");
-    //   }
-    // },
-
-    // async getBannerList(context: Nullable) {
-    //   try {
-    //     const response = await compareBannersTime();
-    //     console.log('getBannerList actions실행시',response)
-    //     context.commit("setBannerList", {info:bannerList});
-    //     context.commit('setBannerLatestTime',response);
-    //   } catch (error) {
-    //     console.error("error");
-    //   }
-    // },
 
     async getTokenInfos(context: Nullable) {
       const response = await tokenInfos();

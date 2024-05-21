@@ -9,14 +9,12 @@
       :style="containerStyle"
       @click.stop
     >
-      <!-- <img
-        v-if="showClose"
-        class="close-icon"
-        src="@/assets/images/img_close_black.png"
-        @click="hide"
-      /> -->
       <img
-        v-if="showClose && popupType !== 'successMinting'"
+        v-if="
+          showClose &&
+          popupType !== 'successMinting' &&
+          popupType !== 'duplicate_nft_buy'
+        "
         class="close-icon"
         src="@/assets/images/img_close_black.png"
         @click="hide"
@@ -30,8 +28,6 @@
       />
       <div class="flex flex-col justify-center items-center">
         <template v-if="popupType === 'qr_code'">
-          <!-- <template v-if="isQrCodePopup"> -->
-
           <div class="flex flex-col justify-center items-center">
             <div class="font-semibold text-2xl">My Address</div>
             <div class="h-5"></div>
@@ -82,12 +78,6 @@
                   {{ t("message.withdrawNewPassInput") }}
                 </div>
                 <div class="ml-4">
-                  <!-- <input
-                    type="password"
-                    v-model="passwd1"
-                    size="20"
-                    class="text-lg border-solid border-1 border-gray-300"
-                  /> -->
                   <input
                     type="password"
                     v-model="passwd1"
@@ -411,24 +401,6 @@
             </div>
           </div>
         </template>
-        <template v-if="popupType === 'game_off'">
-          <div class="flex flex-col justify-center items-center font-medium">
-            <div class="h-5"></div>
-            <div class="text-2xl text-center font-medium">
-              If you <span style="color: red">OFF</span> NFT,<br />carbon
-              reduction data <br />will not be applied.
-            </div>
-            <div class="h-10"></div>
-            <div class="w-full flex justify-center items-center">
-              <button
-                class="wp-60 p-2 font-semibold text-2xl text-white off-btn"
-                @click="resData('OFF')"
-              >
-                OFF
-              </button>
-            </div>
-          </div>
-        </template>
         <template v-if="popupType === 'serviceChecking'">
           <div>
             <div class="mb-10 flex justify-center">
@@ -576,7 +548,6 @@
             popupType !== 'resetPW' &&
             popupType !== 'send_coin' &&
             popupType !== 'game_install' &&
-            popupType !== 'game_off' &&
             popupType !== 'duplicate_nft_buy' &&
             popupType !== 'serviceChecking' &&
             popupType !== 'successReferral' &&
@@ -732,10 +703,6 @@ const props = defineProps({
     default: () => 0,
   },
 });
-
-// watch(() => props.swapEsgp, (newValue, oldValue) => {
-//   console.log(`swapEsgp 변경 ${oldValue} to ${newValue}`);
-// }, { immediate: true });
 
 watch(
   () => props.swapEsgp,
@@ -918,18 +885,11 @@ const withdrawalCamera = () => {
     });
 };
 
-//   function updateWithdrawAddress(address) {
-//   withdrawAddress.value = address;
-// }
-
 const doCopy = () => {
   console.log("do copy?");
   window.flutter_inappwebview.callHandler("handleCopyBtn", {
     content: store.getters["auth/getAddress"],
   });
-  // window.navigator.clipboard.writeText(store.getters["auth/getAddress"]).then(() => {
-  //   //console.log('copy');
-  // });
 
   hide();
 };
@@ -1070,8 +1030,6 @@ const shareTelegram = () => {
         objectType: "feed",
         title: `ZeroQuest - 친구초대 이벤트 ${referralSlice}을 입력하세요`,
         description: `https://play.google.com/store/apps/details?id=com.aiblue.zrqst_webview_app&pcampaignid=web_share`,
-        //  description: `https://play.google.com/store/apps/details?id=com.aiblue.zrqst_multilingual_webview_app&pcampaignid=web_share`,
-
         imageUrl:
           "https://play-lh.googleusercontent.com/VaCMJUHxqjCtqNJ3oKFDdDCZUHdIOu5nZRARVnxSNssiYK6HXZ6JOTcA3vAcLPYfrJI=w240-h480-rw",
         link: {
@@ -1086,8 +1044,8 @@ const shareTelegram = () => {
       .callHandler("handleTelegramShareBtn", {
         infoShareTelegram: infoShareTelegram,
       })
-      .then((res: any) => {
-        console.log(res);
+      .then(async (res: any) => {
+        await store.dispatch("auth/getPointBalanceAll");
       });
   } else {
     console.error("store.state.referral is not defined or is empty");
