@@ -73,7 +73,7 @@
             <div class="h-5"></div>
             <div class="h-10"></div>
             <div class="p-5 flex flex-col text-xl rounded pass-back-bg">
-              <div class="flex justify-start items-center">
+              <div class="flex justify-between items-center">
                 <div>
                   {{ t("message.withdrawNewPassInput") }}
                 </div>
@@ -89,7 +89,7 @@
                 </div>
               </div>
               <div class="h-5"></div>
-              <div class="flex justify-start items-center">
+              <div class="flex justify-between items-center">
                 <div>
                   {{ t("message.withdrawPassCheck") }}
                 </div>
@@ -223,15 +223,9 @@
               <div class="flex justify-end items-center">
                 <div>Address</div>
                 <div class="ml-4">
-                  <!-- <input
-                    type="text"
-                    v-model="withdrawAddress"
-                    size="20"
-                    class="text-lg border-solid border-1 border-gray-300 input-field"
-                  /> -->
                   <input
                     type="text"
-                    v-model="qrCodeReceived"
+                    v-model="withdrawAddress"
                     size="20"
                     class="text-lg border-solid border-1 border-gray-300 input-field"
                   />
@@ -461,6 +455,60 @@
             </div>
           </div>
         </template>
+        <template v-if="popupType === 'passwordRegComplated'">
+          <div>
+            <div class="mb-10 flex justify-center">
+              <img class="wp-30" src="@/assets/images/icon_success.png" />
+            </div>
+            <div class="mb-10 text-3xl font-bold">
+              {{ t("message.passwordRegComplated") }}
+            </div>
+            <div>
+              <button
+                class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
+                @click="refreshHide"
+              >
+                {{ t("message.termsBtn") }}
+              </button>
+            </div>
+          </div>
+        </template>
+        <template v-if="popupType === 'passwordUpdateComplated'">
+          <div>
+            <div class="mb-10 flex justify-center">
+              <img class="wp-30" src="@/assets/images/icon_success.png" />
+            </div>
+            <div class="mb-10 text-3xl font-bold">
+              {{ t("message.passwordUpdateComplated") }}
+            </div>
+            <div>
+              <button
+                class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
+                @click="refreshHide"
+              >
+                {{ t("message.termsBtn") }}
+              </button>
+            </div>
+          </div>
+        </template>
+        <template v-if="popupType === 'successSwap'">
+          <div>
+            <div class="mb-10 flex justify-center">
+              <img class="wp-30" src="@/assets/images/icon_success.png" />
+            </div>
+            <div class="mb-10 text-3xl font-bold">
+              {{ t("message.successSwap") }}
+            </div>
+            <div>
+              <button
+                class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
+                @click="refreshHide"
+              >
+                {{ t("message.termsBtn") }}
+              </button>
+            </div>
+          </div>
+        </template>
         <template v-if="popupType === 'tree_nft'">
           <div>
             <div>
@@ -557,7 +605,10 @@
             popupType !== 'tree_nft' &&
             popupType !== 'shareSuccess' &&
             popupType !== 'notSuccessMinting' &&
-            popupType !== 'PreparingForService'
+            popupType !== 'PreparingForService' &&
+            popupType !== 'successSwap' &&
+            popupType !== 'passwordRegComplated' &&
+            popupType !== 'passwordUpdateComplated'
           "
         >
           <div>
@@ -744,8 +795,6 @@ const withdrawPass = ref("");
 const withdrawMsg = ref("");
 
 const nftList = store.getters["auth/getNftList"];
-const pwHash = computed(() => store.getters["auth/getPwHash"]);
-const pwNumber = computed(() => store.getters["auth/getPwNumber"]);
 
 const popupType = ref("");
 console.log(popupType.value);
@@ -911,35 +960,22 @@ const doPass = () => {
 };
 
 const requestUpdatePW = () => {
-  if (updatePW1.value.length < 6 || updatePW2.value.length < 6) {
-    alert(t("message.WithdrawalPasswordCheck1"));
+  if (updatePW1.value.length < 6) {
+    passwdMsg.value = "Please enter at least 6 characters.";
+  } else if (updatePW1.value.length > 6) {
+    passwdMsg.value = "Only 6 characters allowed.";
   } else if (updatePW1.value !== updatePW2.value) {
-    alert(t("message.WithdrawalPasswordCheck2"));
+    passwdMsg.value = "The passwords do not match.";
   } else {
-    //해쉬, 변경비번, 인증번호 넘겨줘야됨
-    //pwHash.pwNumber
-    http
-      .post("/auth/resetWithdrawPw", {
-        verifyToken: pwHash.value,
-        verifyCode: pwNumber.value,
-        password: openSSLCrypto.encode(
-          CryptoJS.createHash("md5").update(updatePW1.value).digest("hex")
-        ),
-      })
-      .then((response) => {
-        if (response.data.data === true) {
-          alert(t("message.WithdrawalPasswordCheck3"));
-          store.state.isPopup = false;
-        }
-      })
-      .catch((error) => {
-        alert(error.response.data.message);
-      });
+    resData(updatePW1.value);
+
+    updatePW1.value = "";
+    updatePW2.value = "";
+    passwdMsg.value = "";
   }
 };
 
 const doSendCoin = () => {
-  console.log("withdrawl request 버튼 클릭");
   if (withdrawAddress.value === "") {
     withdrawMsg.value = t("message.withdrawError3");
   } else if (!withdrawCount.value || withdrawCount.value < 0) {

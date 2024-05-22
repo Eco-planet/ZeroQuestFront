@@ -144,6 +144,9 @@ export default {
     notSuccessMinting:
       "Please convert a higher amount to proceed with the swap",
     howToUse: "Inquiry on how to use",
+    successSwap: "Token swap was successful.",
+    passwordRegComplated: "Withdrawal password registration completed.",
+    passwordUpdateComplated: "Withdrawal password re-registration completed.",
   },
 
   error: {

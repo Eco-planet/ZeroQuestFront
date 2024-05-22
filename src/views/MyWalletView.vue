@@ -193,7 +193,10 @@ const isUpdate = ref(false);
 const swapEsgp = ref(0);
 const swapEsg = ref(0);
 const showClose = ref(true);
-const tokenInfos = computed(() => store.getters["auth/getTokenInfos"]);
+const tokenInfos = computed(() => vuexStore.getters["auth/getTokenInfos"]);
+const boolWithdraw = computed(() => vuexStore.getters["auth/getWithdrawPw"]);
+const pwHash = computed(() => vuexStore.getters["auth/getPwHash"]);
+const pwNumber = computed(() => vuexStore.getters["auth/getPwNumber"]);
 
 // 선택된 쌍을 저장할 ref
 const selectedPair = ref("ESGP-ESG");
@@ -284,16 +287,39 @@ const checkData = (res: string) => {
   const passwd = openSSLCrypto.encode(
     CryptoJS.createHash("md5").update(res).digest("hex")
   );
-
-  http
-    .post("/api/user/withdrawPw", {
-      password: passwd,
-    })
-    .then((response) => {
-      if (response.data.data.result === true) {
-        store.commit("auth/setWithdrawPw", { pw: true });
-      }
-    });
+  // 이미 withdraw가 등록되어 있으면 updated를 호출 그렇지 않으면
+  if (boolWithdraw.value) {
+    http
+      .post("/auth/resetWithdrawPw", {
+        verifyToken: pwHash.value,
+        verifyCode: pwNumber.value,
+        password: passwd,
+      })
+      .then((response) => {
+        if (response.data.data === true) {
+          store.state.popupType = "passwordUpdateComplated";
+          store.state.isPopup = true;
+        }
+      })
+      .catch((error) => {
+        alert(error.response.data.message);
+      });
+  } else {
+    http
+      .post("/api/user/withdrawPw", {
+        password: passwd,
+      })
+      .then((response) => {
+        if (response.data.data.result === true) {
+          store.commit("auth/setWithdrawPw", { pw: true });
+        }
+        store.state.popupType = "passwordRegComplated";
+        store.state.isPopup = true;
+      })
+      .catch((error) => {
+        alert(error.response.data.message);
+      });
+  }
 };
 
 const checkObject = (res: any) => {
@@ -407,7 +433,7 @@ const sendSwap = () => {
       // 여기에서 currentSwapValue를 사용하여 조건을 검사
       if (currentSwapValue >= 30000) {
         store.state.popupValue = currentSwapValue;
-        store.state.popupType = "successMinting";
+        store.state.popupType = "successSwap";
         popupTitle.value = "Swap transaction completed successfully";
       } else {
         popupTitle.value = "Swap amount must be at least 30000";
