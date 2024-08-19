@@ -82,6 +82,8 @@ export default {
     swapCaution1: "You can swap from ESG point 30,000 points or higher.",
     swapCaution2:
       "ESG Token's price is based on a 7-day average price for CoinMarketCap.",
+    swapCaution3:
+      "Except for ESGP, the balance of ESG and ETH tokens is reflected after the blockchain transaction is completed and therefore does not change immediately.",
     addressCaution1: "We only support the same main net when making a deposit.",
     addressCaution2:
       "Only matic (polygon mainnet) and ESG (Ethereum) mainnet can be deposited and withdrawn.",
@@ -92,7 +94,8 @@ export default {
     withdrawPassReset: "Withdrawal Password Reset",
     withdrawPassUpdate: "Reset Password",
     withdrawCount: "Quantity",
-    withdrawPassInput: "New password",
+    withdrawPassInput: "password",
+    withdrawNewPassInput: "New password",
     withdrawPassCheck: "Confirm password",
     withdrawPassCaution1:
       "Password is a total of 6 digits, special character combination",
@@ -102,7 +105,7 @@ export default {
       "When withdrawing, withdrawal is possible only when the main net is the same.",
     withdrawCaution2:
       "The withdrawal will proceed after the withdrawal review.",
-    withdrawCaution3: "withdrawal fee",
+    withdrawCaution3: "Withdrawal fee",
     withdrawCaution4: "Mainnet fee applied",
     withdrawBtnRegister: "withdrawal request",
     withdrawError1: "Please enter at least 6 digits.",
@@ -115,9 +118,9 @@ export default {
     swapRequestEnd: "The swap request has been completed.",
     agreeTerms:
       "You can use it only if you agree to the required terms and conditions.",
-    termsTitle: "Please accept the terms of service",
+    termsTitle: "Terms of service",
     termsAgreeAll: "We all agree.",
-    termsAgreeInfo: "There is an explanation related to the whole agreement.",
+    termsAgreeInfo: "There is an option to agree on content notifications",
     termsAgree01: "[Requirement] Terms of Use",
     termsAgree02: "[Requirement] Privacy policy",
     termsAgree03: "[Select] Contains your consent.",
@@ -138,7 +141,12 @@ export default {
     successReferralTitle: "Referral code entered!",
     successReferral: "Your referral has been credited with 1000 ESG points",
     successMinting: "Success NFT Minting!",
+    notSuccessMinting:
+      "Please convert a higher amount to proceed with the swap",
     howToUse: "Inquiry on how to use",
+    successSwap: "Token swap was successful.",
+    passwordRegComplated: "Withdrawal password registration completed.",
+    passwordUpdateComplated: "Withdrawal password re-registration completed.",
   },
 
   error: {
@@ -154,6 +162,7 @@ export default {
     passwordNotMatch: "The withdrawal password does not match.",
     notSupportSwap: "Unsupported swap coin.",
     lessMiniumCostSwap: "Swap quantity is less than minimum quantity.",
+    // firstConvertCostSwap: "Please convert first, then proceed with the swap.",
     failedPointSwap: "Point swap failed.",
     commingSoon: "Coming soon.",
     notActivated: "NFT is inactive.",
@@ -162,5 +171,6 @@ export default {
     notEnoughPoints: "ESG points are lacking.",
     notEnoughGasFee:
       "Minting fees are insufficient. Please contact your administrator.",
+    incorrectValue: "Please enter the correct value.",
   },
 };

@@ -52,7 +52,6 @@ export default createStore({
         increVotedContent.vote +=1
       }
     },
-
   },
   actions: {
     updateEntryInfo({ commit }, data) {

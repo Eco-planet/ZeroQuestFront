@@ -10,10 +10,21 @@
       @click.stop
     >
       <img
-        v-if="showClose"
+        v-if="
+          showClose &&
+          popupType !== 'successMinting' &&
+          popupType !== 'duplicate_nft_buy'
+        "
         class="close-icon"
         src="@/assets/images/img_close_black.png"
         @click="hide"
+      />
+
+      <img
+        v-else
+        class="close-icon"
+        src="@/assets/images/img_close_black.png"
+        @click="refreshHide"
       />
       <div class="flex flex-col justify-center items-center">
         <template v-if="popupType === 'qr_code'">
@@ -62,21 +73,23 @@
             <div class="h-5"></div>
             <div class="h-10"></div>
             <div class="p-5 flex flex-col text-xl rounded pass-back-bg">
-              <div class="flex justify-start items-center">
+              <div class="flex justify-between items-center">
                 <div>
-                  {{ t("message.withdrawPassInput") }}
+                  {{ t("message.withdrawNewPassInput") }}
                 </div>
                 <div class="ml-4">
                   <input
                     type="password"
                     v-model="passwd1"
+                    @input="validatePassword"
                     size="20"
+                    maxlength="6"
                     class="text-lg border-solid border-1 border-gray-300"
                   />
                 </div>
               </div>
               <div class="h-5"></div>
-              <div class="flex justify-start items-center">
+              <div class="flex justify-between items-center">
                 <div>
                   {{ t("message.withdrawPassCheck") }}
                 </div>
@@ -123,7 +136,7 @@
             <div class="h-10"></div>
             <div class="p-5 flex flex-col text-xl rounded pass-back-bg">
               <div class="flex justify-between items-center">
-                <div>{{ t("message.withdrawPassInput") }}</div>
+                <div>{{ t("message.withdrawNewPassInput") }}</div>
                 <div class="ml-4">
                   <input
                     type="password"
@@ -171,6 +184,22 @@
           </div>
         </template>
 
+        <template v-if="popupType === 'PreparingForService'">
+          <div>
+            <div class="mb-10 text-3xl font-bold">
+              Service is Being Prepared
+            </div>
+            <div>
+              <button
+                class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
+                @click="hide"
+              >
+                OK
+              </button>
+            </div>
+          </div>
+        </template>
+
         <template v-if="popupType === 'send_coin'">
           <div class="flex flex-col justify-center items-center">
             <div class="flex items-center">
@@ -198,7 +227,7 @@
                     type="text"
                     v-model="withdrawAddress"
                     size="20"
-                    class="text-lg border-solid border-1 border-gray-300"
+                    class="text-lg border-solid border-1 border-gray-300 input-field"
                   />
                 </div>
               </div>
@@ -212,7 +241,7 @@
                     type="number"
                     v-model="withdrawCount"
                     size="20"
-                    class="text-lg border-solid border-1 border-gray-300"
+                    class="text-lg border-solid border-1 border-gray-300 input-field"
                   />
                 </div>
               </div>
@@ -226,7 +255,7 @@
                     type="password"
                     v-model="withdrawPass"
                     size="20"
-                    class="text-lg border-solid border-1 border-gray-300"
+                    class="text-lg border-solid border-1 border-gray-300 input-field"
                   />
                 </div>
               </div>
@@ -261,6 +290,8 @@
               @click="openResetPW"
             >
               {{ t("message.forgetPassword") }}
+              <!-- <h1>Scanned QR Code</h1>
+              <p>{{ qrCodeReceived }}</p> -->
             </div>
           </div>
         </template>
@@ -279,15 +310,6 @@
               </div>
               <div>
                 <div
-                  v-if="locale === 'kr'"
-                  class="py-3 px-10 bg-gray-100 rounded-lg font-medium text-xl"
-                >
-                  인증코드 요청 시<br />
-                  현재 로그인 된 구글 메일로 <br />
-                  임의로 생성된 인증번호를 전송합니다.
-                </div>
-                <div
-                  v-else
                   class="py-3 px-10 bg-gray-100 rounded-lg font-medium text-xl"
                 >
                   When requesting an authentication code, a randomly generated
@@ -325,30 +347,14 @@
 
         <template v-if="popupType === 'duplicate_nft_buy'">
           <div>
-            <div
-              v-if="locale === 'kr'"
-              class="mb-16 text-3xl font-bold text-black"
-            >
-              자발적 탄소감축을 위한 <br />
-              NFT는 반복 구매할 수 없습니다.
-            </div>
-            <div v-else class="mb-16 text-3xl font-bold text-black">
+            <div class="mb-16 text-3xl font-bold text-black">
               Voluntary carbon reduction <br />
               NFTs cannot be purchased repeatedly.
             </div>
           </div>
 
           <div>
-            <div
-              v-if="locale === 'kr'"
-              class="font-semibold text-xl text-black text-2xl"
-            >
-              자발적 탄소감축 "제로퀘스트"를 <br />
-              친구들에게 추천하면<br />
-              <span class="text-esg-color font-bold">50ESG point</span> 를
-              드립니다
-            </div>
-            <div v-else class="font-semibold text-xl text-black text-2xl">
+            <div class="font-semibold text-xl text-black text-2xl">
               If you refer 'ZeroQuest' to friends, <br />
               you'll earn<br />
               <span class="text-esg-color font-bold">50ESG points</span>
@@ -356,17 +362,6 @@
           </div>
 
           <div class="mt-7 mb-4">
-            <!-- 카카오 공유 -->
-            <button type="button">
-              <a id="kakao-link-btn" @click="shareKakao">
-                <img
-                  src="@/assets/images/kakao_logo.png"
-                  alt="카카오톡 공유하기"
-                />
-              </a>
-            </button>
-
-            <!-- 텔레그램 공유 -->
             <button type="button" class="sns_btn" @click="shareTelegram">
               <img src="@/assets/images/telog.png" alt="텔레그램 공유하기" />
             </button>
@@ -374,37 +369,7 @@
         </template>
 
         <template v-if="popupType === 'game_install'">
-          <div
-            v-if="locale === 'kr'"
-            class="flex flex-col justify-center items-center"
-          >
-            <div class="h-5"></div>
-            <div class="text-2xl text-center">
-              NFT 를 활성화하기 위해서는<br />{{
-                nftList[store.state.nftId].name.kor
-              }}
-              App 을<br />설치해야 합니다.
-            </div>
-            <div class="h-10"></div>
-            <div class="flex items-center justify-center">
-              <img :src="nftList[store.state.nftId].image" />
-            </div>
-            <div class="h-10"></div>
-            <div class="text-xl text-center">
-              연동되는 어플리케이션은 설치 후 동일한<br />구글 로그인을 사용해야
-              합니다.
-            </div>
-            <div class="h-10"></div>
-            <div class="w-full flex justify-center items-center">
-              <button
-                class="wp-40 p-2 font-semibold text-2xl text-white game-btn"
-                @click="resData(store.state.nftId.toString())"
-              >
-                설치하기
-              </button>
-            </div>
-          </div>
-          <div v-else class="flex flex-col justify-center items-center">
+          <div class="flex flex-col justify-center items-center">
             <div class="h-5"></div>
             <div class="text-2xl text-center">
               To activate NFTs,<br />you need to install<br />the
@@ -425,47 +390,7 @@
                 class="wp-40 p-2 font-semibold text-2xl text-white game-btn"
                 @click="resData(store.state.nftId.toString())"
               >
-                설치하기
-              </button>
-            </div>
-          </div>
-        </template>
-        <template v-if="popupType === 'game_off'">
-          <div
-            v-if="locale === 'kr'"
-            class="flex flex-col justify-center items-center"
-          >
-            <div class="h-5"></div>
-            <div class="text-2xl text-center font-medium">
-              NFT 를 <span style="color: red">OFF</span> 하면<br />탄소절감
-              데이터가 적용<br />되지 않습니다.
-            </div>
-            <div class="h-10"></div>
-            <div class="w-full flex justify-center items-center">
-              <button
-                class="wp-60 p-2 font-semibold text-2xl text-white off-btn"
-                @click="resData('OFF')"
-              >
-                OFF
-              </button>
-            </div>
-          </div>
-          <div
-            v-else
-            class="flex flex-col justify-center items-center font-medium"
-          >
-            <div class="h-5"></div>
-            <div class="text-2xl text-center font-medium">
-              If you <span style="color: red">OFF</span> NFT,<br />carbon
-              reduction data <br />will not be applied.
-            </div>
-            <div class="h-10"></div>
-            <div class="w-full flex justify-center items-center">
-              <button
-                class="wp-60 p-2 font-semibold text-2xl text-white off-btn"
-                @click="resData('OFF')"
-              >
-                OFF
+                Install
               </button>
             </div>
           </div>
@@ -505,7 +430,7 @@
             <div>
               <button
                 class="w-48 h-16 font-semibold text-white text-xl rounded close-btn"
-                @click="hide"
+                @click="refreshHide"
               >
                 {{ t("message.termsBtn") }}
               </button>
@@ -523,7 +448,61 @@
             <div>
               <button
                 class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
-                @click="hide"
+                @click="refreshHide"
+              >
+                {{ t("message.termsBtn") }}
+              </button>
+            </div>
+          </div>
+        </template>
+        <template v-if="popupType === 'passwordRegComplated'">
+          <div>
+            <div class="mb-10 flex justify-center">
+              <img class="wp-30" src="@/assets/images/icon_success.png" />
+            </div>
+            <div class="mb-10 text-3xl font-bold">
+              {{ t("message.passwordRegComplated") }}
+            </div>
+            <div>
+              <button
+                class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
+                @click="refreshHide"
+              >
+                {{ t("message.termsBtn") }}
+              </button>
+            </div>
+          </div>
+        </template>
+        <template v-if="popupType === 'passwordUpdateComplated'">
+          <div>
+            <div class="mb-10 flex justify-center">
+              <img class="wp-30" src="@/assets/images/icon_success.png" />
+            </div>
+            <div class="mb-10 text-3xl font-bold">
+              {{ t("message.passwordUpdateComplated") }}
+            </div>
+            <div>
+              <button
+                class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
+                @click="refreshHide"
+              >
+                {{ t("message.termsBtn") }}
+              </button>
+            </div>
+          </div>
+        </template>
+        <template v-if="popupType === 'successSwap'">
+          <div>
+            <div class="mb-10 flex justify-center">
+              <img class="wp-30" src="@/assets/images/icon_success.png" />
+            </div>
+            <div class="mb-10 text-3xl font-bold">
+              {{ t("message.successSwap") }}
+            </div>
+            <div>
+              <button
+                class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
+                @click="refreshHide"
               >
                 {{ t("message.termsBtn") }}
               </button>
@@ -557,11 +536,6 @@
               When you withdraw, your accumulated points and NFT information
               will be permanently deleted, and recovery will not be possible.
             </div>
-
-            <div class="mb-10 text-2xl font-semibold">
-              Also, if you rejoin on the same day after withdrawing, you will
-              not receive WMU voting rights. Please keep this in mind.
-            </div>
             <div class="flex justify-between">
               <button
                 class="w-44 h-12 font-semibold text-xl rounded close-btn bg-white text-green-800 border border-gray-300 border-solid"
@@ -590,9 +564,25 @@
             <div>
               <button
                 class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
-                @click="voteHide"
+                @click="refreshHide"
               >
                 Confirm
+              </button>
+            </div>
+          </div>
+        </template>
+        <template v-if="popupType === 'shareSuccess'">
+          <div>
+            <div class="mb-10 flex justify-center">
+              <img class="wp-30" src="@/assets/images/icon_success.png" />
+            </div>
+            <div class="font-bold text-2xl pb-8">Sharing was successful.</div>
+            <div>
+              <button
+                class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
+                @click="hide"
+              >
+                Closed
               </button>
             </div>
           </div>
@@ -606,18 +596,31 @@
             popupType !== 'resetPW' &&
             popupType !== 'send_coin' &&
             popupType !== 'game_install' &&
-            popupType !== 'game_off' &&
             popupType !== 'duplicate_nft_buy' &&
             popupType !== 'serviceChecking' &&
             popupType !== 'successReferral' &&
             popupType !== 'successMinting' &&
             popupType !== 'withDraw' &&
             popupType !== 'successWithdraw' &&
-            popupType !== 'tree_nft'
+            popupType !== 'tree_nft' &&
+            popupType !== 'shareSuccess' &&
+            popupType !== 'notSuccessMinting' &&
+            popupType !== 'PreparingForService' &&
+            popupType !== 'successSwap' &&
+            popupType !== 'passwordRegComplated' &&
+            popupType !== 'passwordUpdateComplated'
           "
         >
           <div>
-            <img class="error-icon" src="@/assets/images/icon_error.png" />
+            <!-- <img class="error-icon" src="@/assets/images/icon_error.png" /> -->
+            <img
+              :src="
+                swapEsgp >= 30000
+                  ? '/assets/images/icon_success.png'
+                  : '/assets/images/icon_error.png'
+              "
+            />
+            <!-- <img :src="swapEsgp >= 30000 ? '/assets/images/icon_success.png' : '/assets/images/icon_success.png'" /> -->
           </div>
           <div class="h-10"></div>
           <div
@@ -625,14 +628,8 @@
             class="text-2xl text-center"
           >
             <div>{{ t(showTitle) }}</div>
-            <!-- <div>
-              ({{
-                t("message.swapRequestValue", {
-                  value: store.state.popupValue,
-                })
-              }})
-            </div> -->
           </div>
+
           <div
             v-else-if="showTitle == 'message.getReward'"
             class="text-2xl text-center"
@@ -664,7 +661,20 @@
               </button>
             </div>
           </div>
-          <div v-if="popupType === 'message'" class="flex justify-center">
+          <div
+            v-if="showTitle == 'message.swapRequestEnd'"
+            class="flex justify-center"
+          >
+            <div>
+              <button
+                class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
+                @click="refreshHide"
+              >
+                Closed
+              </button>
+            </div>
+          </div>
+          <div v-else-if="popupType === 'message'" class="flex justify-center">
             <div>
               <button
                 class="w-48 h-12 font-semibold text-white text-xl rounded close-btn"
@@ -681,7 +691,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, toRefs, watch } from "vue";
+import { computed, ref, toRefs, watch, onMounted, onUnmounted } from "vue";
 import { useI18n } from "vue-i18n";
 import QRCodeVue3 from "qr-code-generator-vue3";
 import http from "@/api/http";
@@ -691,6 +701,19 @@ import { useStore } from "vuex";
 import "vue3-carousel/dist/carousel.css";
 
 const store = useStore();
+const qrCodeReceived = ref("");
+
+onMounted(() => {
+  window.receiveQRCode = (qrCode) => {
+    qrCodeReceived.value = qrCode;
+    console.log("Received QR Code:", qrCode);
+    // 여기에서 추가 로직을 구현할 수 있습니다.
+  };
+});
+
+onUnmounted(() => {
+  delete window.receiveQRCode; // 컴포넌트가 제거될 때 함수를 정리
+});
 
 const locale = computed(() => store.state.system.locale);
 const accessToken = store.getters["auth/getAccessToken"];
@@ -726,7 +749,19 @@ const props = defineProps({
     type: Boolean,
     default: () => true,
   },
+  swapEsgp: {
+    type: Number,
+    default: () => 0,
+  },
 });
+
+watch(
+  () => props.swapEsgp,
+  (newValue, oldValue) => {
+    console.log(`swapEsgp 변경 from ${oldValue} to ${newValue}`);
+  },
+  { immediate: true }
+);
 
 const emit = defineEmits([
   "afterShow",
@@ -737,7 +772,7 @@ const emit = defineEmits([
   "update:visible",
   "resData",
   "resJson",
-  "voteHide",
+  "refreshHide",
   "clickWithdraw",
 ]);
 const { visible, withdrawVisible, innerStyle, title } = toRefs(props); // 弹框组件显隐
@@ -760,11 +795,9 @@ const withdrawPass = ref("");
 const withdrawMsg = ref("");
 
 const nftList = store.getters["auth/getNftList"];
-const pwHash = computed(() => store.getters["auth/getPwHash"]);
-const pwNumber = computed(() => store.getters["auth/getPwNumber"]);
 
 const popupType = ref("");
-
+console.log(popupType.value);
 //출금번호 초기화
 const userEmail = computed(() => store.getters["auth/getUserEmail"]);
 
@@ -825,6 +858,22 @@ const hide = () => {
   passwd1.value = "";
   passwd2.value = "";
   passwdMsg.value = "";
+  qrCodeReceived.value = "";
+
+  const validatePassword = (event) => {
+    const password = event.target.value; // input 이벤트에서 입력된 값을 가져옴
+    const regex = /^[A-Za-z0-9]+$/; // 영문 대소문자 및 숫자만 허용
+    // 입력된 비밀번호가 6자리를 초과하는지 검사합니다.
+    if (password.length > 6) {
+      passwdMsg.value = "Password must be no more than 6 characters.";
+      passwd1.value = password.substring(0, 6); // 비밀번호를 6자리로 자릅니다.
+    } else if (!regex.test(password)) {
+      passwdMsg.value = "Password must contain only alphanumeric characters.";
+      passwd1.value = password.replace(/[^A-Za-z0-9]/g, "");
+    } else {
+      passwdMsg.value = ""; // 에러 메시지를 초기화합니다.
+    }
+  };
 
   withdrawAddress.value = "";
   withdrawCount.value = null;
@@ -834,7 +883,8 @@ const hide = () => {
   emit("hide");
 };
 
-const voteHide = () => {
+const refreshHide = () => {
+  console.log("referral code entered");
   store.state.popupType = "";
 
   passwd1.value = "";
@@ -846,7 +896,7 @@ const voteHide = () => {
   withdrawPass.value = "";
 
   emit("update:visible", false);
-  emit("voteHide");
+  emit("refreshHide");
 };
 
 const resData = (res: string) => {
@@ -877,27 +927,29 @@ const clickMask = () => {
 
 const withdrawalCamera = () => {
   console.log("됐니?");
-  window.flutter_inappwebview.callHandler("handleCopyBtn", {
-    content: slicedValue,
-  });
+  window.flutter_inappwebview
+    .callHandler("handleOpenCamera")
+    .TouchEvent((res: any) => {
+      console.log("res는", res);
+    });
 };
 
 const doCopy = () => {
+  console.log("do copy?");
   window.flutter_inappwebview.callHandler("handleCopyBtn", {
     content: store.getters["auth/getAddress"],
   });
-  // window.navigator.clipboard.writeText(store.getters["auth/getAddress"]).then(() => {
-  //   //console.log('copy');
-  // });
 
   hide();
 };
 
 const doPass = () => {
   if (passwd1.value.length < 6) {
-    passwdMsg.value = "6자리 이상으로 입력해주세요.";
+    passwdMsg.value = "Please enter at least 6 characters.";
+  } else if (passwd1.value.length > 6) {
+    passwdMsg.value = "Only 6 characters allowed.";
   } else if (passwd1.value !== passwd2.value) {
-    passwdMsg.value = "패스워드가 일치하지 않습니다.";
+    passwdMsg.value = "The passwords do not match.";
   } else {
     resData(passwd1.value);
 
@@ -908,40 +960,29 @@ const doPass = () => {
 };
 
 const requestUpdatePW = () => {
-  if (updatePW1.value.length < 6 || updatePW2.value.length < 6) {
-    alert(t("message.WithdrawalPasswordCheck1"));
+  if (updatePW1.value.length < 6) {
+    passwdMsg.value = "Please enter at least 6 characters.";
+  } else if (updatePW1.value.length > 6) {
+    passwdMsg.value = "Only 6 characters allowed.";
   } else if (updatePW1.value !== updatePW2.value) {
-    alert(t("message.WithdrawalPasswordCheck2"));
+    passwdMsg.value = "The passwords do not match.";
   } else {
-    //해쉬, 변경비번, 인증번호 넘겨줘야됨
-    //pwHash.pwNumber
-    http
-      .post("/auth/resetWithdrawPw", {
-        verifyToken: pwHash.value,
-        verifyCode: pwNumber.value,
-        password: openSSLCrypto.encode(
-          CryptoJS.createHash("md5").update(updatePW1.value).digest("hex")
-        ),
-      })
-      .then((response) => {
-        if (response.data.data === true) {
-          alert(t("message.WithdrawalPasswordCheck3"));
-          store.state.isPopup = false;
-        }
-      })
-      .catch((error) => {
-        alert(error.response.data.message);
-      });
+    resData(updatePW1.value);
+
+    updatePW1.value = "";
+    updatePW2.value = "";
+    passwdMsg.value = "";
   }
 };
 
 const doSendCoin = () => {
   if (withdrawAddress.value === "") {
-    withdrawMsg.value = "출금하실 주소를 입력해주세요.";
-  } else if (withdrawCount.value < 0) {
-    withdrawMsg.value = "출금 수량을 입력해주세요.";
+    withdrawMsg.value = t("message.withdrawError3");
+  } else if (!withdrawCount.value || withdrawCount.value < 0) {
+    withdrawMsg.value = t("message.withdrawError4");
+    return;
   } else if (withdrawPass.value === "") {
-    withdrawMsg.value = "출금 비밀번호를 입력해주세요.";
+    withdrawMsg.value = t("message.withdrawError5");
   } else {
     var res = {
       address: withdrawAddress.value,
@@ -964,6 +1005,7 @@ const openResetPW = () => {
 
 //인증코드요청
 const codeRequest = () => {
+  console.log("인증번호 요청");
   http
     .post("/auth/signStart", { email: userEmail.value })
     .then((response) => {
@@ -1006,8 +1048,13 @@ const resetRequest = () => {
   }
 };
 
-// 소셜 공유하기, 텔레그램
+const showShareModal = async () => {
+  await store.dispatch("auth/getPointBalanceAll");
+  store.state.popupType = "shareSuccess";
+  store.state.isPopup = true;
+};
 
+// 소셜 공유하기, 텔레그램
 const shareTelegram = () => {
   const referralValue = referral.value;
 
@@ -1033,51 +1080,13 @@ const shareTelegram = () => {
       .callHandler("handleTelegramShareBtn", {
         infoShareTelegram: infoShareTelegram,
       })
-      .then((res: any) => {
-        console.log(res);
+      .then(async (res: any) => {
+        await store.dispatch("auth/getPointBalanceAll");
       });
   } else {
     console.error("store.state.referral is not defined or is empty");
   }
 };
-const sendReferralRequest = (code) => {
-  return http.post(`/api/user/sendReferral`, {
-    referralCode: code,
-  });
-};
-
-// 소셜 공유하기, 카카오
-// 소셜 공유하기, 카카오
-const shareKakao = () => {
-  const referralValue = referral.value;
-  if (referralValue) {
-    const referralSlice = referralValue.slice(-6);
-    const infoShareKakao = {
-      objectType: "feed",
-      content: {
-        title: `ZeroQuest-친구초대 이벤트 ${referralSlice}을 입력하세요`,
-        description: `https://play.google.com/store/apps/details?id=com.aiblue.zrqst_webview_app&pcampaignid=web_share`,
-        imageUrl:
-          "https://play-lh.googleusercontent.com/VaCMJUHxqjCtqNJ3oKFDdDCZUHdIOu5nZRARVnxSNssiYK6HXZ6JOTcA3vAcLPYfrJI=w240-h480-rw",
-        link: {
-          mobileWebUrl: `https://zeroquest.io`,
-          webUrl: `https://zeroquest.io`,
-        },
-        accessToken: accessToken,
-      },
-    };
-
-    // 모바일 버전
-    window.flutter_inappwebview
-      .callHandler("handleKakaoShareBtn", { infoShareKakao: infoShareKakao })
-      .then((res: any) => {
-        console.log(res);
-      });
-  } else {
-    console.error("store.state.referral is not defined or is empty");
-  }
-};
-
 // 레퍼럴 입력 가이드 (sendReferral)
 const referralInput = () => {
   const userReferralSlice = referral.value.slice(-6);
@@ -1197,6 +1206,12 @@ const showLastSixChars = () => {
 
     .pass-back-bg {
       background-color: #f6f8f5;
+      display: flex;
+      flex-direction: column;
+      padding: 20px; // 패딩 조정
+      gap: 10px; // 항목 사이의 간격
+      background-color: #f6f8f5;
+      border-radius: 10px; // 모서리 둥글게
     }
 
     .pass-bg {
@@ -1230,5 +1245,11 @@ const showLastSixChars = () => {
       background-color: #0c5d25;
     }
   }
+}
+.input-field {
+  width: 100%; // 너비를 100%로 설정하여 부모 컨테이너에 맞게 조정
+  padding: 10px; // 패딩 추가
+  border: 1px solid #ccc; // 테두리 스타일 조정
+  border-radius: 5px; // 모서리 둥글게
 }
 </style>

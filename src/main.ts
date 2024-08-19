@@ -21,7 +21,10 @@ const app = createApp(App)
   .use(locale)
   .use(vue3GoogleLogin, { clientId: process.env.VUE_APP_GOOGLE_API_KEY });
 
-// app.config.globalProperties.isLoading = false;
+router.afterEach(() => {
+  window.scrollTo(0, 0);
+});
+
 declare global {
   interface Window {
     Kakao: any;

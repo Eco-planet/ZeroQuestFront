@@ -112,7 +112,7 @@ import store from "@/store";
 import router from "@/router";
 import http from "@/api/http";
 import Terms from "@/components/Terms/index.vue";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
@@ -199,6 +199,10 @@ const updateTerms = () => {
       });
   }
 };
+
+
+
+
 </script>
 
 <style lang="scss">

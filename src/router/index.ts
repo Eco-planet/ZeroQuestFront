@@ -10,11 +10,6 @@ const routes: Array<RouteRecordRaw> = [
     component: GoogleView,
   },
   {
-    path: "/login",
-    name: "login",
-    component: GameLoginView,
-  },
-  {
     path: "/myzq",
     name: "myzq",
     component: () =>
@@ -58,6 +53,12 @@ const routes: Array<RouteRecordRaw> = [
     component: () =>
       import(/* webpackChunkName: "mywallet" */ "../views/MyWalletView.vue"),
   },
+  {
+    path: "/challenge",
+    name: "challenge",
+    component: () =>
+      import(/* webpackChunkName: "terms" */ "../views/Challenge.vue"),
+  },
 
   {
     path: "/battle",
@@ -96,12 +97,6 @@ const routes: Array<RouteRecordRaw> = [
       import(/* webpackChunkName: "battle" */ "../views/EntryPage.vue"),
   },
   {
-    path: "/about",
-    name: "about",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
-  },
-  {
     path: "/terms",
     name: "terms",
     component: () =>
@@ -121,11 +116,12 @@ const routes: Array<RouteRecordRaw> = [
     component: () =>
       import(/* webpackChunkName: "terms" */ "../views/Withdraw.vue"),
   },
+
   {
-    path: "/firebase",
-    name: "Firebase",
+    path: "/TermsNotion",
+    name: "TermsNotion",
     component: () =>
-      import(/* webpackChunkName: "terms" */ "../views/Firebase.vue"),
+      import(/* webpackChunkName: "terms" */ "../views/TermsNotion.vue"),
   },
 ];
 
@@ -161,10 +157,18 @@ router.beforeEach(async (to: Nullable, from: Nullable, next: Nullable) => {
   next();
 });
 
+const scrollToTop = () => {
+  const topsScroll = document.getElementById("appMain");
+  if (topsScroll) {
+    topsScroll.scrollTo({ top: 0, left: 0 });
+  }
+};
+
 router.afterEach(async (to: Nullable, from: Nullable, next: Nullable) => {
   setTimeout(() => {
     store.state.isLoading = false;
   }, 0);
+  scrollToTop();
 });
 
 export default router;

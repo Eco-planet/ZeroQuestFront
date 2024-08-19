@@ -5,7 +5,7 @@
     <div class="h-10"></div>
     <div class="px-8 py-5 esg-point w-full flex justify-between text-2xl">
       <div>ESG Point</div>
-      <div>{{ esgPoint }}</div>
+      <div>{{ esgPoint.toLocaleString() }}</div>
     </div>
     <div class="h-10"></div>
     <div class="px-8 py-5 my-wallet">
@@ -21,27 +21,23 @@
             </div>
             <div class="flex justify-end">
               <div class="flex flex-col justify-end list-margin">
-                <template v-if="Object.keys(balances).length > 0">
+                <template v-if="Object.keys(userTokenInfo).length > 0">
                   <div class="flex justify-end font-semibold text-2xl">
                     {{
-                      parseFloat(
-                        (1 * balances[key].balance).toFixed(item.decimals)
-                      )
+                      parseFloat(1 * userTokenInfo[key]).toFixed(item.decimals)
                     }}
                   </div>
                   <div class="flex justify-end text-sm">
                     =
                     {{
                       parseFloat(
-                        (item.price * balances[key].balance).toFixed(
-                          item.decimals
-                        )
+                        (item.price * userTokenInfo[key]).toFixed(item.decimals)
                       )
                     }}
                     USDT
                   </div>
                 </template>
-                <template v-if="Object.keys(balances).length === 0">
+                <template v-if="Object.keys(userTokenInfo).length === 0">
                   <div class="flex justify-end font-semibold text-2xl">0</div>
                   <div class="flex justify-end text-sm">= 0 USDT</div>
                 </template>
@@ -64,22 +60,36 @@
       </template>
     </div>
     <div class="h-10"></div>
-    <div class="flex font-semibold text-2xl">SWAP</div>
+    <div class="flex font-semibold text-2xl items-center">
+      SWAP
+      <select
+        v-model="selectedPair"
+        class="ml-5 border-none focus:border-none focus:outline-none"
+        style="margin-left: 20px"
+      >
+        <option value="ESGP-ESG">ESGP to ESG</option>
+        <option value="ESG-ESGP">ESG to ESGP</option>
+        <option value="ESG-ETH">ESG to ETH</option>
+        <option value="ETH-ESG">ETH to ESG</option>
+      </select>
+    </div>
     <div class="h-2"></div>
     <div class="flex">
       <div class="wp-40 flex flex-col">
         <div class="flex justify-end items-center">
-          <div class="wp-50">
+          <div class="wp-100 input-container">
             <input
               type="number"
-              class="w-36 font-semibold text-xl"
+              class="input-field font-semibold text-xl"
               v-model="swapEsgp"
               :onKeyup="initSwapEsgp"
+              @focus="handleFocus"
+              placeholder="0"
               style="text-align: right"
             />
-          </div>
-          <div class="wp-50 flex justify-end items-center text-gray-400">
-            ESG Point
+            <div class="wp-15 flex justify-end items-center text-gray-400">
+              {{ fromSymbol }}
+            </div>
           </div>
         </div>
         <div class="h-px h-5 bg-gray-200"></div>
@@ -91,17 +101,19 @@
       </div>
       <div class="wp-40 flex flex-col">
         <div class="flex justify-end items-center">
-          <div class="wp-80">
+          <div class="wp-80 input-container">
             <input
               type="number"
-              class="w-36 font-semibold text-xl swap-text"
+              class="w-36 font-semibold text-xl swap-text non-clickable"
               v-model="swapEsg"
               style="text-align: right"
               readonly
             />
           </div>
-          <div class="wp-20 flex justify-end items-center text-gray-400">
-            ESG
+          <div
+            class="input-field wp-20 flex justify-end items-center text-gray-400"
+          >
+            {{ toSymbol }}
           </div>
         </div>
         <div class="h-px h-5 bg-gray-200"></div>
@@ -109,15 +121,22 @@
     </div>
     <div class="h-10"></div>
     <div class="flex flex-col text-xl">
-      <div class="swap-noti flex font-semibold">{{ t("message.swapCaution") }}</div>
+      <div class="swap-noti flex font-semibold">
+        {{ t("message.swapCaution") }}
+      </div>
+
       <div class="h-2"></div>
-      <div class="flex justify-start items-center">
+      <div class="flex justify-start items-start" style="text-align: left">
         <div class="font-bold">·</div>
         <div class="ml-2">{{ t("message.swapCaution1") }}</div>
       </div>
-      <div class="flex justify-start">
+      <div class="flex justify-start items-start">
         <div class="font-bold">·</div>
         <div class="ml-2 text-left">{{ t("message.swapCaution2") }}</div>
+      </div>
+      <div class="flex justify-start items-start">
+        <div class="font-bold">·</div>
+        <div class="ml-2 text-left">{{ t("message.swapCaution3") }}</div>
       </div>
     </div>
     <div class="h-10"></div>
@@ -133,15 +152,20 @@
         SWAP
       </button>
     </div>
-    <div class="h-10"></div>
+    <div class="h-20"></div>
   </div>
   <Modal
     :visible="store.state.isPopup"
     @hide="closeModal"
+    @refreshHide="closeSwapModal"
     @resData="checkData"
     @resJson="checkObject"
     :title="popupTitle"
+    :showClose="showClose"
+    :popupType="store.state.popupType"
+    :swapEsgp="currentSwapValue"
   />
+  <div class="h-20"></div>
 </template>
 
 <script lang="ts" setup>
@@ -151,28 +175,43 @@ import http from "@/api/http";
 import CryptoJS from "crypto";
 import openSSLCrypto from "@/utils/openSSLCrypto";
 import { useI18n } from "vue-i18n";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, reactive, watchEffect } from "vue";
 import Modal from "@/components/Modal/index.vue";
 import { errorMsg } from "@/utils/util";
+import { useStore } from "vuex";
+import { computed, watch } from "vue";
 
 const { t } = useI18n();
-
-const esgPoint = ref("");
-const balances = ref();
-const tokenInfos = ref();
+const vuexStore = useStore();
+const userTokenInfo = computed(() => vuexStore.getters["auth/getBalances"]);
+const esgPoint = parseInt(userTokenInfo.value.ESGP);
+const balances = ref({});
 const withdrawSymbol = ref("");
 const popupTitle = ref("");
 
 const isUpdate = ref(false);
 const swapEsgp = ref(0);
 const swapEsg = ref(0);
+const showClose = ref(true);
+const tokenInfos = computed(() => vuexStore.getters["auth/getTokenInfos"]);
+const boolWithdraw = computed(() => vuexStore.getters["auth/getWithdrawPw"]);
+const pwHash = computed(() => vuexStore.getters["auth/getPwHash"]);
+const pwNumber = computed(() => vuexStore.getters["auth/getPwNumber"]);
 
-onMounted(() => {
-  updateBalance();
+// 선택된 쌍을 저장할 ref
+const selectedPair = ref("ESGP-ESG");
+// fromSymbol과 toSymbol을 저장할 ref
+const fromSymbol = ref("");
+const toSymbol = ref("");
 
-  if (store.state.isBalanceUpdate === true || 1) {
-    getBalanceAll();
-  }
+watchEffect(() => {
+  const [from, to] = selectedPair.value.split("-");
+  fromSymbol.value = from;
+  toSymbol.value = to;
+});
+
+onMounted(async () => {
+  await vuexStore.dispatch("auth/getPointBalanceAll");
 });
 
 const checkError = (status: number, code: number) => {
@@ -187,43 +226,17 @@ const checkError = (status: number, code: number) => {
   }
 };
 
-const getBalanceAll = () => {
-  http
-    .get("/api/token/balanceAll")
-    .then((response) => {
-      store.state.isBalanceUpdate = false;
-
-      const resData = response.data.data.balances;
-
-      let balancesData: any = {};
-
-      resData.forEach((res: any) => {
-        balancesData[res.symbol] = res;
-      });
-
-      store.commit("auth/setBalances", { info: balancesData });
-
-      updateBalance();
-    })
-    .catch((error) => {
-      checkError(error.response.status, error.response.data.errorCode);
-    });
-};
-
-const updateBalance = () => {
-  tokenInfos.value = store.getters["auth/getTokenInfos"];
-  balances.value = store.getters["auth/getBalances"];
-
-  for (const key in balances.value) {
-    if (balances.value[key].symbol === "ESGP") {
-      const balance = parseFloat(balances.value[key].balance);
-      esgPoint.value = balance.toLocaleString();
+const getStatusCheck = (type: string, symbol: string) => {
+  isUpdate.value = false;
+  console.log("클릭");
+  if (type === "swap") {
+    if (swapEsgp.value < 30000) {
+      store.state.isPopup = true;
+      store.state.popupType = "message";
+      popupTitle.value = "message.notSuccessMinting";
+      return; // 이 조건을 만족하지 않으면 여기서 함수 실행을 중단
     }
   }
-};
-
-const getStatusCheck = (type: string, symbol: string) => {
-  if (type === "swap" && swapEsg.value <= 0) return false;
 
   // 처리중인 SendCoin/Swap 이 있는지 확인
   http
@@ -237,16 +250,15 @@ const getStatusCheck = (type: string, symbol: string) => {
         store.state.popupType = "message";
         popupTitle.value = "error.notProcessIng";
         store.state.isPopup = true;
-
         isUpdate.value = true;
       } else {
         if (isUpdate.value === true) {
           isUpdate.value = false;
-
-          getBalanceAll();
+          vuexStore.dispatch("auth/getPointBalanceAll");
         }
 
         if (type === "sendCoin") {
+          console.log("나다");
           withdrawSymbol.value = symbol;
 
           if (store.getters["auth/getWithdrawPw"] === true) {
@@ -254,7 +266,6 @@ const getStatusCheck = (type: string, symbol: string) => {
           } else {
             store.state.popupType = "withdraw_pass";
           }
-
           store.state.isPopup = true;
         } else if (type === "swap") {
           if (swapEsg.value === 0) {
@@ -276,16 +287,39 @@ const checkData = (res: string) => {
   const passwd = openSSLCrypto.encode(
     CryptoJS.createHash("md5").update(res).digest("hex")
   );
-
-  http
-    .post("/api/user/withdrawPw", {
-      password: passwd,
-    })
-    .then((response) => {
-      if (response.data.data.result === true) {
-        store.commit("auth/setWithdrawPw", { pw: true });
-      }
-    });
+  // 이미 withdraw가 등록되어 있으면 updated를 호출 그렇지 않으면
+  if (boolWithdraw.value) {
+    http
+      .post("/auth/resetWithdrawPw", {
+        verifyToken: pwHash.value,
+        verifyCode: pwNumber.value,
+        password: passwd,
+      })
+      .then((response) => {
+        if (response.data.data === true) {
+          store.state.popupType = "passwordUpdateComplated";
+          store.state.isPopup = true;
+        }
+      })
+      .catch((error) => {
+        alert(error.response.data.message);
+      });
+  } else {
+    http
+      .post("/api/user/withdrawPw", {
+        password: passwd,
+      })
+      .then((response) => {
+        if (response.data.data.result === true) {
+          store.commit("auth/setWithdrawPw", { pw: true });
+        }
+        store.state.popupType = "passwordRegComplated";
+        store.state.isPopup = true;
+      })
+      .catch((error) => {
+        alert(error.response.data.message);
+      });
+  }
 };
 
 const checkObject = (res: any) => {
@@ -298,6 +332,7 @@ const sendCoin = (
   value: number,
   password: string
 ) => {
+  store.state.isLoading = true;
   const passwd = openSSLCrypto.encode(
     CryptoJS.createHash("md5").update(password).digest("hex")
   );
@@ -311,9 +346,11 @@ const sendCoin = (
       privateKey: store.getters["auth/getPrivateKey"],
       password: passwd,
     })
-    .then((response) => {
-      store.state.popupType = "message";
+    .then(async (response) => {
+      await store.dispatch("auth/getPointBalanceAll");
+      store.state.isLoading = false;
       popupTitle.value = "message.withdrawRequestEnd";
+      store.state.popupType = "message";
       store.state.isPopup = true;
     })
     .catch((error) => {
@@ -330,69 +367,106 @@ const closeModal = () => {
   store.state.isPopup = false;
 };
 
+const closeSwapModal = () => {
+  store.state.isPopup = false;
+  router.go(0);
+};
+
+const isValidNumber = (number) => {
+  return /^\d+$/.test(number);
+};
+
 const getSwapInfo = () => {
-  if (swapEsgp.value < 30000) {
+  if (swapEsgp.value === 0 && fromSymbol.value === "ESGP") {
     store.state.popupType = "message";
     popupTitle.value = "error.lessMiniumCostSwap";
     store.state.isPopup = true;
+    store.state.isLoading = false;
   } else {
-    http
-      .get("/api/swap/estimate", {
-        params: {
-          fromAddress: store.getters["auth/getAddress"],
-          toAddress: store.getters["auth/getAddress"],
-          fromSymbol: "ESGP",
-          toSymbol: "ESG",
-          amount: swapEsgp.value,
-        },
-      })
-      .then((response) => {
-        if (response.data.data.userSendPrice < response.data.data.minSwap) {
-          swapEsg.value = 0;
+    if (isValidNumber(swapEsgp.value)) {
+      store.state.isLoading = true;
+      http
+        .get("/api/swap/estimate", {
+          params: {
+            fromAddress: store.getters["auth/getAddress"],
+            toAddress: store.getters["auth/getAddress"],
+            fromSymbol: fromSymbol.value,
+            toSymbol: toSymbol.value,
+            amount: swapEsgp.value || 0,
+          },
+        })
+        .then((response) => {
+          store.state.isLoading = false;
 
-          store.state.popupType = "message";
-          popupTitle.value = "error.lessMiniumCostSwap";
-          store.state.isPopup = true;
-        } else {
           swapEsg.value = response.data.data.swapRecvAmount;
-        }
-      })
-      .catch((error) => {
-        checkError(error.response.status, error.response.data.errorCode);
-        store.state.popupType = "message";
-        popupTitle.value = "error.notEnoughMoney";
-        store.state.isPopup = true;
-      });
+        })
+        .catch((error) => {
+          checkError(error.response.status, error.response.data.errorCode);
+          store.state.popupType = "message";
+          popupTitle.value = "error.notEnoughMoney";
+          store.state.isPopup = true;
+        });
+    } else {
+      store.state.popupType = "message";
+      popupTitle.value = "error.incorrectValue";
+      store.state.isPopup = true;
+      store.state.isLoading = false;
+    }
   }
 };
 
 const sendSwap = () => {
+  const currentSwapValue = swapEsgp.value; // 요청 전 swapEsgp 값을 저장
+
   http
     .post("/api/swap/send", {
       fromAddress: store.getters["auth/getAddress"],
       toAddress: store.getters["auth/getAddress"],
-      fromSymbol: "ESGP",
-      toSymbol: "ESG",
-      amount: swapEsgp.value,
+      fromSymbol: fromSymbol.value,
+      toSymbol: toSymbol.value,
+      amount: currentSwapValue,
       privateKey: store.getters["auth/getPrivateKey"],
     })
     .then((response) => {
-      store.state.popupValue = swapEsgp.value;
-      store.state.popupType = "message";
-      popupTitle.value = "message.swapRequestEnd";
-      store.state.isPopup = true;
+      console.log("response sendSwap에", response);
 
+      // 여기에서 currentSwapValue를 사용하여 조건을 검사
+      if (currentSwapValue >= 30000) {
+        store.state.popupValue = currentSwapValue;
+        store.state.popupType = "successSwap";
+        popupTitle.value = "Swap transaction completed successfully";
+      } else {
+        popupTitle.value = "Swap amount must be at least 30000";
+        store.state.popupType = "error";
+      }
+
+      showClose.value = true;
+      store.state.isPopup = true;
       swapEsgp.value = 0;
       swapEsg.value = 0;
+      store.dispatch("auth/getPointBalanceAll");
     })
     .catch((error) => {
       checkError(error.response.status, error.response.data.errorCode);
+      popupTitle.value = "Error during the swap operation";
+      store.state.popupType = "error";
+      store.state.isPopup = true;
     });
 };
 
 const initSwapEsgp = () => {
   swapEsg.value = 0;
+};
 
+const handleInput = () => {
+  const appMain = document.getElementById("appMain");
+  if (appMain) {
+    appMain.scrollTop = 0;
+  }
+};
+
+const handleFocus = () => {
+  swapEsgp.value = "";
 };
 </script>
 
@@ -437,6 +511,8 @@ const initSwapEsgp = () => {
 
 .swap-text {
   color: #24d120;
+  width: 100%; /* 너비를 100%로 조정하여 더 많은 공간 확보 */
+  text-align: right;
 }
 
 .list-margin {
@@ -465,5 +541,24 @@ const initSwapEsgp = () => {
 .swap-btn-disable {
   background-color: gray;
   border-radius: 5px;
+}
+
+.input-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-left: -5px; /* 기존 값보다 작게 조정하거나, 음수값을 사용해 조정 */
+}
+
+.input-field {
+  text-align: left;
+  width: 100%;
+  border: none; /* 테두리 제거 */
+  padding: 10px; /* 패딩을 조정하여 입력 필드의 크기를 조정할 수 있음 */
+  border-radius: 5px; /* 필요한 경우 모서리를 둥글게 처리 */
+}
+
+.non-clickable {
+  pointer-events: none; // 포인터 이벤트 비활성화
 }
 </style>

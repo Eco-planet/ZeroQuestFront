@@ -10,16 +10,10 @@
               class="w-full h-full object-contain object-top"
             />
           </div>
-          <div
-            class="mt-4 text-xl font-medium text-black"
-            v-if="locale === 'kr'"
-          >
-            {{ nft.name.kor }}
+          <div class="mt-4 text-lg font-medium text-black text-left">
+            {{ nft.name }}
           </div>
-          <div class="mt-4 text-lg font-medium text-black" v-else>
-            {{ nft.name.eng }}
-          </div>
-          <div class="text-lg font-light text-gray-400">
+          <div class="text-lg font-light text-gray-400 text-left">
             {{ Number(nft.buyPrice2).toLocaleString() }} ESG point
           </div>
         </div>
@@ -32,42 +26,31 @@
 import http from "@/api/http";
 import { reactive, ref, onMounted, Ref, computed } from "vue";
 import { useRouter } from "vue-router";
-import { NFTSampleType } from "@/types/IZeroNftType";
 import { useStore } from "vuex";
+import { checkNftLatestTime } from "@/api/axios.ts";
 
 const router = useRouter();
 const vuexStore = useStore();
-const nftList = ref();
 
-const locale = computed(() => vuexStore.state.system.locale);
+const nftList = computed(() => vuexStore.getters["auth/getNftList"]);
+
+const nftLatestTime = computed(() =>
+  parseInt(vuexStore.state.auth.nftLatestTime)
+);
 
 onMounted(() => {
-  getNftList();
+  checkNftLatestTime(vuexStore, nftLatestTime.value);
 });
-
-const getNftList = () => {
-  http.get("/api/nft/zeroNft").then((res) => {
-    const parsedData = res.data.data.map((item: any) => {
-      if (item.name) {
-        try {
-          return { ...item, name: JSON.parse(item.name) };
-        } catch (e) {
-          console.error("Failed to parse name:", e);
-        }
-      }
-      return item;
-    });
-    nftList.value = parsedData;
-  });
-};
 
 const nftListSort = computed(() => {
   if (!nftList.value) {
     return [];
   } else if (props.selectedIdx === 0) {
-    return nftList.value;
+    return Object.values(nftList.value);
   } else {
-    return nftList.value.filter((item) => item.cid === props.selectedIdx);
+    return Object.values(nftList.value).filter(
+      (item) => item.cid === props.selectedIdx
+    );
   }
 });
 
@@ -93,8 +76,18 @@ function goToDetail(idx: number) {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+ul {
+  overflow: visible;
+}
 .shadow-nft {
   box-shadow: 0 6px 8px 0px rgb(0 0 0 / 0.1), 0 2px 8px 0px rgb(0 0 0 / 0.1);
+}
+
+.content-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 </style>

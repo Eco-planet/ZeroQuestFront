@@ -1,144 +1,6 @@
 <template>
   <div>
-    <div v-if="locale === 'kr'">
-      <div>
-        <h5 v-if="nftId === '4'" class="pb-8 text-3xl text-black font-semibold">
-          멸종위기 동물관심 1탄<br />
-          레드판다 시리즈 NFT
-        </h5>
-        <h5 v-if="nftId === '5'" class="pb-8 text-3xl text-black font-semibold">
-          멸종위기 동물관심 2탄<br />
-          레드판다 시리즈 NFT
-        </h5>
-        <h5 v-if="nftId === '6'" class="pb-8 text-3xl text-black font-semibold">
-          멸종위기 동물관심 3탄<br />
-          하늘다람쥐 시리즈 NFT
-        </h5>
-      </div>
-      <div>
-        <p v-if="nftId === '4'" class="mb-16 font-medium text-xl">
-          Sapiens Red Panda NFT는 <br />
-          돌도끼를 장착한 원시 팬더의 모습으로, <br />
-          고대의 자연 속 인간을 떠올리게 합니다.<br />
-          멸종위기 동물에 대한 관심가지기 1탄으로<br />
-          제로퀘스트가 준비한 레드판다 NFT에 <br />
-          많은 관심 부탁드립니다.
-        </p>
-        <p v-else-if="nftId === '5'" class="mb-16 font-medium text-xl">
-          Adventure Red Panda NFT는 <br />
-          호기심 많고 추진력 끝내주는 모험가입니다. <br />
-          대항해 시대의 개척자를 상징하며, <br />
-          세상을 탐구하기 위해 끊임없이 모험을 합니다.<br />
-          멸종위기 동물에 대한 관심가지기, <br />
-          2탄으로 제로퀘스트가 준비한 레드판다 NFT에 <br />
-          많은 관심 부탁드립니다.
-        </p>
-        <p v-if="nftId === '6'" class="mb-16 font-medium text-xl">
-          하늘다람쥐 NFT는 <br />
-          깨끗한 공기 속에서 친구들과 <br />
-          자유로이 활공하고 싶은 <br />
-          꿈을 가진 하늘 다람쥐 NFT 입니다.<br />
-        </p>
-      </div>
-
-      <div class="flex justify-center">
-        <p v-if="nftId === '4'" class="mb-16 font-bold text-2xl text-left">
-          1. 판매일정 : 12월 8일 ~ 미정 <br />
-          2. 가격 : 500ESG point<br />
-          3. 리워드 : 300일 동안 매일 <br />50 ESG point를 지급합니다
-        </p>
-        <p v-if="nftId === '5'" class="mb-16 font-bold text-2xl text-left">
-          1. 판매일정 : 12월 15일 ~ 미정 <br />
-          2. 가격 : 500ESG point<br />
-          3. 리워드 : 300일 동안 매일 <br />50 ESG point를 지급합니다
-        </p>
-        <p v-if="nftId === '6'" class="mb-16 font-bold text-2xl text-left">
-          1. 판매일정 : 12월 22일 ~ 미정<br />
-          2. 가격 : 500ESG point<br />
-          3. 리워드 : 300일 동안 매일 <br />50 ESG point를 지급합니다
-        </p>
-      </div>
-      <div>
-        <p v-if="nftId === '4'" class="mb-10 font-medium text-xl">
-          멸종 위기 동물들에게 관심을 가져 주세요.
-        </p>
-        <p v-if="nftId === '5'" class="mb-10 font-medium text-xl">
-          멸종 위기 동물들에게 관심을 가져 주세요.
-        </p>
-        <p v-if="nftId === '6'" class="mb-10 font-medium text-xl">
-          멸종 위기 동물 하늘다람쥐에게 관심을 가져 주세요.
-        </p>
-      </div>
-
-      <div v-if="nftId === '4' || nftId === '5'">
-        <p class="mb-10 font-medium text-xl">
-          레드판다는 점점 개체수가 적어지고 있습니다.<br />
-          서식지와 개체수에 대한 생태계 조사 자료는 부족하지만 <br />
-          개체 수가 적은 원인은 개발로 인한 서식지 파괴,<br />
-          가죽이나 애완목적의 밀렵이 중요한 원인입니다.<br />
-          또한 레드판다는 육아를 싫어해서 개체의 수가 <br />
-          잘 늘지 않는 것도 원인이라고 하네요.
-        </p>
-        <p class="mb-10 font-medium text-xl">
-          중국, 인도, 네팔, 부탄, 미얀마 북부 등에서 <br />
-          소수나마 서식하고 있으며,<br />
-          총 개체수는 대략 5000여 마리 정도로 추산됩니다.<br />
-          그중 약 800마리 정도가 동물원에서 사육중이며,<br />
-          특히 일본은 레서판다의 사육번식에 <br />
-          성공한 이래 200마리가량이나 보유하고 있습니다.
-        </p>
-        <p class="mb-10 font-medium text-xl">
-          래서판다에게는 근연종이 없어서, 만약 멸종 가까이 가면 <br />
-          복구는 절망적이라고 합니다.
-        </p>
-        <p class="mb-16 font-medium text-xl">
-          세계자연보전연맹(IUCN)이 정한 Red List에서 <br />
-          취약(Vulnerable)종으로 등록되었다가<br />
-          2015년부로 상황이 더 안 좋아졌는지<br />
-          위험(Endangered)으로 상향 되었습니다.<br />
-          우리의 관심이 더 많이 필요할 때 입니다.
-        </p>
-      </div>
-
-      <div v-if="nftId === '6'">
-        <p class="mb-10 font-medium text-xl">
-          무분별한 개발과 산림 훼손은<br />
-          하늘다람쥐의 서식지를 줄여가고 있습니다. <br />
-          이들은 특히 높은 나무와<br />
-          풍부한 식생이 있는 숲에 의존하는데,<br />
-          이러한 환경이 점차 줄어들면서 <br />
-          서식 가능한 지역이 감소하고 있습니다.
-        </p>
-        <p class="mb-10 font-medium text-xl">
-          또한 전 세계적인 기후 변화는 <br />
-          그들의 서식지인 아고산지대의 생태계에<br />
-          큰 영향을 미치고 있습니다.<br />
-          기온 상승으로 인해 선호하는 식물의 분포가 변하거나,<br />
-          먹이가 되는 나무와 식물이 고사하는 <br />
-          현상들이 일어나고 있습니다.
-        </p>
-        <p class="mb-10 font-medium text-xl">
-          우리의 관심으로 하늘다람쥐가 <br />
-          마음껏 하늘을 날 수 있도록 해주세요
-        </p>
-        <p class="mb-16 font-medium text-xl">
-          ESG Financial은<br />
-          이러한 현상에 대한 심각성을 느끼고 <br />
-          멸종위기동물을 소개해드리면서 <br />
-          이것에 대한 인식을 높이고자 합니다.<br />
-          또한 멸종위기동물NFT 시리즈의 수익금은<br />
-          동물 보호 단체에 기부할 예정이니<br />
-          많은 관심과 참여 부탁드립니다.
-        </p>
-      </div>
-
-      <div class="mt-32 text-2xl font-medium">자발적 탄소감축 플랫폼</div>
-      <div class="flex justify-center">
-        <img class="pt-4" src="@/assets/images/zero.png" />
-      </div>
-    </div>
-
-    <div v-else>
+    <div class="mx-10">
       <div>
         <h5 v-if="nftId === '4'" class="pb-8 text-3xl text-black font-semibold">
           Endangered Animals Awareness Series 1<br />
@@ -181,20 +43,23 @@
       </div>
 
       <div class="flex justify-center">
-        <p v-if="nftId === '4'" class="mb-16 font-bold text-2xl text-left">
-          1. Sale Schedule: December 8th onwards, TBA <br />
+        <p v-if="nftId === '4'" class="mb-16 font-bold text-2xl text-center">
+          1. Sales Schedule: 
+          <br/>December 8th onwards, TBA <br />
           2. Price: 500 ESG points<br />
-          3. Reward: 50 ESG points daily for 300 days
+          3. Reward: 50 ESG points<br/> daily for 300 days<br/>
         </p>
-        <p v-if="nftId === '5'" class="mb-16 font-bold text-2xl text-left">
-          1. Sale Schedule: December 15th onwards, TBA <br />
+        <p v-if="nftId === '5'" class="mb-16 font-bold text-2xl text-center">
+          1. Sales Schedule: 
+          <br/>December 15th onwards, TBA <br />
           2. Price: 500 ESG points<br />
-          3. Reward: 50 ESG points daily for 300 days
+          3. Reward: 50 ESG points <br/>daily for 300 days<br/>
         </p>
-        <p v-if="nftId === '6'" class="mb-16 font-bold text-2xl text-left">
-          1. Sale Schedule: December 22nd onwards, TBA<br />
+        <p v-if="nftId === '6'" class="mb-16 font-bold text-2xl text-center">
+          1. Sales Schedule: 
+          <br/>December 22nd onwards, TBA<br />
           2. Price: 500 ESG points<br />
-          3. Reward: 50 ESG points daily for 300 days
+          3. Reward: 50 ESG points<br/> daily for 300 days<br/>
         </p>
       </div>
       <div>

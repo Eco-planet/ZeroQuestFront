@@ -5,20 +5,22 @@
       <div
         class="mb-10 flex items-center justify-center w-7/10 p-4 rounded-2xl font-semibold text-4xl text-black refBtn"
       >
-        {{ t('message.referral1') }}
+        {{ t("message.referral1") }}
       </div>
     </div>
 
-    <div class="referral-container f0">
+    <div
+      class="referral-container f0"
+      :class="{ 'keyboard-active': isKeyboardVisible }"
+    >
       <p class="tit">
-        {{ t('message.referral2') }}<br />
-        {{ t('message.referral3') }}
+        {{ t("message.referral2") }}<br />
+        {{ t("message.referral3") }}
       </p>
       <p class="tit-bold">
-        <span> {{ t('message.referral5') }} </span>
-        <span>{{ t('message.referral4') }}</span>
+        <span> {{ t("message.referral5") }} </span>
+        <span>{{ t("message.referral4") }}</span>
       </p>
-      
 
       <div
         @click="showLastSixChars"
@@ -34,24 +36,13 @@
         />
       </div>
 
-      <p class="tit">{{ t('message.referral6') }}</p>
+      <p class="tit">{{ t("message.referral6") }}</p>
       <p class="tit-bold">
-        <span>{{ t('message.referral5') }}</span>
-        <span> {{ t('message.referral7') }}</span>
+        <span>{{ t("message.referral5") }}</span>
+        <span> {{ t("message.referral7") }}</span>
       </p>
 
       <div class="mt-7 mb-4">
-        <!-- 카카오 공유 -->
-        <button type="button">
-          <a id="kakao-link-btn" @click="shareKakao">
-            <img
-              src="./../assets/images/kakao_logo.png"
-              alt="카카오톡 공유하기"
-            />
-          </a>
-        </button>
-
-        <!-- 텔레그램 공유 -->
         <button type="button" class="sns_btn" @click="shareTelegram">
           <img src="./../assets/images/telog.png" alt="텔레그램 공유하기" />
         </button>
@@ -60,16 +51,7 @@
       <div class="h-9"></div>
 
       <div>
-        <div v-if="locale === 'kr'" class="font-medium text-sm text-gray-400">
-          주의사항 : 추천인으로 자기 자신을 추천할 수 없습니다.<br />
-          같은 사람에게 여러 번 소문내기를 하더라도<br />
-          50 ESG Point가 지급됩니다.<br />
-          제 3자의 최초가입시에만 소문내기 한 사람에게<br />
-          1,000 ESG Point가 지급됩니다.<br />
-          한 번에 한 사람에게만 소문내기를 할 수 있습니다.<br />
-          하루에 5명의 레퍼럴을 할 수 있습니다.
-        </div>
-        <div  v-else class="font-medium text-sm text-gray-400">
+        <div class="font-medium text-sm text-gray-400">
           Notice: You cannot refer yourself as a referrer.<br />
           Even if you spread the word to the same person multiple times,<br />
           you will be awarded 50 ESG Points.<br />
@@ -80,25 +62,19 @@
         </div>
       </div>
 
-
       <div class="h-10"></div>
 
       <div class="py-5 bg-gray-200 rounded-xl">
         <div>
           <span class="text-3xl font-bold mb-4 block">
-            {{ t('message.referral8') }}
+            {{ t("message.referral8") }}
           </span>
           <div>
-            <span v-if="locale==='kr'" class="text-lg font-bold block py-2">
-              아래 칸에 추천인 코드를 입력한 후<br />
-              확인 버튼을 눌러주세요
-            </span>
-            <span v-else class="text-lg font-bold block py-2">
+            <span class="text-lg font-bold block py-2">
               Please enter the referral code in the box below<br />
               and press the confirm button
             </span>
           </div>
-    
         </div>
 
         <div
@@ -109,6 +85,7 @@
             :placeholder="t('message.referral8')"
             class="px-10 py-4 text-center border border-black border-b-2"
             v-model="referralCode"
+            @focus="handleFocus"
           />
         </div>
 
@@ -116,12 +93,16 @@
           @click="referralInput"
           class="w-36 py-2 text-white font-medium border rounded-full text-xl refBtn"
         >
-          {{ t('message.termsBtn') }}
+          {{ t("message.termsBtn") }}
         </button>
       </div>
     </div>
   </div>
-  <Modal :visible="store.state.isPopup" @hide="closeModal" :title="popupTitle"/>
+  <Modal
+    :visible="store.state.isPopup"
+    @hide="closeModal"
+    :title="popupTitle"
+  />
 </template>
 
 <script lang="ts" setup>
@@ -150,99 +131,72 @@ const balances = ref();
 const tokenInfos = ref();
 const popupTitle = ref("");
 const referralCode = ref(""); //레퍼럴 코드 확인용
-
-const locale = computed(() => vuexStore.state.system.locale)
+const isKeyboardVisible = ref(false); // 키보드 활성화 상태 관리
+const locale = computed(() => vuexStore.state.system.locale);
 const { t } = useI18n();
+
+const toggleKeyboardVisibility = () => {
+  isKeyboardVisible.value = !isKeyboardVisible.value; // 상태 토글
+};
+
+const handleFocus = (event) => {
+  const inputField = event.target;
+  setTimeout(() => {
+    const offsetTop = inputField.getBoundingClientRect().top; // 입력 필드의 상단 위치 가져오기
+    const offsetHeight = inputField.offsetHeight; // 입력 필드의 높이
+    const screenHeight = window.innerHeight; // 화면의 총 높이
+
+    // 입력 필드를 화면의 중앙보다 약간 위에 위치시키기 위한 계산
+    const idealTopPosition = screenHeight / 2 - offsetHeight * 3;
+
+    if (offsetTop > idealTopPosition) {
+      // 입력 필드가 이상적 위치보다 아래에 있을 때
+      window.scrollBy({
+        top: offsetTop - idealTopPosition, // 스크롤을 위로 올릴 양 계산
+        behavior: "smooth",
+      });
+    }
+  }, 300); // 키보드가 나타나는 데 걸리는 시간을 고려하여 지연시간 설정
+};
+
+const showShareModal = async () => {
+  await vuexStore.dispatch("auth/getPointBalanceAll");
+  store.state.popupType = "shareSuccess";
+  store.state.isPopup = true;
+};
 
 // 소셜 공유하기, 텔레그램
 
 const shareTelegram = () => {
+  isKeyboardVisible.value = true; // 키보드 표시
   const referralValue = referral.value;
 
   if (referralValue) {
     const referralSlice = referralValue.slice(-6); // Use slice if referralValue is a string
-    // const url = `https://play.google.com/store/apps/details?id=com.aiblue.zrqst_webview_app`;
-    // const telegramShareUrl = `https://telegram.me/share/url?url=${encodeURIComponent(
-    //   url
-    //   )}  &text=${encodeURIComponent(text + referralSlice)}`;
-    // const title = `ZeroQuest - 친구초대 이벤트 ${referralSlice}을 입력하세요`;
 
     const infoShareTelegram = {
       content: {
         objectType: "feed",
-        title: `ZeroQuest - 친구초대 이벤트 ${referralSlice}을 입력하세요`,
-        description: `https://play.google.com/store/apps/details?id=com.aiblue.zrqst_webview_app&pcampaignid=web_share`,
+        title: `ZeroQuest - Please enter ${referralSlice} on Referral Code Entry`,
+
+        description: `https://play.google.com/store/apps/details?id=com.aiblue.zrqst_multilingual_webview_app`,
         imageUrl:
           "https://play-lh.googleusercontent.com/VaCMJUHxqjCtqNJ3oKFDdDCZUHdIOu5nZRARVnxSNssiYK6HXZ6JOTcA3vAcLPYfrJI=w240-h480-rw",
         link: {
-          mobileWebUrl: `https://zeroquest.io`, 
+          mobileWebUrl: `https://zeroquest.io`,
           webUrl: `https://zeroquest.io`,
         },
         accessToken: accessToken,
-      }
-    }
-
-    window.flutter_inappwebview.callHandler('handleTelegramShareBtn', {infoShareTelegram: infoShareTelegram}).then((res: any) => {
-      console.log(res)
-    })
-  } else {
-    console.error("store.state.referral is not defined or is empty");
-  }
-};
-const sendReferralRequest = () => {
-  return http.post(`/api/user/sendReferral`);
-};
-
-// 소셜 공유하기, 카카오
-const shareKakao = () => {
-  const referralValue = referral.value;
-  if (referralValue) {
-    const referralSlice = referralValue.slice(-6);
-    const infoShareKakao = {
-      objectType: "feed",
-      content: {
-        title: `ZeroQuest-친구초대 이벤트 ${referralSlice}을 입력하세요`,
-        description: `https://play.google.com/store/apps/details?id=com.aiblue.zrqst_webview_app&pcampaignid=web_share`,
-        imageUrl:
-          "https://play-lh.googleusercontent.com/VaCMJUHxqjCtqNJ3oKFDdDCZUHdIOu5nZRARVnxSNssiYK6HXZ6JOTcA3vAcLPYfrJI=w240-h480-rw",
-        link: {
-          mobileWebUrl: `https://zeroquest.io`, 
-          webUrl: `https://zeroquest.io`,
-        },
-        accessToken: accessToken
       },
-    }
+    };
 
-    // 모바일 버전
-    window.flutter_inappwebview.callHandler('handleKakaoShareBtn', {infoShareKakao: infoShareKakao}).then((res: any) => {
-      console.log(res)
-    })
-
-    // 웹 버전
-    // window.Kakao.Link.sendDefault({
-    //   objectType: "feed",
-    //   content: {
-    //     title: `ZeroQuest-친구초대 이벤트 ${referralSlice}을 입력하세요`,
-    //     description: `https://play.google.com/store/apps/details?id=com.aiblue.zrqst_webview_app&pcampaignid=web_share`,
-    //     imageUrl:
-    //       "https://play-lh.googleusercontent.com/VaCMJUHxqjCtqNJ3oKFDdDCZUHdIOu5nZRARVnxSNssiYK6HXZ6JOTcA3vAcLPYfrJI=w240-h480-rw",
-    //     link: {
-    //       mobileWebUrl: `https://zeroquest.io`, 
-    //       webUrl: `https://zeroquest.io`,
-    //     },
-    //     // serverCallbackArgs: { callback: "/api/test" },
-    //     // serverCallbackArgs: '{"key":"value"}',
-    //   },
-    // });
-
-    // 여기서 api/user/sendReferral 호출하기
-    // sendReferralRequest(referralValue)
-    //   .then((response) => {
-    //     console.log("sendReferral Response:", response.data);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error:", error);
-    //   });
+    window.flutter_inappwebview
+      .callHandler("handleTelegramShareBtn", {
+        infoShareTelegram: infoShareTelegram,
+      })
+      .then((res: any) => {
+        showShareModal();
+      });
   } else {
     console.error("store.state.referral is not defined or is empty");
   }
@@ -275,12 +229,14 @@ const referralInput = () => {
     })
     .catch((error) => {
       console.error("Error:", error);
-      
-      if (error.response.data.errorCode === 303) {    // 존재하지 않는 레퍼럴 코드를 입력 했을 때
+
+      if (error.response.data.errorCode === 303) {
+        // 존재하지 않는 레퍼럴 코드를 입력 했을 때
         store.state.popupType = "message";
         store.state.isPopup = true;
         popupTitle.value = "message.ref5";
-      } else if (error.response.data.errorCode === 304) {   // 이미 등록된 레퍼럴 코드를 입력 했을 때
+      } else if (error.response.data.errorCode === 304) {
+        // 이미 등록된 레퍼럴 코드를 입력 했을 때
         store.state.popupType = "message";
         store.state.isPopup = true;
         popupTitle.value = "message.ref4";
@@ -294,16 +250,9 @@ const showLastSixChars = () => {
     const slicedValue = referralValue.slice(-6);
 
     // 클립보드에 slicedValue를 복사
-    window.flutter_inappwebview.callHandler('handleCopyBtn', {content: slicedValue})
-    // navigator.clipboard
-    //   .writeText(slicedValue)
-    //   .then(() => {
-    //     alert(slicedValue + t("message.ref1")); // 뒷부분 6자리를 알림창으로 표시.
-    //     alert(t("message.ref2"));
-    //   })
-    //   .catch((err) => {
-    //     console.error("Could not copy text: ", err);
-    //   });
+    window.flutter_inappwebview.callHandler("handleCopyBtn", {
+      content: slicedValue,
+    });
   }
 };
 
@@ -323,6 +272,7 @@ const closeModal = () => {
 .referral-contens-area {
   width: 100%;
   padding: 60px 50px 170px;
+  margin-bottom: 50px;
   text-align: center;
   position: relative;
 }
@@ -402,5 +352,17 @@ const closeModal = () => {
   .referral-container > .tit-bold > span:nth-child(1) {
     font-weight: 600;
   }
+}
+
+.keyboard-active {
+  margin-bottom: 1000px; /* 필요한 margin-bottom 값 */
+}
+
+/* 기존 스타일 */
+.referral-container {
+  width: 100%;
+  margin-top: 40px;
+  padding: 50px 48px;
+  border: 2px solid #ddd;
 }
 </style>

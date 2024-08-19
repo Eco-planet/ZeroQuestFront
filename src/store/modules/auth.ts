@@ -1,10 +1,19 @@
 import authApi from "@/api/auth";
+import {
+  bannerListApi,
+  nftListApi,
+  getPointBalanceAll,
+  tokenInfos,
+  getRemainingNft,
+} from "@/api/axios";
 import router from "@/router";
 import { ethers } from "ethers-ts";
 import openSSLCrypto from "@/utils/openSSLCrypto";
 import { popperContentEmits } from "element-plus";
 import { isContext } from "vm";
-
+import axios from "axios";
+import store from "..";
+//
 export default {
   namespaced: true,
   state: {
@@ -21,13 +30,18 @@ export default {
     address: localStorage.getItem("address") || "",
     balances: localStorage.getItem("balances") || "",
     withdrawPw: localStorage.getItem("withdrawPw") || false,
+    //bannerList, nftList - nftTime, bannerTime을 비교하기 위해 사용
     nftList: localStorage.getItem("nftList") || "",
+    nftLatestTime: localStorage.getItem("nftLatestTime") || 0,
     bannerList: localStorage.getItem("bannerList") || "",
+    nftTime: localStorage.getItem("nftTime") || 0,
+    bannersTime: localStorage.getItem("bannersTime") || 0,
+    bannerLatestTime: localStorage.getItem("bannerLatestTime") || 0,
+    compareNftTime: localStorage.getItem("compareNftTime") || 0,
     terms: localStorage.getItem("terms") || "",
     vote: localStorage.getItem("vote") || 0,
     pwHash: localStorage.getItem("pwHash") || "",
     pwNumber: localStorage.getItem("pwNumber") || "",
-    ///레퍼럴 테스트
     referral: localStorage.getItem("referral") || "",
   },
   getters: {
@@ -120,6 +134,8 @@ export default {
     setClearToken(state: Nullable) {
       state.expireAccessToken = 0;
       state.expireRefreshToken = 0;
+      state.accessToken = "";
+      state.refreshToken = "";
 
       let orgTokenInfos = state.tokenInfos;
       let orgNftList = state.nftList;
@@ -195,11 +211,11 @@ export default {
 
       localStorage.setItem("address", address);
     },
-    setBalances(state: Nullable, { info }: Nullable) {
-      state.balances = JSON.stringify(info);
-
-      localStorage.setItem("balances", JSON.stringify(info));
+    setBalances(state: Nullable, { balance }: Nullable) {
+      state.balances = JSON.stringify(balance); // 상태 업데이트
+      localStorage.setItem("balances", JSON.stringify(balance));
     },
+
     setWithdrawPw(state: Nullable, { pw }: Nullable) {
       state.withdrawPw = pw;
 
@@ -207,14 +223,31 @@ export default {
     },
     setNftList(state: Nullable, { info }: Nullable) {
       state.nftList = JSON.stringify(info);
-
       localStorage.setItem("nftList", JSON.stringify(info));
     },
+
+    setNftLatestTime(state: Nullable, nftLatestTime: Nullable) {
+      state.nftLatestTime = nftLatestTime;
+      localStorage.setItem("nftLatestTime", nftLatestTime);
+      console.log("nftLatestTime", nftLatestTime);
+    },
+
+    setBannerLatestTime(state: Nullable, bannerLatestTime: Nullable) {
+      state.bannerLatestTime = bannerLatestTime;
+      localStorage.setItem("bannerLatestTime", bannerLatestTime);
+      console.log("bannerLatestTime", bannerLatestTime);
+    },
+
     setBannerList(state: Nullable, { info }: Nullable) {
       state.bannerList = JSON.stringify(info);
-
       localStorage.setItem("bannerList", JSON.stringify(info));
     },
+
+    setBannerTime(state: Nullable, payload: Nullable) {
+      state.bannerTimes = payload; //payload를 변경
+      localStorage.setItem("bannersTime", payload);
+    },
+
     setTerms(state: Nullable, { terms }: Nullable) {
       state.terms = terms;
 
@@ -232,6 +265,23 @@ export default {
     setPwNumber(state: Nullable, { pwNumber }: Nullable) {
       state.pwNumber = pwNumber;
       localStorage.setItem("pwNumber", pwNumber);
+    },
+    setNftMetadata(state: Nullable, { idx, cnt }: any) {
+      // JSON 문자열을 객체로 파싱
+      const nftList = JSON.parse(state.nftList);
+
+      // 객체를 배열로 변환
+      const nftListToArray = Object.keys(nftList).map((key) => ({
+        idx: key,
+        ...nftList[key],
+      }));
+      const nft = nftListToArray.find((item: any) => item.idx === idx);
+      if (nft) {
+        nft.metaData.sale = cnt;
+        state.nftList = JSON.stringify(nftList);
+        localStorage.setItem("nftList", JSON.stringify(nftList));
+      }
+      //
     },
   },
   actions: {
@@ -259,7 +309,9 @@ export default {
           context.commit("setReferral", {
             referral: response.data.data.referral,
           });
-
+          context.commit("setBalances", {
+            balance: response.data.data.userTokenInfo,
+          });
           const seed = openSSLCrypto.decode(response.data.data.wallet.seed);
           const walletData = ethers.Wallet.fromMnemonic(seed);
           const privateKey = openSSLCrypto.encode(walletData.privateKey);
@@ -287,7 +339,6 @@ export default {
         }
       } catch (e) {
         console.log("TOKEN ERROR");
-
         router.push("/");
       }
     },
@@ -349,6 +400,114 @@ export default {
       context.commit("setAccessToken", "");
 
       router.push("/");
+    },
+
+    async getPointBalanceAll(context: any) {
+      try {
+        const response = await getPointBalanceAll();
+        console.log("🚀 ~ getPointBalanceAll ~ response:", response);
+        if (response.status === 200) {
+          const balance = response.data.data.userTokenInfo;
+          if (balance) {
+            context.commit("setBalances", { balance });
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching ESGP balance:", error);
+      }
+    },
+
+    async getBannerList(context: Nullable) {
+      const response = await bannerListApi();
+      console.log("getBannerList Response", response);
+
+      if (response.status === 200) {
+        const bannerListData = response.data.data;
+
+        let bannerList: any = {};
+        let updatedAt: any = [];
+        let latestUpdatedAt = 0;
+
+        bannerListData.forEach((res: any) => {
+          bannerList[res.idx] = res;
+
+          updatedAt.push(Date.parse(res.updatedAt));
+
+          if (updatedAt) {
+            latestUpdatedAt = Math.max(...updatedAt);
+          }
+        });
+
+        context.commit("setBannerLatestTime", latestUpdatedAt);
+        context.commit("setBannerList", { info: bannerList });
+      }
+    },
+
+    async getNftList(context: Nullable) {
+      const response = await nftListApi();
+      console.log("getNftLIst는", response);
+
+      if (response.status === 200) {
+        const nftListData = response.data.data;
+
+        let nftList: any = {};
+        let updatedAt: any = [];
+        let latestUpdatedAt: any = 0;
+
+        nftListData.forEach((res: any) => {
+          nftList[res.idx] = res;
+          updatedAt.push(Date.parse(res.nftUpdatedTime));
+
+          if (updatedAt) {
+            latestUpdatedAt = Math.max(...updatedAt);
+          }
+
+          if (res.metaData !== "" && res.metaData !== undefined) {
+            nftList[res.idx]["metaData"] = JSON.parse(res.metaData);
+          } else {
+            nftList[res.idx]["metaData"] = "";
+          }
+        });
+
+        context.commit("setNftLatestTime", latestUpdatedAt);
+        context.commit("setNftList", { info: nftList });
+      }
+    },
+
+    async getTokenInfos(context: Nullable) {
+      const response = await tokenInfos();
+      if (response.status === 200) {
+        const resTokenData = response.data.data.tokenInfos;
+        const resScannerData = response.data.data.scanner;
+
+        let tokenInfos: any = {};
+        let scanners: any = {};
+
+        resTokenData.forEach((res: any) => {
+          tokenInfos[res.symbol] = res;
+        });
+
+        resScannerData.forEach((res: any) => {
+          scanners[res.chainId] = res;
+        });
+
+        store.commit("auth/setTokenInfos", { info: tokenInfos });
+        store.commit("auth/setScanners", { info: scanners });
+      }
+    },
+
+    async getRemainingNft(context: Nullable, idx: number) {
+      try {
+        if (idx === 4 || idx === 5 || idx === 6) {
+          const response = await getRemainingNft(idx);
+          if (response.data.data) {
+            const cnt = response.data.data;
+            context.commit("setNftMetadata", { idx, cnt });
+          }
+        }
+      } catch (error) {
+        console.error("Failed to refresh NFT metaData:", error);
+      }
     },
   },
 };

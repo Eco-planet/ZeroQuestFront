@@ -3,7 +3,7 @@ name: Dev CI/CD Pipeline
 on:
   push:
     branches:
-      - yong
+      - yong2
 
 jobs:
   build-and-deploy:

@@ -1,5 +1,6 @@
 import http from "@/api/http";
 
+
 const googleLogin = (token: string) => {
   return http.post("/auth/google", {
     token,
@@ -22,3 +23,4 @@ export default {
   updateRefreshToken,
   login,
 };
+

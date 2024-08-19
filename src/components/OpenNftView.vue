@@ -1,31 +1,27 @@
 <template>
-  <div class="flex flex-col">
-    <div class="flex flex-col">
-      <div>
-        <img
-          class="nftImg"
-          :src="nftInfo.image"
-          alt=""
+  <div class="flex flex-col h-full justify-between">
+    <div>
+      <div class="flex flex-col">
+        <div>
+          <img
+            class="nftImg max-w-full h-auto fold:h-64"
+            :src="nftInfo.image"
+            alt=""
+            @click="goNftDetail(nftCard.nftId, nftCard.tokenId)"
+          />
+        </div>
+        <div
+          v-if="nftCard.enable === 0"
+          class="nftDisable"
           @click="goNftDetail(nftCard.nftId, nftCard.tokenId)"
-        />
+        ></div>
       </div>
-      <div
-        v-if="nftCard.enable === 0"
-        class="nftDisable"
-        @click="goNftDetail(nftCard.nftId, nftCard.tokenId)"
-      ></div>
-    </div>
-    <!-- <div v-if="nftCard.enable === 1" class="flex justify-center items-center" @click="goNftDetail(nftCard.nftId, nftCard.tokenId)">
-      <div class="pt-2 w-full text-center text-xl nftCardLife">
-        {{ nftCard.balance }} / {{ nftInfo.metaData.maxLife }}
+      <div class="h-3"></div>
+      <div class="flex flex-col items-center">
+        <div class="font-semibold text-center">{{ nftInfo.name }}</div>
       </div>
-    </div> -->
-    <div class="h-3"></div>
-    <div class="font-semibold text-center" v-if="locale === 'kr'">
-      {{ nftInfo.name.kor }}
     </div>
-    <div class="font-semibold text-center" v-else>{{ nftInfo.name.eng }}</div>
-    <div class="h-1"></div>
+
     <div class="flex justify-center items-center">
       <template v-if="nftCard.enable === 0 && nftInfo.type === 2">
         <div
@@ -53,11 +49,7 @@
       </template>
     </div>
   </div>
-  <Modal
-    :visible="store.state.isPopup"
-    @hide="closeModal"
-    :title="popupTitle"
-  />
+  <Modal :visible="store.state.isPopup" @hide="closeModal" />
 </template>
 
 <script lang="ts" setup>
@@ -85,18 +77,11 @@ const emit = defineEmits(["updateRun", "updateReward", "updateEnable"]);
 
 const { nftCard, nftInfo } = toRefs(props);
 
-watch(
-  nftCard,
-  (val) => {
-    //console.log("enable nftCard");
-  },
-  { immediate: false, deep: true }
-);
+watch(nftCard, (val) => {}, { immediate: false, deep: true });
 
 const updateNftEnable = (type: String) => {
   store.state.nftId = nftCard.value.nftId;
   store.state.nftIdx = nftCard.value.idx;
-
   if (type == "INSTALL") {
     let packageName = "";
 
@@ -113,8 +98,6 @@ const updateNftEnable = (type: String) => {
     window.flutter_inappwebview
       .callHandler("checkAppInstalled", { packageName: packageName })
       .then((res: any) => {
-        //console.log(JSON.stringify(res));
-
         if (res.result == true) {
           emit("updateEnable");
         } else {
@@ -131,9 +114,11 @@ const updateNftEnable = (type: String) => {
   } else if (type == "REWARD") {
     emit("updateReward");
   } else if (type == "TREE") {
-    console.log("debug1");
     store.state.popupType = "tree_nft";
     store.state.isPopup = true;
+  }
+  if ([4, 5, 6].includes(nftInfo.value.idx)) {
+    router.push(`/onft-detail/${nftInfo.value.idx}`);
   }
 };
 
