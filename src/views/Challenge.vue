@@ -19,12 +19,13 @@
 
     <div class="w-full">
       <div class="mb-4 p-5 border">
-        <div class="mb-6 text-2xl font-bold">Zero Challenge</div>
-        <div class="text-lg font-medium text-left">
-          Zero Challenge is a habit tracker that makes practicing environmental
-          protection enjoyable. Various challenges record your carbon reduction
-          efforts and support you. Take on the challenge of carbon reduction now
-          and see it lead to rewards.
+        <div class="mb-6 text-2xl font-bold">Introducing Zero Challenge</div>
+        <div>
+          Zero Challenge records efforts to reduce carbon in everyday life.<br/>
+    Join us for a sustainable world by engaging in simple activities like climbing stairs, sorting waste, and planting trees.<br/>
+    We practice various challenge events and record and share the rankings of rewards.
+          <br />
+          What's your ranking for carbon reduction?
         </div>
       </div>
       <!-- Carousel 적용하기 -->
