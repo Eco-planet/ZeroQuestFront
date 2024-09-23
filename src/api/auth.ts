@@ -2,6 +2,7 @@ import http from "@/api/http";
 
 
 const googleLogin = (token: string) => {
+  console.log("token", token)
   return http.post("/auth/google", {
     token,
   });

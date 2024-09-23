@@ -288,7 +288,6 @@ export default {
     async googleLogin(context: Nullable, { token }: Nullable) {
       try {
         const response = await authApi.googleLogin(token);
-        console.log("res", response);
 
         if (response.status === 200) {
           context.commit("setAccessToken", {
