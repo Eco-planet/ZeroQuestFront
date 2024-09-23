@@ -70,7 +70,7 @@
         <option value="ESGP-ESG">ESGP to ESG</option>
         <option value="ESG-ESGP">ESG to ESGP</option>
         <option value="ESG-ETH">ESG to ETH</option>
-        <option value="ETH-ESG">ETH to ESG</option>
+        <!-- <option value="ETH-ESG">ETH to ESG</option> -->
       </select>
     </div>
     <div class="h-2"></div>
@@ -230,7 +230,8 @@ const getStatusCheck = (type: string, symbol: string) => {
   isUpdate.value = false;
   console.log("클릭");
   if (type === "swap") {
-    if (swapEsgp.value < 30000) {
+    // if (swapEsgp.value < 30000) 
+    if (swapEsgp.value < 30000 && fromSymbol.value === "ESGP"){
       store.state.isPopup = true;
       store.state.popupType = "message";
       popupTitle.value = "message.notSuccessMinting";
@@ -436,8 +437,9 @@ const sendSwap = () => {
         store.state.popupType = "successSwap";
         popupTitle.value = "Swap transaction completed successfully";
       } else {
-        popupTitle.value = "Swap amount must be at least 30000";
-        store.state.popupType = "error";
+        // popupTitle.value = "Swap amount must be at least 30000";
+        // store.state.popupType = "error";
+        popupTitle.value = "Would you like to proceed with the swap?";
       }
 
       showClose.value = true;

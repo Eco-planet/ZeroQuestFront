@@ -110,22 +110,19 @@ const login = (userData: any): void => {
   store.state.isBalanceUpdate = true;
 
   const loginToken = {
+    // googleId: userData.sub,
+    // email: userData.email,
+    // name: userData.name,
     googleId: '117460334549764779336',
     email: 'adstarcore@gmail.com',
     name: '한해수',
     timestamp: Date.now(),
   };
-  // const loginToken = {
-  //   googleId: userData.sub,
-  //   email: userData.email,
-  //   name: userData.name,
-  //   timestamp: Date.now(),
-  // };
 
-  store.commit("auth/setUserName", { userName: '한해수' });
-  store.commit("auth/setUserEmail", { userEmail: 'adstarcore@gmail.com' });
   // store.commit("auth/setUserName", { userName: userData.name });
   // store.commit("auth/setUserEmail", { userEmail: userData.email });
+  store.commit("auth/setUserName", { userName: '한해수' });
+  store.commit("auth/setUserEmail", { userEmail: 'adstarcore@gmail.com' });
 
   const json = JSON.stringify(loginToken);
   const encode = openSSLCrypto.encode(json);
