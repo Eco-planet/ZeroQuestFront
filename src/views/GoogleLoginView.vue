@@ -12,7 +12,7 @@
     <div class="h-10"></div>
     <div
       class="flex justify-center items-center wp-80 max-w-4xl border rounded-full py-4"
-      @click="login"
+      @click="loginSdk"
     >
       <div class="wp-10">
         <img src="@/assets/images/icon_google.png" alt="Google" />
@@ -86,22 +86,22 @@ window.webviewLogin = (sub: String, email: String, name: String) => {
   login({ sub, email, name });
 };
 
-// const loginSdk = () => {
-//   if (showMode.value === "webview") {
-//     window.Java.jsSignIn();
-//   } else {
-//     googleTokenLogin().then((response) => {
-//       axios({
-//         method: "GET",
-//         url:
-//           "https://www.googleapis.com/oauth2/v3/userinfo?access_token=" +
-//           response.access_token,
-//       }).then((userInfo) => {
-//         login(userInfo.data);
-//       });
-//     });
-//   }
-// };
+const loginSdk = () => {
+  if (showMode.value === "webview") {
+    window.Java.jsSignIn();
+  } else {
+    googleTokenLogin().then((response) => {
+      axios({
+        method: "GET",
+        url:
+          "https://www.googleapis.com/oauth2/v3/userinfo?access_token=" +
+          response.access_token,
+      }).then((userInfo) => {
+        login(userInfo.data);
+      });
+    });
+  }
+};
 
 const login = (userData: any): void => {
   // 로그인시 기존 토큰 데이터 삭제
@@ -110,19 +110,15 @@ const login = (userData: any): void => {
   store.state.isBalanceUpdate = true;
 
   const loginToken = {
-    // googleId: userData.sub,
-    // email: userData.email,
-    // name: userData.name,
-    googleId: '117460334549764779336',
-    email: 'adstarcore@gmail.com',
-    name: '한해수',
+    googleId: userData.sub,
+    email: userData.email,
+    name: userData.name,
     timestamp: Date.now(),
   };
 
-  // store.commit("auth/setUserName", { userName: userData.name });
-  // store.commit("auth/setUserEmail", { userEmail: userData.email });
-  store.commit("auth/setUserName", { userName: '한해수' });
-  store.commit("auth/setUserEmail", { userEmail: 'adstarcore@gmail.com' });
+  store.commit("auth/setUserName", { userName: userData.name });
+  store.commit("auth/setUserEmail", { userEmail: userData.email });
+
 
   const json = JSON.stringify(loginToken);
   const encode = openSSLCrypto.encode(json);
